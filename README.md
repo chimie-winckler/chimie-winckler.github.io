@@ -9,7 +9,7 @@ Site transposé depuis Google Sites vers GitHub Pages.
 
 ## À compléter
 - **Liens des documents** : déjà intégrés. Ils pointent vers les fichiers du dossier Drive « Techniques » (2020) et du dossier « FDS », partagés en lecture avec toute personne disposant du lien. Si vous déplacez ou supprimez ces fichiers dans Drive, les liens cesseront de fonctionner.
-- **Images** : elles sont affichées depuis Google Sites et peuvent cesser de fonctionner si l'ancien site est supprimé. Pour les sécuriser : les enregistrer dans un dossier `images/` du dépôt et remplacer les adresses `https://sites.google.com/sitesv-images-rt/...` par `images/nom-du-fichier.png`.
+- **Ressources** : tous les fichiers du site (fiches, recueil, images, FDS, FDS simplifiées) sont rangés dans le dossier `Ressources site internet/`.
 
 ## Fichiers
 | Fichier | Page |
