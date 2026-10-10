@@ -1,0 +1,108 @@
+/* ===== Chimie de Synthèse – feuille de style ===== */
+:root {
+  --fond: #f6f8f9;
+  --carte: #ffffff;
+  --texte: #1f2a30;
+  --doux: #5b6b73;
+  --accent: #0f7c80;      /* vert-bleu "laboratoire" */
+  --accent-clair: #e3f2f2;
+  --bord: #dde4e7;
+  --rayon: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fond: #121a1e; --carte: #1b252a; --texte: #e6edf0; --doux: #9fb0b8;
+    --accent: #4fc3c7; --accent-clair: #1f3437; --bord: #2c3a40;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--fond); color: var(--texte);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.55;
+}
+img { max-width: 100%; display: block; }
+a { color: var(--accent); }
+.conteneur { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+
+/* En-tête et menu */
+.entete { background: var(--carte); border-bottom: 1px solid var(--bord); position: sticky; top: 0; z-index: 10; }
+.entete-inner { display: flex; align-items: center; justify-content: space-between; min-height: 60px; }
+.marque { font-weight: 700; font-size: 1.15rem; text-decoration: none; color: var(--texte); }
+.menu { list-style: none; display: flex; gap: 4px; margin: 0; padding: 0; }
+.menu > li { position: relative; }
+.menu a { display: block; padding: 8px 12px; border-radius: 8px; text-decoration: none; color: var(--texte); }
+.menu a:hover, .menu a.actif { background: var(--accent-clair); color: var(--accent); }
+.sous-menu { display: none; position: absolute; right: 0; top: 100%; list-style: none; margin: 0; padding: 6px;
+  background: var(--carte); border: 1px solid var(--bord); border-radius: var(--rayon); min-width: 230px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+.menu > li:hover .sous-menu, .menu > li:focus-within .sous-menu { display: block; }
+.burger { display: none; background: none; border: 0; font-size: 1.6rem; color: var(--texte); cursor: pointer; }
+
+@media (max-width: 760px) {
+  .burger { display: block; }
+  .entete nav { display: none; position: absolute; left: 0; right: 0; top: 60px; background: var(--carte);
+    border-bottom: 1px solid var(--bord); padding: 8px 16px 16px; }
+  .menu-ouvert .entete nav { display: block; }
+  .menu { flex-direction: column; }
+  .sous-menu { display: block; position: static; border: 0; box-shadow: none; padding: 0 0 0 16px; }
+}
+
+/* Bandeau */
+.bandeau { background: linear-gradient(135deg, var(--accent), #0a4f63); color: #fff; padding: 40px 0 32px; margin-bottom: 32px; }
+.bandeau h1 { margin: 4px 0 0; font-size: clamp(1.7rem, 4vw, 2.4rem); }
+.surtitre { margin: 0; text-transform: uppercase; letter-spacing: .08em; font-size: .8rem; opacity: .85; }
+.intro { margin: 10px 0 0; max-width: 680px; opacity: .95; }
+
+main section { margin-bottom: 44px; }
+h2 { font-size: 1.4rem; border-left: 4px solid var(--accent); padding-left: 10px; margin: 0 0 18px; }
+h3 { margin: 0 0 8px; font-size: 1.05rem; }
+
+/* Tuiles */
+.tuiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.tuile { display: block; background: var(--carte); border: 1px solid var(--bord); border-radius: var(--rayon);
+  padding: 22px; text-decoration: none; color: var(--texte); transition: transform .15s, box-shadow .15s; }
+.tuile:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.08); border-color: var(--accent); }
+.tuile h2, .tuile h3 { border: 0; padding: 0; color: var(--accent); }
+.tuile p { margin: 0; color: var(--doux); }
+
+/* Boutons */
+.boutons { display: flex; flex-wrap: wrap; gap: 10px; }
+.bouton { padding: 10px 18px; border-radius: 999px; background: var(--accent); color: #fff; text-decoration: none; font-weight: 600; }
+.bouton:hover { filter: brightness(1.1); }
+
+/* Sommaire */
+.sommaire { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+.sommaire a { padding: 6px 12px; border-radius: 999px; background: var(--accent-clair); text-decoration: none; font-size: .9rem; }
+
+/* Documents */
+.docs { display: flex; flex-wrap: wrap; gap: 8px; }
+.doc { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border: 1px solid var(--bord);
+  border-radius: 8px; text-decoration: none; color: var(--texte); background: var(--fond); font-size: .9rem; }
+.doc:hover { border-color: var(--accent); }
+.doc-ico { font-size: .7rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: var(--accent); color: #fff; }
+.doc-mp4 .doc-ico { background: #c0392b; }
+.doc-pdf .doc-ico { background: #b03a2e; }
+.doc-xlsx .doc-ico { background: #1e7d45; }
+.doc-docx .doc-ico { background: #2b5797; }
+.doc[data-a-completer] { border-style: dashed; opacity: .75; }
+
+/* Cartes techniques */
+.cartes { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
+.carte { background: var(--carte); border: 1px solid var(--bord); border-radius: var(--rayon); overflow: hidden; scroll-margin-top: 80px; }
+.carte img, .img-vide { width: 100%; height: 190px; object-fit: contain; background: #fff; }
+.img-vide { display: flex; align-items: center; justify-content: center; font-size: 3rem; background: var(--accent-clair); }
+.carte-corps { padding: 16px; }
+.banniere { border-radius: var(--rayon); margin-bottom: 20px; max-height: 260px; width: 100%; object-fit: cover; }
+
+/* Galerie */
+.galerie { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+.galerie figure { margin: 0; background: var(--carte); border: 1px solid var(--bord); border-radius: var(--rayon); overflow: hidden; }
+.galerie img { width: 100%; height: 220px; object-fit: contain; background: #fff; }
+.galerie figcaption { padding: 10px 12px; font-size: .92rem; text-align: center; }
+
+/* Intégrations */
+.agenda iframe, .drive-embed iframe { width: 100%; height: 480px; border: 1px solid var(--bord); border-radius: var(--rayon); background: #fff; }
+.drive-embed { margin-top: 16px; }
+
+.pied { border-top: 1px solid var(--bord); padding: 20px 0; color: var(--doux); font-size: .85rem; margin-top: 40px; }
