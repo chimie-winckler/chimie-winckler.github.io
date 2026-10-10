@@ -27,17 +27,152 @@
 </div>
 <main class="conteneur">
 
-<nav class="sommaire"><a href="#fds">Fiches de sécurité</a><a href="#dechets">Gestion des déchets en salle de TP</a></nav>
+<nav class="sommaire"><a href="#fds">FDS</a><a href="#fdss">FDS simplifiée</a><a href="#dechets">Gestion des déchets en salle de TP</a></nav>
 
 <section id="fds">
-  <h2>Fiches de sécurité</h2>
-  <p>FDS : Fiches De Sécurité — FDSS : Fiche De Sécurité Simplifiée.</p>
-  <div class="docs">
-    <a class="doc doc-dossier" href="https://drive.google.com/drive/folders/1VX4E9JFfOB_naKbzkF80yaUE50uFr6Bq" target="_blank" rel="noopener"><span class="doc-ico">📁</span>Dossier FDS (Google Drive)</a>
-    <a class="doc doc-xlsx" href="https://drive.google.com/file/d/13pMiL154kqzHlDjhnaZq6-NEHV1ZBgD_/view" target="_blank" rel="noopener"><span class="doc-ico">XLS</span>FDS simplifiée vierge</a>
+  <h2>FDS</h2>
+  <p>Fiches De Sécurité des produits utilisés en TP (123 fiches). Tapez un nom pour filtrer la liste.</p>
+  <input class="filtre" type="search" placeholder="Rechercher un produit…" aria-label="Rechercher une FDS" oninput="filtrerFDS(this.value)">
+  <div class="docs liste-fds" id="liste-fds">
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/1-bromobutane.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>1-bromobutane</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/1-chlorobutane.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>1-chlorobutane</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/2%27-hydroxyac%C3%A9toph%C3%A9none.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>2&#x27;-hydroxyacétophénone</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/2%2C6-dimethylaniline.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>2,6-dimethylaniline</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/2-Chloro-N-%282%2C6-dimethylphenyl%29acetamide.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>2-Chloro-N-(2,6-dimethylphenyl)acetamide</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/2-chlorobutane.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>2-chlorobutane</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/2-Hydroxynaphtal%C3%A8ne.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>2-Hydroxynaphtalène</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/2-m%C3%A9thylac%C3%A9toph%C3%A9none%20ou%20orthom%C3%A9thylac%C3%A9toph%C3%A9none.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>2-méthylacétophénone ou orthométhylacétophénone</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/2-nitrobenzoate%20de%20m%C3%A9thyle.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>2-nitrobenzoate de méthyle</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/2-nitror%C3%A9sorcinol.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>2-nitrorésorcinol</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/3-m%C3%A9thylac%C3%A9toph%C3%A9none%20ou%20m%C3%A9tam%C3%A9thylac%C3%A9toph%C3%A9none.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>3-méthylacétophénone ou métaméthylacétophénone</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/3-nitroac%C3%A9toph%C3%A9none.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>3-nitroacétophénone</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/3-nitrobenzald%C3%A9hyde.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>3-nitrobenzaldéhyde</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/3-nitrobenzoate%20de%20m%C3%A9thyle.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>3-nitrobenzoate de méthyle</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/4-chloroph%C3%A9nol.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>4-chlorophénol</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/4-Hydroxybenzald%C3%A9hyde.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>4-Hydroxybenzaldéhyde</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/4-m%C3%A9thylac%C3%A9toph%C3%A9none.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>4-méthylacétophénone</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Ac%C3%A9tanilide.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acétanilide</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Ac%C3%A9tate%20d%27%C3%A9thyle.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acétate d&#x27;éthyle</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Ac%C3%A9tate%20d%27isoamyle.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acétate d&#x27;isoamyle</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Ac%C3%A9tate%20d%27isoeug%C3%A9nol.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acétate d&#x27;isoeugénol</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Ac%C3%A9tate%20de%20benzyle.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acétate de benzyle</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Ac%C3%A9tate%20de%20m%C3%A9thyle.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acétate de méthyle</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Ac%C3%A9tate%20de%20n-butyle.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acétate de n-butyle</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Ac%C3%A9tate%20de%20pentyle.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acétate de pentyle</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Ac%C3%A9tate%20de%20sodium.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acétate de sodium</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Ac%C3%A9tate%20de%20vanilline.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acétate de vanilline</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Ac%C3%A9toac%C3%A9tate%20d%27%C3%A9thyle.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acétoacétate d&#x27;éthyle</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Ac%C3%A9tone.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acétone</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Ac%C3%A9tonitrile.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acétonitrile</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Ac%C3%A9toph%C3%A9none.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acétophénone</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Acide%204-methoxybenzo%C3%AFque.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acide 4-methoxybenzoïque</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Acide%20ac%C3%A9tique.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acide acétique</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Acide%20adipique.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acide adipique</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Acide%20benzilique.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acide benzilique</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Acide%20benzo%C3%AFque.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acide benzoïque</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Acide%20chlorhydrique.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acide chlorhydrique</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Acide%20clofibrique.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acide clofibrique</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Acide%20malonique.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acide malonique</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Acide%20m%C3%A9thano%C3%AFque%20ou%20formique.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acide méthanoïque ou formique</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Acide%20paraaminobenzo%C3%AFque.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acide paraaminobenzoïque</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Acide%20ParaTolu%C3%A8enSulfonique%20APTS.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acide ParaToluèenSulfonique APTS</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Acide%20salicylique.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acide salicylique</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Acide%20sulfurique.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acide sulfurique</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Acide%20trans-cinnamique.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Acide trans-cinnamique</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Alcool%204-m%C3%A9thoxy-benzylique.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Alcool 4-méthoxy-benzylique</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Alcool%20benzylique.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Alcool benzylique</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Alcool%20isoamylique.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Alcool isoamylique</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Aluminium%20et%20ses%20compos%C3%A9s%20min%C3%A9raux.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Aluminium et ses composés minéraux</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Anhydride%20ac%C3%A9tique.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Anhydride acétique</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Aniline.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Aniline</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Aspirine.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Aspirine</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Benzald%C3%A9hyde.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Benzaldéhyde</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Benzhydrol.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Benzhydrol</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Benzile.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Benzile</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Benzoate%20de%20m%C3%A9thyle.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Benzoate de méthyle</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Benzoca%C3%AFne.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Benzocaïne</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Benzonitrile.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Benzonitrile</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Benzoph%C3%A9none.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Benzophénone</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/B%C3%A9ta-alanine.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Béta-alanine</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Bicarbonate%20de%20Sodium.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Bicarbonate de Sodium</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Butan-1-ol.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Butan-1-ol</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Butan-2-ol.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Butan-2-ol</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/C%C3%A9lite.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Célite</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Chlorhydrate%20d%27hydroxylamine.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Chlorhydrate d&#x27;hydroxylamine</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Chlorhydrate%20de%202-Chloro-N%2CN-diethylethylamine.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Chlorhydrate de 2-Chloro-N,N-diethylethylamine</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Chlorobenz%C3%A8ne.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Chlorobenzène</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Chlorobutol%20ou%201%2C1%2C1-trichloro-2-m%C3%A9thylpropan-2-ol.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Chlorobutol ou 1,1,1-trichloro-2-méthylpropan-2-ol</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Chlorure%20d%27%C3%A9thanoyle%20%28acyle%29.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Chlorure d&#x27;éthanoyle (acyle)</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Chlorure%20d%27hydrog%C3%A8ne%20et%20ses%20solutions%20aqueuses.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Chlorure d&#x27;hydrogène et ses solutions aqueuses</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Chlorure%20de%202-chloro%C3%A9thanolye.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Chlorure de 2-chloroéthanolye</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Chromates%20et%20dichromates%20de%20sodium%20et%20de%20potassium.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Chromates et dichromates de sodium et de potassium</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Cinnamald%C3%A9hyde%20Merck.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Cinnamaldéhyde Merck</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Cinnamald%C3%A9hyde%20Roth.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Cinnamaldéhyde Roth</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Cuivre%20et%20ses%20compos%C3%A9s.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Cuivre et ses composés</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Cyclohexane.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Cyclohexane</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Cyclohexanol.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Cyclohexanol</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Cyclohexanone.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Cyclohexanone</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Diac%C3%A9tate%20d%27hydroquinone.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Diacétate d&#x27;hydroquinone</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Dichlorom%C3%A9thane.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Dichlorométhane</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Dichromate%20de%20sodium.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Dichromate de sodium</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Di%C3%A9thylamine.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Diéthylamine</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Eaux%20de%20Javel.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Eaux de Javel</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Ethanol.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Ethanol</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Ether%20di%C3%A9thylique.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Ether diéthylique</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Hexane.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Hexane</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Hydrog%C3%A9nosulfite%20de%20sodium.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Hydrogénosulfite de sodium</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Hydroxyde%20de%20sodium%20et%20ses%20solutions%20aqueuses.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Hydroxyde de sodium et ses solutions aqueuses</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Hydroxyde%20de%20sodium.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Hydroxyde de sodium</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Jaune%20Soudan%20I.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Jaune Soudan I</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Lidoca%C3%AFne.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Lidocaïne</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Limon%C3%A8ne.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Limonène</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Menthol.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Menthol</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Menthone.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Menthone</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/M%C3%A9ta-m%C3%A9thylac%C3%A9toph%C3%A9none.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Méta-méthylacétophénone</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/M%C3%A9thanoate%20%28ou%20formiate%29%20d%27%C3%A9thyle.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Méthanoate (ou formiate) d&#x27;éthyle</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/M%C3%A9thanol.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Méthanol</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Nitrite%20de%20sodium.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Nitrite de sodium</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Ortho-m%C3%A9thylac%C3%A9toph%C3%A9none.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Ortho-méthylacétophénone</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Palladium%20sur%20charbon%20actif.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Palladium sur charbon actif</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Para-anisald%C3%A9hyde.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Para-anisaldéhyde</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Para-m%C3%A9thylac%C3%A9toph%C3%A9none.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Para-méthylacétophénone</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Paraaminophenol.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Paraaminophenol</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Parac%C3%A9tamol.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Paracétamol</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Pentan-1-ol.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Pentan-1-ol</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Pentanols.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Pentanols</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Permanganate%20de%20potassium.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Permanganate de potassium</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Propan-2-ol.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Propan-2-ol</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Pyridine.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Pyridine</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/R%C3%A9sorcinol.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Résorcinol</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Saccharine.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Saccharine</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Salicylate%20de%20m%C3%A9thyle.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Salicylate de méthyle</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Solution%20de%20soude%20%C3%A0%2010%20%25.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Solution de soude à 10 %</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Solvants%20aliphatiques%20en%20C5-C9%2C%20%C3%A9ther%20de%20p%C3%A9trole.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Solvants aliphatiques en C5-C9, éther de pétrole</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Soude%20et%20ses%20solutions%20aqueuses.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Soude et ses solutions aqueuses</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Sulfate%20de%20cuivre%20II.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Sulfate de cuivre II</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Sulfate%20de%20magn%C3%A9sium.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Sulfate de magnésium</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/T%C3%A9trahydruroborate%20de%20sodium%20NaBH4.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Tétrahydruroborate de sodium NaBH4</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Tolu%C3%A8ne.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Toluène</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Tri%C3%A9thylamine.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Triéthylamine</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Trihydrate%20de%20trisoxalatoferrate%28III%29%20de%20potassium.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Trihydrate de trisoxalatoferrate(III) de potassium</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Ur%C3%A9e.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Urée</a>
+    <a class="doc doc-pdf" href="Ressources%20site%20internet/FDS/Zinc%20et%20ses%20min%C3%A9raux.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Zinc et ses minéraux</a>
   </div>
-  <div class="drive-embed"><iframe src="https://drive.google.com/embeddedfolderview?id=1VX4E9JFfOB_naKbzkF80yaUE50uFr6Bq#list" title="Dossier FDS" loading="lazy"></iframe></div>
+  <p class="aucun" id="aucune-fds" hidden>Aucune fiche ne correspond.</p>
 </section>
+
+<section id="fdss">
+  <h2>FDS simplifiée</h2>
+  <p>FDSS : Fiche De Sécurité Simplifiée — modèles vierges à compléter (Excel).</p>
+  <div class="docs">
+    <a class="doc doc-xlsx" href="Ressources%20site%20internet/FDS%20simplifiees/FDS%20simplifi%C3%A9e%20vierge.xlsx" download><span class="doc-ico">XLS</span>FDS simplifiée vierge</a>
+    <a class="doc doc-xlsx" href="Ressources%20site%20internet/FDS%20simplifiees/FDS%20simplifi%C3%A9e%20vierge%20Calais%202025.xlsx" download><span class="doc-ico">XLS</span>FDS simplifiée vierge – Calais 2025</a>
+  </div>
+</section>
+<script>
+function sansAccent(t){return t.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();}
+function filtrerFDS(v){v=sansAccent(v.trim());let n=0;document.querySelectorAll("#liste-fds a").forEach(a=>{const ok=sansAccent(a.textContent).includes(v);a.hidden=!ok;if(ok)n++;});document.getElementById("aucune-fds").hidden=n>0;}
+</script>
 
 <section id="dechets">
   <h2>Gestion des déchets en salle de TP</h2>

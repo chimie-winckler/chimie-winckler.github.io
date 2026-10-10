@@ -106,3 +106,7 @@ h3 { margin: 0 0 8px; font-size: 1.05rem; }
 .drive-embed { margin-top: 16px; }
 
 .pied { border-top: 1px solid var(--bord); padding: 20px 0; color: var(--doux); font-size: .85rem; margin-top: 40px; }
+.filtre { width: 100%; max-width: 420px; padding: 10px 12px; margin: 4px 0 14px; border: 1px solid var(--bord); border-radius: var(--rayon); font: inherit; }
+.liste-fds { max-height: 560px; overflow-y: auto; padding: 4px; }
+.liste-fds a[hidden] { display: none; }
+.aucun { color: #777; font-style: italic; }
