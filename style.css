@@ -49,7 +49,8 @@ a { color: var(--accent); }
 }
 
 /* Bandeau */
-.bandeau { background: linear-gradient(135deg, var(--accent), #0a4f63); color: #fff; padding: 40px 0 32px; margin-bottom: 32px; }
+.bandeau { background: linear-gradient(90deg, rgba(6,56,74,.80) 0%, rgba(6,56,74,.55) 45%, rgba(6,56,74,.15) 100%), url("Ressources%20site%20internet/images/bandeau-molecules.jpg") center 35% / cover no-repeat, #0a4f63; color: #fff; padding: 48px 0 40px; margin-bottom: 32px; }
+.bandeau h1, .bandeau .surtitre, .bandeau .intro { text-shadow: 0 1px 8px rgba(0,0,0,.35); }
 .bandeau h1 { margin: 4px 0 0; font-size: clamp(1.7rem, 4vw, 2.4rem); }
 .surtitre { margin: 0; text-transform: uppercase; letter-spacing: .08em; font-size: .8rem; opacity: .85; }
 .intro { margin: 10px 0 0; max-width: 680px; opacity: .95; }
