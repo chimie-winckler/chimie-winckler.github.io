@@ -31,15 +31,10 @@
 <nav class="sommaire"><a href="gestion-dechets.html">← Gestion des déchets</a></nav>
 <section id="tri-section">
   <h2>Carte de décision : quel bidon choisir ?</h2>
-  <p><b>Explorer la carte</b> : répondez aux questions pour trouver le bidon et son numéro ONU (un clic sur une étape du chemin permet de revenir en arrière). <b>S’entraîner</b> : une série de 10 déchets tirés au hasard, à placer dans le bon bidon.</p>
+  <p><b>Explorer la carte</b> : répondez aux questions pour trouver le bidon et son numéro ONU (un clic sur une étape du chemin permet de revenir en arrière). <b>Entraînement</b> : une série de 10 déchets tirés au hasard, à placer dans le bon bidon.</p>
   <div class="tri-onglets" role="tablist">
-  <button type="button" role="tab" class="tri-onglet actif" id="ong-carte" aria-selected="true">🧭 Explorer la carte</button>
-  <button type="button" role="tab" class="tri-onglet" id="ong-ent" aria-selected="false">🎯 Entraînement</button>
-</div>
-<div class="tri tri-ent" id="ent" hidden aria-live="polite"></div>
-<div class="tri-onglets" role="tablist">
   <button type="button" role="tab" class="actif" data-mode="tri">🧭 Explorer la carte</button>
-  <button type="button" role="tab" data-mode="entr">🎯 S’entraîner</button>
+  <button type="button" role="tab" data-mode="entr">🎯 Entraînement</button>
 </div>
 <div class="tri" id="tri">
   <div class="tri-tete">
@@ -161,102 +156,6 @@
   reset.onclick = function () { trace = []; afficher("debut", -1); };
   afficher("debut", 1);
 
-  /* ---------- Mode entraînement ---------- */
-  var FDS = "Ressources%20site%20internet/FDS/";
-  var PICTO = { "02": "flamme (inflammable)", "03": "flamme sur un cercle (comburant)", "05": "corrosion", "06": "tête de mort (toxicité aiguë)", "07": "point d’exclamation (nocif, irritant)", "08": "danger pour la santé (CMR, aspiration…)", "09": "environnement" };
-  // [nom, description, organique, cmr/halogéné/toxique, inflammable, corrosif ("acide"/"base"/""), environnement, pictos, mentions, fds, pourquoi]
-  var P = [
-    ["Acétone", "Solvant de rinçage usagé.", 1, 0, 1, "", 0, ["02","07"], "H225, H319, H336", "Acétone", "solvant organique, ni CMR, ni halogéné, ni toxique, mais très inflammable"],
-    ["Éthanol", "Reste de solvant de recristallisation.", 1, 0, 1, "", 0, ["02","07"], "H225, H319", "Ethanol", "solvant organique non toxique, très inflammable"],
-    ["Acétate d’éthyle", "Solvant d’extraction usagé.", 1, 0, 1, "", 0, ["02","07"], "H225, H319, H336", "Acétate d'éthyle", "solvant organique non toxique, très inflammable"],
-    ["Méthanol", "Solvant usagé.", 1, 1, 1, "", 0, ["02","06","08"], "H225, H301, H311, H331, H370", "Méthanol", "organique, toxique (tête de mort) et très inflammable"],
-    ["Chlorobenzène", "Reste du TP chlorobenzène.", 1, 1, 1, "", 1, ["02","07","09"], "H226, H332, H411", "Chlorobenzène", "organique halogéné (Cl) et inflammable"],
-    ["1-bromobutane", "Excès de réactif.", 1, 1, 1, "", 1, ["02","07","09"], "H225, H315, H319, H335, H411", "1-bromobutane", "organique halogéné (Br) et très inflammable"],
-    ["Triéthylamine", "Excès de base organique.", 1, 1, 1, "base", 0, ["02","05","06"], "H225, H302, H311, H331, H314", "Triéthylamine", "organique, toxique (tête de mort) et très inflammable : la question « inflammable » arrive avant « corrosif »"],
-    ["Dichlorométhane", "Phase organique d’extraction.", 1, 1, 0, "", 0, ["07","08"], "H315, H319, H336, H351", "Dichlorométhane", "organique halogéné (Cl), suspecté cancérogène, non inflammable"],
-    ["Aniline", "Excès de substrat.", 1, 1, 0, "", 1, ["05","06","08","09"], "H301, H311, H331, H317, H318, H341, H351, H372, H400", "Aniline", "organique, toxique et CMR, non inflammable"],
-    ["Acide acétique à 50 % (solution aqueuse)", "Solution de lavage acide.", 1, 0, 0, "acide", 0, ["05"], "H314", "Acide acétique", "organique, non toxique, non inflammable à cette dilution, corrosif acide"],
-    ["Phase aqueuse basique contenant une amine organique (pH ≈ 12)", "Déchet décrit : non inflammable, non toxique.", 1, 0, 0, "base", 0, ["05"], "H314", "", "organique, ni toxique ni inflammable, corrosif basique"],
-    ["Acide sulfurique (solution)", "Reste de catalyseur acide.", 0, 0, 0, "acide", 0, ["05"], "H290, H314", "Acide sulfurique", "minéral, corrosif acide"],
-    ["Solution de soude (hydroxyde de sodium)", "Solution de lavage basique.", 0, 0, 0, "base", 0, ["05"], "H290, H314", "Soude et ses solutions aqueuses", "minéral, corrosif basique"],
-    ["Dichromate de potassium (solution)", "Reste d’oxydant du TP n°2.", 0, 1, 0, "", 1, ["03","05","06","08","09"], "H272, H301, H312, H314, H317, H330, H334, H340, H350, H360FD, H372, H410", "Chromates et dichromates de sodium et de potassium", "minéral et CMR (cancérogène, mutagène, reprotoxique)"],
-    ["Sulfate de cuivre II (solution)", "Solution de dosage.", 0, 0, 0, "", 1, ["07","09"], "H302, H315, H319, H410", "Sulfate de cuivre II", "minéral, ni CMR ni toxique, non corrosif, mais très toxique pour les organismes aquatiques"],
-    ["Sulfate de magnésium (solution)", "Desséchant dissous dans l’eau.", 0, 0, 0, "", 0, [], "aucune mention de danger", "Sulfate de magnésium", "minéral et sans danger particulier"],
-    ["Hydrogénocarbonate de sodium (solution)", "Solution de lavage d’une phase organique.", 0, 0, 0, "", 0, [], "aucune mention de danger", "Bicarbonate de Sodium", "minéral et sans danger particulier"]
-  ];
-  var BACS = ["UN2810","UN1992","UN1993","UN3265","UN3267","UN3264","UN3289","UN3266","UN3082","FDS"];
-  function parcours(p) {
-    var c = [["organique", p[2] ? "OUI" : "NON"]], cor = p[5] ? p[5].toUpperCase().replace("BASE","BASIQUE") : "NON";
-    if (p[2]) {
-      c.push(["CMR, halogéné ou toxique", p[3] ? "OUI" : "NON"]);
-      c.push(["inflammable", p[4] ? "OUI" : "NON"]);
-      if (p[3]) return [c, p[4] ? "UN1992" : "UN2810"];
-      if (p[4]) return [c, "UN1993"];
-      c.push(["corrosif", cor]);
-      return [c, p[5] === "acide" ? "UN3265" : p[5] === "base" ? "UN3267" : "FDS"];
-    }
-    c.push(["CMR, halogéné ou toxique", p[3] ? "OUI" : "NON"]);
-    if (p[3]) return [c, "UN3289"];
-    c.push(["corrosif", cor]);
-    if (p[5]) return [c, p[5] === "acide" ? "UN3264" : "UN3266"];
-    c.push(["danger pour l’environnement", p[6] ? "OUI" : "NON"]);
-    return [c, p[6] ? "UN3082" : "FDS"];
-  }
-  var ent = document.getElementById("ent"), N = 8, serie = [], k = 0, score = 0;
-  function melange(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
-  function nouvelleSerie() { serie = melange(P).slice(0, N); k = 0; score = 0; question(); }
-  function vignette(id) { return id === "FDS" ? '<span class="tri-mini-fds"></span><small>FDS rub. 13</small>' : '<img src="' + IMG + id + '.jpg" alt=""><small>' + id + '</small>'; }
-  function question() {
-    var p = serie[k], bon = parcours(p)[1];
-    var c = el("div", "tri-carte ent-carte entre-droite");
-    c.appendChild(el("div", "ent-haut", "<span>Déchet " + (k + 1) + " / " + N + "</span><span>Score : " + score + "</span>"));
-    c.appendChild(el("div", "ent-produit", "<b>" + p[0] + "</b><small>" + p[1] + "</small>"));
-    var pic = el("div", "ent-pictos");
-    if (p[7].length) p[7].forEach(function (x) { var im = el("img"); im.src = IMG + "sgh" + x + ".png"; im.alt = PICTO[x]; im.title = PICTO[x]; pic.appendChild(im); });
-    else pic.appendChild(el("span", "ent-aucun", "Aucun pictogramme de danger"));
-    c.appendChild(pic);
-    c.appendChild(el("p", "ent-mentions", "Mentions : " + p[8]));
-    c.appendChild(el("p", "ent-consigne", "Dans quel bidon le jeter ?"));
-    var g = el("div", "ent-bacs");
-    BACS.forEach(function (id) {
-      var b = el("button", "ent-bac", vignette(id)); b.type = "button"; b.setAttribute("aria-label", id === "FDS" ? "Vérifier la FDS rubrique 13" : "Bidon " + id);
-      b.onclick = function () { corriger(c, g, b, id, bon, p); };
-      g.appendChild(b);
-    });
-    c.appendChild(g);
-    ent.innerHTML = ""; ent.appendChild(c);
-  }
-  function corriger(c, g, b, id, bon, p) {
-    var ok = id === bon; if (ok) score++;
-    [].forEach.call(g.children, function (x) { x.disabled = true; });
-    b.classList.add(ok ? "juste" : "faux");
-    if (!ok) g.children[BACS.indexOf(bon)].classList.add("juste");
-    c.querySelector(".ent-haut").lastChild.textContent = "Score : " + score;
-    var ch = parcours(p)[0].map(function (e) { return '<span class="tri-etape">' + e[0] + " <b>" + e[1] + "</b></span>"; }).join(" › ");
-    var f = el("div", "ent-retour " + (ok ? "ok" : "ko"),
-      "<p class='ent-verdict'>" + (ok ? "✔ Bravo !" : "✘ Raté : il fallait " + (bon === "FDS" ? "vérifier la FDS (rubrique 13)" : "le bidon <b>" + bon + "</b>")) + "</p>" +
-      "<p>" + p[0] + " : " + p[10] + ".</p><div class='ent-chemin'>" + ch + "</div>" +
-      (p[9] ? "<p><a href='" + FDS + encodeURIComponent(p[9]).replace(/'/g, "%27") + ".pdf' target='_blank' rel='noopener'>📄 Voir la FDS</a></p>" : ""));
-    var s = el("button", "tri-btn tri-go", k + 1 < N ? "Suivant ▸" : "Voir mon score ▸"); s.type = "button";
-    s.onclick = function () { k++; if (k < N) question(); else bilan(); };
-    f.appendChild(s); c.appendChild(f);
-    f.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  }
-  function bilan() {
-    var m = score === N ? "Parfait ! Vous maîtrisez le tri des déchets." : score >= N * 0.75 ? "Très bien, encore un petit effort !" : score >= N / 2 ? "C’est un début : revoyez la carte de décision." : "Revoyez la carte de décision avant de recommencer.";
-    var c = el("div", "tri-carte tri-resultat entre-droite");
-    c.appendChild(el("div", "ent-score", score + "<small>/" + N + "</small>"));
-    c.appendChild(el("p", "tri-texte", m));
-    var r = el("button", "tri-btn tri-go", "↺ Nouvelle série"); r.type = "button"; r.onclick = nouvelleSerie;
-    c.appendChild(r); ent.innerHTML = ""; ent.appendChild(c);
-  }
-  var oc = document.getElementById("ong-carte"), oe = document.getElementById("ong-ent"), tri = document.getElementById("tri");
-  function onglet(e) {
-    var isE = e === oe; oe.classList.toggle("actif", isE); oc.classList.toggle("actif", !isE);
-    oe.setAttribute("aria-selected", isE); oc.setAttribute("aria-selected", !isE);
-    ent.hidden = !isE; tri.hidden = isE; if (isE && !serie.length) nouvelleSerie();
-  }
-  oc.onclick = function () { onglet(oc); }; oe.onclick = function () { onglet(oe); };
 })();
 </script>
 
