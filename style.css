@@ -128,3 +128,4 @@ h3 { margin: 0 0 8px; font-size: 1.05rem; }
 .docs-col { display: flex; flex-direction: column; gap: 6px; }
 .docs-col .doc { width: 100%; box-sizing: border-box; }
 .nbp { margin-left: auto; padding-left: 10px; font-size: .78rem; color: var(--doux); white-space: nowrap; }
+.carte-decision { max-width: 100%; border: 1px solid var(--bord); }
