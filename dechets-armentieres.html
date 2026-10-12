@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Choisir le récipient à Armentières – Chimie de Synthèse</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="entete">
+  <div class="conteneur entete-inner">
+    <a class="marque" href="index.html">⚗️ Chimie de Synthèse</a>
+    <button class="burger" aria-label="Menu" onclick="document.body.classList.toggle('menu-ouvert')">☰</button>
+    <nav><ul class="menu">
+<li><a href="index.html">Accueil</a></li>
+<li><a href="matieres-premieres.html">Matières premières</a><ul class="sous-menu"><li><a href="fds.html">FDS</a></li><li><a href="fds-simplifiee.html">FDS simplifiée</a></li><li><a href="gestion-dechets.html">Gestion des déchets en salle de TP</a></li></ul></li>
+<li><a href="techniques.html">Techniques</a><ul class="sous-menu"><li><a href="verrerie-et-montages.html">Verrerie et montages</a></li><li><a href="techniques-experimentales.html">Techniques expérimentales</a></li></ul></li>
+<li><a href="ressources.html">Ressources</a><ul class="sous-menu"><li><a href="cours.html">Cours</a></li><li><a href="tp.html">TP</a></li><li><a href="evaluations.html">Évaluations</a></li><li><a href="autres.html">Autres</a></li></ul></li>
+    </ul></nav>
+  </div>
+</header>
+<div class="bandeau">
+  <div class="conteneur">
+    <p class="surtitre">BTS Métiers de la Chimie – Synthèse</p>
+    <h1>Choisir le récipient à Armentières</h1>
+    
+  </div>
+</div>
+<main class="conteneur">
+
+<nav class="sommaire"><a href="gestion-dechets.html">← Gestion des déchets</a></nav>
+<section id="tri-section">
+  <h2>Où éliminer mon déchet ?</h2>
+  <p><b>Explorer la carte</b> : répondez aux questions pour savoir dans quel bidon ou quelle poubelle éliminer votre déchet (un clic sur une étape du chemin permet de revenir en arrière). <b>S’entraîner</b> : une série de 10 déchets tirés au hasard, à placer au bon endroit.</p>
+  <div class="tri-onglets" role="tablist">
+  <button type="button" role="tab" class="actif" data-mode="tri">🧭 Explorer la carte</button>
+  <button type="button" role="tab" data-mode="entr">🎯 S’entraîner</button>
+</div>
+<div class="tri" id="tri">
+  <div class="tri-tete">
+    <ol class="tri-chemin" id="tri-chemin" aria-label="Chemin parcouru"></ol>
+    <button class="tri-reset" id="tri-reset" type="button" hidden>↺ Recommencer</button>
+  </div>
+  <div class="tri-scene" id="tri-scene" aria-live="polite"></div>
+</div>
+<div class="tri entr" id="entr" hidden>
+  <div class="entr-tete"><span id="entr-num"></span><span id="entr-score"></span></div>
+  <div id="entr-zone"></div>
+</div>
+<script>
+(function () {
+  // ---------- Arbre de décision (Armentières) ----------
+  var Q = {
+    type: { q: "Mes déchets sont de type…", court: "type", aide: "<b>Organique</b> : composés carbonés (solvants, réactifs organiques). <b>Minéral</b> : sels, acides et bases minéraux. <b>Métaux lourds</b> : Cu, Cr, Pb, Hg, Ni, Co, Ag… <b>Mélange</b> : plusieurs catégories à la fois.",
+            r: [["Organiques", "org_etat"], ["Minéraux", "min_etat"], ["Métaux lourds", "M"], ["Mélange", "mel_metaux"]] },
+    mel_metaux: { q: "Le mélange contient-il des métaux lourds ?", court: "métaux lourds", aide: "La composition du mélange définit l’ordre de priorité de traitement : <b>métaux lourds</b>, puis <b>organique</b>, puis <b>minéral</b>. La moindre trace de métal lourd suffit.",
+            r: [["OUI", "M"], ["NON", "mel_org"]] },
+    mel_org: { q: "Le mélange est-il de type organique ?", court: "organique", aide: "S’il contient des composés organiques (solvants…), il est traité comme un mélange organique ; sinon, comme un déchet minéral.",
+            r: [["OUI", "mel_hal"], ["NON", "min_etat"]] },
+    mel_hal: { q: "Le mélange organique contient-il des dérivés halogénés ?", court: "halogénés", aide: "Dérivé halogéné : contient Cl, Br ou I (dichlorométhane, chloroforme…). Un seul suffit pour classer tout le mélange en halogéné.",
+            r: [["OUI", "X"], ["NON", "NX"]] },
+    org_etat: { q: "Le déchet organique est-il liquide ou solide ?", court: "état", aide: "Les solides organiques sont collectés à part des solvants.",
+            r: [["Liquide", "org_liq"], ["Solide", "P"]] },
+    org_liq: { q: "Quel type de liquide organique ?", court: "liquide", aide: "L’<b>éther seul</b> et l’<b>acétonitrile seul</b> (non mélangés) sont collectés dans le bidon spécial NX. <b>Halogéné</b> : contient Cl, Br ou I.",
+            r: [["Éther seul", "SNX"], ["Acétonitrile seul", "SNX"], ["Dérivé halogéné", "X"], ["Dérivé non halogéné", "NX"]] },
+    min_etat: { q: "Le déchet minéral est-il liquide ou solide ?", court: "état", aide: "Déchet minéral <b>sans métaux lourds</b> (les métaux lourds vont toujours dans le bidon M).",
+            r: [["Liquide", "EVIER"], ["Solide", "POUB"]] }
+  };
+  var R = {
+    M:     { t: "Bidon Métaux lourds", l: "M", c: "#7a5c3e", k: "flacon" },
+    X:     { t: "Bidon solvant organique halogéné", l: "X", c: "#2e8b3e", k: "flacon" },
+    NX:    { t: "Bidon solvant organique non halogéné", l: "NX", c: "#1f5fbf", k: "flacon" },
+    SNX:   { t: "Bidon spécial NX", l: "NX", s: "spécial", c: "#7b2fa8", k: "flacon" },
+    P:     { t: "Poubelle de récupération « spéciale »", l: "P", c: "#e07b1a", k: "poubelle" },
+    POUB:  { t: "Poubelle", l: "", c: "#6d7a80", k: "poubelle" },
+    EVIER: { t: "Évier sous la hotte, en diluant à l’eau froide du robinet", l: "", c: "#1c8fc9", k: "evier" }
+  };
+  function svg(id) {
+    var r = R[id], c = r.c;
+    if (r.k === "flacon") return '<svg viewBox="0 0 120 160" class="arm-svg" aria-hidden="true"><rect x="44" y="6" width="32" height="18" rx="4" fill="' + c + '"/><path d="M48 24h24v18l22 22v78a12 12 0 0 1-12 12H38a12 12 0 0 1-12-12V64l22-22z" fill="#f4f8fa" stroke="#1d2b2f" stroke-width="4"/><path d="M30 100h60v42a8 8 0 0 1-8 8H38a8 8 0 0 1-8-8z" fill="' + c + '" opacity=".25"/><rect x="34" y="70" width="52" height="44" rx="6" fill="#fff" stroke="' + c + '" stroke-width="4"/><text x="60" y="' + (r.s ? 94 : 100) + '" text-anchor="middle" font-weight="900" font-size="' + (r.l.length > 1 ? 22 : 28) + '" fill="' + c + '" font-family="Inter,Arial,sans-serif">' + r.l + '</text>' + (r.s ? '<text x="60" y="108" text-anchor="middle" font-weight="700" font-size="10" fill="' + c + '" font-family="Inter,Arial,sans-serif">SPÉCIAL</text>' : '') + '</svg>';
+    if (r.k === "poubelle") return '<svg viewBox="0 0 120 160" class="arm-svg" aria-hidden="true"><rect x="22" y="30" width="76" height="12" rx="4" fill="' + c + '"/><rect x="48" y="20" width="24" height="10" rx="3" fill="' + c + '"/><path d="M28 44h64l-7 100a8 8 0 0 1-8 7H43a8 8 0 0 1-8-7z" fill="#f4f8fa" stroke="#1d2b2f" stroke-width="4"/><path d="M48 60v74M60 60v74M72 60v74" stroke="' + c + '" stroke-width="4" stroke-linecap="round" opacity=".5"/>' + (r.l ? '<circle cx="60" cy="96" r="20" fill="#fff" stroke="' + c + '" stroke-width="4"/><text x="60" y="106" text-anchor="middle" font-weight="900" font-size="26" fill="' + c + '" font-family="Inter,Arial,sans-serif">' + r.l + '</text>' : '') + '</svg>';
+    return '<svg viewBox="0 0 120 160" class="arm-svg" aria-hidden="true"><path d="M70 30h18v20" fill="none" stroke="#1d2b2f" stroke-width="6" stroke-linecap="round"/><path d="M88 50v8" stroke="#1d2b2f" stroke-width="6" stroke-linecap="round"/><path d="M88 66c0 10-6 18-6 22a6 6 0 0 0 12 0c0-4-6-12-6-22z" fill="' + c + '"/><path d="M14 98h92l-10 40a10 10 0 0 1-10 8H34a10 10 0 0 1-10-8z" fill="#f4f8fa" stroke="#1d2b2f" stroke-width="4"/><path d="M28 112h64" stroke="' + c + '" stroke-width="5" stroke-linecap="round" opacity=".6"/><circle cx="60" cy="132" r="5" fill="#1d2b2f"/></svg>';
+  }
+  function el(t, c, h) { var e = document.createElement(t); if (c) e.className = c; if (h != null) e.innerHTML = h; return e; }
+  function cls(lbl) { var k = lbl.toLowerCase(); return k === "oui" ? "tri-oui" : k === "non" ? "tri-non" : "tri-choix"; }
+  function boiteResultat(id, grand) {
+    var d = el("div", "arm-res" + (grand ? " grand" : "")); d.style.setProperty("--c", R[id].c);
+    d.innerHTML = svg(id) + '<span class="arm-nom">' + R[id].t + "</span>"; return d;
+  }
+
+  // ---------- Mode Explorer ----------
+  var scene = document.getElementById("tri-scene"), chemin = document.getElementById("tri-chemin"), reset = document.getElementById("tri-reset"), trace = [];
+  function majChemin() {
+    chemin.innerHTML = "";
+    trace.forEach(function (t, i) {
+      var li = el("li"), b = el("button", "tri-etape", Q[t.id].court + " <b>" + t.rep + "</b>"); b.type = "button"; b.title = "Revenir à cette question";
+      b.onclick = function () { trace = trace.slice(0, i); afficher(t.id, -1); }; li.appendChild(b); chemin.appendChild(li);
+    });
+    reset.hidden = trace.length === 0;
+  }
+  function transition(n, sens) {
+    var a = scene.firstElementChild;
+    if (a) { a.classList.add(sens < 0 ? "sort-droite" : "sort-gauche"); setTimeout(function () { if (a.parentNode) a.parentNode.removeChild(a); }, 260); }
+    n.classList.add(sens < 0 ? "entre-gauche" : "entre-droite"); scene.appendChild(n);
+  }
+  function afficher(id, sens) {
+    majChemin(); var carte;
+    if (id === "debut") {
+      carte = el("div", "tri-carte tri-debut");
+      carte.appendChild(el("div", "tri-dechet", "DÉCHET"));
+      carte.appendChild(el("p", "tri-texte", "Répondez aux questions pour savoir où éliminer votre déchet au laboratoire d’Armentières."));
+      var go = el("button", "tri-btn tri-go", "Commencer ▸"); go.type = "button"; go.onclick = function () { afficher("type", 1); }; carte.appendChild(go);
+    } else if (Q[id]) {
+      var n = Q[id]; carte = el("div", "tri-carte");
+      var los = el("div", "tri-losange"); los.appendChild(el("span", null, n.q)); carte.appendChild(los);
+      var rep = el("div", "tri-reponses");
+      n.r.forEach(function (r) { var b = el("button", "tri-btn " + cls(r[0]), r[0]); b.type = "button"; b.onclick = function () { trace.push({ id: id, rep: r[0] }); afficher(r[1], 1); }; rep.appendChild(b); });
+      carte.appendChild(rep);
+      var aide = el("details", "tri-aide"); aide.appendChild(el("summary", null, "Besoin d’aide ?"));
+      var c = el("div", "tri-aide-corps"); c.appendChild(el("p", null, n.aide)); aide.appendChild(c); carte.appendChild(aide);
+    } else {
+      carte = el("div", "tri-carte tri-resultat");
+      carte.appendChild(el("p", "tri-titre-res", "Direction :"));
+      carte.appendChild(boiteResultat(id, true));
+      var again = el("button", "tri-btn tri-go", "↺ Trier un autre déchet"); again.type = "button"; again.onclick = function () { trace = []; afficher("debut", -1); }; carte.appendChild(again);
+    }
+    transition(carte, sens);
+  }
+  reset.onclick = function () { trace = []; afficher("debut", -1); };
+  afficher("debut", 1);
+
+  // ---------- Mode Entraînement ----------
+  var P = [
+    { n: "Dichlorométhane (solvant usagé)", a: { type: "Organiques", org_etat: "Liquide", org_liq: "Dérivé halogéné" } },
+    { n: "Chloroforme (solvant usagé)", a: { type: "Organiques", org_etat: "Liquide", org_liq: "Dérivé halogéné" } },
+    { n: "Acétone de rinçage", a: { type: "Organiques", org_etat: "Liquide", org_liq: "Dérivé non halogéné" } },
+    { n: "Éthanol usagé", a: { type: "Organiques", org_etat: "Liquide", org_liq: "Dérivé non halogéné" } },
+    { n: "Cyclohexane usagé", a: { type: "Organiques", org_etat: "Liquide", org_liq: "Dérivé non halogéné" } },
+    { n: "Éther diéthylique seul", a: { type: "Organiques", org_etat: "Liquide", org_liq: "Éther seul" } },
+    { n: "Acétonitrile seul (éluant HPLC)", a: { type: "Organiques", org_etat: "Liquide", org_liq: "Acétonitrile seul" } },
+    { n: "Acide benzoïque solide", a: { type: "Organiques", org_etat: "Solide" } },
+    { n: "Solution de sulfate de cuivre(II)", a: { type: "Métaux lourds" } },
+    { n: "Solution de dichromate de potassium", a: { type: "Métaux lourds" } },
+    { n: "Mélange acétone + solution de sulfate de cuivre", a: { type: "Mélange", mel_metaux: "OUI" } },
+    { n: "Mélange éthanol + dichlorométhane", a: { type: "Mélange", mel_metaux: "NON", mel_org: "OUI", mel_hal: "OUI" } },
+    { n: "Mélange eau + éthanol", a: { type: "Mélange", mel_metaux: "NON", mel_org: "OUI", mel_hal: "NON" } },
+    { n: "Solution diluée d’acide chlorhydrique", a: { type: "Minéraux", min_etat: "Liquide" } },
+    { n: "Solution diluée de soude", a: { type: "Minéraux", min_etat: "Liquide" } },
+    { n: "Chlorure de sodium solide", a: { type: "Minéraux", min_etat: "Solide" } }
+  ];
+  var ORDRE = ["M", "X", "NX", "SNX", "P", "POUB", "EVIER"];
+  function parcours(x) { var id = "type", e = []; while (Q[id]) { var rep = x.a[id], nx = null; Q[id].r.forEach(function (r) { if (r[0] === rep) nx = r[1]; }); e.push([Q[id].q, rep]); id = nx; } return [e, id]; }
+  var zone = document.getElementById("entr-zone"), num = document.getElementById("entr-num"), sc = document.getElementById("entr-score");
+  var N = 10, serie = [], i = 0, score = 0;
+  function melange(a) { a = a.slice(); for (var k = a.length - 1; k > 0; k--) { var j = Math.floor(Math.random() * (k + 1)); var t = a[k]; a[k] = a[j]; a[j] = t; } return a; }
+  function majTete() { num.textContent = i < N ? "Déchet " + (i + 1) + " / " + N : "Série terminée"; sc.textContent = "Score : " + score; }
+  function demarrer() { serie = melange(P).slice(0, N); i = 0; score = 0; question(); }
+  function question() {
+    majTete(); zone.innerHTML = "";
+    var x = serie[i], c = el("div", "entr-carte entre-droite");
+    c.appendChild(el("p", "entr-consigne", "Où éliminer ce déchet ?"));
+    var prod = el("div", "entr-produit"); prod.appendChild(el("p", "entr-nom", x.n)); c.appendChild(prod);
+    var g = el("div", "entr-choix arm-choix");
+    ORDRE.forEach(function (id) { var b = el("button", "entr-bidon"); b.type = "button"; b.title = R[id].t; b.appendChild(boiteResultat(id)); b.onclick = function () { repondre(id, b, g); }; g.appendChild(b); });
+    c.appendChild(g); zone.appendChild(c);
+  }
+  function repondre(choix, bouton, grille) {
+    var x = serie[i], r = parcours(x), bon = r[1], ok = choix === bon; if (ok) score++; majTete();
+    [].forEach.call(grille.children, function (b) { b.disabled = true; }); bouton.classList.add(ok ? "juste" : "faux");
+    var fb = el("div", "entr-retour " + (ok ? "ok" : "ko"));
+    fb.appendChild(el("p", "entr-verdict", ok ? "✔ Bravo, c’est le bon choix !" : "✘ Ce n’est pas le bon choix."));
+    var sol = el("div", "entr-solution"); sol.appendChild(boiteResultat(bon));
+    var ol = el("ol", "entr-raison"); r[0].forEach(function (s) { ol.appendChild(el("li", null, s[0] + " <b>" + s[1] + "</b>")); });
+    ol.appendChild(el("li", "entr-fin", "➜ <b>" + R[bon].t + "</b>")); sol.appendChild(ol); fb.appendChild(sol);
+    var suiv = el("button", "tri-btn tri-go", i + 1 < N ? "Déchet suivant ▸" : "Voir mon score ▸"); suiv.type = "button";
+    suiv.onclick = function () { i++; i < N ? question() : bilan(); }; fb.appendChild(suiv);
+    zone.firstChild.appendChild(fb); fb.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+  function bilan() {
+    majTete(); zone.innerHTML = "";
+    var c = el("div", "entr-carte entr-bilan entre-droite");
+    var msg = score === N ? "Parfait ! 🏆" : score >= 8 ? "Très bien ! 👏" : score >= 5 ? "C’est un bon début 👍" : "Reprenez la carte de décision et réessayez 💪";
+    c.appendChild(el("div", "entr-note", score + "<small>/" + N + "</small>")); c.appendChild(el("p", "tri-titre-res", msg));
+    var b = el("button", "tri-btn tri-go", "↺ Nouvelle série"); b.type = "button"; b.onclick = demarrer; c.appendChild(b); zone.appendChild(c);
+  }
+  var ong = document.querySelectorAll(".tri-onglets button"), demarre = false;
+  [].forEach.call(ong, function (b) {
+    b.onclick = function () {
+      [].forEach.call(ong, function (o) { o.classList.toggle("actif", o === b); });
+      document.getElementById("tri").hidden = b.dataset.mode !== "tri"; document.getElementById("entr").hidden = b.dataset.mode !== "entr";
+      if (b.dataset.mode === "entr" && !demarre) { demarre = true; demarrer(); }
+    };
+  });
+})();
+</script>
+
+</section>
+
+</main>
+<footer class="pied"><div class="conteneur">BTS Métiers de la Chimie – Synthèse</div></footer>
+</body>
+</html>

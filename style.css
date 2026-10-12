@@ -249,3 +249,17 @@ h3 { margin: 0 0 8px; font-size: 1.05rem; }
 .entr-note small { font-size: 1.4rem; color: var(--doux); }
 @keyframes secoue { 0%,100% { transform: none; } 20%,60% { transform: translateX(-6px); } 40%,80% { transform: translateX(6px); } }
 @media (max-width: 600px) { .entr-choix { grid-template-columns: repeat(3, 1fr); } .entr-nom { font-size: 1.15rem; } }
+
+/* Armentières : flacons et poubelles */
+.tri-choix { background: #5a6b72; }
+.arm-res { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.arm-svg { width: 64px; height: auto; }
+.arm-nom { font-size: .72rem; font-weight: 700; line-height: 1.2; color: var(--c); }
+.arm-res.grand .arm-svg { width: 150px; animation: tampon .55s cubic-bezier(.2,1.6,.4,1) both; filter: drop-shadow(0 12px 18px rgba(0,0,0,.18)); }
+.arm-res.grand .arm-nom { font-size: 1.15rem; max-width: 380px; text-align: center; margin-top: 6px; }
+.arm-choix { grid-template-columns: repeat(7, 1fr); }
+.arm-choix .entr-bidon { padding: 8px 4px; }
+.entr-solution .arm-res .arm-svg { width: 90px; }
+.entr-solution .arm-res .arm-nom { font-size: .85rem; max-width: 160px; text-align: center; }
+@media (max-width: 760px) { .arm-choix { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 420px) { .arm-choix { grid-template-columns: repeat(3, 1fr); } }
