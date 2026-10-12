@@ -129,3 +129,49 @@ h3 { margin: 0 0 8px; font-size: 1.05rem; }
 .docs-col .doc { width: 100%; box-sizing: border-box; }
 .nbp { margin-left: auto; padding-left: 10px; font-size: .78rem; color: var(--doux); white-space: nowrap; }
 .carte-decision { max-width: 100%; border: 1px solid var(--bord); }
+
+/* Carte de décision interactive (tri des déchets) */
+.tri { background: linear-gradient(160deg, #e9f6f6, #f7fbfb); border: 1px solid var(--bord); border-radius: 16px; padding: 18px; margin-bottom: 28px; overflow: hidden; }
+.tri-tete { display: flex; align-items: flex-start; gap: 10px; min-height: 34px; }
+.tri-chemin { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; flex: 1; }
+.tri-chemin li { display: flex; align-items: center; }
+.tri-chemin li + li::before { content: "›"; color: var(--doux); margin-right: 6px; }
+.tri-etape { font: inherit; font-size: .82rem; border: 1px solid var(--bord); background: #fff; border-radius: 999px; padding: 4px 10px; cursor: pointer; color: var(--texte); }
+.tri-etape b { color: var(--accent); margin-left: 4px; }
+.tri-etape:hover { border-color: var(--accent); }
+.tri-reset { font: inherit; font-size: .85rem; background: none; border: 0; color: var(--accent); cursor: pointer; white-space: nowrap; padding: 4px 6px; }
+.tri-scene { position: relative; min-height: 430px; display: grid; }
+.tri-carte { grid-area: 1 / 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 10px 6px 4px; }
+.tri-losange { width: 210px; height: 210px; margin: 34px 0 30px; transform: rotate(45deg); background: #fff; border: 3px solid #1d2b2f; border-radius: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 28px rgba(15,124,128,.18); animation: pulse 2.6s ease-in-out infinite; }
+.tri-losange span { transform: rotate(-45deg); font-weight: 800; font-size: 1.12rem; line-height: 1.25; max-width: 190px; text-transform: uppercase; letter-spacing: .02em; }
+.tri-reponses { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.tri-btn { font: inherit; font-weight: 800; font-size: 1.05rem; letter-spacing: .04em; border: 0; border-radius: 12px; padding: 12px 26px; cursor: pointer; color: #fff; background: var(--accent); box-shadow: 0 4px 0 rgba(0,0,0,.18); transition: transform .12s, box-shadow .12s; }
+.tri-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 rgba(0,0,0,.18); }
+.tri-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(0,0,0,.18); }
+.tri-oui { background: #1f8a4c; } .tri-non { background: #b3261e; }
+.tri-acide { background: #c9a400; } .tri-basique { background: #3f9e18; }
+.tri-go { margin-top: 18px; }
+.tri-aide { margin-top: 18px; max-width: 520px; text-align: left; }
+.tri-aide summary { cursor: pointer; color: var(--accent); font-weight: 600; text-align: center; }
+.tri-aide-corps { display: flex; gap: 10px; align-items: center; background: #fff; border: 1px solid var(--bord); border-radius: 10px; padding: 10px 12px; margin-top: 8px; font-size: .9rem; }
+.tri-aide-corps img { width: 44px; height: 44px; flex: none; }
+.tri-aide-corps p { margin: 0; }
+.tri-dechet { width: 230px; height: 120px; border-radius: 50%; border: 3px solid #1d2b2f; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 900; letter-spacing: .06em; margin: 30px 0 18px; box-shadow: 0 10px 28px rgba(15,124,128,.18); }
+.tri-texte { max-width: 520px; margin: 6px 0 0; color: var(--texte); }
+.tri-titre-res { font-size: 1.3rem; margin: 6px 0 12px; }
+.tri-titre-res b { background: var(--c, var(--accent)); color: #111; padding: 2px 10px; border-radius: 6px; }
+.tri-resultat .tri-texte { margin-top: 18px; font-weight: 600; }
+.tri-bidon { width: min(320px, 80vw); height: auto; border-radius: 14px; box-shadow: 0 0 0 6px var(--c), 0 16px 34px rgba(0,0,0,.2); animation: tampon .55s cubic-bezier(.2,1.6,.4,1) both; }
+.tri-fds { width: 0; height: 0; border-left: 70px solid transparent; border-right: 70px solid transparent; border-bottom: 120px solid #f2b705; position: relative; margin: 20px 0 6px; animation: tampon .55s cubic-bezier(.2,1.6,.4,1) both; }
+.tri-fds span { position: absolute; left: -10px; top: 38px; font-size: 3rem; font-weight: 900; }
+.entre-droite { animation: entreD .35s ease-out both; } .entre-gauche { animation: entreG .35s ease-out both; }
+.sort-gauche { animation: sortG .25s ease-in both; pointer-events: none; } .sort-droite { animation: sortD .25s ease-in both; pointer-events: none; }
+@keyframes entreD { from { opacity: 0; transform: translateX(60px) scale(.96); } to { opacity: 1; transform: none; } }
+@keyframes entreG { from { opacity: 0; transform: translateX(-60px) scale(.96); } to { opacity: 1; transform: none; } }
+@keyframes sortG { to { opacity: 0; transform: translateX(-60px) scale(.96); } }
+@keyframes sortD { to { opacity: 0; transform: translateX(60px) scale(.96); } }
+@keyframes tampon { from { opacity: 0; transform: scale(.4) rotate(-8deg); } to { opacity: 1; transform: none; } }
+@keyframes pulse { 0%,100% { box-shadow: 0 10px 28px rgba(15,124,128,.18); } 50% { box-shadow: 0 10px 34px rgba(15,124,128,.42); } }
+@media (max-width: 600px) { .tri-losange { width: 170px; height: 170px; margin: 28px 0 26px; } .tri-losange span { font-size: .95rem; max-width: 155px; } .tri-btn { padding: 11px 20px; } .tri-scene { min-height: 400px; } }
+@media (prefers-reduced-motion: reduce) { .tri * { animation: none !important; transition: none !important; } }
+.carte-complete summary { cursor: pointer; color: var(--accent); font-weight: 600; margin-bottom: 10px; }
