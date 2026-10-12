@@ -116,3 +116,8 @@ h3 { margin: 0 0 8px; font-size: 1.05rem; }
 .tuile-img .tuile-corps { padding: 18px 22px 22px; }
 .tuile-img h2 { margin: 0 0 6px; font-size: 1.2rem; }
 .illustration { display: block; width: 100%; max-width: 800px; height: auto; margin: 0 auto 24px; background: #fff; border-radius: var(--rayon); }
+.liste-cours { display: flex; flex-direction: column; gap: 10px; }
+.liste-cours > .docs { margin: 0; }
+.dossier { background: var(--carte); border: 1px solid var(--bord); border-left: 4px solid var(--accent); border-radius: var(--rayon); padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+.dossier h3 { margin: 0 0 2px; color: var(--accent); font-size: 1rem; }
+.dossier .docs { margin: 0; }
