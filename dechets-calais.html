@@ -31,9 +31,9 @@
 <nav class="sommaire"><a href="gestion-dechets.html">← Gestion des déchets</a></nav>
 <section id="tri-section">
   <h2>Carte de décision : quel bidon choisir ?</h2>
-  <p><b>Explorer la carte</b> : répondez aux questions pour trouver le bidon et son numéro ONU (un clic sur une étape du chemin permet de revenir en arrière). <b>Entraînement</b> : une série de 10 déchets tirés au hasard, à placer dans le bon bidon.</p>
+  <p><b>Choisir le bon bidon</b> : répondez aux questions pour trouver le bidon et son numéro ONU (un clic sur une étape du chemin permet de revenir en arrière). <b>Entraînement</b> : une série de 10 déchets tirés au hasard, à placer dans le bon bidon.</p>
   <div class="tri-onglets" role="tablist">
-  <button type="button" role="tab" class="actif" data-mode="tri">🧭 Explorer la carte</button>
+  <button type="button" role="tab" class="actif" data-mode="tri">🧭 Choisir le bon bidon</button>
   <button type="button" role="tab" data-mode="entr">🎯 Entraînement</button>
 </div>
 <div class="tri" id="tri">
@@ -185,7 +185,7 @@
   ];
   var LIB = { UN2810: "Liquide organique toxique", UN1992: "Liquide inflammable toxique", UN1993: "Liquide inflammable", UN3265: "Liquide organique acide",
     UN3267: "Liquide organique corrosif basique", UN3264: "Liquide inorganique acide", UN3289: "Liquide inorganique corrosif toxique",
-    UN3266: "Liquide inorganique basique", UN3082: "Dangereux pour l’environnement", FDS: "Vérifier la FDS (rubrique 13)" };
+    UN3266: "Liquide inorganique basique", UN3082: "Dangereux pour l’environnement", FDS: "Vérifier la FDS, rubrique 13 (considérations relatives à l’élimination)" };
   var ORDRE = ["UN2810","UN1992","UN1993","UN3265","UN3267","UN3289","UN3264","UN3266","UN3082","FDS"];
 
   function chemin(x) { // parcours de l'arbre -> [étapes], bidon
@@ -211,7 +211,7 @@
   function el(t, c, h) { var e = document.createElement(t); if (c) e.className = c; if (h != null) e.innerHTML = h; return e; }
   function melange(a) { a = a.slice(); for (var k = a.length - 1; k > 0; k--) { var j = Math.floor(Math.random() * (k + 1)); var t = a[k]; a[k] = a[j]; a[j] = t; } return a; }
   function bidonImg(id, cls) {
-    if (id === "FDS") { var d = el("div", "entr-fds " + (cls || ""), "<span>!</span><small>Vérifier la FDS<br>rubrique 13</small>"); return d; }
+    if (id === "FDS") { var d = el("div", "entr-fds " + (cls || ""), "<span>!</span><small>Vérifier la FDS<br>rubrique 13<br><em>Élimination</em></small>"); return d; }
     var im = el("img", cls || ""); im.src = IMG + id + ".jpg"; im.alt = id + " : " + LIB[id]; return im;
   }
   function majTete() { num.textContent = i < N ? "Déchet " + (i + 1) + " / " + N : "Série terminée"; sc.textContent = "Score : " + score; }
