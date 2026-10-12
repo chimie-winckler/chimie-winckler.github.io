@@ -78,7 +78,7 @@
     UN3289: ["Liquide inorganique corrosif toxique", "#1fd9eb"],
     UN3266: ["Liquide inorganique basique", "#5fd21a"],
     UN3082: ["Dangereux pour l’environnement", "#9fb7c9"],
-    FDS: ["Aucun bidon ne correspond : vérifier la FDS, rubrique 13 (considérations relatives à l’élimination).", "#0f7c80"]
+    FDS: ["La rubrique 13 de la FDS (considérations relatives à l’élimination) indique comment éliminer ce déchet.", "#b9c0c6"]
   };
   var scene = document.getElementById("tri-scene"), chemin = document.getElementById("tri-chemin"), reset = document.getElementById("tri-reset");
   var trace = []; // [{id, rep}]
@@ -137,8 +137,9 @@
       var res = R[id];
       carte = el("div", "tri-carte tri-resultat");
       if (id === "FDS") {
-        carte.appendChild(el("div", "tri-fds", "<span>!</span>"));
-        carte.appendChild(el("p", "tri-titre-res", "Vérifier la FDS"));
+        carte.style.setProperty("--c", "#b9c0c6");
+        carte.appendChild(el("p", "tri-titre-res", "Aucun bidon : <b>vérifier la FDS</b>"));
+        var imf = el("img", "tri-bidon"); imf.src = IMG + "FDS.jpg"; imf.alt = "Vérifier la FDS, rubrique 13"; carte.appendChild(imf);
         carte.appendChild(el("p", "tri-texte", res[0]));
       } else {
         carte.style.setProperty("--c", res[1]);
@@ -211,7 +212,7 @@
   function el(t, c, h) { var e = document.createElement(t); if (c) e.className = c; if (h != null) e.innerHTML = h; return e; }
   function melange(a) { a = a.slice(); for (var k = a.length - 1; k > 0; k--) { var j = Math.floor(Math.random() * (k + 1)); var t = a[k]; a[k] = a[j]; a[j] = t; } return a; }
   function bidonImg(id, cls) {
-    if (id === "FDS") { var d = el("div", "entr-fds " + (cls || ""), "<span>!</span><small>Vérifier la FDS<br>rubrique 13<br><em>Élimination</em></small>"); return d; }
+
     var im = el("img", cls || ""); im.src = IMG + id + ".jpg"; im.alt = id + " : " + LIB[id]; return im;
   }
   function majTete() { num.textContent = i < N ? "Déchet " + (i + 1) + " / " + N : "Série terminée"; sc.textContent = "Score : " + score; }
