@@ -85,6 +85,7 @@ h3 { margin: 0 0 8px; font-size: 1.05rem; }
 .doc-mp4 .doc-ico { background: #c0392b; }
 .doc-pdf .doc-ico { background: #b03a2e; }
 .doc-xlsx .doc-ico { background: #1e7d45; }
+.doc-lien .doc-ico { background: #2a7f8e; }
 .doc-docx .doc-ico { background: #2b5797; }
 .doc[data-a-completer] { border-style: dashed; opacity: .75; }
 
