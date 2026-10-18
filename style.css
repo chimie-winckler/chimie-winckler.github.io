@@ -273,4 +273,4 @@ h3 { margin: 0 0 8px; font-size: 1.05rem; }
 .agenda-modes button { font: inherit; font-size: .9rem; padding: 6px 14px; border: 1px solid var(--bord); border-radius: 999px; background: var(--carte); color: var(--texte); cursor: pointer; }
 .agenda-modes button.actif { background: var(--accent); border-color: var(--accent); color: #fff; }
 
-.pied .compteur { vertical-align: middle; margin-left: 10px; height: 20px; }
+.compteur-haut { margin-left: 12px; height: 20px; flex: none; }
