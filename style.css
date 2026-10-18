@@ -268,3 +268,7 @@ h3 { margin: 0 0 8px; font-size: 1.05rem; }
 @media (max-width: 760px) { .arm-choix { grid-template-columns: repeat(4, 1fr); } }
 @media (max-width: 420px) { .arm-choix { grid-template-columns: repeat(3, 1fr); } }
 .tuile-logo img { height: 140px; object-fit: contain; padding: 14px; }
+
+.agenda-modes { display: flex; gap: 6px; margin: 0 0 10px; }
+.agenda-modes button { font: inherit; font-size: .9rem; padding: 6px 14px; border: 1px solid var(--bord); border-radius: 999px; background: var(--carte); color: var(--texte); cursor: pointer; }
+.agenda-modes button.actif { background: var(--accent); border-color: var(--accent); color: #fff; }
