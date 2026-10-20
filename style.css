@@ -320,3 +320,4 @@ h3 { margin: 0 0 8px; font-size: 1.05rem; }
 :root[data-theme="dark"] .bandeau { filter: brightness(.9); }
 :root[data-theme="dark"] .tuile-home img { filter: brightness(.92); }
 :root[data-theme="dark"] .agenda iframe { border-radius: 8px; }
+.une-carte + .une-carte { margin-top: 12px; }
