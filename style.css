@@ -321,3 +321,6 @@ h3 { margin: 0 0 8px; font-size: 1.05rem; }
 :root[data-theme="dark"] .tuile-home img { filter: brightness(.92); }
 :root[data-theme="dark"] .agenda iframe { border-radius: 8px; }
 .une-carte + .une-carte { margin-top: 12px; }
+/* Annonces de l'accueil : badges de même largeur pour aligner les textes */
+.une-carte > .nouveau { flex: 0 0 auto; box-sizing: border-box; min-width: 13.5em; text-align: center; }
+@media (max-width: 600px) { .une-carte > .nouveau { min-width: 0; } }
