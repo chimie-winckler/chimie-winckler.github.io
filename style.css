@@ -324,3 +324,8 @@ h3 { margin: 0 0 8px; font-size: 1.05rem; }
 /* Annonces de l'accueil : badges de même largeur pour aligner les textes */
 .une-carte > .nouveau { flex: 0 0 auto; box-sizing: border-box; min-width: 13.5em; text-align: center; }
 @media (max-width: 600px) { .une-carte > .nouveau { min-width: 0; } }
+/* Compteur de visites GoatCounter (même allure que l'ancien badge) */
+.gc-badge { display: inline-flex; align-items: stretch; font: 600 11px/20px Verdana, Geneva, sans-serif; letter-spacing: .04em; color: #fff; }
+.gc-badge[hidden] { display: none; }
+.gc-label { background: #555; padding: 0 6px; }
+.gc-valeur { background: #0f7c80; padding: 0 6px; }
