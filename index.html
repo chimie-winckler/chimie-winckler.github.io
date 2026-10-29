@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Accueil – Chimie de Synthèse</title>
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=20261020c">
+</head>
+<body>
+<header class="entete">
+  <div class="conteneur entete-inner">
+    <a class="marque" href="index.html">⚗️ Chimie de Synthèse</a>
+    <button class="burger" aria-label="Menu" onclick="document.body.classList.toggle('menu-ouvert')">☰</button>
+    <nav><ul class="menu">
+<li><a href="index.html" class="actif">Accueil</a></li>
+<li><a href="matieres-premieres.html">Matières premières</a><ul class="sous-menu"><li><a href="fds.html">FDS</a></li><li><a href="fds-simplifiee.html">FDS simplifiée</a></li><li><a href="gestion-dechets.html">Gestion des déchets en salle de TP</a></li></ul></li>
+<li><a href="techniques.html">Techniques</a><ul class="sous-menu"><li><a href="verrerie-et-montages.html">Verrerie et montages</a></li><li><a href="techniques-experimentales.html">Techniques expérimentales</a></li></ul></li>
+<li><a href="ressources.html">Ressources</a><ul class="sous-menu"><li><a href="cours.html">Cours</a></li><li><a href="tp.html">TP</a></li><li><a href="evaluations.html">Évaluations</a></li><li><a href="autres.html">Autres</a></li></ul></li>
+<li><a href="annonces.html">Annonces</a></li>
+    </ul></nav>
+    <button type="button" class="theme-btn" id="theme-btn" aria-label="Changer de thème">🌙</button>
+    <img class="compteur compteur-haut" src="https://hits.sh/chimie-winckler.github.io/accueil-2026-10-28.svg?label=visites&color=0f7c80&style=flat-square" alt="Compteur de visites" height="20">
+  </div>
+</header>
+<div class="bandeau">
+  <div class="conteneur">
+    <p class="surtitre">BTS Métiers de la Chimie – Synthèse</p>
+    <h1>Accueil</h1>
+    
+  </div>
+</div>
+<main class="conteneur">
+
+<section class="une">
+  <a class="une-carte" href="annonces.html" data-fin="2026-12-01">
+    <span class="nouveau">Important</span>
+    <div><strong>Campagne de rentrée PIX – obligatoire</strong>
+    <p>À terminer avant le 1er décembre 2026, sur ordinateur, via l'ENT. Code de campagne : PHPBZK666. Tutoriel de connexion en ligne.</p></div>
+    <span class="une-fleche" aria-hidden="true">→</span>
+  </a>
+  <a class="une-carte" href="annonces.html" data-fin="2026-11-05">
+    <span class="nouveau">Nouveau</span>
+    <div><strong>Inscription au BTS – session 2027</strong>
+    <p>Étudiants de 2ᵉ année : calendrier et pièces à fournir. BTS Métiers de la Chimie : jeudi 5 novembre 2026, salle G12, de 10h à 11h.</p></div>
+    <span class="une-fleche" aria-hidden="true">→</span>
+  </a>
+  <a class="une-carte" href="annonces.html" data-fin="2026-11-30">
+    <span class="nouveau">Culture chimique</span>
+    <div><strong>Le prix Nobel de Chimie</strong>
+    <p>Pour votre culture générale chimique : la vidéo sur le prix Nobel de Chimie.</p></div>
+    <span class="une-fleche" aria-hidden="true">→</span>
+  </a>
+</section>
+
+<section class="tuiles">
+  <a class="tuile tuile-img tuile-home" href="matieres-premieres.html"><img src="Ressources%20site%20internet/images/home-matieres.svg" alt="" loading="lazy"><div class="tuile-corps"><h2>Matières premières</h2><p>Fiches de sécurité, FDS simplifiée et gestion des déchets.</p></div></a>
+  <a class="tuile tuile-img tuile-home" href="techniques.html"><img src="Ressources%20site%20internet/images/home-techniques.svg" alt="" loading="lazy"><div class="tuile-corps"><h2>Techniques</h2><p>Verrerie, montages, mises en œuvre et analyses.</p></div></a>
+  <a class="tuile tuile-img tuile-home" href="ressources.html"><img src="Ressources%20site%20internet/images/home-ressources.svg" alt="" loading="lazy"><div class="tuile-corps"><h2>Ressources</h2><p>Cours, TP, évaluations et autres documents.</p></div></a>
+  <a class="tuile tuile-img tuile-home" href="annonces.html"><img src="Ressources%20site%20internet/images/home-annonces.svg" alt="" loading="lazy"><div class="tuile-corps"><h2>Annonces</h2><p>Informations et ressources à partager.</p></div></a>
+</section>
+
+<section>
+  <h2>Accès rapides</h2>
+  <div class="boutons">
+    <a class="bouton" href="fds.html">FDS</a>
+    <a class="bouton" href="matieres-premieres.html">Matières premières</a>
+    <a class="bouton" href="gestion-dechets.html">Gestion des déchets</a>
+    <a class="bouton" href="techniques-experimentales.html">Techniques</a>
+    <a class="bouton" href="verrerie-et-montages.html">Montages</a>
+    <a class="bouton" href="ressources.html">Ressources</a>
+  </div>
+</section>
+
+<section>
+  <h2>Agenda de Monsieur WINCKLER</h2>
+  <div class="agenda-modes" role="tablist" aria-label="Affichage de l'agenda">
+    <button type="button" data-mode="WEEK" class="actif">Semaine</button>
+    <button type="button" data-mode="AGENDA">Liste</button>
+    <button type="button" data-mode="MONTH">Mois</button>
+  </div>
+  <div class="agenda"><iframe id="agenda-frame" src="https://calendar.google.com/calendar/embed?hl=fr&mode=WEEK&wkst=2&showTitle=0&showPrint=0&showTz=0&showTabs=0&showCalendars=0&bgcolor=%23ffffff&color=%230f7c80&color=%23e07a1f&ctz=Europe%2FParis&src=p6ghh5mdm3u9jir7j6t6fm6i7ms74dlu%40import.calendar.google.com&src=winckler.btsmch%40gmail.com" title="Agenda de Monsieur WINCKLER" loading="lazy"></iframe></div>
+  <script>
+  (function(){
+    var f=document.getElementById('agenda-frame');
+    document.querySelectorAll('.agenda-modes button').forEach(function(b){
+      b.addEventListener('click',function(){
+        document.querySelectorAll('.agenda-modes button').forEach(function(x){x.classList.remove('actif');});
+        b.classList.add('actif');
+        f.src=f.src.replace(/mode=[A-Z]+/,'mode='+b.dataset.mode);
+      });
+    });
+  })();
+  </script></div>
+</section>
+
+</main>
+<footer class="pied"><div class="conteneur">BTS Métiers de la Chimie – Synthèse</div></footer>
+<script>
+(function(){var d=new Date(),j=d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);
+var c=document.querySelectorAll('.une-carte[data-fin]'),v=0;
+c.forEach(function(e){if(j>e.getAttribute('data-fin'))e.style.display='none';else v++;});
+if(!v){var u=document.querySelector('.une');if(u)u.style.display='none';}})();
+</script>
+<script src="theme.js?v=1"></script>
+<script data-goatcounter="https://chimie-winckler.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

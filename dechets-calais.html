@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Choisir le bon bidon à Calais – Chimie de Synthèse</title>
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=20261020c">
+</head>
+<body>
+<header class="entete">
+  <div class="conteneur entete-inner">
+    <a class="marque" href="index.html">⚗️ Chimie de Synthèse</a>
+    <button class="burger" aria-label="Menu" onclick="document.body.classList.toggle('menu-ouvert')">☰</button>
+    <nav><ul class="menu">
+<li><a href="index.html">Accueil</a></li>
+<li><a href="matieres-premieres.html">Matières premières</a><ul class="sous-menu"><li><a href="fds.html">FDS</a></li><li><a href="fds-simplifiee.html">FDS simplifiée</a></li><li><a href="gestion-dechets.html">Gestion des déchets en salle de TP</a></li></ul></li>
+<li><a href="techniques.html">Techniques</a><ul class="sous-menu"><li><a href="verrerie-et-montages.html">Verrerie et montages</a></li><li><a href="techniques-experimentales.html">Techniques expérimentales</a></li></ul></li>
+<li><a href="ressources.html">Ressources</a><ul class="sous-menu"><li><a href="cours.html">Cours</a></li><li><a href="tp.html">TP</a></li><li><a href="evaluations.html">Évaluations</a></li><li><a href="autres.html">Autres</a></li></ul></li>
+<li><a href="annonces.html">Annonces</a></li>
+    </ul></nav>
+    <button type="button" class="theme-btn" id="theme-btn" aria-label="Changer de thème">🌙</button>
+  </div>
+</header>
+<div class="bandeau">
+  <div class="conteneur">
+    <p class="fil"><a href="index.html">Accueil</a> › <a href="gestion-dechets.html">Gestion des déchets en salle de TP</a> › Choisir le bon bidon à Calais</p>
+    <p class="surtitre">BTS Métiers de la Chimie – Synthèse</p>
+    <h1>Choisir le bon bidon à Calais</h1>
+    
+  </div>
+</div>
+<main class="conteneur">
+
+<nav class="sommaire"><a href="gestion-dechets.html">← Gestion des déchets</a></nav>
+<section id="tri-section">
+  <h2>Carte de décision : quel bidon choisir ?</h2>
+  <p><b>Choisir le bon bidon</b> : répondez aux questions pour trouver le bidon et son numéro ONU (un clic sur une étape du chemin permet de revenir en arrière). <b>Entraînement</b> : une série de 10 déchets tirés au hasard, à placer dans le bon bidon.</p>
+  <div class="tri-onglets" role="tablist">
+  <button type="button" role="tab" class="actif" data-mode="tri">🧭 Choisir le bon bidon</button>
+  <button type="button" role="tab" data-mode="entr">🎯 Entraînement</button>
+</div>
+<div class="tri" id="tri">
+  <div class="tri-tete">
+    <ol class="tri-chemin" id="tri-chemin" aria-label="Chemin parcouru"></ol>
+    <button class="tri-reset" id="tri-reset" type="button" hidden>↺ Recommencer</button>
+  </div>
+  <div class="tri-scene" id="tri-scene" aria-live="polite"></div>
+</div>
+<div class="tri entr" id="entr" hidden>
+  <div class="entr-tete"><span id="entr-num"></span><span id="entr-score"></span></div>
+  <div id="entr-zone"></div>
+</div>
+<script>
+(function () {
+  var IMG = "Ressources%20site%20internet/dechets/Choisir%20le%20r%C3%A9cipient%20%C3%A0%20Calais/animation/";
+  var Q = {
+    org:   { q: "Le déchet est-il organique ?", aide: "Il contient des composés organiques : molécules carbonées (solvants, réactifs ou produits organiques…).", picto: [],
+             r: [["OUI", "org_cmr"], ["NON", "min_cmr"]] },
+    org_cmr: { q: "Est-il CMR, halogéné ou toxique ?", aide: "<b>CMR</b> : cancérogène, mutagène ou toxique pour la reproduction. <b>Halogéné</b> : molécule contenant Cl, Br, I ou F liés au carbone (ex. dichlorométhane, chlorobenzène). <b>Toxique</b> : pictogramme tête de mort.", picto: ["sgh08", "sgh06"],
+             r: [["OUI", "org_tox_inf"], ["NON", "org_inf"]] },
+    org_tox_inf: { q: "Est-il inflammable ?", aide: "Pictogramme flamme ; mentions de danger H224, H225 ou H226.", picto: ["sgh02"],
+             r: [["OUI", "UN1992"], ["NON", "UN2810"]] },
+    org_inf: { q: "Est-il inflammable ?", aide: "Pictogramme flamme ; mentions de danger H224, H225 ou H226.", picto: ["sgh02"],
+             r: [["OUI", "UN1993"], ["NON", "org_cor"]] },
+    org_cor: { q: "Est-il corrosif ?", aide: "Pictogramme corrosion. <b>Acide</b> : pH &lt; 7 ; <b>basique</b> : pH &gt; 7.", picto: ["sgh05"],
+             r: [["ACIDE", "UN3265"], ["BASIQUE", "UN3267"], ["NON", "FDS"]] },
+    min_cmr: { q: "Est-il CMR, halogéné ou toxique ?", aide: "<b>CMR</b> : cancérogène, mutagène ou toxique pour la reproduction. <b>Halogéné</b> : molécule contenant Cl, Br, I ou F liés au carbone. <b>Toxique</b> : pictogramme tête de mort.", picto: ["sgh08", "sgh06"],
+             r: [["OUI", "UN3289"], ["NON", "min_cor"]] },
+    min_cor: { q: "Est-il corrosif ?", aide: "Pictogramme corrosion. <b>Acide</b> : pH &lt; 7 ; <b>basique</b> : pH &gt; 7.", picto: ["sgh05"],
+             r: [["ACIDE", "UN3264"], ["BASIQUE", "UN3266"], ["NON", "min_env"]] },
+    min_env: { q: "Est-il dangereux pour l’environnement ?", aide: "Pictogramme environnement ; mentions de danger H400, H410, H411…", picto: ["sgh09"],
+             r: [["OUI", "UN3082"], ["NON", "FDS"]] }
+  };
+  var R = {
+    UN2810: ["Liquide organique toxique", "#1fd9eb"],
+    UN1992: ["Liquide inflammable toxique", "#e07b39"],
+    UN1993: ["Liquide inflammable", "#e3241b"],
+    UN3265: ["Liquide organique acide", "#e8d800"],
+    UN3267: ["Liquide organique corrosif basique", "#5fd21a"],
+    UN3264: ["Liquide inorganique acide", "#e8d800"],
+    UN3289: ["Liquide inorganique corrosif toxique", "#1fd9eb"],
+    UN3266: ["Liquide inorganique basique", "#5fd21a"],
+    UN3082: ["Dangereux pour l’environnement", "#9fb7c9"],
+    FDS: ["La rubrique 13 de la FDS (considérations relatives à l’élimination) indique comment éliminer ce déchet.", "#b9c0c6"]
+  };
+  var scene = document.getElementById("tri-scene"), chemin = document.getElementById("tri-chemin"), reset = document.getElementById("tri-reset");
+  var trace = []; // [{id, rep}]
+
+  function el(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
+
+  function majChemin() {
+    chemin.innerHTML = "";
+    trace.forEach(function (t, i) {
+      var li = el("li"), b = el("button", "tri-etape", Q[t.id].q.replace(/^(Le déchet est-il|Est-il) /, "").replace(" ?", "") + " <b>" + t.rep + "</b>");
+      b.type = "button"; b.title = "Revenir à cette question";
+      b.onclick = function () { trace = trace.slice(0, i); afficher(t.id, -1); };
+      li.appendChild(b); chemin.appendChild(li);
+    });
+    reset.hidden = trace.length === 0;
+  }
+
+  function transition(noeud, sens) {
+    var ancien = scene.firstElementChild;
+    if (ancien) {
+      ancien.classList.add(sens < 0 ? "sort-droite" : "sort-gauche");
+      setTimeout(function () { if (ancien.parentNode) ancien.parentNode.removeChild(ancien); }, 260);
+    }
+    noeud.classList.add(sens < 0 ? "entre-gauche" : "entre-droite");
+    scene.appendChild(noeud);
+  }
+
+  function afficher(id, sens) {
+    majChemin();
+    var carte;
+    if (id === "debut") {
+      carte = el("div", "tri-carte tri-debut");
+      carte.appendChild(el("div", "tri-dechet", "DÉCHET"));
+      carte.appendChild(el("p", "tri-texte", "Répondez aux questions pour trouver le bidon de récupération adapté à votre déchet liquide."));
+      var go = el("button", "tri-btn tri-go", "Commencer ▸"); go.type = "button";
+      go.onclick = function () { afficher("org", 1); };
+      carte.appendChild(go);
+    } else if (Q[id]) {
+      var n = Q[id];
+      carte = el("div", "tri-carte");
+      var los = el("div", "tri-losange"); los.appendChild(el("span", null, n.q)); carte.appendChild(los);
+      var rep = el("div", "tri-reponses");
+      n.r.forEach(function (r) {
+        var b = el("button", "tri-btn tri-" + r[0].toLowerCase(), r[0]); b.type = "button";
+        b.onclick = function () { trace.push({ id: id, rep: r[0] }); afficher(r[1], 1); };
+        rep.appendChild(b);
+      });
+      carte.appendChild(rep);
+      var aide = el("details", "tri-aide");
+      aide.appendChild(el("summary", null, "Besoin d’aide ?"));
+      var c = el("div", "tri-aide-corps");
+      n.picto.forEach(function (p) { var im = el("img"); im.src = IMG + p + ".png"; im.alt = ""; c.appendChild(im); });
+      c.appendChild(el("p", null, n.aide));
+      aide.appendChild(c); carte.appendChild(aide);
+    } else {
+      var res = R[id];
+      carte = el("div", "tri-carte tri-resultat");
+      if (id === "FDS") {
+        carte.style.setProperty("--c", "#b9c0c6");
+        carte.appendChild(el("p", "tri-titre-res", "Aucun bidon : <b>vérifier la FDS</b>"));
+        var imf = el("img", "tri-bidon"); imf.src = IMG + "FDS.jpg"; imf.alt = "Vérifier la FDS, rubrique 13"; carte.appendChild(imf);
+        carte.appendChild(el("p", "tri-texte", res[0]));
+      } else {
+        carte.style.setProperty("--c", res[1]);
+        carte.appendChild(el("p", "tri-titre-res", "Bidon <b>" + id + "</b>"));
+        var im = el("img", "tri-bidon"); im.src = IMG + id + ".jpg"; im.alt = "Étiquette " + id + " : " + res[0];
+        carte.appendChild(im);
+        carte.appendChild(el("p", "tri-texte", res[0]));
+      }
+      var again = el("button", "tri-btn tri-go", "↺ Trier un autre déchet"); again.type = "button";
+      again.onclick = function () { trace = []; afficher("debut", -1); };
+      carte.appendChild(again);
+    }
+    transition(carte, sens);
+  }
+  reset.onclick = function () { trace = []; afficher("debut", -1); };
+  afficher("debut", 1);
+
+})();
+</script>
+
+<script>
+(function () {
+  var IMG = "Ressources%20site%20internet/dechets/Choisir%20le%20r%C3%A9cipient%20%C3%A0%20Calais/animation/";
+  // org : organique ; cmr : texte justifiant CMR/halogéné/toxique (ou null) ; inf : inflammable ; cor : "ACIDE"/"BASIQUE"/null ; env : danger environnement
+  var P = [
+    { n: "Acétone", p: ["02","07"], h: "H225 · H319 · H336", org: 1, cmr: null, inf: 1 },
+    { n: "Éthanol", p: ["02","07"], h: "H225 · H319", org: 1, cmr: null, inf: 1 },
+    { n: "Propan-2-ol", p: ["02","07"], h: "H225 · H319 · H336", org: 1, cmr: null, inf: 1 },
+    { n: "Acétate d’éthyle", p: ["02","07"], h: "H225 · H319 · H336", org: 1, cmr: null, inf: 1 },
+    { n: "Méthanol", p: ["02","06","08"], h: "H225 · H301+H311+H331 · H370", org: 1, cmr: "toxique (H301, H311, H331)", inf: 1 },
+    { n: "Dichlorométhane", p: ["07","08"], h: "H315 · H319 · H336 · H351", org: 1, cmr: "halogéné (chloré) et suspecté cancérogène (H351)", inf: 0 },
+    { n: "Chloroforme (trichlorométhane)", p: ["06","08"], h: "H302 · H315 · H319 · H331 · H351 · H361d · H372", org: 1, cmr: "halogéné, toxique (H331) et CMR (H351, H361d)", inf: 0 },
+    { n: "Aniline", p: ["05","06","08","09"], h: "H301+H311+H331 · H317 · H318 · H341 · H351 · H372 · H400", org: 1, cmr: "toxique (H301, H311, H331) et CMR (H341, H351)", inf: 0 },
+    { n: "Solution aqueuse d’acide oxalique", p: ["05","07"], h: "H302+H312 · H318", org: 1, cmr: null, inf: 0, cor: "ACIDE" },
+    { n: "Éthanolamine (2-aminoéthanol)", p: ["05","07"], h: "H302+H312+H332 · H314 · H335 · H412", org: 1, cmr: null, inf: 0, cor: "BASIQUE" },
+    { n: "Acide chlorhydrique à 37 %", p: ["05","07"], h: "H290 · H314 · H335", org: 0, cmr: null, cor: "ACIDE" },
+    { n: "Acide sulfurique concentré", p: ["05"], h: "H290 · H314", org: 0, cmr: null, cor: "ACIDE" },
+    { n: "Soude (hydroxyde de sodium) à 1 mol/L", p: ["05"], h: "H290 · H314", org: 0, cmr: null, cor: "BASIQUE" },
+    { n: "Ammoniaque à 28 %", p: ["05","07","09"], h: "H290 · H314 · H335 · H400", org: 0, cmr: null, cor: "BASIQUE" },
+    { n: "Solution de dichromate de potassium", p: ["03","05","06","08","09"], h: "H272 · H301 · H314 · H330 · H340 · H350 · H360FD · H372 · H410", org: 0, cmr: "CMR (H340, H350, H360FD) et toxique (H301, H330)" },
+    { n: "Solution de sulfate de cuivre(II)", p: ["07","09"], h: "H302 · H315 · H319 · H410", org: 0, cmr: null, cor: null, env: 1 },
+    { n: "Eau salée (solution de chlorure de sodium)", p: [], h: "Aucune mention de danger", org: 0, cmr: null, cor: null, env: 0 },
+    { n: "Solution aqueuse de glucose", p: [], h: "Aucune mention de danger", org: 1, cmr: null, inf: 0, cor: null }
+  ];
+  var LIB = { UN2810: "Liquide organique toxique", UN1992: "Liquide inflammable toxique", UN1993: "Liquide inflammable", UN3265: "Liquide organique acide",
+    UN3267: "Liquide organique corrosif basique", UN3264: "Liquide inorganique acide", UN3289: "Liquide inorganique corrosif toxique",
+    UN3266: "Liquide inorganique basique", UN3082: "Dangereux pour l’environnement", FDS: "Vérifier la FDS, rubrique 13 (considérations relatives à l’élimination)" };
+  var ORDRE = ["UN2810","UN1992","UN1993","UN3265","UN3267","UN3289","UN3264","UN3266","UN3082","FDS"];
+
+  function chemin(x) { // parcours de l'arbre -> [étapes], bidon
+    var e = [];
+    e.push(["Organique", x.org ? "OUI" : "NON"]);
+    e.push(["CMR, halogéné ou toxique", x.cmr ? "OUI — " + x.cmr : "NON"]);
+    if (x.org) {
+      e.push(["Inflammable", x.inf ? "OUI (H225/H226)" : "NON"]);
+      if (x.cmr) return [e, x.inf ? "UN1992" : "UN2810"];
+      if (x.inf) return [e, "UN1993"];
+      e.push(["Corrosif", x.cor || "NON"]);
+      return [e, x.cor === "ACIDE" ? "UN3265" : x.cor === "BASIQUE" ? "UN3267" : "FDS"];
+    }
+    if (x.cmr) return [e, "UN3289"];
+    e.push(["Corrosif", x.cor || "NON"]);
+    if (x.cor) return [e, x.cor === "ACIDE" ? "UN3264" : "UN3266"];
+    e.push(["Danger pour l’environnement", x.env ? "OUI (H400/H410)" : "NON"]);
+    return [e, x.env ? "UN3082" : "FDS"];
+  }
+
+  var zone = document.getElementById("entr-zone"), num = document.getElementById("entr-num"), sc = document.getElementById("entr-score");
+  var N = 10, serie = [], i = 0, score = 0;
+  function el(t, c, h) { var e = document.createElement(t); if (c) e.className = c; if (h != null) e.innerHTML = h; return e; }
+  function melange(a) { a = a.slice(); for (var k = a.length - 1; k > 0; k--) { var j = Math.floor(Math.random() * (k + 1)); var t = a[k]; a[k] = a[j]; a[j] = t; } return a; }
+  function bidonImg(id, cls) {
+
+    var im = el("img", cls || ""); im.src = IMG + id + ".jpg"; im.alt = id + " : " + LIB[id]; return im;
+  }
+  function majTete() { num.textContent = i < N ? "Déchet " + (i + 1) + " / " + N : "Série terminée"; sc.textContent = "Score : " + score; }
+
+  function demarrer() { serie = melange(P).slice(0, N); i = 0; score = 0; question(); }
+
+  function question() {
+    majTete(); zone.innerHTML = "";
+    var x = serie[i], c = el("div", "entr-carte entre-droite");
+    c.appendChild(el("p", "entr-consigne", "Dans quel bidon jeter ce déchet liquide ?"));
+    var prod = el("div", "entr-produit");
+    prod.appendChild(el("p", "entr-nom", x.n));
+    var pic = el("div", "entr-pictos");
+    x.p.forEach(function (k) { var im = el("img"); im.src = IMG + "sgh" + k + ".png"; im.alt = "SGH" + k; pic.appendChild(im); });
+    if (!x.p.length) pic.appendChild(el("span", "entr-aucun", "Aucun pictogramme"));
+    prod.appendChild(pic);
+    prod.appendChild(el("p", "entr-h", x.h));
+    c.appendChild(prod);
+    var g = el("div", "entr-choix");
+    ORDRE.forEach(function (id) {
+      var b = el("button", "entr-bidon"); b.type = "button"; b.title = id === "FDS" ? LIB.FDS : id + " – " + LIB[id];
+      b.appendChild(bidonImg(id)); b.onclick = function () { repondre(id, b, g); }; g.appendChild(b);
+    });
+    c.appendChild(g); zone.appendChild(c);
+  }
+
+  function repondre(choix, bouton, grille) {
+    var x = serie[i], r = chemin(x), bon = r[1], ok = choix === bon;
+    if (ok) score++;
+    majTete();
+    [].forEach.call(grille.children, function (b) { b.disabled = true; });
+    bouton.classList.add(ok ? "juste" : "faux");
+    var fb = el("div", "entr-retour " + (ok ? "ok" : "ko"));
+    fb.appendChild(el("p", "entr-verdict", ok ? "✔ Bravo, c’est le bon bidon !" : "✘ Ce n’est pas le bon bidon."));
+    var sol = el("div", "entr-solution");
+    sol.appendChild(bidonImg(bon, "entr-sol-img"));
+    var ol = el("ol", "entr-raison");
+    r[0].forEach(function (s) { ol.appendChild(el("li", null, s[0] + " ? <b>" + s[1] + "</b>")); });
+    ol.appendChild(el("li", "entr-fin", "➜ " + (bon === "FDS" ? LIB.FDS : "<b>" + bon + "</b> – " + LIB[bon])));
+    sol.appendChild(ol); fb.appendChild(sol);
+    var suiv = el("button", "tri-btn tri-go", i + 1 < N ? "Déchet suivant ▸" : "Voir mon score ▸"); suiv.type = "button";
+    suiv.onclick = function () { i++; i < N ? question() : bilan(); };
+    fb.appendChild(suiv);
+    zone.firstChild.appendChild(fb);
+    fb.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function bilan() {
+    majTete(); zone.innerHTML = "";
+    var c = el("div", "entr-carte entr-bilan entre-droite");
+    var msg = score === N ? "Parfait ! 🏆" : score >= 8 ? "Très bien ! 👏" : score >= 5 ? "C’est un bon début 👍" : "Reprenez la carte de décision et réessayez 💪";
+    c.appendChild(el("div", "entr-note", score + "<small>/" + N + "</small>"));
+    c.appendChild(el("p", "tri-titre-res", msg));
+    var b = el("button", "tri-btn tri-go", "↺ Nouvelle série"); b.type = "button"; b.onclick = demarrer; c.appendChild(b);
+    zone.appendChild(c);
+  }
+
+  // onglets
+  var ong = document.querySelectorAll(".tri-onglets button"), demarre = false;
+  [].forEach.call(ong, function (b) {
+    b.onclick = function () {
+      [].forEach.call(ong, function (o) { o.classList.toggle("actif", o === b); });
+      document.getElementById("tri").hidden = b.dataset.mode !== "tri";
+      document.getElementById("entr").hidden = b.dataset.mode !== "entr";
+      if (b.dataset.mode === "entr" && !demarre) { demarre = true; demarrer(); }
+    };
+  });
+})();
+</script>
+
+</section>
+<section id="carte">
+  <h2>Carte de décision à imprimer</h2>
+  <a href="Ressources%20site%20internet/dechets/Choisir%20le%20r%C3%A9cipient%20%C3%A0%20Calais/carte-de-decision.jpg" target="_blank" rel="noopener"><img class="illustration carte-decision" src="Ressources%20site%20internet/dechets/Choisir%20le%20r%C3%A9cipient%20%C3%A0%20Calais/carte-de-decision.jpg" alt="Carte de décision pour le tri des déchets liquides : UN2810, UN1992, UN1993, UN3265, UN3267, UN3264, UN3289, UN3266, UN3082" loading="lazy"></a>
+  <div class="docs" style="justify-content:center;margin:10px 0 28px"><a class="doc doc-pdf" href="Ressources%20site%20internet/dechets/Choisir%20le%20r%C3%A9cipient%20%C3%A0%20Calais/Carte%20de%20d%C3%A9cision%20-%20tri%20des%20d%C3%A9chets.pdf" target="_blank" rel="noopener"><span class="doc-ico">PDF</span>Carte de décision - tri des déchets</a></div>
+</section>
+
+</main>
+<footer class="pied"><div class="conteneur">BTS Métiers de la Chimie – Synthèse</div></footer>
+<script src="theme.js?v=1"></script>
+<script data-goatcounter="https://chimie-winckler.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

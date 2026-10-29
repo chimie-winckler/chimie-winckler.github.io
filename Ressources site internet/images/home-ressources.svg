@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 220" role="img">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a7d5c"/><stop offset="1" stop-color="#12455a"/></linearGradient></defs>
+<rect width="400" height="220" fill="url(#g)"/>
+<g fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+<rect x="110" y="48" width="86" height="124" rx="8"/><path d="M128 48v124"/><path d="M146 80h38M146 100h38M146 120h24"/>
+<rect x="206" y="62" width="86" height="110" rx="8" transform="rotate(8 249 117)"/><path d="M226 100h38M226 120h38" transform="rotate(8 249 117)"/>
+<rect x="296" y="140" width="64" height="38" rx="8" stroke-opacity=".0" fill="#fff" fill-opacity=".18"/>
+<text x="328" y="168" font-family="system-ui,sans-serif" font-size="22" font-weight="800" fill="#fff" stroke="none" text-anchor="middle">PDF</text></g></svg>
