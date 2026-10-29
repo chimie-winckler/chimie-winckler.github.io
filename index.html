@@ -20,7 +20,7 @@
 <li><a href="annonces.html">Annonces</a></li>
     </ul></nav>
     <button type="button" class="theme-btn" id="theme-btn" aria-label="Changer de thème">🌙</button>
-    <img class="compteur compteur-haut" src="https://hits.sh/chimie-winckler.github.io/accueil-2026-10-28.svg?label=visites&color=0f7c80&style=flat-square" alt="Compteur de visites" height="20">
+    <span class="compteur compteur-haut gc-badge" id="gc-badge" hidden><span class="gc-label">visites</span><span class="gc-valeur" id="gc-total"></span></span>
   </div>
 </header>
 <div class="bandeau">
@@ -103,6 +103,9 @@ c.forEach(function(e){if(j>e.getAttribute('data-fin'))e.style.display='none';els
 if(!v){var u=document.querySelector('.une');if(u)u.style.display='none';}})();
 </script>
 <script src="theme.js?v=1"></script>
+<script>
+fetch('https://chimie-winckler.goatcounter.com/counter/TOTAL.json').then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){document.getElementById('gc-total').textContent=d.count;document.getElementById('gc-badge').hidden=false;}).catch(function(){});
+</script>
 <script data-goatcounter="https://chimie-winckler.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
