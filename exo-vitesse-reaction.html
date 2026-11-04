@@ -76,13 +76,13 @@ function genVitesse() {
     { q: 'Un système <b>isochore</b> est un système dont :', ok: 'le volume reste constant', faux: [['la température reste constante', 'C’est un système isotherme.'], ['la pression reste constante', 'C’est un système isobare.'], ['les espèces sont dans une seule phase', 'C’est un système monophasé.']] },
     { q: 'Un système <b>monophasé</b> est un système dont :', ok: 'toutes les espèces sont dans une seule et même phase', faux: [['le volume reste constant', 'C’est un système isochore.'], ['la température reste constante', 'C’est un système isotherme.'], ['un seul réactif intervient', 'Le nombre de réactifs n’a rien à voir : « phase » désigne l’état (solution, gaz…).']] }]);
   var etapes = [
-    { type: 'choix', q: '<b>Exprimer</b> la vitesse volumique de réaction v en fonction de la vitesse de disparition de ' + X.f + '.',
+    { type: 'choix', q: '<b>Choisir</b> l’expression correcte de la vitesse volumique de réaction v faisant intervenir la concentration en ' + X.f + '.',
       options: [{ t: 'v = − ' + fr(a) + d(X), ok: true },
         { t: 'v = − ' + a + ' ' + d(X), ok: false, pourquoi: 'On divise par le coefficient stœchiométrique, on ne le multiplie pas.' },
         { t: 'v = ' + fr(a) + d(X), ok: false, pourquoi: 'Erreur de signe : ' + X.f + ' est un réactif, d[' + X.f + ']/dt est négatif ; il faut le signe −.' },
         { t: 'v = − ' + d(X), ok: false, pourquoi: 'Le coefficient stœchiométrique de ' + X.f + ' (' + a + ') a été oublié.' }],
       corr: 'Pour un réactif de coefficient ' + a + ' : v = − ' + fr(a) + d(X) + '. La vitesse de disparition de ' + X.f + ' vaut donc ' + a + ' v.' },
-    { type: 'choix', q: '<b>Exprimer</b> la vitesse volumique de réaction v en fonction de la vitesse de formation de ' + P.f + '.',
+    { type: 'choix', q: '<b>Choisir</b> l’expression correcte de la vitesse volumique de réaction v faisant intervenir la concentration en ' + P.f + '.',
       options: [{ t: 'v = ' + fr(c) + d(P), ok: true },
         { t: 'v = − ' + fr(c) + d(P), ok: false, pourquoi: 'Erreur de signe : ' + P.f + ' est un produit, d[' + P.f + ']/dt est positif.' },
         { t: 'v = ' + (c === 1 ? '2' : c) + ' ' + d(P), ok: false, pourquoi: c === 1 ? 'Le coefficient de ' + P.f + ' vaut 1.' : 'On divise par le coefficient stœchiométrique, on ne le multiplie pas.' },
