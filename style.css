@@ -329,3 +329,52 @@ h3 { margin: 0 0 8px; font-size: 1.05rem; }
 .gc-badge[hidden] { display: none; }
 .gc-label { background: #555; padding: 0 6px; }
 .gc-valeur { background: #0f7c80; padding: 0 6px; }
+
+/* ===== S'entraîner : exercices interactifs ===== */
+.exo { background: var(--carte); border: 1px solid var(--bord); border-top: 4px solid var(--accent); border-radius: var(--rayon); padding: 18px 20px; }
+.exo-tete { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+.exo-tete h2 { margin: 0; }
+.exo-tete .bouton { border: 0; cursor: pointer; font: inherit; font-weight: 600; }
+.exo-consigne { color: var(--doux); margin: 0 0 14px; }
+.exo-contexte { margin-bottom: 14px; }
+.exo-eq-chimique { text-align: center; font-size: 1.1rem; font-weight: 600; padding: 10px; background: var(--accent-clair); border-radius: 8px; overflow-x: auto; }
+.exo-tableau { overflow-x: auto; margin: 10px 0; }
+.exo-tableau table { border-collapse: collapse; font-size: .92rem; min-width: 100%; }
+.exo-tableau th, .exo-tableau td { border: 1px solid var(--bord); padding: 5px 8px; text-align: center; white-space: nowrap; }
+.exo-tableau th { background: var(--accent-clair); text-align: left; }
+.exo-aide { font-size: .9rem; color: var(--doux); margin: 8px 0; }
+.exo-traces { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 8px 0; }
+.exo-traces button { font: inherit; font-size: .9rem; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--bord); background: var(--carte); color: var(--texte); cursor: pointer; }
+.exo-traces button.actif { background: var(--accent); border-color: var(--accent); color: #fff; }
+.exo-modele { font-size: .9rem; margin-left: 4px; cursor: pointer; }
+.exo-graphe { background: #fff; border: 1px solid var(--bord); border-radius: 8px; padding: 4px; }
+.exo-svg { width: 100%; height: auto; display: block; font-family: system-ui, sans-serif; font-size: 13px; }
+.exo-svg text { fill: #3a474e; }
+.exo-svg .lab { font-weight: 600; fill: #1f2a30; }
+.exo-svg .grille { stroke: #e4eaec; stroke-width: 1; }
+.exo-svg .axe { stroke: #5b6b73; stroke-width: 1.5; }
+.exo-svg .point { fill: #0f7c80; }
+.exo-svg .droite { stroke: #c0392b; stroke-width: 2; }
+.exo-equation { font-family: ui-monospace, Consolas, monospace; font-size: .92rem; min-height: 1.4em; margin: 6px 0 0; }
+.exo-etapes { padding-left: 22px; margin: 0; }
+.exo-etape { margin: 0 0 18px; padding: 12px 14px; border: 1px solid var(--bord); border-radius: 10px; }
+.exo-q { margin: 0 0 10px; }
+.exo-options { display: grid; gap: 6px; margin-bottom: 10px; }
+.exo-option { display: flex; gap: 8px; align-items: flex-start; padding: 8px 10px; border: 1px solid var(--bord); border-radius: 8px; cursor: pointer; }
+.exo-option:hover { border-color: var(--accent); }
+.exo-option.juste { border-color: #1e7d45; background: rgba(30,125,69,.10); }
+.exo-option.faux { border-color: #c0392b; background: rgba(192,57,43,.10); }
+.exo-saisie { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 10px; }
+.exo-saisie input { font: inherit; width: 150px; padding: 8px 10px; border: 1px solid var(--bord); border-radius: 8px; background: var(--carte); color: var(--texte); }
+.exo-saisie input.juste { border-color: #1e7d45; } .exo-saisie input.faux { border-color: #c0392b; }
+.exo-valider { border: 0; cursor: pointer; font: inherit; font-weight: 600; }
+.exo-retour { margin-top: 10px; }
+.exo-retour.bien { color: #1e7d45; } .exo-retour.mal { color: #c0392b; } .exo-retour.attention { color: #b9770e; }
+.exo-piege { font-style: italic; }
+.exo-corr { margin-top: 6px; padding: 8px 10px; border-left: 3px solid var(--accent); background: var(--accent-clair); color: var(--texte); border-radius: 0 8px 8px 0; }
+.exo-fin { text-align: center; padding: 10px 0 4px; }
+.exo-fin .bouton { border: 0; cursor: pointer; font: inherit; font-weight: 600; }
+.exo-score { font-size: 1.15rem; }
+.frac { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; font-size: .85em; line-height: 1.1; }
+.frac span:first-child { border-bottom: 1px solid currentColor; padding: 0 2px; }
+:root[data-theme="dark"] .exo-option.juste, :root[data-theme="dark"] .exo-retour.bien { color: #6fd39a; }
