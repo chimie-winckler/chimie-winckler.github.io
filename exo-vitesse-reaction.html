@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vitesse de réaction – Chimie de Synthèse</title>
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=20261104a">
+</head>
+<body>
+<header class="entete">
+  <div class="conteneur entete-inner">
+    <a class="marque" href="index.html">⚗️ Chimie de Synthèse</a>
+    <button class="burger" aria-label="Menu" onclick="document.body.classList.toggle('menu-ouvert')">☰</button>
+    <nav><ul class="menu">
+<li><a href="index.html">Accueil</a></li>
+<li><a href="matieres-premieres.html">Matières premières</a><ul class="sous-menu"><li><a href="fds.html">FDS</a></li><li><a href="fds-simplifiee.html">FDS simplifiée</a></li><li><a href="gestion-dechets.html">Gestion des déchets en salle de TP</a></li></ul></li>
+<li><a href="techniques.html">Techniques</a><ul class="sous-menu"><li><a href="verrerie-et-montages.html">Verrerie et montages</a></li><li><a href="techniques-experimentales.html">Techniques expérimentales</a></li></ul></li>
+<li><a href="ressources.html">Ressources</a><ul class="sous-menu"><li><a href="cours.html">Cours</a></li><li><a href="tp.html">TP</a></li><li><a href="evaluations.html">Évaluations</a></li><li><a href="autres.html">Autres</a></li></ul></li>
+<li><a href="entrainement.html" class="actif">S’entraîner</a></li>
+<li><a href="annonces.html">Annonces</a></li>
+    </ul></nav>
+    <button type="button" class="theme-btn" id="theme-btn" aria-label="Changer de thème">🌙</button>
+  </div>
+</header>
+<div class="bandeau">
+  <div class="conteneur">
+    <p class="fil"><a href="index.html">Accueil</a> › <a href="entrainement.html">S’entraîner</a> › Vitesse de réaction</p>
+    <p class="surtitre">BTS Métiers de la Chimie – Synthèse</p>
+    <h1>Vitesse de réaction</h1>
+    <p class="intro">Cinétique – Partie 6 : vitesses de formation, de disparition et vitesse volumique de réaction.</p>
+  </div>
+</div>
+<main class="conteneur">
+<section class="exo">
+<div class="exo-tete"><h2>Exercice</h2><button type="button" class="bouton" data-nouveau="exo-vitesse">Nouvelles valeurs</button></div>
+<p class="exo-consigne">Répondez aux questions dans l’ordre. Nombres : virgule acceptée ; puissances de 10 sous la forme 1,2e-3. Tolérance : 3 %.</p>
+<div id="exo-vitesse"><p>Chargement de l’exercice…</p></div>
+</section>
+<p><a href="entrainement.html">← Retour aux exercices</a></p>
+</main>
+<footer class="pied"><div class="conteneur">BTS Métiers de la Chimie – Synthèse</div></footer>
+<script src="theme.js?v=1"></script>
+<script src="exo.js?v=20261104a"></script>
+<script>
+function genVitesse() {
+  var A = Exo.alea, C = Exo.choisir, cs = Exo.cs, nb = Exo.nb;
+  function sp(f, c, r) { return { f: f, c: c, r: r }; }
+  var R = C([
+    { nom: 'Oxydation des ions iodure par l’eau oxygénée en milieu acide', e: [sp('H<sub>2</sub>O<sub>2</sub>', 1, 1), sp('I<sup>−</sup>', 2, 1), sp('H<sup>+</sup>', 2, 1), sp('I<sub>2</sub>', 1, 0), sp('H<sub>2</sub>O', 2, 0)], suivi: 'I<sub>2</sub>' },
+    { nom: 'Décomposition du pentoxyde d’azote', e: [sp('N<sub>2</sub>O<sub>5</sub>', 2, 1), sp('NO<sub>2</sub>', 4, 0), sp('O<sub>2</sub>', 1, 0)], suivi: 'O<sub>2</sub>' },
+    { nom: 'Oxydation du monoxyde d’azote', e: [sp('NO', 2, 1), sp('O<sub>2</sub>', 1, 1), sp('NO<sub>2</sub>', 2, 0)], suivi: 'NO<sub>2</sub>' },
+    { nom: 'Synthèse de l’ammoniac', e: [sp('N<sub>2</sub>', 1, 1), sp('H<sub>2</sub>', 3, 1), sp('NH<sub>3</sub>', 2, 0)], suivi: 'NH<sub>3</sub>' },
+    { nom: 'Oxydation des ions iodure par les ions peroxodisulfate', e: [sp('S<sub>2</sub>O<sub>8</sub><sup>2−</sup>', 1, 1), sp('I<sup>−</sup>', 2, 1), sp('SO<sub>4</sub><sup>2−</sup>', 2, 0), sp('I<sub>2</sub>', 1, 0)], suivi: 'I<sub>2</sub>' },
+    { nom: 'Oxydation de l’acide oxalique par les ions permanganate', e: [sp('MnO<sub>4</sub><sup>−</sup>', 2, 1), sp('H<sub>2</sub>C<sub>2</sub>O<sub>4</sub>', 5, 1), sp('H<sup>+</sup>', 6, 1), sp('Mn<sup>2+</sup>', 2, 0), sp('CO<sub>2</sub>', 10, 0), sp('H<sub>2</sub>O', 8, 0)], suivi: 'Mn<sup>2+</sup>' }]);
+  function ecr(s) { return (s.c > 1 ? s.c + ' ' : '') + s.f; }
+  var reac = R.e.filter(function (s) { return s.r; }), prod = R.e.filter(function (s) { return !s.r && s.f !== 'H<sub>2</sub>O'; });
+  var eq = reac.map(ecr).join(' + ') + ' → ' + R.e.filter(function (s) { return !s.r; }).map(ecr).join(' + ');
+  var cand = reac.filter(function (s) { return s.c > 1 && s.f !== 'H<sup>+</sup>'; }); if (!cand.length) cand = reac.filter(function (s) { return s.c > 1; });
+  var X = C(cand);
+  var P = C(prod), a = X.c, c = P.c;
+  function fr(k) { return k === 1 ? '' : '<span class="frac"><span>1</span><span>' + k + '</span></span> '; }
+  function d(s) { return 'd[' + s.f + ']/dt'; }
+  var u = 's', U = 'mmol.L<sup>-1</sup>.s<sup>-1</sup>';
+  // vitesse de formation donnée
+  var w = cs(A(0.2, 5), 2);
+  // tableau de suivi du produit
+  var Pinf = cs(A(4, 20), 2) * c, tau = C([60, 90, 120, 150]), tt = [0, 30, 60, 120, 240, 480, 960];
+  var cp = tt.map(function (t) { return cs(Pinf * (1 - Math.exp(-t / tau)), 3); });
+  var i1 = 0, i2 = C([1, 2]), j1 = 4, j2 = 6;
+  var vm1 = (cp[i2] - cp[i1]) / (tt[i2] - tt[i1]), vm2 = (cp[j2] - cp[j1]) / (tt[j2] - tt[j1]);
+  var tab = '<div class="exo-tableau"><table><tr><th>t (s)</th>' + tt.map(function (t) { return '<td>' + t + '</td>'; }).join('') + '</tr><tr><th>[' + P.f + '] (mmol.L<sup>-1</sup>)</th>' + cp.map(function (v) { return '<td>' + nb(v, 3) + '</td>'; }).join('') + '</tr></table></div>';
+  var ctx = '<p><b>' + R.nom + '</b>, dans un système monophasé et isochore :</p><p class="exo-eq-chimique">' + eq + '</p>';
+  var autreCoef = a !== c ? a : c + 1;
+  var def = C([
+    { q: 'Un système <b>isochore</b> est un système dont :', ok: 'le volume reste constant', faux: [['la température reste constante', 'C’est un système isotherme.'], ['la pression reste constante', 'C’est un système isobare.'], ['les espèces sont dans une seule phase', 'C’est un système monophasé.']] },
+    { q: 'Un système <b>monophasé</b> est un système dont :', ok: 'toutes les espèces sont dans une seule et même phase', faux: [['le volume reste constant', 'C’est un système isochore.'], ['la température reste constante', 'C’est un système isotherme.'], ['un seul réactif intervient', 'Le nombre de réactifs n’a rien à voir : « phase » désigne l’état (solution, gaz…).']] }]);
+  var etapes = [
+    { type: 'choix', q: '<b>Exprimer</b> la vitesse volumique de réaction v en fonction de la vitesse de disparition de ' + X.f + '.',
+      options: [{ t: 'v = − ' + fr(a) + d(X), ok: true },
+        { t: 'v = − ' + a + ' ' + d(X), ok: false, pourquoi: 'On divise par le coefficient stœchiométrique, on ne le multiplie pas.' },
+        { t: 'v = ' + fr(a) + d(X), ok: false, pourquoi: 'Erreur de signe : ' + X.f + ' est un réactif, d[' + X.f + ']/dt est négatif ; il faut le signe −.' },
+        { t: 'v = − ' + d(X), ok: false, pourquoi: 'Le coefficient stœchiométrique de ' + X.f + ' (' + a + ') a été oublié.' }],
+      corr: 'Pour un réactif de coefficient ' + a + ' : v = − ' + fr(a) + d(X) + '. La vitesse de disparition de ' + X.f + ' vaut donc ' + a + ' v.' },
+    { type: 'choix', q: '<b>Exprimer</b> la vitesse volumique de réaction v en fonction de la vitesse de formation de ' + P.f + '.',
+      options: [{ t: 'v = ' + fr(c) + d(P), ok: true },
+        { t: 'v = − ' + fr(c) + d(P), ok: false, pourquoi: 'Erreur de signe : ' + P.f + ' est un produit, d[' + P.f + ']/dt est positif.' },
+        { t: 'v = ' + (c === 1 ? '2' : c) + ' ' + d(P), ok: false, pourquoi: c === 1 ? 'Le coefficient de ' + P.f + ' vaut 1.' : 'On divise par le coefficient stœchiométrique, on ne le multiplie pas.' },
+        { t: 'v = ' + fr(autreCoef) + d(P), ok: false, pourquoi: 'Chaque espèce est divisée par SON propre coefficient stœchiométrique (ici ' + c + ').' }],
+      corr: 'Pour un produit de coefficient ' + c + ' : v = ' + fr(c) + d(P) + '.' },
+    { type: 'nombre', q: 'À un instant donné, la vitesse volumique de formation de ' + P.f + ' vaut ' + nb(w, 2) + ' ' + U + '. <b>Calculer</b> la vitesse volumique de disparition de ' + X.f + ' au même instant.', rep: w * a / c, unite: U, tol: 0.03,
+      pieges: [{ v: w * c / a, msg: 'Rapport des coefficients inversé.' }, { v: w, msg: 'Les coefficients stœchiométriques ont été oubliés.' }, { v: w / c, msg: 'C’est la vitesse volumique de réaction v, pas la vitesse de disparition de ' + X.f + '.' }, { v: w * a, msg: 'Vous avez multiplié par ' + a + ' sans diviser par le coefficient de ' + P.f + ' (' + c + ').' }].filter(function (p) { return Math.abs(p.v - w * a / c) > 1e-9; }),
+      corr: 'v = ' + fr(c) + d(P) + ' = − ' + fr(a) + d(X) + ', donc − ' + d(X) + ' = ' + a + '/' + c + ' × ' + nb(w, 2) + ' = <b>' + nb(w * a / c) + ' ' + U + '</b>.' },
+    { type: 'nombre', q: '<b>En déduire</b> la vitesse volumique de réaction v à cet instant.', rep: w / c, unite: U, tol: 0.03,
+      pieges: [{ v: w * c, msg: 'On divise par le coefficient stœchiométrique, on ne le multiplie pas.' }, { v: w, msg: 'C’est la vitesse de formation de ' + P.f + ' : il faut la diviser par son coefficient (' + c + ').' }].filter(function (p) { return Math.abs(p.v - w / c) > 1e-9; }),
+      corr: 'v = ' + fr(c) + d(P) + ' = ' + nb(w, 2) + ' / ' + c + ' = <b>' + nb(w / c) + ' ' + U + '</b>. (On retrouve la même valeur avec ' + X.f + ' : ' + nb(w * a / c) + ' / ' + a + '.)' },
+    { type: 'nombre', q: 'On suit la formation de ' + P.f + ' dans une autre expérience :' + tab + '<b>Déterminer</b> la vitesse volumique moyenne de formation de ' + P.f + ' entre t = ' + tt[i1] + ' s et t = ' + tt[i2] + ' s.', rep: vm1, unite: U, tol: 0.03,
+      pieges: [{ v: cp[i2] / tt[i2], msg: 'Vous avez divisé une concentration par une date : il faut diviser une <b>variation</b> de concentration par une <b>durée</b>.' }, { v: (tt[i2] - tt[i1]) / (cp[i2] - cp[i1]), msg: 'Rapport inversé : v<sub>moy</sub> = Δ[' + P.f + '] / Δt.' }, { v: cp[i2] - cp[i1], msg: 'Il faut diviser la variation de concentration par la durée.' }].filter(function (p) { return Math.abs(p.v - vm1) > 1e-9; }),
+      corr: 'v<sub>moy</sub> = ([' + P.f + ']<sub>' + tt[i2] + ' s</sub> − [' + P.f + ']<sub>' + tt[i1] + ' s</sub>) / (' + tt[i2] + ' − ' + tt[i1] + ') = (' + nb(cp[i2], 3) + ' − ' + nb(cp[i1], 3) + ') / ' + (tt[i2] - tt[i1]) + ' = <b>' + nb(vm1) + ' ' + U + '</b>.' },
+    { type: 'choix', q: 'Entre t = ' + tt[j1] + ' s et t = ' + tt[j2] + ' s, la vitesse moyenne de formation de ' + P.f + ' vaut ' + nb(vm2) + ' ' + U + '. <b>Commenter</b> l’évolution de la vitesse.',
+      options: [{ t: 'Elle diminue, car les réactifs sont consommés : leurs concentrations diminuent', ok: true },
+        { t: 'Elle augmente, car la quantité de produit formé augmente', ok: false, pourquoi: 'La vitesse est la pente de la courbe, pas la valeur de la concentration : la pente diminue.' },
+        { t: 'Elle reste constante, car c’est la même réaction', ok: false, pourquoi: 'Comparez les deux valeurs : la vitesse moyenne a nettement diminué.' },
+        { t: 'Elle diminue, car le produit formé ralentit toujours la réaction', ok: false, pourquoi: 'Ce n’est pas la raison générale : c’est la diminution des concentrations en réactifs, facteur cinétique, qui ralentit la réaction.' }],
+      corr: 'La vitesse passe de ' + nb(vm1) + ' à ' + nb(vm2) + ' ' + U + ' : elle diminue au cours du temps, car la concentration des réactifs (facteur cinétique) diminue.' },
+    { type: 'choix', q: '<b>Définir</b>. ' + def.q, options: [{ t: def.ok, ok: true }].concat(def.faux.map(function (f) { return { t: f[0], ok: false, pourquoi: f[1] }; })), corr: 'Un système isochore garde un volume constant ; un système monophasé ne comporte qu’une seule phase. Ces deux conditions permettent d’utiliser la vitesse <b>volumique</b> v = (1/V) dx/dt = ' + fr(c) + d(P) + '.' }];
+  return { contexte: ctx, etapes: etapes };
+}
+Exo.lancer('exo-vitesse', genVitesse);
+</script>
+<script data-goatcounter="https://chimie-winckler.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

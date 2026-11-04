@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ordre de réaction – Chimie de Synthèse</title>
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=20261104a">
+</head>
+<body>
+<header class="entete">
+  <div class="conteneur entete-inner">
+    <a class="marque" href="index.html">⚗️ Chimie de Synthèse</a>
+    <button class="burger" aria-label="Menu" onclick="document.body.classList.toggle('menu-ouvert')">☰</button>
+    <nav><ul class="menu">
+<li><a href="index.html">Accueil</a></li>
+<li><a href="matieres-premieres.html">Matières premières</a><ul class="sous-menu"><li><a href="fds.html">FDS</a></li><li><a href="fds-simplifiee.html">FDS simplifiée</a></li><li><a href="gestion-dechets.html">Gestion des déchets en salle de TP</a></li></ul></li>
+<li><a href="techniques.html">Techniques</a><ul class="sous-menu"><li><a href="verrerie-et-montages.html">Verrerie et montages</a></li><li><a href="techniques-experimentales.html">Techniques expérimentales</a></li></ul></li>
+<li><a href="ressources.html">Ressources</a><ul class="sous-menu"><li><a href="cours.html">Cours</a></li><li><a href="tp.html">TP</a></li><li><a href="evaluations.html">Évaluations</a></li><li><a href="autres.html">Autres</a></li></ul></li>
+<li><a href="entrainement.html" class="actif">S’entraîner</a></li>
+<li><a href="annonces.html">Annonces</a></li>
+    </ul></nav>
+    <button type="button" class="theme-btn" id="theme-btn" aria-label="Changer de thème">🌙</button>
+  </div>
+</header>
+<div class="bandeau">
+  <div class="conteneur">
+    <p class="fil"><a href="index.html">Accueil</a> › <a href="entrainement.html">S’entraîner</a> › Ordre de réaction</p>
+    <p class="surtitre">BTS Métiers de la Chimie – Synthèse</p>
+    <h1>Ordre de réaction</h1>
+    <p class="intro">Cinétique – Partie 6 : anamorphose, constante de vitesse, temps de demi-réaction.</p>
+  </div>
+</div>
+<main class="conteneur">
+<section class="exo">
+<div class="exo-tete"><h2>Exercice</h2><button type="button" class="bouton" data-nouveau="exo-ordre">Nouvelles valeurs</button></div>
+<p class="exo-consigne">Répondez aux questions dans l’ordre. Nombres : virgule acceptée ; puissances de 10 sous la forme 1,2e-3. Tolérance : 4 %.</p>
+<div id="exo-ordre"><p>Chargement de l’exercice…</p></div>
+</section>
+<p><a href="entrainement.html">← Retour aux exercices</a></p>
+</main>
+<footer class="pied"><div class="conteneur">BTS Métiers de la Chimie – Synthèse</div></footer>
+<script src="theme.js?v=1"></script>
+<script src="exo.js?v=20261104a"></script>
+<script>
+function genOrdre() {
+  var A = Exo.alea, C = Exo.choisir, cs = Exo.cs, nb = Exo.nb;
+  var n = C([0, 1, 2]);
+  var u = C(['s', 'min', 'h']);
+  var esp = C([
+    { nom: 'du pentoxyde d’azote N<sub>2</sub>O<sub>5</sub>', s: 'N<sub>2</sub>O<sub>5</sub>' },
+    { nom: 'de l’eau oxygénée H<sub>2</sub>O<sub>2</sub>', s: 'H<sub>2</sub>O<sub>2</sub>' },
+    { nom: 'd’un ester E au cours de sa saponification', s: 'E' },
+    { nom: 'du 2-chloro-2-méthylpropane R–Cl au cours de son hydrolyse', s: 'RCl' },
+    { nom: 'd’un colorant D au cours de sa décoloration', s: 'D' }]);
+  var C0 = cs(A(10, 50), 3), dt = C([5, 10, 20]), T = 8 * dt, f = A(0.72, 0.86), k;
+  if (n === 0) k = f * C0 / T; else if (n === 1) k = -Math.log(1 - f) / T; else k = (1 / (C0 * (1 - f)) - 1 / C0) / T;
+  k = cs(k, 3);
+  var ts = [], cc = [];
+  for (var i = 0; i <= 8; i++) {
+    var t = i * dt, c;
+    if (n === 0) c = C0 - k * t; else if (n === 1) c = C0 * Math.exp(-k * t); else c = 1 / (1 / C0 + k * t);
+    if (i > 0) c *= 1 + A(-0.008, 0.008);
+    ts.push(t); cc.push(cs(c, 3));
+  }
+  var tr = {
+    0: { ys: cc, lab: '[' + esp.s + '] (mmol.L<tspan baseline-shift="super">-1</tspan>)', nom: '[' + esp.s + '] = f(t)' },
+    1: { ys: cc.map(Math.log), lab: 'ln [' + esp.s + ']', nom: 'ln [' + esp.s + '] = f(t)' },
+    2: { ys: cc.map(function (c) { return 1 / c; }), lab: '1/[' + esp.s + '] (L.mmol<tspan baseline-shift="super">-1</tspan>)', nom: '1/[' + esp.s + '] = f(t)' } };
+  [0, 1, 2].forEach(function (j) { tr[j].reg = Exo.regression(ts, tr[j].ys); });
+  var R = tr[n].reg, kr = Math.abs(R.a);
+  var X = '[' + esp.s + ']', X0 = '[' + esp.s + ']<sub>0</sub>';
+  var uk = ['mmol.L<sup>-1</sup>.' + u + '<sup>-1</sup>', u + '<sup>-1</sup>', 'L.mmol<sup>-1</sup>.' + u + '<sup>-1</sup>'];
+  var nomOrdre = ['0', '1', '2'];
+  var tab = '<div class="exo-tableau"><table><tr><th>t (' + u + ')</th>' + ts.map(function (t) { return '<td>' + nb(t, 3) + '</td>'; }).join('') + '</tr><tr><th>' + X + ' (mmol.L<sup>-1</sup>)</th>' + cc.map(function (c) { return '<td>' + nb(c, 3) + '</td>'; }).join('') + '</tr></table></div>';
+  var ctx = '<p>On suit au cours du temps la concentration ' + esp.nom + ', seul réactif dont dépend la vitesse, dans un système monophasé et isochore, à température constante.</p>' + tab +
+    '<p class="exo-aide">Comme avec un tableur, choisissez le tracé à afficher, puis affichez sa modélisation par une droite.</p>' +
+    '<div class="exo-traces boutons-traces"><button type="button" data-tr="0" class="actif">' + tr[0].nom + '</button><button type="button" data-tr="1">' + tr[1].nom + '</button><button type="button" data-tr="2">' + tr[2].nom + '</button><label class="exo-modele"><input type="checkbox"> Afficher la modélisation</label></div>' +
+    '<div class="exo-graphe"></div><p class="exo-equation"></p>';
+  function ecrireEq(j) { var r = tr[j].reg; return 'Modélisation : y = ' + nb(r.a, 4) + ' x ' + (r.b < 0 ? '− ' : '+ ') + nb(Math.abs(r.b), 4) + '  ;  R² = ' + r.r2.toFixed(4).replace('.', ','); }
+  var t12, t12corr, pt;
+  if (n === 0) { t12 = C0 / (2 * kr); t12corr = 'À l’ordre 0, ' + X + ' = ' + X0 + ' − kt, donc t<sub>½</sub> = ' + X0 + ' / (2k) = ' + nb(C0) + ' / (2 × ' + nb(kr) + ') = <b>' + nb(t12) + ' ' + u + '</b>.'; }
+  else if (n === 1) { t12 = Math.log(2) / kr; t12corr = 'À l’ordre 1, ln ' + X + ' = ln ' + X0 + ' − kt, donc t<sub>½</sub> = ln 2 / k = 0,693 / ' + nb(kr) + ' = <b>' + nb(t12) + ' ' + u + '</b>.'; }
+  else { t12 = 1 / (kr * C0); t12corr = 'À l’ordre 2, 1/' + X + ' = 1/' + X0 + ' + kt, donc t<sub>½</sub> = 1 / (k × ' + X0 + ') = 1 / (' + nb(kr) + ' × ' + nb(C0) + ') = <b>' + nb(t12) + ' ' + u + '</b>.'; }
+  var formules = [
+    { v: C0 / (2 * kr), msg: 'Vous avez utilisé t<sub>½</sub> = ' + X0 + '/(2k), valable pour l’ordre 0 seulement.' },
+    { v: Math.log(2) / kr, msg: 'Vous avez utilisé t<sub>½</sub> = ln 2 / k, valable pour l’ordre 1 seulement.' },
+    { v: 1 / (kr * C0), msg: 'Vous avez utilisé t<sub>½</sub> = 1/(k' + X0 + '), valable pour l’ordre 2 seulement.' },
+    { v: 1 / kr, msg: 'Vous avez calculé 1/k : il manque un facteur.' },
+    { v: kr * Math.log(2), msg: 'Formule inversée : vous avez calculé k × ln 2.' }].filter(function (p, j) { return j !== n; });
+  var v0 = kr * Math.pow(C0, n);
+  var etapes = [
+    { type: 'choix', q: '<b>Déterminer</b> l’ordre de la réaction par rapport à ' + esp.s + '.',
+      options: [0, 1, 2].map(function (j) { return { t: 'Ordre ' + j + ' : le tracé ' + tr[j].nom + ' est une droite', ok: j === n, pourquoi: 'Le tracé ' + tr[j].nom + ' n’est pas une droite (R² = ' + tr[j].reg.r2.toFixed(4).replace('.', ',') + ') : regardez les points, pas seulement R².' }; })
+        .concat([{ t: 'On ne peut pas conclure sans connaître k', ok: false, pourquoi: 'L’ordre se trouve sans k : on cherche celui des trois tracés qui donne une droite.' }]),
+      corr: 'Seul le tracé <b>' + tr[n].nom + '</b> donne des points alignés (R² = ' + R.r2.toFixed(4).replace('.', ',') + ') : la réaction est d’<b>ordre ' + n + '</b>. C’est la méthode de l’anamorphose : on transforme la loi intégrée en fonction affine du temps.' },
+    { type: 'nombre', q: '<b>Déterminer</b> la valeur de la constante de vitesse k (l’unité est demandée à l’étape suivante).', rep: kr, unite: '', tol: 0.04,
+      pieges: [{ v: Math.abs(R.b), msg: 'C’est l’ordonnée à l’origine, pas la pente.' }].concat([0, 1, 2].filter(function (j) { return j !== n; }).map(function (j) { return { v: Math.abs(tr[j].reg.a), msg: 'C’est la pente du tracé ' + tr[j].nom + ', qui n’est pas une droite.' }; })),
+      corr: 'Pour l’ordre ' + n + ', la loi intégrée est ' + ['' + X + ' = ' + X0 + ' − kt : pente = −k', 'ln ' + X + ' = ln ' + X0 + ' − kt : pente = −k', '1/' + X + ' = 1/' + X0 + ' + kt : pente = +k'][n] + '. La modélisation donne une pente de ' + nb(R.a, 4) + ', donc <b>k = ' + nb(kr) + ' ' + uk[n] + '</b> (k est toujours positif).' },
+    { type: 'choix', q: '<b>Donner</b> l’unité de k, les concentrations étant en mmol.L<sup>-1</sup> et le temps en ' + u + '.',
+      options: [0, 1, 2].map(function (j) { return { t: uk[j], ok: j === n, pourquoi: 'C’est l’unité de k pour une réaction d’ordre ' + j + '.' }; }).concat([{ t: 'k est sans unité', ok: false, pourquoi: 'k = v / [A]<sup>n</sup> a toujours une unité, qui dépend de l’ordre.' }]),
+      corr: 'v (mmol.L<sup>-1</sup>.' + u + '<sup>-1</sup>) = k × ' + X + '<sup>' + n + '</sup>, donc k s’exprime en <b>' + uk[n] + '</b>.' },
+    { type: 'nombre', q: '<b>Calculer</b> le temps de demi-réaction t<sub>½</sub>.', rep: t12, unite: u, tol: 0.04, pieges: formules, corr: t12corr },
+    { type: 'choix', q: '<b>Prévoir</b> l’effet sur t<sub>½</sub> d’une concentration initiale deux fois plus grande, à la même température.',
+      options: [{ t: 't<sub>½</sub> double', ok: n === 0, pourquoi: 't<sub>½</sub> double seulement pour l’ordre 0 (t<sub>½</sub> proportionnel à ' + X0 + ').' },
+        { t: 't<sub>½</sub> ne change pas', ok: n === 1, pourquoi: 't<sub>½</sub> ne dépend pas de ' + X0 + ' seulement pour l’ordre 1.' },
+        { t: 't<sub>½</sub> est divisé par 2', ok: n === 2, pourquoi: 't<sub>½</sub> est divisé par 2 seulement pour l’ordre 2 (t<sub>½</sub> inversement proportionnel à ' + X0 + ').' },
+        { t: 't<sub>½</sub> est multiplié par 4', ok: false, pourquoi: 'Aucun des ordres 0, 1 ou 2 ne donne ce résultat.' }],
+      corr: ['À l’ordre 0, t<sub>½</sub> = ' + X0 + '/(2k) : t<sub>½</sub> <b>double</b>.', 'À l’ordre 1, t<sub>½</sub> = ln 2 / k ne dépend pas de ' + X0 + ' : t<sub>½</sub> <b>ne change pas</b>.', 'À l’ordre 2, t<sub>½</sub> = 1/(k' + X0 + ') : t<sub>½</sub> est <b>divisé par 2</b>.'][n] },
+    { type: 'nombre', q: '<b>Calculer</b> la vitesse volumique initiale v<sub>0</sub> à l’aide de la loi de vitesse.', rep: v0, unite: 'mmol.L<sup>-1</sup>.' + u + '<sup>-1</sup>', tol: 0.04,
+      pieges: [{ v: kr, msg: 'Vous avez oublié le terme ' + X0 + '<sup>' + n + '</sup> : v<sub>0</sub> = k × ' + X0 + '<sup>' + n + '</sup>.' }, { v: kr * C0, msg: 'Vous avez écrit v<sub>0</sub> = k × ' + X0 + ' : l’exposant doit être l’ordre (' + n + ').' }, { v: kr * C0 * C0, msg: 'Vous avez écrit v<sub>0</sub> = k × ' + X0 + '² : l’exposant doit être l’ordre (' + n + ').' }].filter(function (p) { return Math.abs(p.v - v0) > 1e-9 * v0; }),
+      corr: 'Loi de vitesse : v = k × ' + X + '<sup>' + n + '</sup>, donc v<sub>0</sub> = ' + nb(kr) + ' × ' + nb(C0) + '<sup>' + n + '</sup> = <b>' + nb(v0) + ' mmol.L<sup>-1</sup>.' + u + '<sup>-1</sup></b>.' }];
+  return { contexte: ctx, etapes: etapes, apres: function (rac) {
+    var cur = 0, zone = rac.querySelector('.exo-graphe'), eq = rac.querySelector('.exo-equation'), cb = rac.querySelector('.exo-modele input');
+    function dessiner() { var o = tr[cur]; zone.innerHTML = Exo.graphique({ xs: ts, ys: o.ys, xlab: 't (' + u + ')', ylab: o.lab, droite: cb.checked ? o.reg : null }); eq.innerHTML = cb.checked ? ecrireEq(cur) : ''; }
+    rac.querySelectorAll('[data-tr]').forEach(function (b) { b.addEventListener('click', function () { cur = +b.dataset.tr; rac.querySelectorAll('[data-tr]').forEach(function (x) { x.classList.toggle('actif', x === b); }); dessiner(); }); });
+    cb.addEventListener('change', dessiner); dessiner();
+  } };
+}
+Exo.lancer('exo-ordre', genOrdre);
+</script>
+<script data-goatcounter="https://chimie-winckler.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
