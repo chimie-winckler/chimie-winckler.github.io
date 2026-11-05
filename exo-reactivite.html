@@ -395,7 +395,7 @@
       roleF: ['il augmente le caractère nucléophile de l’atome d’oxygène', 'il déplace l’équilibre en consommant l’eau'],
       glob: 'C6H11–OH' + EQ + 'C6H10 + H2O', faux: ['C6H11–OH + H<sup>+</sup>' + EQ + 'C6H10 + H3O<sup>+</sup>', 'C6H11–OH + H<sup>+</sup>' + EQ + 'C6H11<sup>+</sup> + H2O'] },
     { nom: 'Addition électrophile de HCl sur le propène (activité-cours 1)', et: [
-      ['CH3–CH=CH2 + H–Cl' + EQ + 'CH3–C<sup>+</sup>H–CH3 + Cl<sup>−</sup>', 'addition'],
+      ['CH3–CH=CH2 + H–Cl' + EQ + 'CH3–C<sup>+</sup>H–CH3 + Cl<sup>−</sup>', null],
       ['CH3–C<sup>+</sup>H–CH3 + Cl<sup>−</sup>' + EQ + 'CH3–CHCl–CH3', 'addition']],
       cat: null, autres: ['H<sup>+</sup>', 'Cl<sup>−</sup>', 'le carbocation'],
       glob: 'CH3–CH=CH2 + HCl' + EQ + 'CH3–CHCl–CH3', faux: ['CH3–CH=CH2 + HCl' + EQ + 'CH3–CH2–CH2Cl', 'CH3–CH=CH2 + HCl' + EQ + 'CH3–C<sup>+</sup>H–CH3 + Cl<sup>−</sup>'] },
@@ -419,7 +419,7 @@
       glob: '(CH3)2C=O + 2 C2H5–OH' + EQ + '(CH3)2C(O–C2H5)2 + H2O', faux: ['(CH3)2C=O + C2H5–OH' + EQ + '(CH3)2C(OH)–O–C2H5', '(CH3)2C=O + 2 C2H5–OH + H<sup>+</sup>' + EQ + '(CH3)2C(O–C2H5)2 + H3O<sup>+</sup>'] }];
   Exo.lancer('exo-p4-lecture', function () {
     var L = C(LECT), n = L.et.length, et = [];
-    var html = '<p><b>' + L.nom + '</b></p><ol class="exo-tableau">' + L.et.map(function (e) { return '<li class="exo-eq-chimique">' + s(e[0]) + '</li>'; }).join('') + '</ol>';
+    var html = '<p><b>' + L.nom + '</b></p>' + L.et.map(function (e, i) { return '<p class="exo-eq-chimique"><b>Étape ' + (i + 1) + ' :</b> ' + s(e[0]) + '</p>'; }).join('');
     et.push({ type: 'nombre', q: 'Combien d’étapes (actes élémentaires) comporte ce mécanisme ?', rep: n, tol: 0.001, corr: 'Chaque ligne est un acte élémentaire : <b>' + n + '</b> étapes.' });
     var typed = L.et.map(function (e, i) { return [i, e[1]]; }).filter(function (x) { return x[1]; }), pick = C(typed);
     et.push({ type: 'choix', q: 'L’étape ' + (pick[0] + 1) + ' est :', options: ['acide-base', 'addition', 'substitution', 'élimination'].map(function (t) {
