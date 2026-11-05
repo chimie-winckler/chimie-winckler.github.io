@@ -56,7 +56,7 @@
 </main>
 <footer class="pied"><div class="conteneur">BTS Métiers de la Chimie – Synthèse</div></footer>
 <script src="theme.js?v=1"></script>
-<script src="exo.js?v=20261105b"></script>
+<script src="exo.js?v=20261105c"></script>
 <script>
 /* ===== Partie 9 : échanges thermiques ===== */
 (function () {
@@ -83,7 +83,7 @@
       { type: 'nombre', q: 'Un réacteur continu consomme ' + nb(Dn, 2) + ' mol.s<sup>-1</sup> de ' + R.re + ' : ' + R.eq + ', Δ<sub>r</sub>H = ' + nb(R.H, 4) + ' kJ.mol<sup>-1</sup>. <b>Calculer</b> la puissance thermique à évacuer pour maintenir le réacteur à température constante, en kW.', rep: phi3 / 1000, unite: 'kW', tol: 0.02,
         pieges: [{ v: Dn * Math.abs(R.H) * 3600, msg: 'Le débit molaire est déjà en mol.s<sup>-1</sup>.' }, { v: phi3, msg: 'Le résultat est en W ; il est demandé en kW.' }, { v: Math.abs(R.H) / Dn, msg: 'Φ = D<sub>n</sub> × |Δ<sub>r</sub>H| : on multiplie.' }],
         corr: 'Φ = D<sub>n</sub> × |Δ<sub>r</sub>H| = ' + nb(Dn, 2) + ' × ' + nb(Math.abs(R.H), 4) + ' = <b>' + nb(phi3 / 1000) + ' kW</b>, à évacuer car la réaction est exothermique (Δ<sub>r</sub>H < 0).' },
-      { type: 'choix', q: 'Le ' + F.nom + ' précédent est chauffé puis entièrement vaporisé. Le flux thermique total reçu est :', options: [{ t: 'la somme du flux de chauffage et du flux de vaporisation', ok: true }, { t: 'le plus grand des deux flux', ok: false, pourquoi: 'Si plusieurs phénomènes ont lieu pour un même fluide, on additionne les flux.' }, { t: 'la différence des deux flux', ok: false, pourquoi: 'Les deux phénomènes consomment de l’énergie : les flux s’additionnent.' }, { t: 'seulement le flux de vaporisation, car le fluide finit à l’état gazeux', ok: false, pourquoi: 'Il faut aussi l’amener à sa température d’ébullition.' }], corr: 'On <b>additionne</b> les flux : Φ = D<sub>m</sub> c<sub>p</sub> ΔT + D<sub>m</sub> L<sub>v</sub>.' }] };
+      { type: 'choix', q: 'Le fluide précédent (' + F.nom + ') est chauffé puis entièrement vaporisé. Le flux thermique total reçu est :', options: [{ t: 'la somme du flux de chauffage et du flux de vaporisation', ok: true }, { t: 'le plus grand des deux flux', ok: false, pourquoi: 'Si plusieurs phénomènes ont lieu pour un même fluide, on additionne les flux.' }, { t: 'la différence des deux flux', ok: false, pourquoi: 'Les deux phénomènes consomment de l’énergie : les flux s’additionnent.' }, { t: 'seulement le flux de vaporisation, car le fluide finit à l’état gazeux', ok: false, pourquoi: 'Il faut aussi l’amener à sa température d’ébullition.' }], corr: 'On <b>additionne</b> les flux : Φ = D<sub>m</sub> c<sub>p</sub> ΔT + D<sub>m</sub> L<sub>v</sub>.' }] };
   }
 
   /* 2. Bilan thermique d’un échangeur double tube */
