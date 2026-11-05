@@ -74,8 +74,26 @@ var Exo = (function () {
   }
 
   /* ---------- déroulé d'une série ---------- */
+  /* élision automatique : « de éthanol » → « d’éthanol », « le acide » → « l’acide » (hors « -le avec ») */
+  function elider(t) {
+    if (typeof t !== 'string') return t;
+    return t.replace(/(^|[\s>(])(de|De|le|Le|la|La) ([aeéèêiîoôuAEÉÈÊIÎOÔU])/g, function (m, a, w, v) {
+      if (/^[A-Z]/.test(v) && !/^[ÉÈÊÎÔ]/.test(v) && !/^[AEIOU][a-zé]/.test(v + '')) return m;
+      return a + (w.charAt(0) === 'D' ? 'D’' : w.charAt(0) === 'd' ? 'd’' : w.charAt(0) === 'L' ? 'L’' : 'l’') + v;
+    });
+  }
+  function nettoyer(ex) {
+    ex.contexte = elider(ex.contexte);
+    ex.etapes.forEach(function (e) {
+      e.q = elider(e.q); e.corr = elider(e.corr);
+      (e.options || []).forEach(function (o) { o.t = elider(o.t); o.pourquoi = elider(o.pourquoi); });
+      (e.pieges || []).forEach(function (p) { p.msg = elider(p.msg); });
+    });
+    return ex;
+  }
   var gens = {};
-  function lancer(id, generer) {
+  function lancer(id, generer0) {
+    var generer = function () { return nettoyer(generer0()); };
     gens[id] = generer;
     var racine = document.getElementById(id), score = { ok: 0, tot: 0 };
     function nouvelle() {
