@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Les polymères – Chimie de Synthèse</title>
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=20261105a">
+</head>
+<body>
+<header class="entete">
+  <div class="conteneur entete-inner">
+    <a class="marque" href="index.html">⚗️ Chimie de Synthèse</a>
+    <button class="burger" aria-label="Menu" onclick="document.body.classList.toggle('menu-ouvert')">☰</button>
+    <nav><ul class="menu">
+<li><a href="index.html">Accueil</a></li>
+<li><a href="matieres-premieres.html">Matières premières</a><ul class="sous-menu"><li><a href="fds.html">FDS</a></li><li><a href="fds-simplifiee.html">FDS simplifiée</a></li><li><a href="gestion-dechets.html">Gestion des déchets en salle de TP</a></li></ul></li>
+<li><a href="techniques.html">Techniques</a><ul class="sous-menu"><li><a href="verrerie-et-montages.html">Verrerie et montages</a></li><li><a href="techniques-experimentales.html">Techniques expérimentales</a></li></ul></li>
+<li><a href="ressources.html">Ressources</a><ul class="sous-menu"><li><a href="cours.html">Cours</a></li><li><a href="tp.html">TP</a></li><li><a href="evaluations.html">Évaluations</a></li><li><a href="autres.html">Autres</a></li></ul></li>
+<li><a href="entrainement.html" class="actif">S’entraîner</a></li>
+<li><a href="annonces.html">Annonces</a></li>
+    </ul></nav>
+    <button type="button" class="theme-btn" id="theme-btn" aria-label="Changer de thème">🌙</button>
+  </div>
+</header>
+<div class="bandeau">
+  <div class="conteneur">
+    <p class="fil"><a href="index.html">Accueil</a> › <a href="entrainement.html">S’entraîner</a> › Les polymères</p>
+    <p class="surtitre">BTS Métiers de la Chimie – Partie 10 : les polymères</p>
+    <h1>Les polymères</h1>
+    <p class="intro">Équation de synthèse, motif, type de polymérisation, famille, masses molaires moyennes et propriétés.</p>
+  </div>
+</div>
+<main class="conteneur">
+<nav class="sommaire"><a href="#synthese">Synthèse d’un polymère</a><a href="#moyennes">Masses molaires moyennes</a><a href="#cours">Structure et propriétés</a></nav><section class="exo exo-bloc" id="synthese">
+<div class="exo-tete"><h2>Synthèse d’un polymère</h2><button type="button" class="bouton" data-nouveau="exo-p10-synthese">Nouvelles valeurs</button></div>
+<p class="exo-consigne">Nombres : virgule acceptée ; puissances de 10 sous la forme 1,2e-3. Tolérance : 2 %. D’après les applications « polyaddition » et « polycondensation » : un polymère différent à chaque essai.</p>
+<div id="exo-p10-synthese"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="moyennes">
+<div class="exo-tete"><h2>Masses molaires moyennes</h2><button type="button" class="bouton" data-nouveau="exo-p10-moyennes">Nouvelles valeurs</button></div>
+<p class="exo-consigne">Nombres : virgule acceptée ; puissances de 10 sous la forme 1,2e-3. Tolérance : 2 %. M<sub>n</sub>, M<sub>w</sub>, indice de polymolécularité et degré de polymérisation.</p>
+<div id="exo-p10-moyennes"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="cours">
+<div class="exo-tete"><h2>Structure et propriétés</h2><button type="button" class="bouton" data-nouveau="exo-p10-cours">Nouvelles valeurs</button></div>
+<p class="exo-consigne">Nombres : virgule acceptée ; puissances de 10 sous la forme 1,2e-3. Tolérance : 2 %. Thermoplastiques, thermodurcissables, T<sub>g</sub>, DSC, copolymères, module d’Young.</p>
+<div id="exo-p10-cours"><p>Chargement…</p></div>
+</section><p><a href="entrainement.html">← Retour aux exercices</a></p>
+</main>
+<footer class="pied"><div class="conteneur">BTS Métiers de la Chimie – Synthèse</div></footer>
+<script src="theme.js?v=1"></script>
+<script src="exo.js?v=20261105a"></script>
+<script>
+/* ===== Partie 10 : les polymères ===== */
+(function () {
+  var A = Exo.alea, C = Exo.choisir, cs = Exo.cs, nb = Exo.nb, M = Exo.melanger;
+  function s(x) { return x.replace(/(\d+)/g, '<sub>$1</sub>'); }   // CH2 -> CH<sub>2</sub>
+  function mot(x) { return '–[ ' + s(x) + ' ]<sub>n</sub>–'; }
+  var MASSES = 'M(H) = 1 ; M(C) = 12 ; M(N) = 14 ; M(O) = 16 ; M(F) = 19 ; M(Cl) = 35,5 g.mol<sup>-1</sup>';
+  var ADD = [
+    { nom: 'polyéthylène (PE)', mono: [['éthène', 'CH2=CH2', 28]], motif: 'CH2–CH2', faux: ['CH2=CH2', 'CH2–CH2–CH2'], Mm: 28, usage: 'sacs, emballages' },
+    { nom: 'polypropylène (PP)', mono: [['propène', 'CH2=CH–CH3', 42]], motif: 'CH2–CH(CH3)', faux: ['CH2=CH(CH3)', 'CH2–CH2–CH3'], Mm: 42, usage: 'pièces de plomberie, boîtes' },
+    { nom: 'polychlorure de vinyle (PVC)', mono: [['chloroéthène', 'CH2=CHCl', 62.5]], motif: 'CH2–CHCl', faux: ['CH2=CHCl', 'CH2–CH2–Cl'], Mm: 62.5, usage: 'tuyaux, chaussures synthétiques' },
+    { nom: 'polystyrène (PS)', mono: [['styrène (phényléthène)', 'CH2=CH–C6H5', 104]], motif: 'CH2–CH(C6H5)', faux: ['CH2=CH(C6H5)', 'CH(C6H5)–CH(C6H5)'], Mm: 104, usage: 'emballages, isolants' },
+    { nom: 'polytétrafluoroéthylène (PTFE, Téflon®)', mono: [['tétrafluoroéthène', 'CF2=CF2', 100]], motif: 'CF2–CF2', faux: ['CF2=CF2', 'CF=CF'], Mm: 100, usage: 'revêtements anti-adhésifs' },
+    { nom: 'polyméthacrylate de méthyle (PMMA, Plexiglas®)', mono: [['méthacrylate de méthyle', 'CH2=C(CH3)–COOCH3', 100]], motif: 'CH2–C(CH3)(COOCH3)', faux: ['CH2=C(CH3)(COOCH3)', 'CH2–CH2–COOCH3'], Mm: 100, usage: 'vitrages, Plexiglas®' },
+    { nom: 'polyacrylonitrile (PAN)', mono: [['acrylonitrile', 'CH2=CH–CN', 53]], motif: 'CH2–CH(CN)', faux: ['CH2=CH(CN)', 'CH2–CH2–CN'], Mm: 53, usage: 'fibres textiles acryliques' },
+    { nom: 'polyacrylamide', mono: [['acrylamide', 'CH2=CH–CONH2', 71]], motif: 'CH2–CH(CONH2)', faux: ['CH2=CH(CONH2)', 'CH2–CH2–CONH2'], Mm: 71, usage: 'gels, traitement des eaux' }];
+  var COND = [
+    { nom: 'nylon 6-6', mono: [['acide hexanedioïque', 'HOOC–(CH2)4–COOH', 146], ['hexane-1,6-diamine', 'H2N–(CH2)6–NH2', 116]], motif: 'CO–(CH2)4–CO–NH–(CH2)6–NH', pm: 'H2O', k: 2, Mpm: 18, fam: 'polyamide', liaison: 'amide –CO–NH–', Mm: 226, usage: 'fibres, textiles' },
+    { nom: 'Kevlar®', mono: [['acide benzène-1,4-dicarboxylique', 'HOOC–C6H4–COOH', 166], ['benzène-1,4-diamine', 'H2N–C6H4–NH2', 108]], motif: 'CO–C6H4–CO–NH–C6H4–NH', pm: 'H2O', k: 2, Mpm: 18, fam: 'polyamide (aromatique, aramide)', liaison: 'amide –CO–NH–', Mm: 238, usage: 'gilets pare-balles, câbles' },
+    { nom: 'PET (polytéréphtalate d’éthylène)', mono: [['acide benzène-1,4-dicarboxylique', 'HOOC–C6H4–COOH', 166], ['éthane-1,2-diol', 'HO–CH2–CH2–OH', 62]], motif: 'CO–C6H4–CO–O–CH2–CH2–O', pm: 'H2O', k: 2, Mpm: 18, fam: 'polyester', liaison: 'ester –CO–O–', Mm: 192, usage: 'bouteilles, fibres textiles' },
+    { nom: 'polyester (hydroquinone / chlorure de téréphtaloyle)', mono: [['hydroquinone', 'HO–C6H4–OH', 110], ['chlorure de téréphtaloyle', 'ClOC–C6H4–COCl', 203]], motif: 'O–C6H4–O–CO–C6H4–CO', pm: 'HCl', k: 2, Mpm: 36.5, fam: 'polyester', liaison: 'ester –CO–O–', Mm: 240, usage: 'polyesters aromatiques' },
+    { nom: 'polyamide 11 (Rilsan®)', mono: [['acide 11-aminoundécanoïque', 'H2N–(CH2)10–COOH', 201]], motif: 'NH–(CH2)10–CO', pm: 'H2O', k: 1, Mpm: 18, fam: 'polyamide', liaison: 'amide –CO–NH–', Mm: 183, usage: 'tubes, fibres synthétiques' },
+    { nom: 'acide polylactique (PLA)', mono: [['acide lactique', 'CH3–CH(OH)–COOH', 90]], motif: 'O–CH(CH3)–CO', pm: 'H2O', k: 1, Mpm: 18, fam: 'polyester', liaison: 'ester –CO–O–', Mm: 72, usage: 'emballages biodégradables, fils de suture' }];
+  var PU = { nom: 'polyuréthane', mono: [['diisocyanate (MDI)', 'OCN–C6H4–CH2–C6H4–NCO', 250], ['éthane-1,2-diol', 'HO–CH2–CH2–OH', 62]], motif: 'CO–NH–C6H4–CH2–C6H4–NH–CO–O–CH2–CH2–O', pm: '', k: 0, Mpm: 0, fam: 'polyuréthane', liaison: 'uréthane –NH–CO–O–', Mm: 312, usage: 'mousses, vernis' };
+  var TYPES = { add: 'Polyaddition (polymérisation en chaîne) : la double liaison C=C s’ouvre, aucun atome n’est perdu', cond: 'Polycondensation (par étapes) : chaque liaison formée entre deux groupes caractéristiques élimine une petite molécule', pu: 'Polyaddition par étapes : deux groupes caractéristiques s’additionnent sans élimination de petite molécule', faux: 'Copolymérisation en chaîne : deux doubles liaisons C=C s’ouvrent l’une sur l’autre' };
+
+  /* 1. Synthèse d’un polymère */
+  function genSynthese() {
+    var r = Math.random(), P, t;
+    if (r < 0.45) { P = C(ADD); t = 'add'; } else if (r < 0.88) { P = C(COND); t = 'cond'; } else { P = PU; t = 'pu'; }
+    var DP = C([120, 140, 250, 500, 800, 1200, 2500, 5000]);
+    var Mmono = P.mono.reduce(function (a, m) { return a + m[2]; }, 0);
+    var monoTxt = P.mono.map(function (m) { return m[0] + ' : ' + s(m[1]); }).join('<br>');
+    var ctx = '<p>On étudie la synthèse du <b>' + P.nom + '</b> (' + P.usage + ').</p><p class="exo-eq-chimique" style="font-weight:500;text-align:left">' + (P.mono.length > 1 ? 'Monomères :<br>' : 'Monomère : ') + monoTxt + '</p><p class="exo-aide">Données : ' + MASSES + '.</p>';
+    var nM = P.mono.length === 1 ? 'n ' + s(P.mono[0][1]) : 'n ' + s(P.mono[0][1]) + ' + n ' + s(P.mono[1][1]);
+    var pmCoef = P.k === 2 ? '2n' : 'n';
+    var eqOk = nM + ' → ' + mot(P.motif) + (t === 'cond' ? ' + ' + pmCoef + ' ' + s(P.pm) : '');
+    var et = [];
+    et.push({ type: 'choix', q: '<b>Identifier</b> le type de polymérisation mis en jeu.',
+      options: [{ t: TYPES.add, ok: t === 'add', pourquoi: 'Le monomère n’a pas de double liaison C=C, ou bien la réaction forme une liaison entre deux groupes caractéristiques.' },
+        { t: TYPES.cond, ok: t === 'cond', pourquoi: t === 'add' ? 'Le monomère possède une double liaison C=C : il n’y a pas de groupes caractéristiques qui réagissent en éliminant une petite molécule.' : 'Ici, la réaction de –N=C=O avec –OH ne libère aucune petite molécule.' },
+        { t: TYPES.pu, ok: t === 'pu', pourquoi: 'C’est le cas des polyuréthanes (diisocyanate + diol), pas de ce polymère.' },
+        { t: TYPES.faux, ok: false, pourquoi: 'Ce n’est pas le mécanisme mis en jeu ici.' }],
+      corr: t === 'add' ? 'Le monomère possède une double liaison C=C : c’est une <b>polyaddition</b>. Tous les atomes du monomère se retrouvent dans le polymère.' : t === 'cond' ? 'Les groupes ' + (P.fam.indexOf('amide') >= 0 ? 'acide carboxylique (ou dérivé) et amine' : 'acide carboxylique (ou dérivé) et alcool') + ' réagissent en éliminant ' + s(P.pm) + ' : c’est une <b>polycondensation</b>.' : 'Les groupes isocyanate –N=C=O et hydroxyle –OH s’additionnent sans perte d’atomes : c’est une <b>polyaddition par étapes</b>.' });
+    var fauxMotifs = t === 'add' ? P.faux.map(function (f, i) { return { t: mot(f), ok: false, pourquoi: i === 0 ? 'La double liaison C=C a disparu dans le polymère : elle a servi à relier les motifs.' : 'Le substituant reste porté par un carbone de la chaîne principale : on ne l’intègre pas à la chaîne.' }; }).concat([{ t: s(P.mono[0][1]), ok: false, pourquoi: 'C’est le monomère, pas le motif du polymère.' }])
+      : [{ t: mot(P.mono.map(function (m) { return m[1]; }).join(' + ')), ok: false, pourquoi: 'Le motif n’est pas la juxtaposition des monomères : ' + (t === 'cond' ? 'chaque liaison formée a éliminé ' + s(P.pm) + '.' : 'les groupes ont réagi entre eux.') },
+         { t: mot(P.motif.replace(/^(CO|NH|O)–/, '')), ok: false, pourquoi: 'Le motif est incomplet : il manque un atome de la liaison ' + P.liaison + '.' },
+         { t: s(P.mono[0][1]), ok: false, pourquoi: 'C’est un monomère, pas le motif du polymère.' }];
+    et.push({ type: 'choix', q: '<b>Identifier</b> le motif du polymère.', options: [{ t: mot(P.motif), ok: true }].concat(fauxMotifs),
+      corr: 'Le motif est <b>' + mot(P.motif) + '</b>' + (t === 'add' ? ' : la double liaison s’est ouverte pour relier les motifs.' : ', avec la liaison ' + P.liaison + ' entre les fragments.') });
+    var eqF = t === 'add' ? [{ t: nM + ' → ' + mot(P.motif) + ' + n H<sub>2</sub>O', ok: false, pourquoi: 'Une polyaddition n’élimine aucune petite molécule.' },
+        { t: s(P.mono[0][1]) + ' → ' + mot(P.motif), ok: false, pourquoi: 'Il faut n monomères pour former un polymère de n motifs : l’équation n’est pas équilibrée.' },
+        { t: nM + ' → ' + mot(P.faux[0]), ok: false, pourquoi: 'Le motif garde à tort la double liaison.' }]
+      : t === 'cond' ? [{ t: nM + ' → ' + mot(P.motif), ok: false, pourquoi: 'Une polycondensation élimine une petite molécule (' + s(P.pm) + ') à chaque liaison formée.' },
+        { t: nM + ' → ' + mot(P.motif) + ' + ' + (P.k === 2 ? 'n' : '2n') + ' ' + s(P.pm), ok: false, pourquoi: 'Comptez les liaisons ' + P.liaison + ' par motif : il y en a ' + P.k + ', donc ' + pmCoef + ' ' + s(P.pm) + '.' },
+        { t: nM + ' → ' + mot(P.motif) + ' + ' + pmCoef + ' ' + (P.pm === 'H2O' ? 'HCl' : 'H<sub>2</sub>O'), ok: false, pourquoi: 'La petite molécule éliminée provient des groupes qui réagissent : ici ' + s(P.pm) + '.' }]
+      : [{ t: nM + ' → ' + mot(P.motif) + ' + 2n H<sub>2</sub>O', ok: false, pourquoi: 'L’addition d’un –OH sur un –N=C=O n’élimine aucune molécule.' },
+        { t: nM + ' → ' + mot('CO–NH–C6H4–CH2–C6H4–NH–CO') + ' + n ' + s('HO–CH2–CH2–OH'), ok: false, pourquoi: 'Le diol est incorporé dans le motif.' },
+        { t: s(P.mono[0][1]) + ' + ' + s(P.mono[1][1]) + ' → ' + mot(P.motif), ok: false, pourquoi: 'Il faut n molécules de chaque monomère.' }];
+    et.push({ type: 'choix', q: '<b>Choisir</b> l’équation de la réaction de synthèse du polymère.', options: [{ t: eqOk, ok: true }].concat(eqF),
+      corr: eqOk + (t === 'cond' ? '. (En toute rigueur, une chaîne de n motifs garde un groupe libre à chaque extrémité et ' + (P.k === 2 ? '2n − 1' : 'n − 1') + ' molécules sont éliminées ; pour n grand, on écrit ' + pmCoef + '.)' : '.') });
+    if (t !== 'add') et.push({ type: 'choix', q: '<b>Identifier</b>, en justifiant, la famille du polymère.',
+      options: [['polyamide', 'amide –CO–NH–'], ['polyester', 'ester –CO–O–'], ['polyuréthane', 'uréthane –NH–CO–O–'], ['polyéther', 'éther –O–']].map(function (f) { var ok = P.fam.indexOf(f[0]) === 0; return { t: f[0].charAt(0).toUpperCase() + f[0].slice(1) + ' : le motif contient la liaison ' + f[1], ok: ok, pourquoi: 'Cherchez la liaison qui relie les fragments dans le motif : ici c’est la liaison ' + P.liaison + '.' }; }),
+      corr: 'Le motif contient la liaison <b>' + P.liaison + '</b> : c’est un <b>' + P.fam + '</b>.' });
+    var pieg = [{ v: Mmono, msg: t === 'cond' ? 'C’est la somme des masses molaires des monomères : retirez ' + P.k + ' × M(' + s(P.pm) + ').' : 'Vérifiez le décompte des atomes.' }];
+    if (t === 'cond') pieg.push({ v: Mmono - P.Mpm, msg: 'Le motif contient ' + P.k + ' liaisons ' + P.liaison + ' : il faut retirer ' + P.k + ' × M(' + s(P.pm) + ').' });
+    et.push({ type: 'nombre', q: '<b>Calculer</b> la masse molaire du motif.', rep: P.Mm, unite: 'g.mol<sup>-1</sup>', tol: 0.01,
+      pieges: pieg.filter(function (q) { return Math.abs(q.v - P.Mm) > 0.5; }),
+      corr: 'M(motif) = ' + (t === 'cond' ? 'somme des monomères − ' + P.k + ' × M(' + s(P.pm) + ') = ' + nb(Mmono, 4) + ' − ' + nb(P.k * P.Mpm, 3) + ' = ' : '') + '<b>' + nb(P.Mm, 4) + ' g.mol<sup>-1</sup></b>' + (t === 'cond' ? '.' : ' (même masse que le monomère : une polyaddition ne perd aucun atome).') });
+    var Mp = DP * P.Mm;
+    et.push({ type: 'nombre', q: '<b>Calculer</b> la masse molaire moyenne du polymère, sachant que l’indice de polymérisation vaut DP = ' + DP + '.', rep: Mp, unite: 'g.mol<sup>-1</sup>', tol: 0.02,
+      pieges: [{ v: DP * Mmono, msg: 'Vous avez utilisé la masse des monomères au lieu de celle du motif.' }, { v: P.Mm / DP, msg: 'M = DP × M(motif) : on multiplie.' }, { v: DP / P.Mm, msg: 'M = DP × M(motif).' }].filter(function (q) { return Math.abs(q.v - Mp) > Mp * 0.01; }),
+      corr: 'M = DP × M(motif) = ' + DP + ' × ' + nb(P.Mm, 4) + ' = <b>' + nb(Mp) + ' g.mol<sup>-1</sup></b>' + (DP < 100 ? '' : '') + '.' });
+    var Mn2 = cs(A(15000, 300000), 3), DP2 = Mn2 / P.Mm;
+    et.push({ type: 'nombre', q: 'Un autre échantillon a une masse molaire moyenne en nombre M<sub>n</sub> = ' + nb(Mn2) + ' g.mol<sup>-1</sup>. <b>Déterminer</b> son degré moyen de polymérisation DP<sub>n</sub>.', rep: DP2, unite: '', tol: 0.02,
+      pieges: [{ v: Mn2 / Mmono, msg: 'Divisez par la masse molaire du motif, pas par celle des monomères.' }, { v: Mn2 * P.Mm, msg: 'DP<sub>n</sub> = M<sub>n</sub> / M(motif) : on divise.' }].filter(function (q) { return Math.abs(q.v - DP2) > DP2 * 0.01; }),
+      corr: 'DP<sub>n</sub> = M<sub>n</sub> / M(motif) = ' + nb(Mn2) + ' / ' + nb(P.Mm, 4) + ' ≈ <b>' + nb(DP2) + '</b> motifs par chaîne en moyenne.' });
+    return { contexte: ctx, etapes: et };
+  }
+
+  /* 2. Masses molaires moyennes et indice de polymolécularité */
+  function genMoyennes() {
+    var P = C(ADD.concat(COND)), k = C([3, 4]), pops = [];
+    for (var i = 0; i < k; i++) pops.push({ N: Math.round(A(1, 10)) * C([1, 2, 5]), DP: Math.round(A(200, 3000) / 10) * 10 });
+    pops.forEach(function (p) { p.M = p.DP * P.Mm; });
+    var N = pops.reduce(function (a, p) { return a + p.N; }, 0), sNM = pops.reduce(function (a, p) { return a + p.N * p.M; }, 0), sNM2 = pops.reduce(function (a, p) { return a + p.N * p.M * p.M; }, 0);
+    var Mn = sNM / N, Mw = sNM2 / sNM, Ip = Mw / Mn, moy = pops.reduce(function (a, p) { return a + p.M; }, 0) / k;
+    var tab = '<div class="exo-tableau"><table><tr><th>Population i</th>' + pops.map(function (p, j) { return '<td>' + (j + 1) + '</td>'; }).join('') + '</tr><tr><th>Nombre de chaînes N<sub>i</sub> (× 10<sup>15</sup>)</th>' + pops.map(function (p) { return '<td>' + p.N + '</td>'; }).join('') + '</tr><tr><th>M<sub>i</sub> (g.mol<sup>-1</sup>)</th>' + pops.map(function (p) { return '<td>' + nb(p.M, 4) + '</td>'; }).join('') + '</tr></table></div>';
+    var ctx = '<p>Un échantillon de ' + P.nom + ' (M(motif) = ' + nb(P.Mm, 4) + ' g.mol<sup>-1</sup>) contient plusieurs populations de chaînes :</p>' + tab + '<p class="exo-aide">M<sub>n</sub> = Σ N<sub>i</sub>M<sub>i</sub> / Σ N<sub>i</sub> ; M<sub>w</sub> = Σ N<sub>i</sub>M<sub>i</sub><sup>2</sup> / Σ N<sub>i</sub>M<sub>i</sub> ; I<sub>p</sub> = M<sub>w</sub> / M<sub>n</sub>.</p>';
+    return { contexte: ctx, etapes: [
+      { type: 'nombre', q: '<b>Calculer</b> la masse molaire moyenne en nombre M<sub>n</sub>.', rep: Mn, unite: 'g.mol<sup>-1</sup>', tol: 0.02,
+        pieges: [{ v: moy, msg: 'C’est la moyenne simple des M<sub>i</sub> : chaque M<sub>i</sub> doit être pondérée par son nombre de chaînes N<sub>i</sub>.' }, { v: Mw, msg: 'C’est la moyenne en masse M<sub>w</sub>.' }, { v: sNM, msg: 'Il faut diviser par le nombre total de chaînes Σ N<sub>i</sub>.' }].filter(function (q) { return Math.abs(q.v - Mn) > Mn * 0.02; }),
+        corr: 'Σ N<sub>i</sub> = ' + N + ' ; Σ N<sub>i</sub>M<sub>i</sub> = ' + nb(sNM, 4) + ' ; M<sub>n</sub> = ' + nb(sNM, 4) + ' / ' + N + ' = <b>' + nb(Mn) + ' g.mol<sup>-1</sup></b> (le facteur 10<sup>15</sup> se simplifie).' },
+      { type: 'nombre', q: '<b>Calculer</b> la masse molaire moyenne en masse M<sub>w</sub>.', rep: Mw, unite: 'g.mol<sup>-1</sup>', tol: 0.02,
+        pieges: [{ v: Mn, msg: 'C’est M<sub>n</sub> : pour M<sub>w</sub>, chaque M<sub>i</sub> est pondérée par la masse N<sub>i</sub>M<sub>i</sub>.' }, { v: sNM2 / N, msg: 'Il faut diviser par Σ N<sub>i</sub>M<sub>i</sub>, pas par Σ N<sub>i</sub>.' }].filter(function (q) { return Math.abs(q.v - Mw) > Mw * 0.02; }),
+        corr: 'M<sub>w</sub> = Σ N<sub>i</sub>M<sub>i</sub><sup>2</sup> / Σ N<sub>i</sub>M<sub>i</sub> = ' + nb(sNM2, 4) + ' / ' + nb(sNM, 4) + ' = <b>' + nb(Mw) + ' g.mol<sup>-1</sup></b>. On a bien M<sub>w</sub> ≥ M<sub>n</sub>.' },
+      { type: 'nombre', q: '<b>Calculer</b> l’indice de polymolécularité I<sub>p</sub>.', rep: Ip, unite: '', tol: 0.02,
+        pieges: [{ v: 1 / Ip, msg: 'Rapport inversé : I<sub>p</sub> = M<sub>w</sub>/M<sub>n</sub> ≥ 1.' }],
+        corr: 'I<sub>p</sub> = M<sub>w</sub> / M<sub>n</sub> = ' + nb(Mw) + ' / ' + nb(Mn) + ' = <b>' + nb(Ip) + '</b>. Plus I<sub>p</sub> est proche de 1, plus les chaînes ont des tailles voisines.' },
+      { type: 'nombre', q: '<b>En déduire</b> le degré moyen de polymérisation en nombre DP<sub>n</sub>.', rep: Mn / P.Mm, unite: '', tol: 0.02,
+        pieges: [{ v: Mw / P.Mm, msg: 'C’est DP<sub>w</sub> : le degré moyen en nombre se calcule avec M<sub>n</sub>.' }],
+        corr: 'DP<sub>n</sub> = M<sub>n</sub> / M(motif) = ' + nb(Mn) + ' / ' + nb(P.Mm, 4) + ' = <b>' + nb(Mn / P.Mm) + '</b>.' },
+      { type: 'choix', q: '<b>Indiquer</b> ce que deviendrait I<sub>p</sub> si toutes les chaînes avaient la même longueur.',
+        options: [{ t: 'I<sub>p</sub> = 1 (polymère monodispersé)', ok: true }, { t: 'I<sub>p</sub> = 0', ok: false, pourquoi: 'On a toujours M<sub>w</sub> ≥ M<sub>n</sub>, donc I<sub>p</sub> ≥ 1.' }, { t: 'I<sub>p</sub> tend vers l’infini', ok: false, pourquoi: 'C’est l’inverse : une distribution très large donne un I<sub>p</sub> élevé.' }, { t: 'I<sub>p</sub> = DP<sub>n</sub>', ok: false, pourquoi: 'I<sub>p</sub> compare deux moyennes, il ne dépend pas de la longueur des chaînes.' }],
+        corr: 'Si toutes les chaînes sont identiques, M<sub>w</sub> = M<sub>n</sub> et <b>I<sub>p</sub> = 1</b> : le polymère est monodispersé.' }] };
+  }
+
+  /* 3. Questions de cours (tirage de 6 questions) */
+  var BANQUE = [
+    ['Un polymère <b>thermoplastique</b> :', 'se ramollit quand on le chauffe, ce qui permet de le remettre en forme', [['durcit de façon irréversible sous l’action de la chaleur', 'C’est un thermodurcissable.'], ['est toujours totalement cristallin', 'La plupart des thermoplastiques sont amorphes ou semi-cristallins.'], ['est insoluble dans tous les solvants', 'C’est le cas des polymères fortement réticulés (thermodurcissables).']]],
+    ['Un polymère <b>thermodurcissable</b> :', 'durcit de façon irréversible, le plus souvent sous l’action de la chaleur', [['se ramollit à chaque chauffage', 'C’est un thermoplastique.'], ['se dissout facilement dans un bon solvant', 'Sa structure réticulée l’empêche de se dissoudre : il gonfle seulement.'], ['est formé de chaînes linéaires indépendantes', 'Ses chaînes sont reliées entre elles (réseau réticulé).']]],
+    ['La <b>température de transition vitreuse</b> T<sub>g</sub> correspond au passage :', 'de l’état vitreux (rigide, cassant) à l’état caoutchoutique (souple)', [['de l’état solide à l’état liquide visqueux', 'C’est la fusion (T<sub>fus</sub>), qui ne concerne que la partie cristalline.'], ['de l’état amorphe à l’état cristallin', 'C’est une cristallisation.'], ['de l’état liquide à l’état gazeux', 'Les polymères se décomposent avant de se vaporiser.']]],
+    ['La transition vitreuse concerne :', 'uniquement les zones amorphes du polymère', [['uniquement les zones cristallines', 'Ce sont les zones amorphes dont les chaînes deviennent mobiles.'], ['les polymères 100 % cristallins', 'Un polymère totalement cristallin n’a pas de transition vitreuse.'], ['seulement les thermodurcissables', 'Elle existe pour tout polymère qui possède une partie amorphe.']]],
+    ['Un polymère est mis dans un bon solvant : il <b>gonfle sans se dissoudre</b>. On en déduit qu’il est :', 'réticulé (thermodurcissable)', [['linéaire (thermoplastique)', 'Un thermoplastique linéaire finit par se dissoudre dans un bon solvant.'], ['de faible masse molaire', 'Un polymère de faible masse molaire se dissout plus facilement.'], ['totalement amorphe', 'Le gonflement sans dissolution traduit un réseau tridimensionnel.']]],
+    ['Un copolymère de motifs A et B de séquence <b>ABABABABAB</b> est un copolymère :', 'alterné', [['statistique', 'Dans un copolymère statistique, A et B se succèdent au hasard.'], ['séquencé (à blocs)', 'Un copolymère séquencé enchaîne de longues séquences AAAA puis BBBB.'], ['greffé', 'Un copolymère greffé porte des chaînes latérales d’un motif sur une chaîne de l’autre.']]],
+    ['Un <b>homopolymère</b> est obtenu :', 'à partir d’un seul monomère', [['à partir de deux monomères différents', 'C’est un copolymère.'], ['uniquement par polycondensation', 'Le mode de synthèse n’intervient pas dans cette définition.'], ['avec des chaînes toutes de même longueur', 'C’est la définition d’un polymère monodispersé.']]],
+    ['On parle d’<b>oligomère</b> lorsque :', 'le degré de polymérisation est faible (de l’ordre de la dizaine à la centaine)', [['le degré de polymérisation dépasse le million', 'C’est un haut polymère.'], ['le polymère contient deux monomères', 'C’est un copolymère.'], ['le polymère est réticulé', 'La réticulation n’a rien à voir avec la taille des chaînes.']]],
+    ['Le <b>taux de cristallinité massique</b> est :', 'le rapport de la masse des phases cristallines à la masse de l’échantillon', [['le rapport M<sub>w</sub>/M<sub>n</sub>', 'C’est l’indice de polymolécularité.'], ['la température de fusion de la partie cristalline', 'C’est une température, pas un taux.'], ['le nombre de motifs par chaîne', 'C’est le degré de polymérisation.']]],
+    ['En DSC, la <b>fusion</b> d’un polymère semi-cristallin apparaît sous la forme :', 'd’un pic endothermique', [['d’un pic exothermique', 'C’est la cristallisation qui est exothermique.'], ['d’une simple marche (changement de ligne de base)', 'C’est l’allure de la transition vitreuse.'], ['d’aucun signal', 'La fusion absorbe de l’énergie : elle donne un pic.']]],
+    ['En DSC, la <b>transition vitreuse</b> apparaît sous la forme :', 'd’une marche (changement de ligne de base), T<sub>g</sub> se lisant au milieu de la pente', [['d’un pic endothermique', 'C’est l’allure d’une fusion.'], ['d’un pic exothermique', 'C’est l’allure d’une cristallisation.'], ['d’un pic dont l’aire donne T<sub>g</sub>', 'L’aire d’un pic donne une énergie, pas une température.']]],
+    ['En DSC, la <b>cristallisation à froid</b> des zones amorphes apparaît sous la forme :', 'd’un pic exothermique', [['d’un pic endothermique', 'C’est la fusion qui est endothermique.'], ['d’une marche', 'C’est la transition vitreuse.'], ['d’une chute brutale du signal à 0', 'Ce n’est pas un phénomène thermique.']]],
+    ['Pour un polymère, la température d’utilisation doit être :', 'suffisamment éloignée de T<sub>g</sub> pour éviter les ramollissements', [['égale à T<sub>g</sub>', 'Autour de T<sub>g</sub>, les propriétés mécaniques varient fortement.'], ['supérieure à T<sub>fus</sub>', 'Au-delà de T<sub>fus</sub>, le polymère devient un liquide visqueux.'], ['sans lien avec T<sub>g</sub>', 'T<sub>g</sub> fixe justement les limites d’utilisation et de mise en forme.']]],
+    ['Une polymérisation en chaîne :', 'nécessite un centre actif (radical, anion, cation) qui se régénère à chaque addition', [['élimine une petite molécule à chaque étape', 'C’est une polycondensation.'], ['forme d’abord des dimères, puis des trimères, puis des oligomères', 'C’est une polymérisation par étapes.'], ['fonctionne avec n’importe quel monomère bifonctionnel', 'Il faut un monomère insaturé (C=C) ou un hétérocycle.']]],
+    ['Le <b>module d’Young</b> E d’un matériau :', 'caractérise sa résistance à l’allongement dans le domaine élastique (E = σ/ε)', [['est la contrainte à la rupture', 'La rupture se produit après le domaine élastique.'], ['est sans unité', 'E s’exprime comme une contrainte, en MPa en général.'], ['augmente quand le matériau est plus facile à étirer', 'Plus E est grand, plus il faut d’effort pour étirer le matériau.']]]];
+  function genCours() {
+    var qs = M(BANQUE).slice(0, 6);
+    var et = qs.map(function (b) { return { type: 'choix', q: '<b>Choisir</b> la bonne proposition. ' + b[0], options: [{ t: b[1], ok: true }].concat(b[2].map(function (f) { return { t: f[0], ok: false, pourquoi: f[1] }; })), corr: '<b>' + b[0].replace(/<\/?b>/g, '') + '</b> ' + b[1] + '.' }; });
+    var sig = cs(A(5, 60), 2), eps = cs(A(0.002, 0.03), 2), E = sig / eps;
+    et.push({ type: 'nombre', q: 'Lors d’un essai de traction dans le domaine élastique, une éprouvette subit une contrainte σ = ' + nb(sig, 2) + ' MPa pour un allongement relatif ε = ' + nb(eps, 2) + '. <b>Calculer</b> le module d’Young E.', rep: E, unite: 'MPa', tol: 0.02,
+      pieges: [{ v: sig * eps, msg: 'E = σ / ε : on divise.' }, { v: eps / sig, msg: 'Rapport inversé : E = σ / ε.' }, { v: sig / (100 * eps), msg: 'ε est un allongement relatif sans unité, à utiliser tel quel (pas en %).' }],
+      corr: 'E = σ / ε = ' + nb(sig, 2) + ' / ' + nb(eps, 2) + ' = <b>' + nb(E) + ' MPa</b>.' });
+    return { contexte: '<p>Six questions de cours tirées au hasard, puis un calcul de module d’Young.</p>', etapes: et };
+  }
+
+  Exo.lancer('exo-p10-synthese', genSynthese);
+  Exo.lancer('exo-p10-moyennes', genMoyennes);
+  Exo.lancer('exo-p10-cours', genCours);
+})();
+</script>
+<script data-goatcounter="https://chimie-winckler.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
