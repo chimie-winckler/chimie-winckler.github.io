@@ -119,7 +119,7 @@ var Exo = (function () {
         if (isNaN(v)) { retour.className = 'exo-retour attention'; retour.innerHTML = 'Entrez un nombre (virgule acceptée ; puissances de 10 : 1,2e-3).'; return; }
         ok = proche(v, et.rep, et.tol || 0.03);
         if (!ok) {
-          (et.pieges || []).some(function (p) { if (proche(v, p.v, et.tol || 0.03)) { msg = p.msg; return true; } });
+          (et.pieges || []).some(function (p) { if (proche(p.v, et.rep, 2 * (et.tol || 0.03))) return false; if (proche(v, p.v, et.tol || 0.03)) { msg = p.msg; return true; } });
           if (!msg && proche(v, -et.rep, et.tol || 0.03)) msg = 'Erreur de signe.';
           if (!msg) [1e3, 1e-3, 60, 1 / 60, 3600, 1 / 3600].some(function (f) { if (proche(v, et.rep * f, et.tol || 0.03)) { msg = 'L’ordre de grandeur est faux : vérifiez les unités et les conversions.'; return true; } });
         }
