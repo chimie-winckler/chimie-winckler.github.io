@@ -84,7 +84,7 @@
     var t = r.filter(function (x) { return x[2] > 0; }), pre = '';
     if (abr) {
       var tot = 0, cut = -1, g = { 18: 'Ar', 36: 'Kr', 54: 'Xe' }, gz = null;
-      t.forEach(function (x, i) { tot += x[2]; if (g[tot] && x[1] === 1 && (abr === true || tot <= abr)) { cut = i; gz = g[tot]; } });
+      t.forEach(function (x, i) { tot += x[2]; if (g[tot] && x[1] === 1 && i < t.length - 1 && (abr === true || tot <= abr)) { cut = i; gz = g[tot]; } });
       if (cut >= 0 && cut < t.length - 1) { pre = '[' + gz + '] '; t = t.slice(cut + 1); }
     }
     return pre + t.map(function (x) { return x[0] + L[x[1]] + '<sup>' + x[2] + '</sup>'; }).join(' ');
@@ -254,8 +254,11 @@
     if (!x.noang) {
       var angs = ['180°', '120°', '109,5°', '≈ 107°', '≈ 104,5°', '90°'];
       var ao = [{ t: g[1], ok: true }].concat(M(angs.filter(function (a) { return a !== g[1]; })).slice(0, 3).map(function (a) {
-        return { t: a, ok: false, pourquoi: (x.m && a === '109,5°') ? 'Un doublet non liant est plus encombrant qu’un doublet liant : il referme l’angle sous 109,5°.' : 'Angle associé à une autre géométrie.' }; }));
-      et.push({ type: 'choix', q: 'Quel angle de liaison attend-on ?', options: ao, corr: 'Géométrie ' + g[0] + ' : angle <b>' + g[1] + '</b>.' + (x.m ? ' Les doublets non liants, plus encombrants, referment les angles par rapport à 109,5°.' : '') });
+        var ref = x.n + x.m === 3 ? '120°' : '109,5°', msg = 'Angle associé à une autre géométrie.';
+        if (x.m && a === ref) msg = 'C’est l’angle de la figure de répulsion (' + (ref === '120°' ? 'triangulaire plane' : 'tétraédrique') + '), mais un doublet non liant, plus encombrant qu’un doublet liant, referme l’angle en dessous de ' + ref + '.';
+        else if (x.m && x.n + x.m === 3 && a === '109,5°') msg = '109,5° correspond à un environnement tétraédrique (4 doublets) ; ici l’atome central a 3 doublets (figure triangulaire plane, 120°) et le doublet non liant referme l’angle un peu en dessous de 120°.';
+        return { t: a, ok: false, pourquoi: msg }; }));
+      et.push({ type: 'choix', q: 'Quel angle de liaison attend-on ?', options: ao, corr: 'Géométrie ' + g[0] + ' : angle <b>' + g[1] + '</b>.' + (x.m ? ' Les doublets non liants, plus encombrants, referment les angles par rapport à l’angle de la figure de répulsion (' + (x.n + x.m === 3 ? '120°, triangulaire plane' : '109,5°, tétraédrique') + ').' : '') });
     }
     return { contexte: '<p>Édifice étudié : <b>' + x.f + '</b> (atome central : ' + x.c + ').</p>', etapes: et };
   });
