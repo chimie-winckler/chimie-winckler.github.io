@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Réactivité et mécanismes – Chimie de Synthèse</title>
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=20261105a">
+</head>
+<body>
+<header class="entete">
+  <div class="conteneur entete-inner">
+    <a class="marque" href="index.html">⚗️ Chimie de Synthèse</a>
+    <button class="burger" aria-label="Menu" onclick="document.body.classList.toggle('menu-ouvert')">☰</button>
+    <nav><ul class="menu">
+<li><a href="index.html">Accueil</a></li>
+<li><a href="matieres-premieres.html">Matières premières</a><ul class="sous-menu"><li><a href="fds.html">FDS</a></li><li><a href="fds-simplifiee.html">FDS simplifiée</a></li><li><a href="gestion-dechets.html">Gestion des déchets en salle de TP</a></li></ul></li>
+<li><a href="techniques.html">Techniques</a><ul class="sous-menu"><li><a href="verrerie-et-montages.html">Verrerie et montages</a></li><li><a href="techniques-experimentales.html">Techniques expérimentales</a></li></ul></li>
+<li><a href="ressources.html">Ressources</a><ul class="sous-menu"><li><a href="cours.html">Cours</a></li><li><a href="tp.html">TP</a></li><li><a href="evaluations.html">Évaluations</a></li><li><a href="autres.html">Autres</a></li></ul></li>
+<li><a href="entrainement.html" class="actif">S’entraîner</a></li>
+<li><a href="annonces.html">Annonces</a></li>
+    </ul></nav>
+    <button type="button" class="theme-btn" id="theme-btn" aria-label="Changer de thème">🌙</button>
+  </div>
+</header>
+<div class="bandeau">
+  <div class="conteneur">
+    <p class="fil"><a href="index.html">Accueil</a> › <a href="entrainement.html">S’entraîner</a> › Réactivité et mécanismes</p>
+    <p class="surtitre">BTS Métiers de la Chimie – Partie 4 : réactivité</p>
+    <h1>Réactivité et mécanismes</h1>
+    <p class="intro">Types de réactions, sites nucléophiles et électrophiles, flèches courbes des mécanismes (à vérifier : certaines sont fausses !) et régiosélectivité. D’après les activités de la partie 4.</p>
+  </div>
+</div>
+<main class="conteneur">
+<nav class="sommaire"><a href="#types">Types de réactions</a><a href="#sites">Sites nucléophiles et électrophiles</a><a href="#meca">Mécanismes : les flèches sont-elles justes ?</a><a href="#regio">Régiosélectivité : Markovnikov ou Kharasch</a></nav><section class="exo exo-bloc" id="types">
+<div class="exo-tete"><h2>Types de réactions</h2><button type="button" class="bouton" data-nouveau="exo-p4-types">Nouvel exercice</button></div>
+<p class="exo-consigne">Substitution, addition, élimination, acido-basique, transposition, oxydo-réduction ; insaturations ; nature du réactif.</p>
+<div id="exo-p4-types"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="sites">
+<div class="exo-tete"><h2>Sites nucléophiles et électrophiles</h2><button type="button" class="bouton" data-nouveau="exo-p4-sites">Nouvel exercice</button></div>
+<p class="exo-consigne">Doublets non liants, liaisons π, charges, polarisation des liaisons et électronégativité.</p>
+<div id="exo-p4-sites"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="meca">
+<div class="exo-tete"><h2>Mécanismes : les flèches sont-elles justes ?</h2><button type="button" class="bouton" data-nouveau="exo-p4-meca">Nouvel exercice</button></div>
+<p class="exo-consigne">Un étudiant a écrit un mécanisme : repérer l’erreur éventuelle (sens de la flèche, rupture, mauvais site, flèche en trop…). Le mécanisme correct s’affiche dans la correction. SN2, addition électrophile, acido-basique, protonation, addition nucléophile, organomagnésien.</p>
+<div id="exo-p4-meca"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="regio">
+<div class="exo-tete"><h2>Régiosélectivité : Markovnikov ou Kharasch</h2><button type="button" class="bouton" data-nouveau="exo-p4-regio">Nouvel exercice</button></div>
+<p class="exo-consigne">Addition de HCl, HBr ou H<sub>2</sub>O sur un alcène : intermédiaire le plus stable et produit majoritaire.</p>
+<div id="exo-p4-regio"><p>Chargement…</p></div>
+</section><p><a href="entrainement.html">← Retour aux exercices</a></p>
+</main>
+<footer class="pied"><div class="conteneur">BTS Métiers de la Chimie – Synthèse</div></footer>
+<script src="theme.js?v=1"></script>
+<script src="exo.js?v=20261105a"></script>
+<script src="chem.js?v=20261105c"></script>
+<script>
+/* ===== Partie 4 : réactivité, mécanismes ===== */
+(function () {
+  var C = Exo.choisir, M = Exo.melanger;
+  function s(x) { return x.replace(/([A-Za-z\)])(\d+)/g, '$1<sub>$2</sub>'); }
+  var FL = ' <span aria-hidden="true">⟶</span> ';
+  function A(id, x, y, lab, o) { var a = { id: id, x: x, y: y, lab: lab }; for (var k in (o || {})) a[k] = o[k]; return a; }
+
+  /* ---------- 1. Types de réactions ---------- */
+  var TYPES = ['substitution', 'addition', 'élimination', 'acido-basique', 'transposition', 'oxydo-réduction'];
+  var DEF = {
+    substitution: 'un atome ou groupe d’atomes du substrat est remplacé par un autre',
+    addition: 'réactif et substrat se lient, le produit contient tous leurs atomes',
+    'élimination': 'perte de deux atomes ou groupes portés par deux sites voisins, avec création d’une liaison multiple',
+    'acido-basique': 'échange d’un proton H<sup>+</sup> entre deux entités',
+    transposition: 'migration d’un atome ou d’un groupe : réarrangement du squelette',
+    'oxydo-réduction': 'perte ou gain d’électrons par l’espèce organique'
+  };
+  var UN = { substitution: 'une substitution', addition: 'une addition', 'élimination': 'une élimination', 'acido-basique': 'une réaction acido-basique', transposition: 'une transposition', 'oxydo-réduction': 'une oxydo-réduction' };
+  var INS = { substitution: 'inchangé', addition: 'diminue', 'élimination': 'augmente', 'acido-basique': 'inchangé', transposition: 'inchangé' };
+  var REAC = [
+    { eq: 'CH3–I + HO<sup>−</sup>' + FL + 'CH3–OH + I<sup>−</sup>', t: 'substitution', sub: 'nucléophile (SN)' },
+    { eq: 'CH3–CH=CH2 + HBr' + FL + 'CH3–CHBr–CH3', t: 'addition', sub: 'électrophile (AE)' },
+    { eq: 'CH3–CH=CH2 + H2' + FL + 'CH3–CH2–CH3 (catalyseur : Ni)', t: 'addition' },
+    { eq: 'CH3–CH2–CH2–CH2–CH2–OH' + FL + 'CH3–CH2–CH2–CH=CH2 + H2O (milieu acide, chauffage)', t: 'élimination' },
+    { eq: 'cyclohexanol' + FL + 'cyclohexène + H2O (H<sup>+</sup>, chauffage)', t: 'élimination' },
+    { eq: 'CH3–CH2–Br + HO<sup>−</sup>' + FL + 'CH2=CH2 + H2O + Br<sup>−</sup> (éthanol, chauffage)', t: 'élimination' },
+    { eq: 'CH3–CH2–OH + HO<sup>−</sup>' + FL + 'CH3–CH2–O<sup>−</sup> + H2O', t: 'acido-basique' },
+    { eq: 'CH3–COOH + H2O' + FL + 'CH3–COO<sup>−</sup> + H3O<sup>+</sup>', t: 'acido-basique' },
+    { eq: 'C6H6 + Br2' + FL + 'C6H5–Br + HBr (catalyseur : FeBr3)', t: 'substitution', sub: 'électrophile (SE)' },
+    { eq: 'CH4 + Cl2' + FL + 'CH3–Cl + HCl (lumière)', t: 'substitution', sub: 'radicalaire (SR)' },
+    { eq: '(CH3)2C=CH2 + H2O' + FL + '(CH3)3C–OH (milieu acide)', t: 'addition', sub: 'électrophile (AE)' },
+    { eq: 'CH3–CH=CH2 + HBr' + FL + 'CH3–CH2–CH2Br (lumière, peroxydes)', t: 'addition', sub: 'radicalaire (AR)' },
+    { eq: 'CH3–CO–CH3 + HCN' + FL + '(CH3)2C(OH)–CN', t: 'addition', sub: 'nucléophile (AN)' },
+    { eq: 'buta-1,3-diène + éthène' + FL + 'cyclohexène (une seule étape)', t: 'addition', sub: 'concertée (Diels-Alder)' },
+    { eq: 'CH3–C<sup>+</sup>H–CH(CH3)2' + FL + 'CH3–CH2–C<sup>+</sup>(CH3)2', t: 'transposition' },
+    { eq: 'CH3–CH2–OH' + FL + 'CH3–CHO (dichromate de potassium, milieu acide)', t: 'oxydo-réduction' },
+    { eq: 'CH3–CH2–Cl + CN<sup>−</sup>' + FL + 'CH3–CH2–CN + Cl<sup>−</sup>', t: 'substitution', sub: 'nucléophile (SN)' }];
+  Exo.lancer('exo-p4-types', function () {
+    var r = C(REAC), et = [];
+    et.push({ type: 'choix', q: 'De quel type de réaction s’agit-il ?', options: [{ t: r.t, ok: true }].concat(M(TYPES.filter(function (t) { return t !== r.t; })).slice(0, 3).map(function (t) {
+      return { t: t, ok: false, pourquoi: UN[t].charAt(0).toUpperCase() + UN[t].slice(1) + ' : ' + DEF[t] + '.' }; })), corr: '<b>' + r.t.charAt(0).toUpperCase() + r.t.slice(1) + '</b> : ' + DEF[r.t] + '.' });
+    if (INS[r.t]) et.push({ type: 'choix', q: 'Le nombre d’insaturations (liaisons multiples, cycles) du substrat :', options: ['augmente', 'diminue', 'inchangé'].map(function (x) {
+      return { t: x === 'inchangé' ? 'reste inchangé' : x, ok: x === INS[r.t], pourquoi: 'Addition : les insaturations diminuent ; élimination : elles augmentent ; substitution, acido-basique, transposition : inchangées.' }; }),
+      corr: 'Pour ' + UN[r.t] + ', le nombre d’insaturations <b>' + (INS[r.t] === 'inchangé' ? 'reste inchangé' : INS[r.t]) + '</b>.' });
+    if (r.sub) et.push({ type: 'choix', q: 'Plus précisément, cette ' + r.t + ' est :', options: ['nucléophile', 'électrophile', 'radicalaire', 'concertée'].filter(function (x) { return x !== 'concertée' || r.t === 'addition'; }).map(function (x) {
+      return { t: x, ok: r.sub.indexOf(x) === 0, pourquoi: 'On qualifie la réaction d’après la nature du réactif : nucléophile (apporte un doublet), électrophile (accepte un doublet), radicalaire (électron célibataire, lumière ou peroxydes).' }; }),
+      corr: r.t.charAt(0).toUpperCase() + r.t.slice(1) + ' <b>' + r.sub + '</b>.' + (r.sub.indexOf('électrophile (AE)') === 0 ? ' La double liaison C=C (nucléophile) attaque H<sup>+</sup> (électrophile).' : r.sub.indexOf('radicalaire') === 0 ? ' Lumière ou peroxydes : mécanisme en chaîne par radicaux.' : '') });
+    return { contexte: '<p class="exo-eq-chimique">' + s(r.eq) + '</p>', etapes: et };
+  });
+
+  /* ---------- 2. Sites nucléophiles et électrophiles ---------- */
+  var SITES = [
+    ['l’atome O de H2O', 'N', 'deux doublets non liants'], ['l’atome N de NH3', 'N', 'un doublet non liant'], ['l’ion HO<sup>−</sup>', 'N', 'une charge négative et des doublets non liants'],
+    ['l’ion CN<sup>−</sup>', 'N', 'une charge négative et un doublet non liant sur C'], ['la double liaison C=C de l’éthène', 'N', 'une liaison π riche en électrons'], ['l’ion Br<sup>−</sup>', 'N', 'une charge négative et des doublets non liants'],
+    ['l’atome C de CH3–MgBr', 'N', 'une charge partielle δ<sup>−</sup> (Mg est moins électronégatif que C)'], ['l’atome O du groupe C=O', 'N', 'des doublets non liants et une charge partielle δ<sup>−</sup>'],
+    ['l’ion H<sup>+</sup>', 'E', 'une lacune électronique (aucun électron)'], ['l’atome C du groupe C=O de la propanone', 'E', 'une charge partielle δ<sup>+</sup> (O est plus électronégatif)'],
+    ['l’atome C lié à Br dans CH3–CH2–Br', 'E', 'une charge partielle δ<sup>+</sup> (Br est plus électronégatif)'], ['le carbocation (CH3)3C<sup>+</sup>', 'E', 'une charge positive et une lacune électronique'],
+    ['l’atome B de BF3', 'E', 'une lacune électronique'], ['l’atome Al de AlCl3', 'E', 'une lacune électronique'], ['l’atome H de H–Cl', 'E', 'une charge partielle δ<sup>+</sup> (Cl est plus électronégatif)']];
+  var CHI = { H: 2.2, C: 2.6, O: 3.4, Mg: 1.3, Cl: 3.2, Br: 3.0, N: 3.0 };
+  var LIA = [['C', 'Br'], ['C', 'Cl'], ['C', 'O'], ['O', 'H'], ['C', 'Mg'], ['C', 'H'], ['H', 'Cl'], ['N', 'H']];
+  function stSite(x) {
+    var nu = x[1] === 'N';
+    return { type: 'choix', q: 'Dans cette réaction, ' + s(x[0]) + ' joue le rôle de :', options: [
+      { t: 'site nucléophile (donneur de doublet)', ok: nu, pourquoi: 'Un site électrophile est pauvre en électrons (lacune, charge +, δ<sup>+</sup>) : il accepte un doublet.' },
+      { t: 'site électrophile (accepteur de doublet)', ok: !nu, pourquoi: 'Un site nucléophile est riche en électrons (doublet non liant, liaison π, charge −, δ<sup>−</sup>) : il donne un doublet.' }],
+      corr: s(x[0]) + ' possède ' + x[2] + ' : c’est un site <b>' + (nu ? 'nucléophile' : 'électrophile') + '</b>.' };
+  }
+  Exo.lancer('exo-p4-sites', function () {
+    var t = M(SITES), l = C(LIA), a = l[0], b = l[1], pa = CHI[a] > CHI[b] ? 'δ−' : 'δ+';
+    var et = [stSite(t[0]), {
+      type: 'choix', q: 'Dans la liaison ' + a + '–' + b + ', quelle charge partielle porte l’atome ' + a + ' ?', options: [
+        { t: 'δ<sup>+</sup>', ok: pa === 'δ+', pourquoi: 'L’atome le plus électronégatif attire le doublet de liaison et porte δ<sup>−</sup>.' },
+        { t: 'δ<sup>−</sup>', ok: pa === 'δ−', pourquoi: 'L’atome le moins électronégatif porte δ<sup>+</sup>.' }],
+      corr: 'χ(' + a + ') = ' + String(CHI[a]).replace('.', ',') + ' ; χ(' + b + ') = ' + String(CHI[b]).replace('.', ',') + '. ' + (CHI[a] > CHI[b] ? a : b) + ' est plus électronégatif : ' + a + ' porte <b>' + pa.replace('δ', 'δ<sup>') + '</sup></b>' + (Math.abs(CHI[a] - CHI[b]) < 0.5 ? ' (liaison faiblement polarisée)' : '') + '.' }, stSite(t[1])];
+    return { contexte: '<p>Électronégativités (Pauling) : H 2,2 ; C 2,6 ; N 3,0 ; O 3,4 ; Mg 1,3 ; Cl 3,2 ; Br 3,0.</p>', etapes: et };
+  });
+
+  /* ---------- 3. Mécanismes : flèches courbes correctes ou fausses ---------- */
+  var CAT = {
+    ok: 'Le mécanisme est correctement écrit',
+    inv: 'Une flèche est tracée à l’envers',
+    rupt: 'Lors d’une rupture de liaison, le doublet part vers le mauvais atome',
+    site: 'Une flèche pointe vers le mauvais site',
+    nodbl: 'Une flèche part d’un atome qui n’a pas de doublet disponible',
+    trop: 'Il y a une flèche en trop'
+  };
+  var MECA = [
+    { nom: 'Substitution nucléophile (SN2) : HO<sup>−</sup> + CH<sub>3</sub>–Br', eq: 'HO<sup>−</sup> + CH3–Br' + FL + 'HO–CH3 + Br<sup>−</sup>',
+      m: { atoms: [A('H1', 18, 70, 'H'), A('O', 48, 70, 'O', { lp: [-125, 125, 0], q: '−', qx: 6, qy: -20 }), A('C', 140, 70, 'C', { dq: 'δ+', dqx: -16, dqy: -18 }), A('Ha', 140, 30, 'H'), A('Hb', 118, 106, 'H'), A('Hc', 162, 106, 'H'), A('Br', 215, 70, 'Br', { r: 14, lp: [-90, 90, 0], dq: 'δ−', dqy: -28 })],
+        bonds: [['H1', 'O', 1], ['C', 'Ha', 1], ['C', 'Hb', 1], ['C', 'Hc', 1], ['C', 'Br', 1]] },
+      ok: [{ from: { atom: 'O', lp: 0 }, to: { atom: 'C', dx: -12, dy: -2 }, bend: -0.45 }, { from: { bond: ['C', 'Br'] }, to: { atom: 'Br', dx: -2, dy: 15 }, bend: 0.5 }],
+      err: {
+        inv: { a: [{ from: { atom: 'C', dx: -12 }, to: { atom: 'O', dx: 14 }, bend: 0.45 }, 1], msg: 'La flèche part de C vers O : à l’envers. Elle doit partir du doublet non liant de O (nucléophile) vers C (électrophile, δ<sup>+</sup>).' },
+        rupt: { a: [0, { from: { bond: ['C', 'Br'] }, to: { atom: 'C', dx: 8, dy: 16 }, bend: -0.6 }], msg: 'Le doublet de la liaison C–Br part vers Br, plus électronégatif, qui devient Br<sup>−</sup> (groupe partant).' },
+        nodbl: { a: [{ from: { atom: 'H1', dy: -12 }, to: { atom: 'C', dx: -12, dy: -4 }, bend: -0.35 }, 1], msg: 'La flèche part de H, qui n’a pas de doublet non liant : elle doit partir d’un doublet non liant de O.' },
+        site: { a: [{ from: { atom: 'O', lp: 0 }, to: { atom: 'Br', dx: -4, dy: -14 }, bend: -0.4 }, 1], msg: 'Le nucléophile attaque le carbone δ<sup>+</sup>, pas Br (δ<sup>−</sup>).' } },
+      desc: 'Un doublet non liant de O (HO<sup>−</sup>, nucléophile) attaque le carbone δ<sup>+</sup> (électrophile) ; en même temps, le doublet de la liaison C–Br part vers Br : Br<sup>−</sup> est le groupe partant. Une seule étape (SN2).',
+      nu: ['HO<sup>−</sup>', ['CH<sub>3</sub>–Br', 'Br<sup>−</sup>']], el: ['l’atome C de CH<sub>3</sub>–Br', ['l’atome O de HO<sup>−</sup>', 'l’atome Br']],
+      prod: ['méthanol CH<sub>3</sub>OH et ion bromure Br<sup>−</sup>', ['un carbocation CH<sub>3</sub><sup>+</sup>', 'CH<sub>3</sub>–O–Br', 'un radical CH<sub>3</sub>•']] },
+    { nom: 'Addition électrophile, étape 1 : propène + H–Cl', eq: 'CH3–CH=CH2 + H–Cl' + FL + 'CH3–C<sup>+</sup>H–CH3 + Cl<sup>−</sup>',
+      m: { atoms: [A('C3', 30, 95, 'H3C', { r: 17 }), A('C2', 78, 68, 'CH', { r: 13 }), A('C1', 126, 95, 'CH2', { r: 16 }), A('H', 178, 45, 'H', { dq: 'δ+', dqy: -20 }), A('Cl', 225, 45, 'Cl', { r: 12, lp: [-90, 90, 0], dq: 'δ−', dqy: -28 })],
+        bonds: [['C3', 'C2', 1], ['C2', 'C1', 2], ['H', 'Cl', 1]] },
+      ok: [{ from: { bond: ['C2', 'C1'] }, to: { atom: 'H', dx: -8, dy: 10 }, bend: -0.4 }, { from: { bond: ['H', 'Cl'] }, to: { atom: 'Cl', dx: 0, dy: 16 }, bend: 0.55 }],
+      err: {
+        inv: { a: [{ from: { atom: 'H', dx: -8, dy: 10 }, to: { bond: ['C2', 'C1'] }, bend: 0.4 }, 1], msg: 'La flèche part de H vers la double liaison : à l’envers. C’est la liaison π (riche en électrons) qui attaque H (δ<sup>+</sup>).' },
+        rupt: { a: [0, { from: { bond: ['H', 'Cl'] }, to: { atom: 'H', dx: 0, dy: -14 }, bend: 0.6 }], msg: 'Le doublet de la liaison H–Cl part vers Cl, plus électronégatif, qui devient Cl<sup>−</sup>.' },
+        site: { a: [{ from: { bond: ['C2', 'C1'] }, to: { atom: 'Cl', dx: -4, dy: -14 }, bend: -0.45 }, 1], msg: 'La double liaison attaque l’atome électrophile H (δ<sup>+</sup>), pas Cl (δ<sup>−</sup>).' } },
+      desc: 'La liaison π de C=C (nucléophile) attaque H (δ<sup>+</sup>) ; le doublet de H–Cl part vers Cl qui devient Cl<sup>−</sup>. H se fixe sur CH<sub>2</sub> pour former le carbocation le plus stable (secondaire).',
+      nu: ['la double liaison C=C du propène', ['l’atome Cl de HCl', 'l’atome H de HCl']], el: ['l’atome H de HCl', ['la double liaison C=C', 'l’atome Cl de HCl']],
+      prod: ['un carbocation secondaire CH<sub>3</sub>–C<sup>+</sup>H–CH<sub>3</sub> et Cl<sup>−</sup>', ['un carbocation primaire CH<sub>3</sub>–CH<sub>2</sub>–CH<sub>2</sub><sup>+</sup> et Cl<sup>−</sup>', 'directement le 2-chloropropane', 'un carbanion CH<sub>3</sub>–C<sup>−</sup>H–CH<sub>3</sub>']] },
+    { nom: 'Addition électrophile, étape 2 : carbocation + Cl<sup>−</sup>', eq: 'CH3–C<sup>+</sup>H–CH3 + Cl<sup>−</sup>' + FL + 'CH3–CHCl–CH3',
+      m: { atoms: [A('C3', 30, 95, 'H3C', { r: 17 }), A('C2', 78, 68, 'CH', { r: 13, q: '+', qx: 0, qy: -22 }), A('C1', 126, 95, 'CH3', { r: 16 }), A('Cl', 200, 55, 'Cl', { r: 12, lp: [0, 90, 180, -90], q: '−', qx: 17, qy: -17 })],
+        bonds: [['C3', 'C2', 1], ['C2', 'C1', 1]] },
+      ok: [{ from: { atom: 'Cl', lp: 180 }, to: { atom: 'C2', dx: 14, dy: -6 }, bend: 0.45 }],
+      err: {
+        inv: { a: [{ from: { atom: 'C2', dx: 14, dy: -6 }, to: { atom: 'Cl', dx: -14 }, bend: -0.45 }], msg: 'La flèche part du carbocation, qui n’a pas de doublet à donner : elle doit partir d’un doublet non liant de Cl<sup>−</sup> vers C<sup>+</sup>.' },
+        site: { a: [{ from: { atom: 'Cl', lp: 180 }, to: { atom: 'C1', dx: 14, dy: 2 }, bend: -0.3 }], msg: 'Cl<sup>−</sup> attaque le carbone qui porte la charge + (lacune), pas un carbone voisin.' },
+        trop: { a: [0, { from: { bond: ['C2', 'C1'] }, to: { atom: 'C1', dx: 0, dy: 16 }, bend: -0.5 }], msg: 'Aucune liaison n’est rompue dans cette étape : la flèche de rupture C–C est en trop.' } },
+      desc: 'Un doublet non liant de Cl<sup>−</sup> (nucléophile) attaque le carbone C<sup>+</sup> (électrophile, lacune) : on obtient le 2-chloropropane, produit majoritaire (règle de Markovnikov).',
+      nu: ['l’ion Cl<sup>−</sup>', ['le carbocation', 'l’atome H de HCl']], el: ['le carbone C<sup>+</sup> du carbocation', ['l’ion Cl<sup>−</sup>', 'un carbone CH<sub>3</sub>']],
+      prod: ['le 2-chloropropane (produit majoritaire)', ['le 1-chloropropane (produit majoritaire)', 'le propène et HCl', 'le chloropropène']] },
+    { nom: 'Réaction acido-basique : HO<sup>−</sup> + éthanol', eq: 'HO<sup>−</sup> + CH3–CH2–OH' + FL + 'H2O + CH3–CH2–O<sup>−</sup>',
+      m: { atoms: [A('H1', 12, 70, 'H'), A('O1', 42, 70, 'O', { lp: [-125, 125, 0], q: '−', qx: 6, qy: -20 }), A('H2', 110, 70, 'H', { dq: 'δ+', dqy: -20 }), A('O2', 150, 70, 'O', { lp: [-90, 90], dq: 'δ−', dqx: 16, dqy: -18 }), A('C', 198, 70, 'CH2', { r: 16 }), A('Cb', 252, 70, 'CH3', { r: 16 })],
+        bonds: [['H1', 'O1', 1], ['H2', 'O2', 1], ['O2', 'C', 1], ['C', 'Cb', 1]] },
+      ok: [{ from: { atom: 'O1', lp: 0 }, to: { atom: 'H2', dx: -8, dy: -6 }, bend: -0.5 }, { from: { bond: ['H2', 'O2'] }, to: { atom: 'O2', dx: -2, dy: 15 }, bend: 0.6 }],
+      err: {
+        inv: { a: [{ from: { atom: 'H2', dx: -8, dy: -6 }, to: { atom: 'O1', dx: 14 }, bend: 0.5 }, 1], msg: 'La flèche part de H vers O : à l’envers. La base HO<sup>−</sup> donne un doublet au proton H (δ<sup>+</sup>).' },
+        rupt: { a: [0, { from: { bond: ['H2', 'O2'] }, to: { atom: 'H2', dx: 0, dy: 14 }, bend: -0.6 }], msg: 'Le doublet de la liaison O–H reste sur O (plus électronégatif) : on forme l’ion éthanolate.' },
+        site: { a: [{ from: { atom: 'O1', lp: 0 }, to: { atom: 'C', dx: -4, dy: -14 }, bend: -0.35 }, 1], msg: 'La base capte le proton H (δ<sup>+</sup>) lié à O, pas un carbone.' } },
+      desc: 'Le doublet non liant de HO<sup>−</sup> (base) capte le proton H (δ<sup>+</sup>) ; le doublet de la liaison O–H reste sur O : on obtient H<sub>2</sub>O et l’ion éthanolate.',
+      nu: ['l’ion HO<sup>−</sup>', ['l’atome H de l’éthanol', 'l’atome C de CH<sub>2</sub>']], el: ['l’atome H du groupe OH de l’éthanol', ['l’ion HO<sup>−</sup>', 'l’atome O de l’éthanol']],
+      prod: ['l’eau H<sub>2</sub>O et l’ion éthanolate CH<sub>3</sub>CH<sub>2</sub>O<sup>−</sup>', ['l’éthène et l’eau', 'l’éthanal', 'CH<sub>3</sub>CH<sub>2</sub>–OH<sub>2</sub><sup>+</sup>']] },
+    { nom: 'Déshydratation, étape 1 : protonation d’un alcool', eq: 'R–OH + H<sup>+</sup>' + FL + 'R–OH2<sup>+</sup>',
+      m: { atoms: [A('R', 30, 80, 'R'), A('O', 80, 80, 'O', { lp: [-90, 90] }), A('H1', 128, 80, 'H'), A('Hp', 110, 22, 'H', { q: '+', qx: 15, qy: -8 })],
+        bonds: [['R', 'O', 1], ['O', 'H1', 1]] },
+      ok: [{ from: { atom: 'O', lp: -90 }, to: { atom: 'Hp', dx: -10, dy: 4 }, bend: 0.5 }],
+      err: {
+        inv: { a: [{ from: { atom: 'Hp', dx: -10, dy: 4 }, to: { atom: 'O', lp: -90 }, bend: -0.5 }], msg: 'H<sup>+</sup> n’a aucun électron : la flèche part du doublet non liant de O vers H<sup>+</sup>.' },
+        nodbl: { a: [{ from: { atom: 'H1', dy: -12 }, to: { atom: 'Hp', dx: 6, dy: 10 }, bend: 0.3 }], msg: 'Le H du groupe OH n’a pas de doublet non liant : la flèche part d’un doublet non liant de O.' },
+        trop: { a: [0, { from: { bond: ['O', 'H1'] }, to: { atom: 'O', dx: 2, dy: 20 }, bend: 0.9 }], msg: 'Aucune liaison n’est rompue lors de la protonation : la flèche de rupture O–H est en trop.' } },
+      desc: 'Un doublet non liant de O (site nucléophile, basique) capte H<sup>+</sup> (lacune) : on forme l’ion alkyloxonium R–OH<sub>2</sub><sup>+</sup>, qui libérera H<sub>2</sub>O (bon groupe partant).',
+      nu: ['l’atome O de l’alcool', ['H<sup>+</sup>', 'le groupe R']], el: ['H<sup>+</sup>', ['l’atome O de l’alcool', 'l’atome H du groupe OH']],
+      prod: ['l’ion alkyloxonium R–OH<sub>2</sub><sup>+</sup>', ['un alcène et de l’eau', 'un carbocation R<sup>+</sup> directement', 'l’ion alcoolate R–O<sup>−</sup>']] },
+    { nom: 'Addition nucléophile : CN<sup>−</sup> + propanone', eq: 'CN<sup>−</sup> + (CH3)2C=O' + FL + '(CH3)2C(CN)–O<sup>−</sup>',
+      m: { atoms: [A('N', 14, 62, 'N', { lp: [180] }), A('Cn', 50, 62, 'C', { lp: [0], q: '−', qx: 0, qy: -20 }), A('Cc', 140, 80, 'C', { dq: 'δ+', dqx: -18, dqy: 2 }), A('O', 140, 14, 'O', { lp: [-135, -45], dq: 'δ−', dqx: -24, dqy: 0.1 }), A('M1', 100, 112, 'H3C', { r: 17 }), A('M2', 182, 112, 'CH3', { r: 16 })],
+        bonds: [['N', 'Cn', 3], ['Cc', 'O', 2], ['Cc', 'M1', 1], ['Cc', 'M2', 1]] },
+      ok: [{ from: { atom: 'Cn', lp: 0 }, to: { atom: 'Cc', dx: -12, dy: -4 }, bend: -0.4 }, { from: { bond: ['Cc', 'O'], dx: -6, dy: 8 }, to: { atom: 'O', dx: 22, dy: 6 }, bend: -0.6 }],
+      err: {
+        site: { a: [{ from: { atom: 'Cn', lp: 0 }, to: { atom: 'O', dx: -12, dy: 2 }, bend: -0.3 }, 1], msg: 'Le nucléophile attaque le carbone δ<sup>+</sup> du groupe C=O, pas l’oxygène δ<sup>−</sup>.' },
+        rupt: { a: [0, { from: { bond: ['Cc', 'O'] }, to: { atom: 'Cc', dx: 14, dy: -4 }, bend: 0.6 }], msg: 'Le doublet π de C=O part vers O (plus électronégatif), qui porte ensuite la charge −.' },
+        inv: { a: [{ from: { atom: 'Cc', dx: -12, dy: -4 }, to: { atom: 'Cn', lp: 0 }, bend: 0.4 }, 1], msg: 'La flèche part du carbone δ<sup>+</sup> vers CN<sup>−</sup> : à l’envers. Le doublet de CN<sup>−</sup> attaque le carbone électrophile.' } },
+      desc: 'Le doublet non liant du carbone de CN<sup>−</sup> (nucléophile) attaque le carbone δ<sup>+</sup> du groupe carbonyle ; le doublet π de C=O part vers O : on forme un ion alcoolate (intermédiaire).',
+      nu: ['l’ion CN<sup>−</sup> (atome C)', ['le carbone du groupe C=O', 'l’oxygène du groupe C=O']], el: ['le carbone du groupe C=O', ['l’ion CN<sup>−</sup>', 'l’oxygène du groupe C=O']],
+      prod: ['un ion alcoolate (CH<sub>3</sub>)<sub>2</sub>C(CN)–O<sup>−</sup>', ['un carbocation', '(CH<sub>3</sub>)<sub>2</sub>C=O–CN', 'un alcène']] },
+    { nom: 'Organomagnésien : CH<sub>3</sub>–MgBr + méthanal', eq: 'CH3–MgBr + H2C=O' + FL + 'CH3–CH2–O<sup>−</sup> + MgBr<sup>+</sup>',
+      m: { atoms: [A('Cm', 30, 80, 'H3C', { r: 17, dq: 'δ−', dqy: -22 }), A('Mg', 100, 80, 'MgBr', { r: 24, dq: 'δ+', dqy: -22 }), A('Cc', 180, 92, 'C', { dq: 'δ+', dqx: -16, dqy: -6 }), A('O', 180, 24, 'O', { lp: [-135, -45], dq: 'δ−', dqx: -24, dqy: 0.1 }), A('Ha', 156, 124, 'H'), A('Hb', 204, 124, 'H')],
+        bonds: [['Cm', 'Mg', 1], ['Cc', 'O', 2], ['Cc', 'Ha', 1], ['Cc', 'Hb', 1]] },
+      ok: [{ from: { bond: ['Cm', 'Mg'] }, to: { atom: 'Cc', dx: -12, dy: 4 }, bend: 0.45 }, { from: { bond: ['Cc', 'O'], dx: -6, dy: 8 }, to: { atom: 'O', dx: 22, dy: 6 }, bend: -0.6 }],
+      err: {
+        inv: { a: [{ from: { atom: 'Cc', dx: -12, dy: 4 }, to: { bond: ['Cm', 'Mg'] }, bend: -0.45 }, 1], msg: 'La flèche part du carbone δ<sup>+</sup> : à l’envers. C’est le doublet de la liaison C–Mg (carbone δ<sup>−</sup>, nucléophile) qui attaque.' },
+        site: { a: [{ from: { bond: ['Cm', 'Mg'] }, to: { atom: 'O', dx: -12, dy: 4 }, bend: -0.35 }, 1], msg: 'Le carbone nucléophile attaque le carbone δ<sup>+</sup> du groupe C=O, pas O.' },
+        rupt: { a: [0, { from: { bond: ['Cc', 'O'] }, to: { atom: 'Cc', dx: 14, dy: -4 }, bend: 0.6 }], msg: 'Le doublet π de C=O part vers O, plus électronégatif.' } },
+      desc: 'Le doublet de la liaison C–Mg (le carbone δ<sup>−</sup> est nucléophile, c’est l’intérêt de la réaction de Grignard) attaque le carbone δ<sup>+</sup> du méthanal ; le doublet π part vers O. Après hydrolyse : éthanol (allongement de chaîne).',
+      nu: ['l’atome C de CH<sub>3</sub>–MgBr', ['l’atome Mg', 'le carbone du groupe C=O']], el: ['le carbone du groupe C=O', ['l’atome C de CH<sub>3</sub>–MgBr', 'l’atome O']],
+      prod: ['un alcoolate magnésien CH<sub>3</sub>–CH<sub>2</sub>–O–MgBr (éthanol après hydrolyse)', ['du méthanol', 'de l’éthane', 'un carbocation CH<sub>3</sub><sup>+</sup>']] }];
+  function fleches(me, v) {
+    if (v === 'ok') return me.ok;
+    return me.err[v].a.map(function (x) { return typeof x === 'number' ? me.ok[x] : x; });
+  }
+  function dessinMeca(me, v) { return '<div class="mol-cadre">' + Chem.mech(me.m, fleches(me, v)) + '</div>'; }
+  function opt3(bon, faux, msg) { return [{ t: bon, ok: true }].concat(faux.map(function (f) { return { t: f, ok: false, pourquoi: msg }; })); }
+  Exo.lancer('exo-p4-meca', function () {
+    var me = C(MECA), errs = Object.keys(me.err), v = Math.random() < 0.3 ? 'ok' : C(errs);
+    var cats = ['ok'].concat(v !== 'ok' ? [v] : []), autres = M(errs.filter(function (e) { return cats.indexOf(e) < 0; }).concat(['nodbl', 'trop', 'site', 'inv', 'rupt'].filter(function (e) { return errs.indexOf(e) < 0; })));
+    while (cats.length < 4) { var c = autres.shift(); if (cats.indexOf(c) < 0) cats.push(c); }
+    var et = [
+      { type: 'choix', q: 'Les flèches courbes de ce mécanisme sont-elles correctes ?', options: cats.map(function (c) {
+        return { t: CAT[c], ok: c === v, pourquoi: v === 'ok' ? 'Ce mécanisme est correct : chaque flèche part d’un doublet (non liant ou de liaison) et va vers le site électrophile, ou vers l’atome le plus électronégatif lors d’une rupture.' : me.err[v].msg }; }),
+        corr: (v === 'ok' ? 'Le mécanisme est <b>correct</b>. ' : '<b>Erreur :</b> ' + me.err[v].msg + ' ') + me.desc + '<p>Mécanisme correct :</p>' + dessinMeca(me, 'ok') },
+      { type: 'choix', q: 'Quelle est l’espèce (ou le site) nucléophile dans cette étape ?', options: opt3(me.nu[0], me.nu[1], 'Le nucléophile est riche en électrons : c’est de lui que part la flèche courbe.'), corr: 'Nucléophile (donneur de doublet) : <b>' + me.nu[0] + '</b>.' },
+      { type: 'choix', q: 'Quel est le site électrophile attaqué ?', options: opt3(me.el[0], me.el[1], 'Le site électrophile est pauvre en électrons (δ<sup>+</sup>, charge +, lacune) : c’est là que pointe la flèche.'), corr: 'Site électrophile (accepteur de doublet) : <b>' + me.el[0] + '</b>.' },
+      { type: 'choix', q: 'Qu’obtient-on à l’issue de cette étape ?', options: opt3(me.prod[0], M(me.prod[1]).slice(0, 3), 'Suivez les flèches : chaque flèche déplace un doublet, une liaison se forme là où elle pointe.'), corr: 'On obtient <b>' + me.prod[0] + '</b>.' }
+    ];
+    return { contexte: '<p><b>' + me.nom + '</b></p><p class="exo-eq-chimique">' + s(me.eq) + '</p><p>Mécanisme proposé par un étudiant :</p>' + dessinMeca(me, v), etapes: et };
+  });
+
+  /* ---------- 4. Régiosélectivité : Markovnikov ou Kharasch ---------- */
+  var ALC = [
+    { n: 'propène', f: 'CH3–CH=CH2', cp: 'secondaire CH3–C<sup>+</sup>H–CH3', cs: 'primaire CH3–CH2–CH2<sup>+</sup>', rp: 'secondaire CH3–C•H–CH2Br', rs: 'primaire CH3–CHBr–CH2•', X: '2-#opropane', Xs: '1-#opropane', R: '1-bromopropane', Rs: '2-bromopropane', OH: 'propan-2-ol', OHs: 'propan-1-ol' },
+    { n: '2-méthylpropène', f: '(CH3)2C=CH2', cp: 'tertiaire (CH3)3C<sup>+</sup>', cs: 'primaire (CH3)2CH–CH2<sup>+</sup>', rp: 'tertiaire (CH3)2C•–CH2Br', rs: 'primaire (CH3)2CBr–CH2•', X: '2-#o-2-méthylpropane', Xs: '1-#o-2-méthylpropane', R: '1-bromo-2-méthylpropane', Rs: '2-bromo-2-méthylpropane', OH: '2-méthylpropan-2-ol', OHs: '2-méthylpropan-1-ol' },
+    { n: 'but-1-ène', f: 'CH3–CH2–CH=CH2', cp: 'secondaire CH3–CH2–C<sup>+</sup>H–CH3', cs: 'primaire CH3–CH2–CH2–CH2<sup>+</sup>', rp: 'secondaire CH3–CH2–C•H–CH2Br', rs: 'primaire CH3–CH2–CHBr–CH2•', X: '2-#obutane', Xs: '1-#obutane', R: '1-bromobutane', Rs: '2-bromobutane', OH: 'butan-2-ol', OHs: 'butan-1-ol' },
+    { n: '2-méthylbut-2-ène', f: '(CH3)2C=CH–CH3', cp: 'tertiaire (CH3)2C<sup>+</sup>–CH2–CH3', cs: 'secondaire (CH3)2CH–C<sup>+</sup>H–CH3', rp: 'tertiaire (CH3)2C•–CHBr–CH3', rs: 'secondaire (CH3)2CBr–C•H–CH3', X: '2-#o-2-méthylbutane', Xs: '2-#o-3-méthylbutane', R: '2-bromo-3-méthylbutane', Rs: '2-bromo-2-méthylbutane', OH: '2-méthylbutan-2-ol', OHs: '3-méthylbutan-2-ol' }];
+  Exo.lancer('exo-p4-regio', function () {
+    var a = C(ALC), r = C(['HCl', 'HBr', 'HBrRad', 'H2O']), rad = r === 'HBrRad', et = [];
+    var reac = { HCl: 'HCl', HBr: 'HBr', HBrRad: 'HBr, en présence de lumière (ou de peroxydes), solvant aprotique', H2O: 'H<sub>2</sub>O en milieu acide (H<sup>+</sup>)' }[r];
+    var hal = r === 'HCl' ? 'chlor' : 'brom';
+    var maj = rad ? a.R : r === 'H2O' ? a.OH : a.X.replace('#', hal), min = rad ? a.Rs : r === 'H2O' ? a.OHs : a.Xs.replace('#', hal);
+    et.push({ type: 'choix', q: 'Quel type de mécanisme intervient ?', options: [
+      { t: 'addition électrophile (carbocation intermédiaire)', ok: !rad, pourquoi: rad ? 'Lumière ou peroxydes : mécanisme radicalaire en chaîne (effet Kharasch).' : '' },
+      { t: 'addition radicalaire (radical intermédiaire)', ok: rad, pourquoi: 'Sans lumière ni peroxydes, l’addition est électrophile : la double liaison attaque H<sup>+</sup>.' },
+      { t: 'substitution nucléophile', ok: false, pourquoi: 'Le réactif s’ajoute sur la double liaison : c’est une addition.' }],
+      corr: rad ? 'Lumière ou peroxydes : <b>addition radicalaire</b> en chaîne (amorçage, propagation, rupture).' : '<b>Addition électrophile</b> : la liaison π attaque H<sup>+</sup>, il se forme un carbocation.' });
+    et.push({ type: 'choix', q: 'Quel intermédiaire réactionnel se forme majoritairement ?', options: [
+      { t: (rad ? 'radical ' : 'carbocation ') + s(rad ? a.rp : a.cp), ok: true },
+      { t: (rad ? 'radical ' : 'carbocation ') + s(rad ? a.rs : a.cs), ok: false, pourquoi: 'L’intermédiaire le plus stable est le plus substitué : tertiaire > secondaire > primaire.' },
+      { t: (rad ? 'carbocation ' + s(a.cp) : 'radical ' + s(a.rp)), ok: false, pourquoi: rad ? 'En présence de lumière ou de peroxydes, l’intermédiaire est un radical.' : 'Addition électrophile : l’intermédiaire est un carbocation (ion), pas un radical.' }],
+      corr: rad ? 'Br• s’additionne sur le carbone le moins substitué pour donner le <b>radical le plus stable</b> : ' + s(a.rp) + '.' : 'H<sup>+</sup> se fixe sur le carbone le moins substitué pour donner le <b>carbocation le plus stable</b> (le plus substitué) : ' + s(a.cp) + '.' });
+    et.push({ type: 'choix', q: 'Quel est le produit majoritaire ?', options: [{ t: maj, ok: true }, { t: min, ok: false, pourquoi: rad ? 'Effet Kharasch (« anti-Markovnikov ») : Br se fixe sur le carbone le moins substitué.' : 'Règle de Markovnikov : ' + (r === 'H2O' ? 'OH' : 'X') + ' se fixe sur le carbone le plus substitué (issu du carbocation le plus stable).' }],
+      corr: rad ? 'Effet Kharasch : Br sur le carbone le <b>moins</b> substitué : <b>' + maj + '</b> (' + min + ' minoritaire).' : 'Règle de Markovnikov : ' + (r === 'H2O' ? 'OH' : (r === 'HCl' ? 'Cl' : 'Br')) + ' sur le carbone le <b>plus</b> substitué : <b>' + maj + '</b> (' + min + ' minoritaire).' });
+    et.push({ type: 'choix', q: 'Les deux produits possibles sont des isomères :', options: [
+      { t: 'de position (isomères de constitution)', ok: true }, { t: 'énantiomères', ok: false, pourquoi: 'Ils diffèrent par la position du groupe fixé : ce sont des isomères de constitution.' }, { t: 'Z et E', ok: false, pourquoi: 'Les produits n’ont plus de double liaison C=C.' }],
+      corr: 'Même formule brute, position différente du groupe : isomères <b>de position</b>. La réaction est <b>régiosélective</b>.' });
+    return { contexte: '<p>On fait réagir le <b>' + a.n + '</b> (' + s(a.f) + ') avec ' + reac + '.</p>', etapes: et };
+  });
+})();
+
+</script>
+<script data-goatcounter="https://chimie-winckler.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
