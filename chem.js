@@ -249,8 +249,8 @@ var Chem = (function () {
       var short = 0.9, ex = s0[0] + dx * short + (1 - short) * 0, ey = s0[1] + dy * short;
       body += '<path d="M' + s0[0].toFixed(1) + ',' + s0[1].toFixed(1) + ' C' + c1[0].toFixed(1) + ',' + c1[1].toFixed(1) + ' ' + c2[0].toFixed(1) + ',' + c2[1].toFixed(1) + ' ' + ex.toFixed(1) + ',' + ey.toFixed(1) + '" fill="none" stroke="' + col + '" stroke-width="2" marker-end="url(#' + mid + ')"/>';
     });
-    var xs = m.atoms.map(function (a) { return a.x; }), ys = m.atoms.map(function (a) { return a.y; });
-    return svgWrap(body, Math.min.apply(null, xs) - 25, Math.min.apply(null, ys) - 45, Math.max.apply(null, xs) + 25, Math.max.apply(null, ys) + 45, o.cls);
+    var xs = m.atoms.map(function (a) { return a.x - String(a.lab || '').replace(/\d/g, '').length * fs * 0.3; }), xs2 = m.atoms.map(function (a) { return a.x + String(a.lab || '').replace(/\d/g, '').length * fs * 0.3; }), ys = m.atoms.map(function (a) { return a.y; });
+    return svgWrap(body, Math.min.apply(null, xs) - 22, Math.min.apply(null, ys) - 45, Math.max.apply(null, xs2) + 22, Math.max.apply(null, ys) + 45, o.cls);
   }
 
   var MA = { H: 1, C: 12, N: 14, O: 16, F: 19, P: 31, S: 32, Cl: 35.5, Br: 79.9, I: 126.9 };
