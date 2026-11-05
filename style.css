@@ -378,3 +378,15 @@ h3 { margin: 0 0 8px; font-size: 1.05rem; }
 .frac { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; font-size: .85em; line-height: 1.1; }
 .frac span:first-child { border-bottom: 1px solid currentColor; padding: 0 2px; }
 :root[data-theme="dark"] .exo-option.juste, :root[data-theme="dark"] .exo-retour.bien { color: #6fd39a; }
+/* Partie 8 : w rond, schémas de principe */
+.w { font-family: "Cambria Math", "STIX Two Math", "Latin Modern Math", "Cambria", serif; font-style: normal; font-size: 1.12em; }
+.exo-bloc { margin-bottom: 30px; scroll-margin-top: 80px; }
+.exo-bloc h3 { color: var(--accent); margin-bottom: 4px; }
+.schema { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 0; margin: 12px 0; font-size: .9rem; }
+.schema-col { display: flex; flex-direction: column; gap: 12px; }
+.schema-app { border: 2px solid var(--accent); background: var(--accent-clair); color: var(--accent); font-weight: 700; border-radius: 10px; padding: 22px 14px; text-align: center; min-width: 110px; }
+.flux { display: flex; align-items: center; gap: 6px; }
+.flux.entree { justify-content: flex-end; text-align: right; }
+.flux span { line-height: 1.35; }
+.flux .fleche { color: var(--doux); font-size: 1.4rem; flex: none; }
+@media (max-width: 600px) { .schema { grid-template-columns: 1fr; gap: 8px; } .flux.entree { justify-content: flex-start; text-align: left; } .schema-app { padding: 10px; } }

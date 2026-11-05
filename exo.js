@@ -74,7 +74,9 @@ var Exo = (function () {
   }
 
   /* ---------- déroulé d'une série ---------- */
+  var gens = {};
   function lancer(id, generer) {
+    gens[id] = generer;
     var racine = document.getElementById(id), score = { ok: 0, tot: 0 };
     function nouvelle() {
       var ex = generer(); score = { ok: 0, tot: 0 };
@@ -139,5 +141,5 @@ var Exo = (function () {
     var b = document.querySelector('[data-nouveau="' + id + '"]');
     if (b) b.addEventListener('click', nouvelle);
   }
-  return { alea: alea, choisir: choisir, melanger: melanger, cs: cs, nb: nb, lire: lire, regression: regression, graphique: graphique, lancer: lancer };
+  return { gens: gens, alea: alea, choisir: choisir, melanger: melanger, cs: cs, nb: nb, lire: lire, regression: regression, graphique: graphique, lancer: lancer };
 })();
