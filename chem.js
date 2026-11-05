@@ -124,14 +124,25 @@ var Chem = (function () {
     }
     return 0;
   }
-  var SYM = { 0: '0', 1: 'H', 6: 'C', 7: 'N', 8: 'O', 9: 'F', 15: 'P', 16: 'S', 17: 'Cl', 35: 'Br', 53: 'I' };
+  var SYM = { 0: 'fantôme', 1: 'H', 6: 'C', 7: 'N', 8: 'O', 9: 'F', 15: 'P', 16: 'S', 17: 'Cl', 35: 'Br', 53: 'I' };
   /* Explication de la comparaison de deux groupes */
-  function why(ga, gb) {
-    var a = tree(ga.sm), b = tree(gb.sm);
-    if (a.Z !== b.Z) return ga.lab + ' > ' + gb.lab + ' : Z(' + SYM[a.Z] + ') = ' + a.Z + ' > Z(' + SYM[b.Z] + ') = ' + b.Z + '.';
-    var sa = sortKids(a).map(function (k) { return SYM[k.Z]; }), sb = sortKids(b).map(function (k) { return SYM[k.Z]; });
-    if (sa.join() !== sb.join()) return ga.lab + ' > ' + gb.lab + ' : même 1<sup>er</sup> atome (' + SYM[a.Z] + ') ; au rang suivant, (' + sa.join(', ') + ') > (' + sb.join(', ') + ').';
-    return ga.lab + ' > ' + gb.lab + ' : égalité aux deux premiers rangs, la différence apparaît plus loin dans la chaîne.';
+  function sl(l) { return String(l).replace(/(\d+)/g, '<sub>$1</sub>'); }
+  function why(ga, gb) { // explication : ga est prioritaire sur gb
+    var a = tree(ga.sm), b = tree(gb.sm), dup = /[=#]/.test(ga.sm + gb.sm) ? ' (liaisons multiples dédoublées, règle 4)' : '';
+    if (a.Z !== b.Z) return sl(ga.lab) + ' > ' + sl(gb.lab) + ' : atomes de 1<sup>er</sup> rang ' + SYM[a.Z] + ' (Z = ' + a.Z + ') > ' + SYM[b.Z] + ' (Z = ' + b.Z + ') (règle 1).';
+    var la = [a], lb = [b];
+    for (var d = 2; d < 8; d++) {
+      var ga2 = la.map(function (n) { return sortKids(n).map(function (k) { return k.Z; }); });
+      var gb2 = lb.map(function (n) { return sortKids(n).map(function (k) { return k.Z; }); });
+      var f = function (g) { return g.map(function (x) { return '(' + x.map(function (z) { return SYM[z]; }).join(', ') + ')'; }).join(' ; '); };
+      if (JSON.stringify(ga2) !== JSON.stringify(gb2)) {
+        var g = 0; while (g < ga2.length && JSON.stringify(ga2[g]) === JSON.stringify(gb2[g])) g++;
+        return sl(ga.lab) + ' > ' + sl(gb.lab) + ' : même atome de 1<sup>er</sup> rang (' + SYM[a.Z] + ')' + (d > 2 ? ', égalité jusqu’au rang ' + (d - 1) : '') + ' ; au rang ' + d + (d > 2 ? ', en suivant la branche prioritaire' : '') + ' : ' + f([ga2[g] || []]) + ' > ' + f([gb2[g] || []]) + ' (règle ' + (d > 2 ? '3' : '2') + ')' + dup + '.';
+      }
+      la = [].concat.apply([], la.map(function (n) { return n.kids; }));
+      lb = [].concat.apply([], lb.map(function (n) { return n.kids; }));
+    }
+    return sl(ga.lab) + ' > ' + sl(gb.lab) + '.';
   }
   function rank(groups) { // groups: [{lab, sm}] → indices du plus prioritaire au moins prioritaire
     var t = groups.map(function (g) { return tree(g.sm); });
@@ -161,12 +172,13 @@ var Chem = (function () {
   }
   function cram(groups, rot, o) {
     o = o || {};
-    var L = 46, fs = o.size || 15, g = cramGeom(rot || 0), body = '', minx = 0, maxx = 0, miny = 0, maxy = 0;
+    var k0 = o.center ? 0.24 : 0, L = 46, fs = o.size || 15, g = cramGeom(rot || 0), body = '', minx = 0, maxx = 0, miny = 0, maxy = 0;
     g.forEach(function (p, k) {
       var x = p.x * L, y = p.y * L;
-      if (p.t === 'p') body += line(0, 0, x * 0.78, y * 0.78);
-      else if (p.t === 'w') { var nx = -p.y, ny = p.x, len = Math.hypot(nx, ny); nx /= len; ny /= len; body += '<polygon points="0,0 ' + (x * 0.78 + nx * 5).toFixed(1) + ',' + (y * 0.78 + ny * 5).toFixed(1) + ' ' + (x * 0.78 - nx * 5).toFixed(1) + ',' + (y * 0.78 - ny * 5).toFixed(1) + '" fill="#1f2a30"/>'; }
-      else { var mx = -p.y, my = p.x, l2 = Math.hypot(mx, my); mx /= l2; my /= l2; for (var s = 1; s <= 6; s++) { var f = s / 6.5, hw = 5 * f; body += line(x * 0.78 * f + mx * hw, y * 0.78 * f + my * hw, x * 0.78 * f - mx * hw, y * 0.78 * f - my * hw, { w: 1.6 }); } }
+      var sx = x * k0, sy = y * k0;
+      if (p.t === 'p') body += line(sx, sy, x * 0.78, y * 0.78);
+      else if (p.t === 'w') { var nx = -p.y, ny = p.x, len = Math.hypot(nx, ny); nx /= len; ny /= len; body += '<polygon points="' + sx.toFixed(1) + ',' + sy.toFixed(1) + ' ' + (x * 0.78 + nx * 5).toFixed(1) + ',' + (y * 0.78 + ny * 5).toFixed(1) + ' ' + (x * 0.78 - nx * 5).toFixed(1) + ',' + (y * 0.78 - ny * 5).toFixed(1) + '" fill="#1f2a30"/>'; }
+      else { var mx = -p.y, my = p.x, l2 = Math.hypot(mx, my); mx /= l2; my /= l2; for (var s = 1; s <= 6; s++) { var f = (k0 + (0.78 - k0) * s / 6.2) / 0.78, hw = 5.5 * f; body += line(x * 0.78 * f + mx * hw, y * 0.78 * f + my * hw, x * 0.78 * f - mx * hw, y * 0.78 * f - my * hw, { w: 1.6 }); } }
       var lab = groups[k].lab, anchor = Math.abs(p.x) < 0.3 ? 'middle' : (p.x > 0 ? 'start' : 'end');
       var lx = x + (anchor === 'start' ? 3 : anchor === 'end' ? -3 : 0), ly = y + (p.y < -0.5 ? -4 : p.y > 0.5 ? 6 : 0);
       body += txt(lx, ly, lab, { size: fs, anchor: anchor });
@@ -240,5 +252,7 @@ var Chem = (function () {
     return svgWrap(body, Math.min.apply(null, xs) - 25, Math.min.apply(null, ys) - 45, Math.max.apply(null, xs) + 25, Math.max.apply(null, ys) + 45, o.cls);
   }
 
-  return { topo: topo, tree: tree, cmp: cmp, rank: rank, why: why, rs: rs, cram: cram, alkene: alkene, ze: ze, mech: mech, txt: txt };
+  var MA = { H: 1, C: 12, N: 14, O: 16, F: 19, P: 31, S: 32, Cl: 35.5, Br: 79.9, I: 126.9 };
+  function masse(sm) { var at = parse(sm), m = 0; at.forEach(function (a, i) { var b = a.nb.reduce(function (s, e) { return s + e[1]; }, 0) + (i === 0 ? 1 : 0); m += MA[a.el] + Math.max(0, (VAL[a.el] || 0) - b) * MA.H; }); return m; }
+  return { masse: masse, topo: topo, tree: tree, cmp: cmp, rank: rank, why: why, rs: rs, cram: cram, alkene: alkene, ze: ze, mech: mech, txt: txt };
 })();

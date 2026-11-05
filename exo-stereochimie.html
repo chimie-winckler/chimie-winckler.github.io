@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stéréochimie – Chimie de Synthèse</title>
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=20261105a">
+</head>
+<body>
+<header class="entete">
+  <div class="conteneur entete-inner">
+    <a class="marque" href="index.html">⚗️ Chimie de Synthèse</a>
+    <button class="burger" aria-label="Menu" onclick="document.body.classList.toggle('menu-ouvert')">☰</button>
+    <nav><ul class="menu">
+<li><a href="index.html">Accueil</a></li>
+<li><a href="matieres-premieres.html">Matières premières</a><ul class="sous-menu"><li><a href="fds.html">FDS</a></li><li><a href="fds-simplifiee.html">FDS simplifiée</a></li><li><a href="gestion-dechets.html">Gestion des déchets en salle de TP</a></li></ul></li>
+<li><a href="techniques.html">Techniques</a><ul class="sous-menu"><li><a href="verrerie-et-montages.html">Verrerie et montages</a></li><li><a href="techniques-experimentales.html">Techniques expérimentales</a></li></ul></li>
+<li><a href="ressources.html">Ressources</a><ul class="sous-menu"><li><a href="cours.html">Cours</a></li><li><a href="tp.html">TP</a></li><li><a href="evaluations.html">Évaluations</a></li><li><a href="autres.html">Autres</a></li></ul></li>
+<li><a href="entrainement.html" class="actif">S’entraîner</a></li>
+<li><a href="annonces.html">Annonces</a></li>
+    </ul></nav>
+    <button type="button" class="theme-btn" id="theme-btn" aria-label="Changer de thème">🌙</button>
+  </div>
+</header>
+<div class="bandeau">
+  <div class="conteneur">
+    <p class="fil"><a href="index.html">Accueil</a> › <a href="entrainement.html">S’entraîner</a> › Stéréochimie</p>
+    <p class="surtitre">BTS Métiers de la Chimie – Partie 3 : représentation des molécules</p>
+    <h1>Stéréochimie</h1>
+    <p class="intro">Représentation de Cram, règles séquentielles de Cahn, Ingold et Prelog, configurations R/S et Z/E, relations de stéréoisomérie. D’après la fiche d’entraînement de la partie 3.</p>
+  </div>
+</div>
+<main class="conteneur">
+<nav class="sommaire"><a href="#rs">Configuration R / S en Cram</a><a href="#relation">Même molécule ou énantiomères ?</a><a href="#ze">Stéréoisomérie Z / E</a><a href="#cip">Réfléchir sur les règles CIP</a><a href="#multi">Plusieurs carbones asymétriques</a></nav><section class="exo exo-bloc" id="rs">
+<div class="exo-tete"><h2>Configuration R / S en Cram</h2><button type="button" class="bouton" data-nouveau="exo-p3-rs">Nouvel exercice</button></div>
+<p class="exo-consigne">Classer les substituants du C*, repérer le n°4 dans l’espace, lire le sens de rotation. Molécules de la fiche (exercice Cram) et du cours.</p>
+<div id="exo-p3-rs"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="relation">
+<div class="exo-tete"><h2>Même molécule ou énantiomères ?</h2><button type="button" class="bouton" data-nouveau="exo-p3-relation">Nouvel exercice</button></div>
+<p class="exo-consigne">Deux représentations de Cram d’une même molécule, orientées différemment.</p>
+<div id="exo-p3-relation"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="ze">
+<div class="exo-tete"><h2>Stéréoisomérie Z / E</h2><button type="button" class="bouton" data-nouveau="exo-p3-ze">Nouvel exercice</button></div>
+<p class="exo-consigne">Existence de la stéréoisomérie, groupes prioritaires sur chaque carbone, descripteur Z ou E.</p>
+<div id="exo-p3-ze"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="cip">
+<div class="exo-tete"><h2>Réfléchir sur les règles CIP</h2><button type="button" class="bouton" data-nouveau="exo-p3-cip">Nouvel exercice</button></div>
+<p class="exo-consigne">Comparer deux groupes : numéro atomique, rang suivant, branche prioritaire, liaisons multiples dédoublées… et les pièges (la masse ne compte pas).</p>
+<div id="exo-p3-cip"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="multi">
+<div class="exo-tete"><h2>Plusieurs carbones asymétriques</h2><button type="button" class="bouton" data-nouveau="exo-p3-multi">Nouvel exercice</button></div>
+<p class="exo-consigne">Nombre de stéréoisomères, énantiomères ou diastéréoisomères, séparation.</p>
+<div id="exo-p3-multi"><p>Chargement…</p></div>
+</section><p><a href="entrainement.html">← Retour aux exercices</a></p>
+</main>
+<footer class="pied"><div class="conteneur">BTS Métiers de la Chimie – Synthèse</div></footer>
+<script src="theme.js?v=1"></script>
+<script src="exo.js?v=20261105a"></script>
+<script src="chem.js?v=20261105b"></script>
+<script>
+/* ===== Partie 3 : représentation des molécules, stéréochimie ===== */
+(function () {
+  var C = Exo.choisir, M = Exo.melanger;
+  function G(lab, sm) { return { lab: lab, sm: sm }; }
+  function h(lab) { return lab.replace(/(\d+)/g, '<sub>$1</sub>'); }
+  /* Carbones asymétriques des exercices de la fiche et du cours */
+  var CS = [
+    { n: '4,4-diméthylpentan-3-ol', d: '(CH<sub>3</sub>)<sub>3</sub>C–C*H(OH)–CH<sub>2</sub>CH<sub>3</sub>', g: [G('OH', 'O'), G('C(CH3)3', 'C(C)(C)C'), G('C2H5', 'CC'), G('H', 'H')] },
+    { n: '3-chlorohexane', d: 'CH<sub>3</sub>CH<sub>2</sub>–C*HCl–CH<sub>2</sub>CH<sub>2</sub>CH<sub>3</sub>', g: [G('Cl', 'Cl'), G('C3H7', 'CCC'), G('C2H5', 'CC'), G('H', 'H')] },
+    { n: '1-bromoéthanol', d: 'CH<sub>3</sub>–C*H(Br)(OH)', g: [G('Br', 'Br'), G('OH', 'O'), G('CH3', 'C'), G('H', 'H')] },
+    { n: 'HO–C*H(SH)–C≡N', d: 'HO–C*H(SH)–C≡N', g: [G('SH', 'S'), G('OH', 'O'), G('C≡N', 'C#N'), G('H', 'H')] },
+    { n: 'ClCO–CH<sub>2</sub>–C*H(CH<sub>3</sub>)–COOH', d: 'ClCO–CH<sub>2</sub>–C*H(CH<sub>3</sub>)–COOH', g: [G('COOH', 'C(=O)O'), G('CH2COCl', 'CC(=O)Cl'), G('CH3', 'C'), G('H', 'H')] },
+    { n: 'H–C*(C≡N)(C<sub>2</sub>H<sub>5</sub>)(CH=CH<sub>2</sub>)', d: 'H–C*(C≡N)(C<sub>2</sub>H<sub>5</sub>)(CH=CH<sub>2</sub>)', g: [G('C≡N', 'C#N'), G('CH=CH2', 'C=C'), G('C2H5', 'CC'), G('H', 'H')] },
+    { n: 'CH<sub>3</sub>–C*H(CH<sub>2</sub>CH<sub>2</sub>OH)(CH<sub>2</sub>CH<sub>2</sub>CH<sub>3</sub>)', d: 'CH<sub>3</sub>–C*H(CH<sub>2</sub>CH<sub>2</sub>OH)(CH<sub>2</sub>CH<sub>2</sub>CH<sub>3</sub>)', g: [G('CH2CH2OH', 'CCO'), G('C3H7', 'CCC'), G('CH3', 'C'), G('H', 'H')] },
+    { n: 'C*(Br)(Cl)(C<sub>2</sub>H<sub>5</sub>)(CH<sub>3</sub>)', d: 'C*(Br)(Cl)(C<sub>2</sub>H<sub>5</sub>)(CH<sub>3</sub>)', g: [G('Br', 'Br'), G('Cl', 'Cl'), G('C2H5', 'CC'), G('CH3', 'C')] },
+    { n: 'C*H(NH<sub>2</sub>)(CH<sub>2</sub>Cl)(CH<sub>2</sub>OH)', d: 'C*H(NH<sub>2</sub>)(CH<sub>2</sub>Cl)(CH<sub>2</sub>OH)', g: [G('NH2', 'N'), G('CH2Cl', 'CCl'), G('CH2OH', 'CO'), G('H', 'H')] },
+    { n: 'C*H(COOH)(CH<sub>2</sub>SH)(CH<sub>2</sub>OH)', d: 'C*H(COOH)(CH<sub>2</sub>SH)(CH<sub>2</sub>OH)', g: [G('CH2SH', 'CS'), G('COOH', 'C(=O)O'), G('CH2OH', 'CO'), G('H', 'H')] },
+    { n: 'alanine', d: 'H<sub>2</sub>N–C*H(CH<sub>3</sub>)–COOH', g: [G('NH2', 'N'), G('COOH', 'C(=O)O'), G('CH3', 'C'), G('H', 'H')] },
+    { n: 'sérine', d: 'H<sub>2</sub>N–C*H(CH<sub>2</sub>OH)–COOH', g: [G('NH2', 'N'), G('COOH', 'C(=O)O'), G('CH2OH', 'CO'), G('H', 'H')] },
+    { n: 'cystéine', d: 'H<sub>2</sub>N–C*H(CH<sub>2</sub>SH)–COOH', g: [G('NH2', 'N'), G('CH2SH', 'CS'), G('COOH', 'C(=O)O'), G('H', 'H')] },
+    { n: 'butan-2-ol', d: 'CH<sub>3</sub>–C*H(OH)–CH<sub>2</sub>CH<sub>3</sub>', g: [G('OH', 'O'), G('C2H5', 'CC'), G('CH3', 'C'), G('H', 'H')] },
+    { n: '2-hydroxypropanal', d: 'CH<sub>3</sub>–C*H(OH)–CHO', g: [G('OH', 'O'), G('CHO', 'C=O'), G('CH3', 'C'), G('H', 'H')] },
+    { n: 'acide lactique', d: 'CH<sub>3</sub>–C*H(OH)–COOH', g: [G('OH', 'O'), G('COOH', 'C(=O)O'), G('CH3', 'C'), G('H', 'H')] }];
+  var ROT = [0, 0.35, -0.35, Math.PI, Math.PI - 0.35];
+  var LIEU = ['dans le plan', 'dans le plan', 'en arrière du plan (trait hachuré)', 'en avant du plan (triangle plein)'];
+  function ordre(gs) { var r = Chem.rank(gs); return r.map(function (i) { return gs[i]; }); }
+  function txtOrdre(o) { return o.map(function (g) { return h(g.lab); }).join(' &gt; '); }
+  /* place les 4 groupes : H (ou le n°4) souvent en arrière, comme dans le cours */
+  function placer(m) {
+    var gs = M(m.g), o = ordre(m.g), d = o[3];
+    if (Math.random() < 0.55) { var i = gs.indexOf(d); gs[i] = gs[2]; gs[2] = d; }
+    return gs;
+  }
+  function cramHtml(gs, rot) { return '<div class="mol-cadre">' + Chem.cram(gs, rot, { center: 'C' }) + '</div>'; }
+  function classementOptions(gs) {
+    var o = ordre(gs), vrai = txtOrdre(o), ops = [{ t: vrai, ok: true }], vus = [vrai];
+    function aj(oo, msg) { var t = txtOrdre(oo); if (vus.indexOf(t) < 0 && ops.length < 4) { vus.push(t); ops.push({ t: t, ok: false, pourquoi: msg }); } }
+    aj(gs.slice().sort(function (a, b) { return Chem.masse(b.sm) - Chem.masse(a.sm); }), 'Le classement ne se fait pas selon la masse des groupes : on compare les numéros atomiques, atome par atome, rang après rang (règles 1 et 2).');
+    var sans = gs.map(function (g) { return G(g.lab, g.sm.replace(/[=#]/g, '')); }), rs = Chem.rank(sans);
+    if (rs) aj(rs.map(function (i) { return gs[i]; }), 'Une liaison multiple s’ouvre en liaisons simples en dédoublant les atomes (règle 4) : C=O compte comme (O, O).');
+    for (var k = 0; k < 3; k++) { var x = o.slice(); var t = x[k]; x[k] = x[k + 1]; x[k + 1] = t; aj(x, Chem.why(o[k], o[k + 1])); }
+    return ops;
+  }
+  function corrRS(gs, rot) {
+    var o = ordre(gs), r = Chem.rs(gs, rot), pos = gs.indexOf(o[3]);
+    var s = 'Priorités : ' + o.map(function (g, i) { return (i + 1) + ' = ' + h(g.lab); }).join(' ; ') + '. Le n°4 (' + h(o[3].lab) + ') est ' + LIEU[pos] + '. ';
+    if (pos === 2) s += 'On regarde la molécule à l’opposé du n°4 : 1 → 2 → 3 tourne dans le sens ' + (r === 'R' ? 'des aiguilles d’une montre' : 'trigonométrique') + ' : <b>' + r + '</b>.';
+    else if (pos === 3) s += 'Le sens lu 1 → 2 → 3 est ' + (r === 'R' ? 'trigonométrique' : 'horaire') + ', mais le n°4 est vers l’observateur : on inverse, configuration <b>' + r + '</b>.';
+    else s += 'Astuce : échanger le n°4 avec le groupe en arrière inverse la configuration ; dans le dessin obtenu (n°4 en arrière) on lit ' + (r === 'R' ? 'S' : 'R') + ', donc la molécule dessinée est <b>' + r + '</b>.';
+    return s;
+  }
+  function rsOptions(gs, rot) {
+    var r = Chem.rs(gs, rot), pos = gs.indexOf(ordre(gs)[3]), msg = pos === 3 ? 'Le substituant n°4 est en avant : il faut inverser le sens lu.' : pos === 2 ? 'Vérifiez le classement puis le sens 1 → 2 → 3 : horaire = R, trigonométrique = S.' : 'Le n°4 est dans le plan : échangez-le avec le groupe en arrière (cela inverse la configuration) avant de lire le sens.';
+    return [{ t: 'R (rectus)', ok: r === 'R', pourquoi: msg }, { t: 'S (sinister)', ok: r === 'S', pourquoi: msg }];
+  }
+
+  /* 1. Configuration R / S en représentation de Cram */
+  Exo.lancer('exo-p3-rs', function () {
+    var m = C(CS), gs = placer(m), rot = C(ROT), o = ordre(gs), d = o[3];
+    var p1 = gs.map(function (g) { return { t: h(g.lab), ok: g === o[0], pourquoi: g === o[0] ? '' : Chem.why(o[0], g) }; });
+    var et = [
+      { type: 'choix', q: 'Quel substituant du carbone asymétrique est prioritaire (n°1) ?', options: p1, corr: 'On compare d’abord les numéros atomiques des atomes directement liés à C* (règle 1). ' + Chem.why(o[0], o[1]) },
+      { type: 'choix', q: 'Quel est le classement complet selon les règles CIP ?', options: classementOptions(gs), corr: txtOrdre(o) + '. ' + Chem.why(o[1], o[2]) + ' ' + Chem.why(o[2], o[3]) },
+      { type: 'choix', q: 'Où se trouve le substituant n°4 (' + h(d.lab) + ') dans cette représentation ?', options: [
+        { t: 'en arrière du plan', ok: gs.indexOf(d) === 2, pourquoi: 'Trait hachuré = en arrière ; triangle plein = en avant ; trait simple = dans le plan.' },
+        { t: 'en avant du plan', ok: gs.indexOf(d) === 3, pourquoi: 'Trait hachuré = en arrière ; triangle plein = en avant ; trait simple = dans le plan.' },
+        { t: 'dans le plan de la feuille', ok: gs.indexOf(d) < 2, pourquoi: 'Trait hachuré = en arrière ; triangle plein = en avant ; trait simple = dans le plan.' }],
+        corr: h(d.lab) + ' est ' + LIEU[gs.indexOf(d)] + '.' },
+      { type: 'choix', q: 'Quelle est la configuration absolue du carbone asymétrique ?', options: rsOptions(gs, rot), corr: corrRS(gs, rot) },
+      { type: 'choix', q: 'On échange les positions de deux substituants de C*. On obtient :', options: [
+        { t: 'l’énantiomère (configuration inversée)', ok: true },
+        { t: 'la même molécule', ok: false, pourquoi: 'Échanger deux substituants d’un C* inverse sa configuration.' },
+        { t: 'un diastéréoisomère', ok: false, pourquoi: 'Avec un seul C*, inverser la configuration donne l’image dans un miroir, non superposable : l’énantiomère.' }],
+        corr: 'Une permutation de deux substituants inverse la configuration (' + Chem.rs(gs, rot) + ' → ' + (Chem.rs(gs, rot) === 'R' ? 'S' : 'R') + ') : on obtient l’<b>énantiomère</b>.' }
+    ];
+    return { contexte: '<p>Molécule : <b>' + m.n + '</b> ' + (m.d !== m.n ? '(' + m.d + ')' : '') + '. Représentation de Cram du carbone asymétrique C* :</p>' + cramHtml(gs, rot), etapes: et };
+  });
+
+  /* 2. Même molécule ou énantiomères ? */
+  Exo.lancer('exo-p3-relation', function () {
+    var m = C(CS), A = placer(m), B = placer(m), ra = C(ROT), rb = C(ROT), RA = Chem.rs(A, ra), RB = Chem.rs(B, rb);
+    var et = [
+      { type: 'choix', q: 'Configuration du C* de la molécule (1) ?', options: rsOptions(A, ra), corr: corrRS(A, ra) },
+      { type: 'choix', q: 'Configuration du C* de la molécule (2) ?', options: rsOptions(B, rb), corr: corrRS(B, rb) },
+      { type: 'choix', q: 'Quelle relation existe entre (1) et (2) ?', options: [
+        { t: 'ce sont deux représentations de la même molécule', ok: RA === RB, pourquoi: 'Les configurations sont différentes : les deux molécules sont images l’une de l’autre dans un miroir.' },
+        { t: 'ce sont deux énantiomères', ok: RA !== RB, pourquoi: 'Même configuration absolue : c’est la même molécule, vue sous un autre angle.' },
+        { t: 'ce sont deux diastéréoisomères', ok: false, pourquoi: 'Avec un seul C*, deux stéréoisomères de configuration sont forcément énantiomères.' }],
+        corr: '(1) est ' + RA + ', (2) est ' + RB + ' : ' + (RA === RB ? '<b>même molécule</b>.' : '<b>énantiomères</b> (images non superposables dans un miroir).') }
+    ];
+    return { contexte: '<p>Molécule : <b>' + m.n + '</b>. Deux représentations de Cram :</p><div class="mol-ligne"><div><b>(1)</b> ' + cramHtml(A, ra) + '</div><div><b>(2)</b> ' + cramHtml(B, rb) + '</div></div>', etapes: et };
+  });
+
+  /* 3. Stéréoisomérie Z / E */
+  var GZ = [G('H', 'H'), G('CH3', 'C'), G('C2H5', 'CC'), G('Cl', 'Cl'), G('Br', 'Br'), G('I', 'I'), G('OH', 'O'), G('CH2OH', 'CO'), G('CHO', 'C=O'), G('COOH', 'C(=O)O'), G('CH(CH3)2', 'C(C)C'), G('CH=CH2', 'C=C'), G('CH2Cl', 'CCl'), G('C3H7', 'CCC'), G('F', 'F')];
+  Exo.lancer('exo-p3-ze', function () {
+    var p = M(GZ), s = [p[0], p[1], p[2], p[3]];
+    if (Math.random() < 0.2) { if (Math.random() < 0.5) s[1] = s[0]; else s[3] = s[2]; }
+    if (Math.random() < 0.6) { var iH = s.indexOf(GZ[0]); if (iH < 0) s[C([0, 1, 2, 3])] = GZ[0]; }
+    if (s[0] === s[1] && s[2] === s[3]) s[3] = p[4];
+    var z = Chem.ze(s), nul = z === null;
+    var gauche = nul && s[0] === s[1], droite = nul && s[2] === s[3];
+    var et = [{ type: 'choix', q: 'Cette molécule présente-t-elle une stéréoisomérie Z/E ?', options: [
+      { t: 'oui', ok: !nul, pourquoi: 'Un des carbones de la double liaison porte deux groupes identiques (' + h((gauche ? s[0] : s[2]).lab) + ') : échanger ses substituants redonne la même molécule.' },
+      { t: 'non', ok: nul, pourquoi: 'Chaque carbone de la double liaison porte deux groupes différents : deux diastéréoisomères Z et E existent.' }],
+      corr: nul ? 'Le carbone de ' + (gauche ? 'gauche' : 'droite') + ' porte deux groupes ' + h((gauche ? s[0] : s[2]).lab) + ' identiques : <b>pas de stéréoisomérie Z/E</b>.' : 'Chaque carbone doublement lié porte deux groupes différents : <b>stéréoisomérie Z/E</b>.' }];
+    if (!nul) {
+      var l = Chem.rank([s[0], s[1]]), r = Chem.rank([s[2], s[3]]), gl = [s[0], s[1]][l[0]], gr = [s[2], s[3]][r[0]];
+      et.push({ type: 'choix', q: 'Quel groupe est prioritaire sur le carbone de <b>gauche</b> ?', options: [s[0], s[1]].map(function (g) {
+        return { t: h(g.lab), ok: g === gl, pourquoi: g === gl ? '' : Chem.why(gl, g) }; }), corr: Chem.why(gl, [s[0], s[1]][l[1]]) });
+      et.push({ type: 'choix', q: 'Quel groupe est prioritaire sur le carbone de <b>droite</b> ?', options: [s[2], s[3]].map(function (g) {
+        return { t: h(g.lab), ok: g === gr, pourquoi: g === gr ? '' : Chem.why(gr, g) }; }), corr: Chem.why(gr, [s[2], s[3]][r[1]]) });
+      et.push({ type: 'choix', q: 'Quel est le stéréodescripteur de la double liaison ?', options: [
+        { t: 'Z', ok: z === 'Z', pourquoi: 'Z (zusammen) : les deux groupes prioritaires sont du même côté de la double liaison. Ici ils sont de part et d’autre.' },
+        { t: 'E', ok: z === 'E', pourquoi: 'E (entgegen) : les deux groupes prioritaires sont de part et d’autre. Ici ils sont du même côté.' }],
+        corr: h(gl.lab) + ' et ' + h(gr.lab) + ' sont ' + (z === 'Z' ? 'du <b>même côté</b> : isomère <b>Z</b>.' : 'de <b>part et d’autre</b> : isomère <b>E</b>.') + ' Attention : Z/E ne se lit pas sur les H (cis/trans), mais sur les groupes prioritaires.' });
+    }
+    return { contexte: '<p>Soit l’alcène suivant :</p><div class="mol-cadre">' + Chem.alkene(s) + '</div>', etapes: et };
+  });
+
+  /* 4. Règles CIP : réfléchir sur des comparaisons */
+  var GP = [G('CH3', 'C'), G('C2H5', 'CC'), G('C3H7', 'CCC'), G('CH(CH3)2', 'C(C)C'), G('C(CH3)3', 'C(C)(C)C'), G('CH=CH2', 'C=C'), G('C≡CH', 'C#C'), G('C≡N', 'C#N'),
+    G('CH2OH', 'CO'), G('CHO', 'C=O'), G('COOH', 'C(=O)O'), G('CH2Cl', 'CCl'), G('CH2SH', 'CS'), G('CH2NH2', 'CN'), G('CH2CH2OH', 'CCO'), G('CONH2', 'C(=O)N'), G('COCl', 'C(=O)Cl'),
+    G('OH', 'O'), G('OCH3', 'OC'), G('NH2', 'N'), G('SH', 'S'), G('Cl', 'Cl'), G('Br', 'Br'), G('H', 'H')];
+  function paire() {
+    var a, b, k = 0;
+    do { a = C(GP); b = C(GP); k++; } while ((a === b || (Chem.tree(a.sm).Z !== Chem.tree(b.sm).Z && Math.random() < 0.8)) && k < 200);
+    return Chem.cmp(Chem.tree(a.sm), Chem.tree(b.sm)) > 0 ? [a, b] : [b, a];
+  }
+  Exo.lancer('exo-p3-cip', function () {
+    var et = [], vus = [];
+    while (et.length < 4) {
+      var pr = paire(), key = pr[0].lab + pr[1].lab; if (vus.indexOf(key) >= 0) continue; vus.push(key);
+      var x = M(pr), lourd = Chem.masse(pr[1].sm) > Chem.masse(pr[0].sm);
+      et.push({ type: 'choix', q: 'Quel groupe est prioritaire : ' + h(x[0].lab) + ' ou ' + h(x[1].lab) + ' ?', options: [
+        { t: h(pr[0].lab), ok: true },
+        { t: h(pr[1].lab), ok: false, pourquoi: lourd ? 'Piège : ' + h(pr[1].lab) + ' est plus lourd, mais la masse du groupe n’intervient pas ; on compare les numéros atomiques rang par rang.' : 'Comparez les atomes de 1<sup>er</sup> rang, puis les ensembles d’atomes de 2<sup>e</sup> rang.' },
+        { t: 'ils ont la même priorité', ok: false, pourquoi: 'Deux groupes différents finissent toujours par se départager : si le 1<sup>er</sup> atome est le même, on passe au rang suivant (règle 2).' }],
+        corr: Chem.why(pr[0], pr[1]) });
+    }
+    return { contexte: '<p>Règles séquentielles de Cahn, Ingold et Prelog. Rappel : règle 1, Z le plus élevé ; règle 2, en cas d’égalité, on compare les atomes du rang suivant ; règle 3, on suit la branche prioritaire ; règle 4, les liaisons multiples sont ouvertes en dédoublant les atomes.</p>', etapes: et };
+  });
+
+  /* 5. Plusieurs carbones asymétriques */
+  var MULTI = [
+    { n: '2-bromo-3-chlorobutane', d: 'CH<sub>3</sub>–C*HBr–C*HCl–CH<sub>3</sub>', c: ['2', '3'] },
+    { n: 'thréonine', d: 'CH<sub>3</sub>–C*H(OH)–C*H(NH<sub>2</sub>)–COOH', c: ['2', '3'] },
+    { n: '3-chlorobutan-2-ol', d: 'CH<sub>3</sub>–C*H(OH)–C*HCl–CH<sub>3</sub>', c: ['2', '3'] },
+    { n: '2,3-dihydroxybutanal', d: 'CH<sub>3</sub>–C*H(OH)–C*H(OH)–CHO', c: ['2', '3'] },
+    { n: '2,3,4-trihydroxybutanal', d: 'HOCH<sub>2</sub>–C*H(OH)–C*H(OH)–CHO (aldose)', c: ['2', '3'] },
+    { n: '2,3,4,5-tétrahydroxypentanal', d: 'HOCH<sub>2</sub>–C*H(OH)–C*H(OH)–C*H(OH)–CHO (aldopentose)', c: ['2', '3', '4'] }];
+  function desc(m, v) { return '(' + m.c.map(function (c, i) { return c + v[i]; }).join(',') + ')'; }
+  Exo.lancer('exo-p3-multi', function () {
+    var m = C(MULTI), n = m.c.length, A = m.c.map(function () { return C(['R', 'S']); }), B;
+    var t = C(['ena', 'dia', 'dia', 'meme']);
+    if (t === 'ena') B = A.map(function (x) { return x === 'R' ? 'S' : 'R'; });
+    else if (t === 'meme') B = A.slice();
+    else { B = A.slice(); var k = Math.floor(Math.random() * n); B[k] = B[k] === 'R' ? 'S' : 'R'; if (n === 3 && Math.random() < 0.5) { var k2 = (k + 1) % n; B[k2] = B[k2] === 'R' ? 'S' : 'R'; } }
+    var nb = Math.pow(2, n);
+    var et = [
+      { type: 'nombre', q: 'Combien de carbones asymétriques possède cette molécule ?', rep: n, tol: 0.001, corr: 'Les carbones marqués C* sont liés à quatre groupes différents : <b>' + n + '</b> (C' + m.c.join(', C') + ').' },
+      { type: 'nombre', q: 'Combien de stéréoisomères de configuration au maximum ?', rep: nb, tol: 0.001, pieges: n === 3 ? [{ v: 2 * n, msg: 'Ce n’est pas 2 × n mais 2<sup>n</sup> : chaque C* peut être R ou S.' }, { v: n * n, msg: 'Ce n’est pas n² mais 2<sup>n</sup>.' }] : [],
+        corr: 'Chaque C* peut être R ou S : au plus 2<sup>' + n + '</sup> = <b>' + nb + '</b> stéréoisomères.' },
+      { type: 'choix', q: 'Quelle relation existe entre les stéréoisomères ' + desc(m, A) + ' et ' + desc(m, B) + ' ?', options: [
+        { t: 'énantiomères', ok: t === 'ena', pourquoi: t === 'meme' ? 'Les descripteurs sont identiques : même molécule.' : 'Pour des énantiomères, <b>tous</b> les C* sont inversés.' },
+        { t: 'diastéréoisomères', ok: t === 'dia', pourquoi: t === 'meme' ? 'Les descripteurs sont identiques : même molécule.' : 'Tous les C* sont inversés : ce sont des énantiomères (images dans un miroir).' },
+        { t: 'même molécule', ok: t === 'meme', pourquoi: 'Les descripteurs sont différents : ce sont deux stéréoisomères distincts.' }],
+        corr: t === 'ena' ? 'Tous les C* sont inversés : <b>énantiomères</b>.' : t === 'meme' ? 'Mêmes descripteurs : <b>même molécule</b>.' : 'Une partie seulement des C* est inversée : <b>diastéréoisomères</b> (stéréoisomères non énantiomères).' },
+      { type: 'choix', q: 'Peut-on séparer ces deux stéréoisomères par une technique usuelle (distillation, recristallisation, chromatographie classique) ?', options: [
+        { t: 'oui', ok: t === 'dia', pourquoi: t === 'ena' ? 'Deux énantiomères ont les mêmes propriétés physiques (sauf vis-à-vis de la lumière polarisée et d’un environnement chiral).' : 'C’est la même molécule : il n’y a rien à séparer.' },
+        { t: 'non', ok: t !== 'dia', pourquoi: 'Deux diastéréoisomères ont des propriétés physiques différentes : on peut les séparer.' }],
+        corr: t === 'dia' ? 'Oui : des diastéréoisomères ont des propriétés physiques et chimiques différentes.' : t === 'ena' ? 'Non : des énantiomères ont les mêmes propriétés physiques ; il faut un dédoublement (réactif chiral, formation de diastéréoisomères).' : 'Non : il s’agit de la même molécule.' }
+    ];
+    return { contexte: '<p>Molécule : <b>' + m.n + '</b> : ' + m.d + '.</p>', etapes: et };
+  });
+})();
+
+</script>
+<script data-goatcounter="https://chimie-winckler.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
