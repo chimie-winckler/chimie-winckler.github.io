@@ -48,11 +48,11 @@ function genOrdre() {
   var n = C([0, 1, 2]);
   var u = C(['s', 'min', 'h']);
   var esp = C([
-    { nom: 'du pentoxyde d’azote N<sub>2</sub>O<sub>5</sub>', s: 'N<sub>2</sub>O<sub>5</sub>' },
-    { nom: 'de l’eau oxygénée H<sub>2</sub>O<sub>2</sub>', s: 'H<sub>2</sub>O<sub>2</sub>' },
-    { nom: 'd’un ester E au cours de sa saponification', s: 'E' },
-    { nom: 'du 2-chloro-2-méthylpropane R–Cl au cours de son hydrolyse', s: 'RCl' },
-    { nom: 'd’un colorant D au cours de sa décoloration', s: 'D' }]);
+    { nom: 'du pentoxyde d’azote N<sub>2</sub>O<sub>5</sub>', s: 'N<sub>2</sub>O<sub>5</sub>', eq: '2 N<sub>2</sub>O<sub>5</sub>(g) → 4 NO<sub>2</sub>(g) + O<sub>2</sub>(g)' },
+    { nom: 'de l’eau oxygénée H<sub>2</sub>O<sub>2</sub>', s: 'H<sub>2</sub>O<sub>2</sub>', eq: '2 H<sub>2</sub>O<sub>2</sub>(aq) → 2 H<sub>2</sub>O(l) + O<sub>2</sub>(g)' },
+    { nom: 'de l’éthanoate d’éthyle E au cours de sa saponification (soude en large excès)', s: 'E', eq: 'CH<sub>3</sub>COOC<sub>2</sub>H<sub>5</sub> + HO<sup>−</sup> → CH<sub>3</sub>COO<sup>−</sup> + C<sub>2</sub>H<sub>5</sub>OH' },
+    { nom: 'du 2-chloro-2-méthylpropane R–Cl au cours de son hydrolyse', s: 'RCl', eq: '(CH<sub>3</sub>)<sub>3</sub>C–Cl + H<sub>2</sub>O → (CH<sub>3</sub>)<sub>3</sub>C–OH + H<sup>+</sup> + Cl<sup>−</sup>' },
+    { nom: 'd’un colorant D au cours de sa décoloration', s: 'D', eq: 'D (coloré) → produits incolores' }]);
   var C0 = cs(A(10, 50), 3), dt = C([5, 10, 20]), T = 8 * dt, f = A(0.72, 0.86), k;
   if (n === 0) k = f * C0 / T; else if (n === 1) k = -Math.log(1 - f) / T; else k = (1 / (C0 * (1 - f)) - 1 / C0) / T;
   k = cs(k, 3);
@@ -73,7 +73,7 @@ function genOrdre() {
   var uk = ['mmol.L<sup>-1</sup>.' + u + '<sup>-1</sup>', u + '<sup>-1</sup>', 'L.mmol<sup>-1</sup>.' + u + '<sup>-1</sup>'];
   var nomOrdre = ['0', '1', '2'];
   var tab = '<div class="exo-tableau"><table><tr><th>t (' + u + ')</th>' + ts.map(function (t) { return '<td>' + nb(t, 3) + '</td>'; }).join('') + '</tr><tr><th>' + X + ' (mmol.L<sup>-1</sup>)</th>' + cc.map(function (c) { return '<td>' + nb(c, 3) + '</td>'; }).join('') + '</tr></table></div>';
-  var ctx = '<p>On suit au cours du temps la concentration ' + esp.nom + ', seul réactif dont dépend la vitesse, dans un système monophasé et isochore, à température constante.</p>' + tab +
+  var ctx = '<p>On suit au cours du temps la concentration ' + esp.nom + ', seul réactif dont dépend la vitesse, dans un système monophasé et isochore, à température constante.</p><p class="exo-eq-chimique">' + esp.eq + '</p>' + tab +
     '<p class="exo-aide">Comme avec un tableur, choisissez le tracé à afficher, puis affichez sa modélisation par une droite.</p>' +
     '<div class="exo-traces boutons-traces"><button type="button" data-tr="0" class="actif">' + tr[0].nom + '</button><button type="button" data-tr="1">' + tr[1].nom + '</button><button type="button" data-tr="2">' + tr[2].nom + '</button><label class="exo-modele"><input type="checkbox"> Afficher la modélisation</label></div>' +
     '<div class="exo-graphe"></div><p class="exo-equation"></p>';
