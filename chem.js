@@ -253,7 +253,63 @@ var Chem = (function () {
     return svgWrap(body, Math.min.apply(null, xs) - 22, Math.min.apply(null, ys) - 45, Math.max.apply(null, xs2) + 22, Math.max.apply(null, ys) + 45, o.cls);
   }
 
+
+  /* ---------- Carbone asymétrique en 3D, à faire tourner (souris ou doigt) ---------- */
+  var TET = [[0, 1, 0], [0.943, -0.333, 0], [-0.471, -0.333, 0.816], [-0.471, -0.333, -0.816]];
+  var COUL = { H: '#f4f4f4', C: '#3b4248', N: '#3b6fd8', O: '#e0412f', S: '#e6c229', Cl: '#2fae4a', Br: '#9b3a26', I: '#7a3d9b', F: '#8fd16a', P: '#f08a24' };
+  function rs3d(groups) { // groups placés sur TET[0..3]
+    var r = rank(groups); if (!r) return null;
+    var v = r.map(function (k) { return TET[k]; }), d = v[3];
+    var A1 = [0, 1, 2].map(function (i) { return v[0][i] - d[i]; }), B1 = [0, 1, 2].map(function (i) { return v[1][i] - d[i]; }), C1 = [0, 1, 2].map(function (i) { return v[2][i] - d[i]; });
+    var det = A1[0] * (B1[1] * C1[2] - B1[2] * C1[1]) - A1[1] * (B1[0] * C1[2] - B1[2] * C1[0]) + A1[2] * (B1[0] * C1[1] - B1[1] * C1[0]);
+    return det < 0 ? 'R' : 'S';
+  }
+  function mul(A, B) { var C = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]; for (var i = 0; i < 3; i++) for (var j = 0; j < 3; j++) for (var k = 0; k < 3; k++) C[i][j] += A[i][k] * B[k][j]; return C; }
+  function rotY(a) { var c = Math.cos(a), s = Math.sin(a); return [[c, 0, s], [0, 1, 0], [-s, 0, c]]; }
+  function rotX(a) { var c = Math.cos(a), s = Math.sin(a); return [[1, 0, 0], [0, c, -s], [0, s, c]]; }
+  function vue3d(el, groups, o) {
+    o = o || {};
+    var W = 300, H = 260, L = 88, R0 = mul(rotX(Math.random() * 6.28), rotY(Math.random() * 6.28)), R = R0, num = false, rk = rank(groups) || [];
+    var els = groups.map(function (g) { return tree(g.sm).el; });
+    el.innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="vue3d-svg" role="img" aria-label="Modèle 3D du carbone asymétrique"></svg>' +
+      '<div class="vue3d-outils"><button type="button" class="bouton petit" data-a="num">Aide : numéros CIP</button> <button type="button" class="bouton petit" data-a="reset">Réinitialiser</button></div>' +
+      '<p class="exo-aide">Faites glisser la molécule (souris ou doigt) pour la faire tourner.</p>';
+    var svg = el.querySelector('svg');
+    function dessiner() {
+      var cx = W / 2, cy = H / 2, it = TET.map(function (v, k) {
+        var p = [0, 1, 2].map(function (i) { return R[i][0] * v[0] + R[i][1] * v[1] + R[i][2] * v[2]; });
+        return { k: k, x: cx + p[0] * L, y: cy - p[1] * L, z: p[2] };
+      });
+      var b = '';
+      it.forEach(function (p) { var w = 7 + 3 * p.z; b += '<line x1="' + cx + '" y1="' + cy + '" x2="' + p.x.toFixed(1) + '" y2="' + p.y.toFixed(1) + '" stroke="#8a949b" stroke-width="' + w.toFixed(1) + '" stroke-linecap="round" opacity="' + (0.55 + 0.45 * (p.z + 1) / 2).toFixed(2) + '"/>'; });
+      var liste = it.concat([{ k: -1, x: cx, y: cy, z: 0 }]).sort(function (a, c) { return a.z - c.z; });
+      liste.forEach(function (p) {
+        if (p.k < 0) { b += '<circle cx="' + cx + '" cy="' + cy + '" r="17" fill="url(#g3dC)" stroke="#222" stroke-width="1"/><text x="' + cx + '" y="' + (cy + 5) + '" text-anchor="middle" font-size="14" fill="#fff" font-weight="bold">C*</text>'; return; }
+        var e = els[p.k], r = (e === 'H' ? 15 : 20) * (1 + 0.35 * p.z), op = (0.4 + 0.6 * (p.z + 1) / 2).toFixed(2), col = COUL[e] || '#777';
+        b += '<g opacity="' + op + '"><circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="' + r.toFixed(1) + '" fill="' + col + '" stroke="#222" stroke-width="1"/>';
+        b += '<circle cx="' + (p.x - r * 0.35).toFixed(1) + '" cy="' + (p.y - r * 0.35).toFixed(1) + '" r="' + (r * 0.28).toFixed(1) + '" fill="#fff" opacity="0.45"/>';
+        var dx = p.x - cx, dy = p.y - cy, n = Math.hypot(dx, dy) || 1, lx = p.x + dx / n * (r + 6), ly = p.y + dy / n * (r + 6);
+        b += txt(lx, ly, groups[p.k].lab, { size: 15, anchor: dx > 8 ? 'start' : dx < -8 ? 'end' : 'middle', weight: 'bold' });
+        if (num) b += '<text x="' + p.x.toFixed(1) + '" y="' + (p.y + 5).toFixed(1) + '" text-anchor="middle" font-size="15" font-weight="bold" fill="' + (e === 'H' || e === 'S' ? '#000' : '#fff') + '">' + (rk.indexOf(p.k) + 1) + '</text>';
+        b += '</g>';
+      });
+      svg.innerHTML = '<defs><radialGradient id="g3dC" cx="35%" cy="35%"><stop offset="0" stop-color="#7d868c"/><stop offset="1" stop-color="#2a2f33"/></radialGradient></defs><rect width="' + W + '" height="' + H + '" fill="#fff"/>' + b;
+    }
+    var x0 = null, y0 = null;
+    svg.addEventListener('pointerdown', function (e) { x0 = e.clientX; y0 = e.clientY; svg.setPointerCapture(e.pointerId); e.preventDefault(); });
+    svg.addEventListener('pointermove', function (e) {
+      if (x0 === null) return;
+      var dx = e.clientX - x0, dy = e.clientY - y0; x0 = e.clientX; y0 = e.clientY;
+      R = mul(rotX(dy * 0.012), mul(rotY(dx * 0.012), R)); dessiner();
+    });
+    function fin() { x0 = null; }
+    svg.addEventListener('pointerup', fin); svg.addEventListener('pointercancel', fin);
+    el.querySelector('[data-a="num"]').addEventListener('click', function () { num = !num; dessiner(); });
+    el.querySelector('[data-a="reset"]').addEventListener('click', function () { R = R0; dessiner(); });
+    dessiner();
+    return { rs: rs3d(groups) };
+  }
   var MA = { H: 1, C: 12, N: 14, O: 16, F: 19, P: 31, S: 32, Cl: 35.5, Br: 79.9, I: 126.9 };
   function masse(sm) { var at = parse(sm), m = 0; at.forEach(function (a, i) { var b = a.nb.reduce(function (s, e) { return s + e[1]; }, 0) + (i === 0 ? 1 : 0); m += MA[a.el] + Math.max(0, (VAL[a.el] || 0) - b) * MA.H; }); return m; }
-  return { masse: masse, topo: topo, tree: tree, cmp: cmp, rank: rank, why: why, rs: rs, cram: cram, alkene: alkene, ze: ze, mech: mech, txt: txt };
+  return { vue3d: vue3d, rs3d: rs3d, masse: masse, topo: topo, tree: tree, cmp: cmp, rank: rank, why: why, rs: rs, cram: cram, alkene: alkene, ze: ze, mech: mech, txt: txt };
 })();

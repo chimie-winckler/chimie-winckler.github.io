@@ -396,3 +396,19 @@ h3 { margin: 0 0 8px; font-size: 1.05rem; }
 .mol-cadre svg { max-width: 100%; height: auto; display: block; }
 .exo-option .mol-cadre { margin: 2px 0; }
 .mol-ligne { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.vue3d { display: inline-block; max-width: 100%; }
+.vue3d-svg { width: 300px; max-width: 100%; height: auto; border: 1px solid #d9e2e4; border-radius: 10px; touch-action: none; cursor: grab; background: #fff; display: block; }
+.vue3d-svg:active { cursor: grabbing; }
+.vue3d-outils { margin-top: 6px; display: flex; gap: 6px; flex-wrap: wrap; }
+.bouton.petit { padding: 4px 10px; font-size: 0.85em; }
+.chrono-barre { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 8px 0; }
+.chrono-barre .actif { outline: 3px solid var(--accent, #0f7c80); }
+.chrono-info { display: flex; gap: 18px; font-size: 1.1em; margin: 8px 0; font-variant-numeric: tabular-nums; }
+.chrono-zone { text-align: center; }
+.chrono-zone .mol-cadre { transition: box-shadow .2s; }
+.chrono-zone .mol-cadre.juste { box-shadow: 0 0 0 4px #2e9b57; }
+.chrono-zone .mol-cadre.faux { box-shadow: 0 0 0 4px #c0392b; }
+.chrono-rs { display: flex; gap: 16px; justify-content: center; margin: 12px 0; }
+.chrono-rs button { font-size: 1.6em; min-width: 110px; padding: 10px 0; }
+.chrono-erreurs { display: grid; gap: 10px; }
+.chrono-erreur { border-left: 4px solid #c0392b; padding: 6px 10px; background: rgba(192, 57, 43, .06); }

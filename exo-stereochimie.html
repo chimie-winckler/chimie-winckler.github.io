@@ -32,10 +32,18 @@
   </div>
 </div>
 <main class="conteneur">
-<nav class="sommaire"><a href="#rs">Configuration R / S en Cram</a><a href="#relation">Même molécule ou énantiomères ?</a><a href="#ze">Stéréoisomérie Z / E</a><a href="#cip">Réfléchir sur les règles CIP</a><a href="#multi">Plusieurs carbones asymétriques</a></nav><section class="exo exo-bloc" id="rs">
+<nav class="sommaire"><a href="#rs">Configuration R / S en Cram</a><a href="#3d">Le carbone asymétrique en 3D</a><a href="#chrono">Mode chrono : R ou S ?</a><a href="#relation">Même molécule ou énantiomères ?</a><a href="#ze">Stéréoisomérie Z / E</a><a href="#cip">Réfléchir sur les règles CIP</a><a href="#multi">Plusieurs carbones asymétriques</a></nav><section class="exo exo-bloc" id="rs">
 <div class="exo-tete"><h2>Configuration R / S en Cram</h2><button type="button" class="bouton" data-nouveau="exo-p3-rs">Nouvel exercice</button></div>
 <p class="exo-consigne">Classer les substituants du C*, repérer le n°4 dans l’espace, lire le sens de rotation. Molécules de la fiche (exercice Cram) et du cours.</p>
 <div id="exo-p3-rs"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="3d">
+<div class="exo-tete"><h2>Le carbone asymétrique en 3D</h2><button type="button" class="bouton" data-nouveau="exo-p3-3d">Nouvel exercice</button></div>
+<p class="exo-consigne">Mode apprentissage : faire tourner le modèle moléculaire pour placer le n°4 en arrière, lire R ou S, puis retrouver la bonne représentation de Cram.</p>
+<div id="exo-p3-3d"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="chrono">
+<div class="exo-tete"><h2>Mode chrono : R ou S ?</h2><button type="button" class="bouton" data-nouveau="exo-p3-chrono">Nouvel exercice</button></div>
+<p class="exo-consigne">10 représentations de Cram à enchaîner le plus vite possible, en trois niveaux. Chaque erreur coûte 5 s ; les corrections s’affichent à la fin. Rien n’est enregistré.</p>
+<div id="exo-p3-chrono"><p>Chargement…</p></div>
 </section><section class="exo exo-bloc" id="relation">
 <div class="exo-tete"><h2>Même molécule ou énantiomères ?</h2><button type="button" class="bouton" data-nouveau="exo-p3-relation">Nouvel exercice</button></div>
 <p class="exo-consigne">Deux représentations de Cram d’une même molécule, orientées différemment.</p>
@@ -57,7 +65,7 @@
 <footer class="pied"><div class="conteneur">BTS Métiers de la Chimie – Synthèse</div></footer>
 <script src="theme.js?v=1"></script>
 <script src="exo.js?v=20261105a"></script>
-<script src="chem.js?v=20261105d"></script>
+<script src="chem.js?v=20261105e"></script>
 <script>
 /* ===== Partie 3 : représentation des molécules, stéréochimie ===== */
 (function () {
@@ -234,6 +242,84 @@
     ];
     return { contexte: '<p>Molécule : <b>' + m.n + '</b> : ' + m.d + '.</p>', etapes: et };
   });
+
+  /* 6. Mode apprentissage : le carbone asymétrique en 3D */
+  function cramDeConf(m, conf, deja) {
+    for (var k = 0; k < 60; k++) { var gs = M(m.g), rot = C(ROT), h1 = cramHtml(gs, rot); if (Chem.rs(gs, rot) === conf && deja.indexOf(h1) < 0) { deja.push(h1); return h1; } }
+    return null;
+  }
+  Exo.lancer('exo-p3-3d', function () {
+    var m = C(CS), slots = M(m.g), conf = Chem.rs3d(slots), o = ordre(slots), autre = conf === 'R' ? 'S' : 'R', deja = [];
+    var ops = [{ t: cramDeConf(m, conf, deja), ok: true }];
+    [autre, autre].forEach(function (c) { var x = cramDeConf(m, c, deja); if (x) ops.push({ t: x, ok: false, pourquoi: 'Cette représentation est celle de l’énantiomère (configuration ' + c + ').' }); });
+    var et = [
+      { type: 'choix', q: 'Classer les quatre substituants selon les règles CIP :', options: classementOptions(slots), corr: txtOrdre(o) + '. ' + Chem.why(o[0], o[1]) + ' ' + Chem.why(o[1], o[2]) + ' ' + Chem.why(o[2], o[3]) },
+      { type: 'choix', q: 'Faites tourner la molécule pour que le n°4 (' + h(o[3].lab) + ') pointe vers l’arrière, loin de vous. Dans quel sens tourne-t-on de 1 vers 2 puis 3 ?', options: [
+        { t: 'sens des aiguilles d’une montre : configuration R', ok: conf === 'R', pourquoi: 'Vérifiez que le n°4 est bien derrière C* (petite boule pâle), puis suivez 1 → 2 → 3. Le bouton « Aide : numéros CIP » affiche les priorités.' },
+        { t: 'sens trigonométrique : configuration S', ok: conf === 'S', pourquoi: 'Vérifiez que le n°4 est bien derrière C* (petite boule pâle), puis suivez 1 → 2 → 3. Le bouton « Aide : numéros CIP » affiche les priorités.' }],
+        corr: 'Avec ' + h(o[3].lab) + ' en arrière, 1 (' + h(o[0].lab) + ') → 2 (' + h(o[1].lab) + ') → 3 (' + h(o[2].lab) + ') tourne dans le sens ' + (conf === 'R' ? 'des aiguilles d’une montre : <b>R</b>.' : 'trigonométrique : <b>S</b>.') },
+      { type: 'choix', q: 'Quelle représentation de Cram correspond à la molécule en 3D ?', options: ops, corr: 'La molécule est <b>' + conf + '</b> : seule la bonne représentation de Cram donne aussi ' + conf + '. Les autres représentent l’énantiomère ' + autre + '.' }
+    ];
+    return { contexte: '<p>Molécule : <b>' + m.n + '</b>' + (m.d !== m.n ? ' (' + m.d + ')' : '') + '. Modèle moléculaire du carbone asymétrique :</p><div class="vue3d"></div>', etapes: et,
+      apres: function (r) { Chem.vue3d(r.querySelector('.vue3d'), slots); } };
+  });
+
+  /* 7. Mode chrono : 10 configurations R/S le plus vite possible */
+  (function () {
+    var racine = document.getElementById('exo-p3-chrono'); if (!racine) return;
+    var niveau = 1, meilleur = {}, t0 = 0, timer = null, i = 0, serie = [], err = [], bloque = false;
+    var DESC = { 1: 'Niveau 1 : le n°4 est toujours en arrière.', 2: 'Niveau 2 : le n°4 peut être en avant ou dans le plan.', 3: 'Niveau 3 : groupes plus difficiles à classer (règles 2 à 4) et orientations variées.' };
+    function tirage() {
+      if (niveau === 3) {
+        var gs; do { gs = M(GP).slice(0, 4); } while (!Chem.rank(gs));
+        return { n: 'C*', gs: gs, rot: C(ROT) };
+      }
+      var m = C(CS), g = placer(m), rot = niveau === 1 ? C([0, 0.35, -0.35]) : C(ROT);
+      if (niveau === 1) { var d = ordre(g)[3], k = g.indexOf(d); g[k] = g[2]; g[2] = d; }
+      return { n: m.n, gs: g, rot: rot };
+    }
+    function accueil() {
+      clearInterval(timer);
+      racine.innerHTML = '<div class="chrono-barre">' + [1, 2, 3].map(function (n) { return '<button type="button" class="bouton petit' + (n === niveau ? ' actif' : '') + '" data-n="' + n + '">Niveau ' + n + '</button>'; }).join('') + '</div>' +
+        '<p>' + DESC[niveau] + ' 10 carbones asymétriques à identifier : R ou S ? Chaque erreur ajoute 5 s.' + (meilleur[niveau] ? ' Meilleur temps de la séance : <b>' + meilleur[niveau].toFixed(1).replace('.', ',') + ' s</b>.' : '') + '</p>' +
+        '<button type="button" class="bouton" data-go="1">Démarrer</button>';
+      racine.querySelectorAll('[data-n]').forEach(function (b) { b.addEventListener('click', function () { niveau = +b.dataset.n; accueil(); }); });
+      racine.querySelector('[data-go]').addEventListener('click', depart);
+    }
+    function depart() {
+      serie = []; for (var k = 0; k < 10; k++) serie.push(tirage());
+      i = 0; err = []; t0 = performance.now();
+      racine.innerHTML = '<div class="chrono-info"><span>Question <b class="c-i">1</b> / 10</span><span>⏱ <b class="c-t">0,0</b> s</span><span>Erreurs : <b class="c-e">0</b></span></div><div class="chrono-zone"><div class="c-mol"></div><div class="chrono-rs"><button type="button" class="bouton" data-r="R">R</button><button type="button" class="bouton" data-r="S">S</button></div></div>';
+      racine.querySelectorAll('[data-r]').forEach(function (b) { b.addEventListener('click', function () { repondre(b.dataset.r); }); });
+      timer = setInterval(function () { racine.querySelector('.c-t').textContent = ((performance.now() - t0) / 1000).toFixed(1).replace('.', ','); }, 100);
+      montrer();
+    }
+    function montrer() {
+      var q = serie[i]; racine.querySelector('.c-i').textContent = i + 1;
+      racine.querySelector('.c-mol').innerHTML = '<p class="exo-aide">' + (q.n === 'C*' ? 'Carbone asymétrique' : q.n) + '</p>' + cramHtml(q.gs, q.rot); bloque = false;
+    }
+    function repondre(r) {
+      if (bloque) return; bloque = true;
+      var q = serie[i], bon = Chem.rs(q.gs, q.rot), cadre = racine.querySelector('.c-mol .mol-cadre');
+      if (r !== bon) { err.push(q); racine.querySelector('.c-e').textContent = err.length; }
+      cadre.classList.add(r === bon ? 'juste' : 'faux');
+      setTimeout(function () { i++; if (i < 10) montrer(); else fin(); }, 350);
+    }
+    function fin() {
+      clearInterval(timer);
+      var t = (performance.now() - t0) / 1000, tot = t + 5 * err.length, rec = !meilleur[niveau] || tot < meilleur[niveau];
+      if (rec) meilleur[niveau] = tot;
+      var h2 = '<p class="exo-score">Score : <b>' + (10 - err.length) + ' / 10</b> en ' + t.toFixed(1).replace('.', ',') + ' s' + (err.length ? ' + ' + 5 * err.length + ' s de pénalité = <b>' + tot.toFixed(1).replace('.', ',') + ' s</b>' : '') + (rec ? ' — meilleur temps de la séance !' : '') + '</p>';
+      if (err.length) h2 += '<h3>Corrections</h3><div class="chrono-erreurs">' + err.map(function (q) { return '<div class="chrono-erreur">' + cramHtml(q.gs, q.rot) + '<p>' + corrRS(q.gs, q.rot) + '</p></div>'; }).join('') + '</div>';
+      h2 += '<p><button type="button" class="bouton" data-go="1">Rejouer</button> <button type="button" class="bouton" data-acc="1">Changer de niveau</button></p>';
+      racine.innerHTML = h2;
+      racine.querySelector('[data-go]').addEventListener('click', depart);
+      racine.querySelector('[data-acc]').addEventListener('click', accueil);
+    }
+    accueil();
+    var b = document.querySelector('[data-nouveau="exo-p3-chrono"]'); if (b) b.addEventListener('click', accueil);
+  })();
+
 })();
 
 </script>
