@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bilans avec réaction – Chimie de Synthèse</title>
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=20261105a">
+</head>
+<body>
+<header class="entete">
+  <div class="conteneur entete-inner">
+    <a class="marque" href="index.html">⚗️ Chimie de Synthèse</a>
+    <button class="burger" aria-label="Menu" onclick="document.body.classList.toggle('menu-ouvert')">☰</button>
+    <nav><ul class="menu">
+<li><a href="index.html">Accueil</a></li>
+<li><a href="matieres-premieres.html">Matières premières</a><ul class="sous-menu"><li><a href="fds.html">FDS</a></li><li><a href="fds-simplifiee.html">FDS simplifiée</a></li><li><a href="gestion-dechets.html">Gestion des déchets en salle de TP</a></li></ul></li>
+<li><a href="techniques.html">Techniques</a><ul class="sous-menu"><li><a href="verrerie-et-montages.html">Verrerie et montages</a></li><li><a href="techniques-experimentales.html">Techniques expérimentales</a></li></ul></li>
+<li><a href="ressources.html">Ressources</a><ul class="sous-menu"><li><a href="cours.html">Cours</a></li><li><a href="tp.html">TP</a></li><li><a href="evaluations.html">Évaluations</a></li><li><a href="autres.html">Autres</a></li></ul></li>
+<li><a href="entrainement.html" class="actif">S’entraîner</a></li>
+<li><a href="annonces.html">Annonces</a></li>
+    </ul></nav>
+    <button type="button" class="theme-btn" id="theme-btn" aria-label="Changer de thème">🌙</button>
+  </div>
+</header>
+<div class="bandeau">
+  <div class="conteneur">
+    <p class="fil"><a href="index.html">Accueil</a> › <a href="entrainement.html">S’entraîner</a> › Bilans avec réaction</p>
+    <p class="surtitre">BTS Métiers de la Chimie – Partie 8 : changement d’échelle</p>
+    <h1>Bilans avec réaction</h1>
+    <p class="intro">Réactif limitant, taux de conversion, sélectivité, rendement, bilan en continu et temps de passage.</p>
+  </div>
+</div>
+<main class="conteneur">
+<nav class="sommaire"><a href="#limitant">Réactif limitant et taux de conversion</a><a href="#competitives">Réactions compétitives</a><a href="#continu">Bilan en continu avec un inerte</a><a href="#passage">Temps de passage</a></nav><section class="exo exo-bloc" id="limitant">
+<div class="exo-tete"><h2>Réactif limitant et taux de conversion</h2><button type="button" class="bouton" data-nouveau="exo-p8-limitant">Nouvelles valeurs</button></div>
+<p class="exo-consigne">Nombres : virgule acceptée ; puissances de 10 sous la forme 1,2e-3. Tolérance : 2 %. D’après l’exemple 3 du cours.</p>
+<div id="exo-p8-limitant"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="competitives">
+<div class="exo-tete"><h2>Réactions compétitives</h2><button type="button" class="bouton" data-nouveau="exo-p8-competitives">Nouvelles valeurs</button></div>
+<p class="exo-consigne">Nombres : virgule acceptée ; puissances de 10 sous la forme 1,2e-3. Tolérance : 2 %. D’après l’exemple 4 du cours : τ, σ et η = σ × τ.</p>
+<div id="exo-p8-competitives"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="continu">
+<div class="exo-tete"><h2>Bilan en continu avec un inerte</h2><button type="button" class="bouton" data-nouveau="exo-p8-continu">Nouvelles valeurs</button></div>
+<p class="exo-consigne">Nombres : virgule acceptée ; puissances de 10 sous la forme 1,2e-3. Tolérance : 2 %. D’après les exemples 5 et 6 du cours : E + G = S + C.</p>
+<div id="exo-p8-continu"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="passage">
+<div class="exo-tete"><h2>Temps de passage</h2><button type="button" class="bouton" data-nouveau="exo-p8-passage">Nouvelles valeurs</button></div>
+<p class="exo-consigne">Nombres : virgule acceptée ; puissances de 10 sous la forme 1,2e-3. Tolérance : 2 %. t = V<sub>R</sub> / D<sub>V</sub>.</p>
+<div id="exo-p8-passage"><p>Chargement…</p></div>
+</section><p><a href="entrainement.html">← Retour aux exercices</a></p>
+</main>
+<footer class="pied"><div class="conteneur">BTS Métiers de la Chimie – Synthèse</div></footer>
+<script src="theme.js?v=1"></script>
+<script src="exo.js?v=20261105a"></script>
+<script>
+/* Outils communs aux exercices de la partie 8 */
+var P8 = (function () {
+  var A = Exo.alea, C = Exo.choisir, cs = Exo.cs, nb = Exo.nb;
+  var W = '<span class="w">𝑤</span>';                       // titre massique, w rond
+  function w(sub) { return W + (sub ? '<sub>' + sub + '</sub>' : ''); }
+  function v(s, sub) { return '<i>' + s + '</i>' + (sub ? '<sub>' + sub + '</sub>' : ''); }
+  function pct(x, n) { return nb(100 * x, n || 3) + ' %'; }
+  var LIQ = [
+    { n: 'méthanol', f: 'CH<sub>3</sub>OH', M: 32, rho: 0.790 },
+    { n: 'éthanol', f: 'C<sub>2</sub>H<sub>5</sub>OH', M: 46, rho: 0.789 },
+    { n: 'acide acétique', f: 'CH<sub>3</sub>COOH', M: 60, rho: 1.05 },
+    { n: 'acétone', f: 'C<sub>3</sub>H<sub>6</sub>O', M: 58, rho: 0.784 },
+    { n: 'propan-1-ol', f: 'C<sub>3</sub>H<sub>7</sub>OH', M: 60, rho: 0.803 }];
+  var EAU = { n: 'eau', f: 'H<sub>2</sub>O', M: 18, rho: 1.00 };
+  var SOL = [
+    { n: 'chlorure de sodium', f: 'NaCl', M: 58.5, s: 360 },
+    { n: 'chlorure de potassium', f: 'KCl', M: 74.6, s: 340 },
+    { n: 'hydroxyde de sodium', f: 'NaOH', M: 40.0, s: 1090 },
+    { n: 'sulfate de cuivre', f: 'CuSO<sub>4</sub>', M: 159.6, s: 207 },
+    { n: 'glucose', f: 'C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>', M: 180, s: 910 }];
+  function donneesM(list) { return '<p class="exo-aide">Données : ' + list.map(function (s) { return 'M(' + s.f + ') = ' + nb(s.M, 3) + ' g.mol<sup>-1</sup>'; }).join(' ; ') + '.</p>'; }
+  return { A: A, C: C, cs: cs, nb: nb, W: W, w: w, v: v, pct: pct, LIQ: LIQ, EAU: EAU, SOL: SOL, donneesM: donneesM };
+})();
+/* Schéma de principe simple : entrées à gauche, appareil au centre, sorties à droite */
+P8.schema = function (app, entrees, sorties) {
+  function fl(t, cl) { var f = '<span class="fleche" aria-hidden="true">⟶</span>'; return '<div class="flux ' + cl + '">' + (cl === 'entree' ? '<span>' + t + '</span>' + f : f + '<span>' + t + '</span>') + '</div>'; }
+  return '<div class="schema" role="img" aria-label="Schéma de principe"><div class="schema-col">' + entrees.map(function (t) { return fl(t, 'entree'); }).join('') +
+    '</div><div class="schema-app">' + app + '</div><div class="schema-col">' + sorties.map(function (t) { return fl(t, 'sortie'); }).join('') + '</div></div>';
+};
+
+/* Élisions : de l’éthanol, du benzène, la soude… */
+(function () {
+  var FEM = ['soude'];
+  function voy(n) { return /^[aeéèêiïoôuh]/i.test(n); }
+  P8.de = function (n) { return (voy(n) ? 'd’' : 'de ') + n; };
+  P8.du = function (n) { return voy(n) ? 'de l’' + n : (FEM.indexOf(n) >= 0 ? 'de la ' : 'du ') + n; };
+  P8.le = function (n) { return voy(n) ? 'l’' + n : (FEM.indexOf(n) >= 0 ? 'la ' : 'le ') + n; };
+})();
+
+/* ===== Séquence 3 : bilans de matière avec réaction ===== */
+(function () {
+  var A = P8.A, C = P8.C, cs = P8.cs, nb = P8.nb;
+  var RX = [
+    { nom: 'Synthèse de l’éthanoate d’éthyle (estérification)', r: [['C<sub>2</sub>H<sub>5</sub>OH', 1, 'éthanol'], ['CH<sub>3</sub>COOH', 1, 'acide éthanoïque']], p: [['CH<sub>3</sub>COOC<sub>2</sub>H<sub>5</sub>', 1, 'ester'], ['H<sub>2</sub>O', 1, 'eau']] },
+    { nom: 'Synthèse de l’ammoniac', r: [['N<sub>2</sub>', 1, 'diazote'], ['H<sub>2</sub>', 3, 'dihydrogène']], p: [['NH<sub>3</sub>', 2, 'ammoniac']] },
+    { nom: 'Synthèse du méthanol', r: [['CO', 1, 'monoxyde de carbone'], ['H<sub>2</sub>', 2, 'dihydrogène']], p: [['CH<sub>3</sub>OH', 1, 'méthanol']] },
+    { nom: 'Oxydation du dioxyde de soufre', r: [['SO<sub>2</sub>', 2, 'dioxyde de soufre'], ['O<sub>2</sub>', 1, 'dioxygène']], p: [['SO<sub>3</sub>', 2, 'trioxyde de soufre']] },
+    { nom: 'Combustion du méthane', r: [['CH<sub>4</sub>', 1, 'méthane'], ['O<sub>2</sub>', 2, 'dioxygène']], p: [['CO<sub>2</sub>', 1, 'dioxyde de carbone'], ['H<sub>2</sub>O', 2, 'eau']] }];
+  function ecr(s) { return (s[1] > 1 ? s[1] + ' ' : '') + s[0]; }
+  function equation(R) { return R.r.map(ecr).join(' + ') + ' → ' + R.p.map(ecr).join(' + '); }
+
+  /* 1. Réactif limitant, taux de conversion, rendement */
+  function genLimitant() {
+    var R = C(RX), a = R.r[0], b = R.r[1], na = cs(A(2, 20), 2), nbb;
+    var lim = C([0, 1]);              // 0 : A limitant, 1 : B limitant
+    var ratio = b[1] / a[1];          // n_B stœchiométrique = ratio × n_A
+    nbb = cs(na * ratio * (lim === 0 ? A(1.25, 1.8) : A(0.5, 0.8)), 2);
+    var xmax = Math.min(na / a[1], nbb / b[1]), RL = lim === 0 ? a : b, nRL = lim === 0 ? na : nbb;
+    var tau = cs(A(0.55, 0.92), 2), xi = tau * xmax, p = R.p[0], np = p[1] * xi;
+    var nRestB = (lim === 0 ? nbb - b[1] * xi : na - a[1] * xi), autre = lim === 0 ? b : a;
+    var ctx = '<p><b>' + R.nom + '</b>, en réacteur fermé :</p><p class="exo-eq-chimique">' + equation(R) + '</p><p>On introduit ' + nb(na) + ' mol ' + P8.de(a[2]) + ' (' + a[0] + ') et ' + nb(nbb) + ' mol ' + P8.de(b[2]) + ' (' + b[0] + '). En fin de réaction, ' + Math.round(tau * 100) + ' % du réactif limitant a été consommé, sans réaction secondaire.</p>';
+    return { contexte: ctx, etapes: [
+      { type: 'choix', q: '<b>Identifier</b> le réactif limitant.',
+        options: [{ t: a[2] + ' (' + a[0] + ')', ok: lim === 0, pourquoi: 'Comparez n/coefficient : ' + nb(na) + '/' + a[1] + ' = ' + nb(na / a[1]) + ' et ' + nb(nbb) + '/' + b[1] + ' = ' + nb(nbb / b[1]) + '. Le limitant a le plus petit rapport.' },
+          { t: b[2] + ' (' + b[0] + ')', ok: lim === 1, pourquoi: 'Comparez n/coefficient : ' + nb(na) + '/' + a[1] + ' = ' + nb(na / a[1]) + ' et ' + nb(nbb) + '/' + b[1] + ' = ' + nb(nbb / b[1]) + '. Le limitant a le plus petit rapport.' },
+          { t: 'Aucun : les réactifs sont en proportions stœchiométriques', ok: false, pourquoi: 'Les rapports n/coefficient sont différents.' },
+          { t: 'Celui qui est introduit en plus petite quantité, quels que soient les coefficients', ok: false, pourquoi: 'Il faut tenir compte des coefficients stœchiométriques : on compare n/coefficient.' }],
+        corr: nb(na) + '/' + a[1] + ' = ' + nb(na / a[1]) + ' et ' + nb(nbb) + '/' + b[1] + ' = ' + nb(nbb / b[1]) + ' : le réactif limitant est <b>' + RL[2] + '</b>, et x<sub>max</sub> = ' + nb(xmax) + ' mol.' },
+      { type: 'nombre', q: '<b>Calculer</b> l’avancement final x<sub>f</sub>.', rep: xi, unite: 'mol', tol: 0.02,
+        pieges: [{ v: xmax, msg: 'C’est l’avancement maximal : ici seuls ' + Math.round(tau * 100) + ' % du limitant sont consommés.' }, { v: tau * nRL, msg: 'C’est la quantité de limitant consommée : divisez par son coefficient (' + RL[1] + ').' }].filter(function (q) { return Math.abs(q.v - xi) > 1e-9; }),
+        corr: 'Quantité de limitant consommée : ' + nb(tau, 2) + ' × ' + nb(nRL) + ' = ' + nb(tau * nRL) + ' mol, donc x<sub>f</sub> = ' + nb(tau * nRL) + ' / ' + RL[1] + ' = <b>' + nb(xi) + ' mol</b>.' },
+      { type: 'nombre', q: '<b>Calculer</b> la quantité ' + P8.de(p[2]) + ' (' + p[0] + ') formée.', rep: np, unite: 'mol', tol: 0.02,
+        pieges: [{ v: p[1] * xmax, msg: 'Vous avez utilisé x<sub>max</sub> : la réaction n’a converti que ' + Math.round(tau * 100) + ' % du limitant.' }, { v: xi, msg: 'Le coefficient de ' + p[0] + ' (' + p[1] + ') a été oublié.' }].filter(function (q) { return Math.abs(q.v - np) > 1e-9; }),
+        corr: 'n(' + p[0] + ') = ' + p[1] + ' × x<sub>f</sub> = <b>' + nb(np) + ' mol</b>.' },
+      { type: 'nombre', q: '<b>Calculer</b> la quantité ' + P8.de(autre[2]) + ' restante.', rep: nRestB, unite: 'mol', tol: 0.02,
+        pieges: [{ v: (lim === 0 ? nbb : na) - xi, msg: 'Le coefficient de ' + autre[0] + ' (' + autre[1] + ') a été oublié.' }, { v: autre[1] * xi, msg: 'C’est la quantité consommée, pas la quantité restante.' }].filter(function (q) { return Math.abs(q.v - nRestB) > 1e-9; }),
+        corr: 'n(' + autre[0] + ') = ' + nb(lim === 0 ? nbb : na) + ' − ' + autre[1] + ' × ' + nb(xi) + ' = <b>' + nb(nRestB) + ' mol</b>.' },
+      { type: 'nombre', q: '<b>Calculer</b> le taux de conversion ' + P8.de(autre[2]) + ' (réactif en excès).', rep: 100 * autre[1] * xi / (lim === 0 ? nbb : na), unite: '%', tol: 0.02,
+        pieges: [{ v: 100 * tau, msg: 'C’est le taux de conversion du réactif limitant.' }],
+        corr: 'τ = quantité transformée / quantité introduite = ' + nb(autre[1] * xi) + ' / ' + nb(lim === 0 ? nbb : na) + ' = <b>' + nb(100 * autre[1] * xi / (lim === 0 ? nbb : na)) + ' %</b>. Pour le réactif en excès, τ est plus faible que pour le limitant.' }] };
+  }
+
+  /* 2. Réactions compétitives : taux de conversion, sélectivité, rendement */
+  function genCompetitives() {
+    var nA = cs(A(4, 20), 2), x1 = cs(nA * A(0.3, 0.55), 2), x2 = cs(nA * A(0.1, 0.3), 2), nB = cs(x1 * A(1.3, 2), 2), nC = cs(2 * x2 * A(1.2, 2), 2);
+    var tA = (x1 + x2) / nA, sig = x1 / (x1 + x2), eta = x1 / nA;
+    var tab = '<div class="exo-tableau"><table><tr><th>Quantité (mol)</th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th></tr><tr><th>État initial</th><td>' + nb(nA) + '</td><td>' + nb(nB) + '</td><td>' + nb(nC) + '</td><td>0</td><td>0</td></tr><tr><th>État final</th><td>' + nb(nA - x1 - x2) + '</td><td>' + nb(nB - x1) + '</td><td>' + nb(nC - 2 * x2) + '</td><td>' + nb(x1) + '</td><td>' + nb(x2) + '</td></tr></table></div>';
+    var ctx = '<p>Le réactif A participe à deux réactions compétitives. Le produit recherché est D.</p><p class="exo-eq-chimique">(1) A + B → D <br>(2) A + 2 C → E</p>' + tab;
+    return { contexte: ctx, etapes: [
+      { type: 'nombre', q: '<b>Calculer</b> le taux de conversion τ<sub>A</sub> de A.', rep: 100 * tA, unite: '%', tol: 0.02,
+        pieges: [{ v: 100 * x1 / nA, msg: 'C’est le rendement en D : τ compte tout le A transformé, par les deux réactions.' }, { v: 100 * (nA - x1 - x2) / nA, msg: 'C’est la part de A restante, pas la part transformée.' }],
+        corr: 'A transformé = ' + nb(nA) + ' − ' + nb(nA - x1 - x2) + ' = ' + nb(x1 + x2) + ' mol, donc τ<sub>A</sub> = ' + nb(x1 + x2) + ' / ' + nb(nA) + ' = <b>' + P8.pct(tA) + '</b>.' },
+      { type: 'nombre', q: '<b>Calculer</b> la sélectivité σ<sub>A/D</sub> de la transformation de A en D.', rep: 100 * sig, unite: '%', tol: 0.02,
+        pieges: [{ v: 100 * x1 / nA, msg: 'C’est le rendement : la sélectivité se rapporte au A <b>transformé</b>, pas au A introduit.' }, { v: 100 * x1 / x2, msg: 'C’est le rapport D/E : il faut diviser par tout le A transformé.' }],
+        corr: 'σ<sub>A/D</sub> = A transformé en D / A transformé = ' + nb(x1) + ' / ' + nb(x1 + x2) + ' = <b>' + P8.pct(sig) + '</b>.' },
+      { type: 'nombre', q: '<b>En déduire</b> le rendement η<sub>A/D</sub> en D.', rep: 100 * eta, unite: '%', tol: 0.02,
+        pieges: [{ v: 100 * sig, msg: 'C’est la sélectivité : η = σ × τ.' }, { v: 100 * (sig + tA) / 2, msg: 'η = σ × τ : on multiplie.' }],
+        corr: 'η<sub>A/D</sub> = σ<sub>A/D</sub> × τ<sub>A</sub> = ' + nb(sig) + ' × ' + nb(tA) + ' = <b>' + P8.pct(eta) + '</b> (soit ' + nb(x1) + ' / ' + nb(nA) + ').' },
+      { type: 'choix', q: '<b>Choisir</b> la modification qui améliore la <b>sélectivité</b> en D.',
+        options: [{ t: 'Favoriser la réaction (1) par rapport à la réaction (2), par exemple en diminuant la quantité de C', ok: true },
+          { t: 'Augmenter la quantité de A introduite', ok: false, pourquoi: 'Cela ne change pas le partage du A transformé entre D et E.' },
+          { t: 'Prolonger la réaction pour augmenter τ<sub>A</sub>', ok: false, pourquoi: 'τ augmente, mais la sélectivité dépend du partage entre les réactions (1) et (2).' },
+          { t: 'Recycler le A non transformé', ok: false, pourquoi: 'Le recyclage améliore le taux de conversion global, pas la sélectivité.' }],
+        corr: 'La sélectivité mesure la part du A transformé qui donne le produit recherché : il faut favoriser la réaction (1) aux dépens de la réaction (2).' }] };
+  }
+
+  /* 3. Bilan molaire avec réaction en continu (type acrylonitrile / méthanol) */
+  function genContinu() {
+    var R = C([RX[1], RX[2], RX[3]]), a = R.r[0], b = R.r[1], p = R.p[0];
+    var xa = cs(A(0.15, 0.4), 2), xi = C([0.01, 0.02, 0.03, 0.05]), xb = Math.round((1 - xa - xi) * 100) / 100, E = cs(A(20, 200), 2), tau = cs(A(0.1, 0.4), 2);
+    var na = xa * E, nbb = xb * E, lim = (na / a[1] < nbb / b[1]) ? a : b, nl = lim === a ? na : nbb;
+    var xiv = tau * nl / lim[1], Sa = na - a[1] * xiv, Sb = nbb - b[1] * xiv, Sp = p[1] * xiv, Si = xi * E, S = Sa + Sb + Sp + Si;
+    var ctx = '<p><b>' + R.nom + '</b> en réacteur continu, en régime permanent :</p><p class="exo-eq-chimique">' + equation(R) + '</p><p>Le flux d’entrée E = ' + nb(E) + ' mol.s<sup>-1</sup> contient, en fractions molaires : ' + nb(xa, 2) + ' de ' + a[0] + ', ' + nb(xb, 2) + ' de ' + b[0] + ' et ' + nb(xi, 2) + ' d’un gaz inerte (argon). Le taux de conversion du réactif limitant vaut τ = ' + nb(tau, 2) + '.</p><p class="exo-aide">Bilan avec réaction : E + G = S + C (pas d’accumulation en R.P.).</p>';
+    return { contexte: ctx, etapes: [
+      { type: 'choix', q: '<b>Identifier</b> le réactif limitant.',
+        options: [{ t: a[0], ok: lim === a, pourquoi: 'Comparez les débits molaires divisés par les coefficients : ' + nb(na) + '/' + a[1] + ' et ' + nb(nbb) + '/' + b[1] + '.' }, { t: b[0], ok: lim === b, pourquoi: 'Comparez les débits molaires divisés par les coefficients : ' + nb(na) + '/' + a[1] + ' et ' + nb(nbb) + '/' + b[1] + '.' }, { t: 'L’argon', ok: false, pourquoi: 'Un inerte ne réagit pas : il ne peut pas être limitant.' }, { t: 'Celui de plus petite fraction molaire, sans tenir compte des coefficients', ok: false, pourquoi: 'Il faut diviser par les coefficients stœchiométriques.' }],
+        corr: 'Débits d’entrée : ' + a[0] + ' : ' + nb(na) + ' mol.s<sup>-1</sup> ; ' + b[0] + ' : ' + nb(nbb) + ' mol.s<sup>-1</sup>. Rapports n/coefficient : ' + nb(na / a[1]) + ' et ' + nb(nbb / b[1]) + ' : le limitant est <b>' + lim[0] + '</b>.' },
+      { type: 'nombre', q: '<b>Calculer</b> le débit molaire de ' + p[0] + ' en sortie.', rep: Sp, unite: 'mol.s<sup>-1</sup>', tol: 0.02,
+        pieges: [{ v: tau * nl, msg: 'C’est le débit de limitant consommé : utilisez les coefficients (' + lim[1] + ' ' + lim[0] + ' → ' + p[1] + ' ' + p[0] + ').' }, { v: p[1] * nl / lim[1], msg: 'Vous avez supposé une conversion totale : τ = ' + nb(tau, 2) + '.' }].filter(function (q) { return Math.abs(q.v - Sp) > 1e-9; }),
+        corr: 'Limitant consommé : C = τ × ' + nb(nl) + ' = ' + nb(tau * nl) + ' mol.s<sup>-1</sup>, soit un avancement par seconde de ' + nb(xiv) + ' mol.s<sup>-1</sup>. Généré : G(' + p[0] + ') = ' + p[1] + ' × ' + nb(xiv) + ' = <b>' + nb(Sp) + ' mol.s<sup>-1</sup></b>.' },
+      { type: 'nombre', q: '<b>Calculer</b> le débit molaire de ' + (lim === a ? b : a)[0] + ' en sortie.', rep: lim === a ? Sb : Sa, unite: 'mol.s<sup>-1</sup>', tol: 0.02,
+        pieges: [{ v: (lim === a ? nbb : na) - xiv, msg: 'Le coefficient stœchiométrique de ' + (lim === a ? b : a)[0] + ' a été oublié.' }, { v: (lim === a ? nbb : na) * (1 - tau), msg: 'Le taux de conversion τ concerne le réactif limitant, pas celui en excès.' }].filter(function (q) { return Math.abs(q.v - (lim === a ? Sb : Sa)) > 1e-9; }),
+        corr: 'S = E − C = ' + nb(lim === a ? nbb : na) + ' − ' + (lim === a ? b : a)[1] + ' × ' + nb(xiv) + ' = <b>' + nb(lim === a ? Sb : Sa) + ' mol.s<sup>-1</sup></b>.' },
+      { type: 'nombre', q: '<b>Calculer</b> le débit molaire total S en sortie.', rep: S, unite: 'mol.s<sup>-1</sup>', tol: 0.02,
+        pieges: [{ v: E, msg: 'Les quantités de matière ne se conservent pas forcément avec une réaction : seule la masse se conserve.' }, { v: S - Si, msg: 'N’oubliez pas l’argon, qui traverse le réacteur sans réagir.' }].filter(function (q) { return Math.abs(q.v - S) > 1e-9; }),
+        corr: 'S = ' + nb(Sa) + ' + ' + nb(Sb) + ' + ' + nb(Sp) + ' + ' + nb(Si) + ' (argon) = <b>' + nb(S) + ' mol.s<sup>-1</sup></b>. ' + (Math.abs(S - E) > 1e-9 ? 'Le débit molaire n’est pas conservé (' + nb(E) + ' en entrée), mais le débit <b>massique</b> l’est.' : '') },
+      { type: 'nombre', q: '<b>Calculer</b> la fraction molaire de l’argon en sortie.', rep: 100 * Si / S, unite: '%', tol: 0.02,
+        pieges: [{ v: 100 * xi, msg: 'C’est la fraction d’entrée : le débit total a changé, donc la fraction aussi.' }],
+        corr: 'x<sub>Ar, S</sub> = ' + nb(Si) + ' / ' + nb(S) + ' = <b>' + nb(100 * Si / S) + ' %</b>. Avec un recyclage, l’inerte s’accumulerait : c’est pourquoi on installe une purge.' }] };
+  }
+
+  /* 4. Temps de passage */
+  function genPassage() {
+    var VR = cs(A(0.5, 20), 2), DV = cs(A(20, 600), 2), uD = C([['L.min<sup>-1</sup>', 1 / 60, 'L'], ['m<sup>3</sup>.h<sup>-1</sup>', 1000 / 3600, 'm3']]);
+    var VRL = VR * 1000, DVLs = DV * uD[1], t = VRL / DVLs, tmin = t / 60;
+    var ctx = '<p>Un réacteur continu de volume V<sub>R</sub> = ' + nb(VR) + ' m<sup>3</sup> est traversé par un débit volumique D<sub>V</sub> = ' + nb(DV) + ' ' + uD[0] + '.</p>';
+    return { contexte: ctx, etapes: [
+      { type: 'nombre', q: '<b>Convertir</b> le débit volumique en m<sup>3</sup>.s<sup>-1</sup>.', rep: DVLs / 1000, unite: 'm<sup>3</sup>.s<sup>-1</sup>', tol: 0.02,
+        pieges: [{ v: DV, msg: 'Le débit n’a pas été converti.' }, { v: DVLs, msg: 'C’est en L.s<sup>-1</sup> : 1 m<sup>3</sup> = 1000 L.' }],
+        corr: 'D<sub>V</sub> = ' + nb(DV) + ' ' + uD[0] + ' = <b>' + nb(DVLs / 1000) + ' m<sup>3</sup>.s<sup>-1</sup></b>.' },
+      { type: 'nombre', q: '<b>Calculer</b> le temps de passage t du fluide dans le réacteur, en minutes.', rep: tmin, unite: 'min', tol: 0.02,
+        pieges: [{ v: 1 / tmin, msg: 'Rapport inversé : t = V<sub>R</sub> / D<sub>V</sub>.' }, { v: t, msg: 'C’est en secondes : divisez par 60.' }],
+        corr: 't = V<sub>R</sub> / D<sub>V</sub> = ' + nb(VR) + ' / ' + nb(DVLs / 1000) + ' = ' + nb(t) + ' s = <b>' + nb(tmin) + ' min</b>.' },
+      { type: 'choix', q: '<b>Prévoir</b> l’effet d’un doublement du débit volumique sur le temps de passage et sur le taux de conversion.',
+        options: [{ t: 'Le temps de passage est divisé par 2, et le taux de conversion diminue en général', ok: true },
+          { t: 'Le temps de passage double, et le taux de conversion augmente', ok: false, pourquoi: 't = V<sub>R</sub>/D<sub>V</sub> : si D<sub>V</sub> double, t est divisé par 2.' },
+          { t: 'Le temps de passage ne change pas, car le réacteur garde le même volume', ok: false, pourquoi: 't dépend aussi du débit : t = V<sub>R</sub>/D<sub>V</sub>.' },
+          { t: 'Le temps de passage est divisé par 2, mais le taux de conversion est inchangé', ok: false, pourquoi: 'Avec moins de temps dans le réacteur, la réaction avance moins : τ diminue en général.' }],
+        corr: 'Le fluide passe deux fois moins de temps dans le réacteur : la réaction a moins de temps pour avancer, donc τ diminue en général.' }] };
+  }
+
+  Exo.lancer('exo-p8-limitant', genLimitant);
+  Exo.lancer('exo-p8-competitives', genCompetitives);
+  Exo.lancer('exo-p8-continu', genContinu);
+  Exo.lancer('exo-p8-passage', genPassage);
+})();
+</script>
+<script data-goatcounter="https://chimie-winckler.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

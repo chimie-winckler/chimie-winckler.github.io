@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Composition des mélanges – Chimie de Synthèse</title>
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=20261105a">
+</head>
+<body>
+<header class="entete">
+  <div class="conteneur entete-inner">
+    <a class="marque" href="index.html">⚗️ Chimie de Synthèse</a>
+    <button class="burger" aria-label="Menu" onclick="document.body.classList.toggle('menu-ouvert')">☰</button>
+    <nav><ul class="menu">
+<li><a href="index.html">Accueil</a></li>
+<li><a href="matieres-premieres.html">Matières premières</a><ul class="sous-menu"><li><a href="fds.html">FDS</a></li><li><a href="fds-simplifiee.html">FDS simplifiée</a></li><li><a href="gestion-dechets.html">Gestion des déchets en salle de TP</a></li></ul></li>
+<li><a href="techniques.html">Techniques</a><ul class="sous-menu"><li><a href="verrerie-et-montages.html">Verrerie et montages</a></li><li><a href="techniques-experimentales.html">Techniques expérimentales</a></li></ul></li>
+<li><a href="ressources.html">Ressources</a><ul class="sous-menu"><li><a href="cours.html">Cours</a></li><li><a href="tp.html">TP</a></li><li><a href="evaluations.html">Évaluations</a></li><li><a href="autres.html">Autres</a></li></ul></li>
+<li><a href="entrainement.html" class="actif">S’entraîner</a></li>
+<li><a href="annonces.html">Annonces</a></li>
+    </ul></nav>
+    <button type="button" class="theme-btn" id="theme-btn" aria-label="Changer de thème">🌙</button>
+  </div>
+</header>
+<div class="bandeau">
+  <div class="conteneur">
+    <p class="fil"><a href="index.html">Accueil</a> › <a href="entrainement.html">S’entraîner</a> › Composition des mélanges</p>
+    <p class="surtitre">BTS Métiers de la Chimie – Partie 8 : changement d’échelle</p>
+    <h1>Composition des mélanges</h1>
+    <p class="intro">Titres massiques et molaires, rapports, concentrations, préparation et concentration d’une solution.</p>
+  </div>
+</div>
+<main class="conteneur">
+<nav class="sommaire"><a href="#titres">Titres et rapports d’un mélange</a><a href="#conversion">Titre massique ↔ titre molaire</a><a href="#concentration">Titre massique et concentrations</a><a href="#evaporation">Solubilité et évaporation</a></nav><section class="exo exo-bloc" id="titres">
+<div class="exo-tete"><h2>Titres et rapports d’un mélange</h2><button type="button" class="bouton" data-nouveau="exo-p8-titres">Nouvelles valeurs</button></div>
+<p class="exo-consigne">Nombres : virgule acceptée ; puissances de 10 sous la forme 1,2e-3. Tolérance : 2 %. D’après le DM n°2 (réservoir eau / méthanol).</p>
+<div id="exo-p8-titres"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="conversion">
+<div class="exo-tete"><h2>Titre massique ↔ titre molaire</h2><button type="button" class="bouton" data-nouveau="exo-p8-conversion">Nouvelles valeurs</button></div>
+<p class="exo-consigne">Nombres : virgule acceptée ; puissances de 10 sous la forme 1,2e-3. Tolérance : 2 %. Méthodes du cours : raisonner sur 100 g ou sur 1 mol de mélange.</p>
+<div id="exo-p8-conversion"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="concentration">
+<div class="exo-tete"><h2>Titre massique et concentrations</h2><button type="button" class="bouton" data-nouveau="exo-p8-concentration">Nouvelles valeurs</button></div>
+<p class="exo-consigne">Nombres : virgule acceptée ; puissances de 10 sous la forme 1,2e-3. Tolérance : 2 %. Passer de <span class="w">𝑤</span> à C<sub>m</sub> et C avec la masse volumique de la solution.</p>
+<div id="exo-p8-concentration"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="evaporation">
+<div class="exo-tete"><h2>Solubilité et évaporation</h2><button type="button" class="bouton" data-nouveau="exo-p8-evaporation">Nouvelles valeurs</button></div>
+<p class="exo-consigne">Nombres : virgule acceptée ; puissances de 10 sous la forme 1,2e-3. Tolérance : 2 %. D’après le DM n°2 (solution de chlorure de sodium).</p>
+<div id="exo-p8-evaporation"><p>Chargement…</p></div>
+</section><p><a href="entrainement.html">← Retour aux exercices</a></p>
+</main>
+<footer class="pied"><div class="conteneur">BTS Métiers de la Chimie – Synthèse</div></footer>
+<script src="theme.js?v=1"></script>
+<script src="exo.js?v=20261105a"></script>
+<script>
+/* Outils communs aux exercices de la partie 8 */
+var P8 = (function () {
+  var A = Exo.alea, C = Exo.choisir, cs = Exo.cs, nb = Exo.nb;
+  var W = '<span class="w">𝑤</span>';                       // titre massique, w rond
+  function w(sub) { return W + (sub ? '<sub>' + sub + '</sub>' : ''); }
+  function v(s, sub) { return '<i>' + s + '</i>' + (sub ? '<sub>' + sub + '</sub>' : ''); }
+  function pct(x, n) { return nb(100 * x, n || 3) + ' %'; }
+  var LIQ = [
+    { n: 'méthanol', f: 'CH<sub>3</sub>OH', M: 32, rho: 0.790 },
+    { n: 'éthanol', f: 'C<sub>2</sub>H<sub>5</sub>OH', M: 46, rho: 0.789 },
+    { n: 'acide acétique', f: 'CH<sub>3</sub>COOH', M: 60, rho: 1.05 },
+    { n: 'acétone', f: 'C<sub>3</sub>H<sub>6</sub>O', M: 58, rho: 0.784 },
+    { n: 'propan-1-ol', f: 'C<sub>3</sub>H<sub>7</sub>OH', M: 60, rho: 0.803 }];
+  var EAU = { n: 'eau', f: 'H<sub>2</sub>O', M: 18, rho: 1.00 };
+  var SOL = [
+    { n: 'chlorure de sodium', f: 'NaCl', M: 58.5, s: 360 },
+    { n: 'chlorure de potassium', f: 'KCl', M: 74.6, s: 340 },
+    { n: 'hydroxyde de sodium', f: 'NaOH', M: 40.0, s: 1090 },
+    { n: 'sulfate de cuivre', f: 'CuSO<sub>4</sub>', M: 159.6, s: 207 },
+    { n: 'glucose', f: 'C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>', M: 180, s: 910 }];
+  function donneesM(list) { return '<p class="exo-aide">Données : ' + list.map(function (s) { return 'M(' + s.f + ') = ' + nb(s.M, 3) + ' g.mol<sup>-1</sup>'; }).join(' ; ') + '.</p>'; }
+  return { A: A, C: C, cs: cs, nb: nb, W: W, w: w, v: v, pct: pct, LIQ: LIQ, EAU: EAU, SOL: SOL, donneesM: donneesM };
+})();
+/* Schéma de principe simple : entrées à gauche, appareil au centre, sorties à droite */
+P8.schema = function (app, entrees, sorties) {
+  function fl(t, cl) { var f = '<span class="fleche" aria-hidden="true">⟶</span>'; return '<div class="flux ' + cl + '">' + (cl === 'entree' ? '<span>' + t + '</span>' + f : f + '<span>' + t + '</span>') + '</div>'; }
+  return '<div class="schema" role="img" aria-label="Schéma de principe"><div class="schema-col">' + entrees.map(function (t) { return fl(t, 'entree'); }).join('') +
+    '</div><div class="schema-app">' + app + '</div><div class="schema-col">' + sorties.map(function (t) { return fl(t, 'sortie'); }).join('') + '</div></div>';
+};
+
+/* Élisions : de l’éthanol, du benzène, la soude… */
+(function () {
+  var FEM = ['soude'];
+  function voy(n) { return /^[aeéèêiïoôuh]/i.test(n); }
+  P8.de = function (n) { return (voy(n) ? 'd’' : 'de ') + n; };
+  P8.du = function (n) { return voy(n) ? 'de l’' + n : (FEM.indexOf(n) >= 0 ? 'de la ' : 'du ') + n; };
+  P8.le = function (n) { return voy(n) ? 'l’' + n : (FEM.indexOf(n) >= 0 ? 'la ' : 'le ') + n; };
+})();
+
+/* ===== Séquence 1 : composition des mélanges ===== */
+(function () {
+  var A = P8.A, C = P8.C, cs = P8.cs, nb = P8.nb, w = P8.w, v = P8.v;
+
+  /* 1. Titres et rapports d'un mélange binaire */
+  function genTitres() {
+    var a = C(P8.LIQ), b = Math.random() < 0.75 ? P8.EAU : C(P8.LIQ.filter(function (l) { return l.M !== a.M; }));
+    var ma = cs(A(5, 60), 3), mb = cs(A(80, 400), 3);
+    var wa = ma / (ma + mb), R = ma / mb, na = ma * 1000 / a.M, nbb = mb * 1000 / b.M, xa = na / (na + nbb);
+    var ctx = '<p>Un réservoir contient m<sub>A</sub> = ' + nb(ma) + ' kg ' + P8.de(a.n) + ' (A) et m<sub>B</sub> = ' + nb(mb) + ' kg ' + P8.de(b.n) + ' (B).</p>' + P8.donneesM([a, b]);
+    return { contexte: ctx, etapes: [
+      { type: 'nombre', q: '<b>Calculer</b> le titre massique ' + w('A') + ' en ' + a.n + '.', rep: 100 * wa, unite: '%', tol: 0.02,
+        pieges: [{ v: 100 * R, msg: 'C’est le rapport massique m<sub>A</sub>/m<sub>B</sub> : le titre se rapporte à la masse <b>totale</b>.' }, { v: 100 * (1 - wa), msg: 'C’est le titre massique en ' + b.n + '.' }, { v: 100 * xa, msg: 'C’est le titre molaire.' }],
+        corr: w('A') + ' = m<sub>A</sub> / (m<sub>A</sub> + m<sub>B</sub>) = ' + nb(ma) + ' / (' + nb(ma) + ' + ' + nb(mb) + ') = <b>' + P8.pct(wa) + '</b>.' },
+      { type: 'nombre', q: '<b>Calculer</b> le rapport massique R<sub>A</sub> en ' + a.n + ' (sans unité).', rep: R, unite: '', tol: 0.02,
+        pieges: [{ v: wa, msg: 'C’est le titre massique : le rapport massique divise par la masse de <b>solvant</b>.' }, { v: mb / ma, msg: 'Rapport inversé : R<sub>A</sub> = m<sub>A</sub>/m<sub>B</sub>.' }, { v: 100 * R, msg: 'Le rapport massique est demandé sans unité, pas en %.' }],
+        corr: 'R<sub>A</sub> = m<sub>A</sub> / m<sub>B</sub> = ' + nb(ma) + ' / ' + nb(mb) + ' = <b>' + nb(R) + '</b>.' },
+      { type: 'nombre', q: '<b>Déterminer</b> le titre molaire x<sub>A</sub> en ' + a.n + '.', rep: 100 * xa, unite: '%', tol: 0.02,
+        pieges: [{ v: 100 * wa, msg: 'C’est le titre massique : il faut passer par les quantités de matière.' }, { v: 100 * na / nbb, msg: 'C’est le rapport molaire n<sub>A</sub>/n<sub>B</sub>.' }, { v: 100 * (ma / b.M) / (ma / b.M + mb / a.M), msg: 'Les masses molaires ont été inversées.' }],
+        corr: 'n<sub>A</sub> = ' + nb(ma) + ' × 10<sup>3</sup> / ' + a.M + ' = ' + nb(na) + ' mol ; n<sub>B</sub> = ' + nb(mb) + ' × 10<sup>3</sup> / ' + nb(b.M, 3) + ' = ' + nb(nbb) + ' mol ; x<sub>A</sub> = n<sub>A</sub> / (n<sub>A</sub> + n<sub>B</sub>) = <b>' + P8.pct(xa) + '</b>.' },
+      { type: 'choix', q: '<b>Comparer</b> x<sub>A</sub> et ' + w('A') + ', et justifier.',
+        options: [
+          { t: a.M > b.M ? 'x<sub>A</sub> < ' + w('A') + ', car M(A) > M(B) : à masse égale, il y a moins de molécules de A' : 'x<sub>A</sub> > ' + w('A') + ', car M(A) < M(B) : à masse égale, il y a plus de molécules de A', ok: true },
+          { t: a.M > b.M ? 'x<sub>A</sub> > ' + w('A') + ', car M(A) > M(B)' : 'x<sub>A</sub> < ' + w('A') + ', car M(A) < M(B)', ok: false, pourquoi: 'Comparez vos deux valeurs : plus la masse molaire de A est grande, moins il y a de moles de A pour une même masse.' },
+          { t: 'x<sub>A</sub> = ' + w('A') + ', car c’est le même mélange', ok: false, pourquoi: 'Les deux titres ne sont égaux que si les deux constituants ont la même masse molaire.' },
+          { t: 'On ne peut pas comparer un titre molaire et un titre massique', ok: false, pourquoi: 'Ce sont deux grandeurs sans unité : on peut les comparer.' }],
+        corr: 'M(A) = ' + a.M + ' g.mol<sup>-1</sup> et M(B) = ' + nb(b.M, 3) + ' g.mol<sup>-1</sup> : ' + (a.M > b.M ? 'x<sub>A</sub> (' + P8.pct(xa) + ') < ' + w('A') + ' (' + P8.pct(wa) + ').' : 'x<sub>A</sub> (' + P8.pct(xa) + ') > ' + w('A') + ' (' + P8.pct(wa) + ').') }] };
+  }
+
+  /* 2. Conversions titre massique <-> titre molaire (méthodes du cours) */
+  function genConversion() {
+    var a = C(P8.LIQ), b = Math.random() < 0.6 ? P8.EAU : C(P8.LIQ.filter(function (l) { return l.M !== a.M; }));
+    var sens = C(['w2x', 'x2w']), et = [];
+    var ctx = '<p>Mélange binaire ' + P8.de(a.n) + ' (A) et ' + P8.de(b.n) + ' (B).</p>' + P8.donneesM([a, b]);
+    if (sens === 'w2x') {
+      var wa = cs(A(0.1, 0.9), 2), na = 100 * wa / a.M, nbb = 100 * (1 - wa) / b.M, xa = na / (na + nbb);
+      ctx += '<p>Le titre massique en ' + a.n + ' vaut ' + w('A') + ' = ' + P8.pct(wa, 2) + '.</p>';
+      et = [
+        { type: 'nombre', q: '<b>Calculer</b> la quantité de matière ' + P8.de(a.n) + ' contenue dans 100 g de mélange.', rep: na, unite: 'mol', tol: 0.02,
+          pieges: [{ v: wa * 100 * a.M, msg: 'n = m / M : on divise par la masse molaire.' }, { v: 100 / a.M, msg: 'Il faut utiliser la masse de A dans 100 g de mélange, soit ' + nb(100 * wa, 2) + ' g.' }],
+          corr: '100 g de mélange contiennent ' + nb(100 * wa, 2) + ' g de A, donc n<sub>A</sub> = ' + nb(100 * wa, 2) + ' / ' + a.M + ' = <b>' + nb(na) + ' mol</b>.' },
+        { type: 'nombre', q: '<b>En déduire</b> le titre molaire x<sub>A</sub> en ' + a.n + '.', rep: 100 * xa, unite: '%', tol: 0.02,
+          pieges: [{ v: 100 * wa, msg: 'C’est le titre massique de départ : il faut aussi calculer n<sub>B</sub>.' }, { v: 100 * na / nbb, msg: 'C’est le rapport molaire n<sub>A</sub>/n<sub>B</sub>.' }, { v: 100 * (100 * wa / b.M) / (100 * wa / b.M + 100 * (1 - wa) / a.M), msg: 'Les masses molaires ont été inversées.' }],
+          corr: 'n<sub>B</sub> = ' + nb(100 * (1 - wa), 2) + ' / ' + nb(b.M, 3) + ' = ' + nb(nbb) + ' mol, donc x<sub>A</sub> = ' + nb(na) + ' / (' + nb(na) + ' + ' + nb(nbb) + ') = <b>' + P8.pct(xa) + '</b>.' }];
+    } else {
+      var xa2 = cs(A(0.1, 0.9), 2), ma = xa2 * a.M, mb = (1 - xa2) * b.M, wa2 = ma / (ma + mb);
+      ctx += '<p>Le titre molaire en ' + a.n + ' vaut x<sub>A</sub> = ' + P8.pct(xa2, 2) + '.</p>';
+      et = [
+        { type: 'nombre', q: '<b>Calculer</b> la masse ' + P8.de(a.n) + ' contenue dans 1 mol de mélange.', rep: ma, unite: 'g', tol: 0.02,
+          pieges: [{ v: xa2 / a.M, msg: 'm = n × M : on multiplie par la masse molaire.' }, { v: a.M, msg: 'Il faut utiliser la quantité de A dans 1 mol de mélange, soit ' + nb(xa2, 2) + ' mol.' }],
+          corr: '1 mol de mélange contient ' + nb(xa2, 2) + ' mol de A, donc m<sub>A</sub> = ' + nb(xa2, 2) + ' × ' + a.M + ' = <b>' + nb(ma) + ' g</b>.' },
+        { type: 'nombre', q: '<b>En déduire</b> le titre massique ' + w('A') + ' en ' + a.n + '.', rep: 100 * wa2, unite: '%', tol: 0.02,
+          pieges: [{ v: 100 * xa2, msg: 'C’est le titre molaire de départ : il faut aussi calculer m<sub>B</sub>.' }, { v: 100 * ma / mb, msg: 'C’est le rapport massique m<sub>A</sub>/m<sub>B</sub>.' }, { v: 100 * (xa2 * b.M) / (xa2 * b.M + (1 - xa2) * a.M), msg: 'Les masses molaires ont été inversées.' }],
+          corr: 'm<sub>B</sub> = ' + nb(1 - xa2, 2) + ' × ' + nb(b.M, 3) + ' = ' + nb(mb) + ' g, donc ' + w('A') + ' = ' + nb(ma) + ' / (' + nb(ma) + ' + ' + nb(mb) + ') = <b>' + P8.pct(wa2) + '</b>.' }];
+    }
+    return { contexte: ctx, etapes: et };
+  }
+
+  /* 3. Titre massique <-> concentrations d'une solution aqueuse */
+  function genConcentration() {
+    var s = C(P8.SOL), wv = cs(A(0.03, 0.25), 2), d = cs(1 + wv * A(0.6, 0.9), 3), rho = d * 1000;
+    var Cm = wv * rho, Cc = Cm / s.M;
+    var ctx = '<p>Une solution aqueuse ' + P8.de(s.n) + ' (' + s.f + ') a un titre massique ' + w() + ' = ' + P8.pct(wv, 2) + ' et une densité d = ' + nb(d, 3) + '.</p><p class="exo-aide">Données : M(' + s.f + ') = ' + nb(s.M, 3) + ' g.mol<sup>-1</sup> ; ρ<sub>eau</sub> = 1000 g.L<sup>-1</sup>.</p>';
+    return { contexte: ctx, etapes: [
+      { type: 'nombre', q: '<b>Calculer</b> la masse volumique ρ de la solution en g.L<sup>-1</sup>.', rep: rho, unite: 'g.L<sup>-1</sup>', tol: 0.01,
+        pieges: [{ v: d, msg: 'La densité est sans unité : ρ = d × ρ<sub>eau</sub>.' }, { v: 1000 / d, msg: 'ρ = d × ρ<sub>eau</sub>, on multiplie.' }],
+        corr: 'ρ = d × ρ<sub>eau</sub> = ' + nb(d, 3) + ' × 1000 = <b>' + nb(rho, 4) + ' g.L<sup>-1</sup></b>.' },
+      { type: 'nombre', q: '<b>Calculer</b> la concentration en masse C<sub>m</sub> en ' + s.n + '.', rep: Cm, unite: 'g.L<sup>-1</sup>', tol: 0.02,
+        pieges: [{ v: wv * 1000, msg: 'Vous avez pris la masse volumique de l’eau : il faut celle de la solution.' }, { v: rho / wv, msg: 'C<sub>m</sub> = ' + w() + ' × ρ : on multiplie.' }, { v: 100 * wv * rho, msg: 'Le titre doit être utilisé sous forme décimale, pas en %.' }],
+        corr: 'Pour 1 L de solution : m<sub>solution</sub> = ρ × V = ' + nb(rho, 4) + ' g, dont m<sub>soluté</sub> = ' + w() + ' × m<sub>solution</sub>. Donc C<sub>m</sub> = ' + w() + ' × ρ = ' + nb(wv, 2) + ' × ' + nb(rho, 4) + ' = <b>' + nb(Cm) + ' g.L<sup>-1</sup></b>.' },
+      { type: 'nombre', q: '<b>En déduire</b> la concentration en quantité de matière C en ' + s.n + '.', rep: Cc, unite: 'mol.L<sup>-1</sup>', tol: 0.02,
+        pieges: [{ v: Cm * s.M, msg: 'C = C<sub>m</sub> / M : on divise par la masse molaire.' }, { v: wv * 1000 / s.M, msg: 'Vous avez pris la masse volumique de l’eau au lieu de celle de la solution.' }, { v: wv * d / s.M, msg: 'Pensez à exprimer ρ en g.L<sup>-1</sup> (et non à utiliser d directement).' }],
+        corr: 'C = C<sub>m</sub> / M = ' + nb(Cm) + ' / ' + nb(s.M, 3) + ' = <b>' + nb(Cc) + ' mol.L<sup>-1</sup></b>. Formule directe : C = ' + w() + ' × ρ / M.' },
+      { type: 'nombre', q: 'On veut préparer V = ' + nb(cs(A(0.25, 2), 2)) + ' L de cette solution. <b>Calculer</b> la masse ' + P8.de(s.n) + ' à peser.', rep: null, unite: 'g', tol: 0.02, _V: true, corr: '' }].map(function (e) {
+        if (!e._V) return e;
+        var V = parseFloat(e.q.match(/V = ([\d,]+)/)[1].replace(',', '.')), m = Cm * V;
+        e.rep = m;
+        e.pieges = [{ v: wv * 1000 * V, msg: 'Il faut la masse volumique de la solution, pas celle de l’eau.' }, { v: Cc * V, msg: 'C’est la quantité de matière (mol) : multipliez par M pour avoir la masse.' }, { v: Cm / V, msg: 'm = C<sub>m</sub> × V : on multiplie par le volume.' }];
+        e.corr = 'm = C<sub>m</sub> × V = ' + nb(Cm) + ' × ' + nb(V) + ' = <b>' + nb(m) + ' g</b>.';
+        return e;
+      }) };
+  }
+
+  /* 4. Préparer, concentrer une solution (solubilité, évaporation) */
+  function genEvaporation() {
+    var s = C(P8.SOL.filter(function (x) { return x.s < 500; })), me = cs(A(8, 20), 3), wsat = s.s / (s.s + 1000);
+    var ms = cs(me * wsat / (1 - wsat) * A(0.3, 0.55), 2), wi = ms / (ms + me);
+    var wf = cs(A(wi * 1.3, wsat * 0.93), 2);
+    var mSf = ms / wf, meF = mSf - ms, mev = me - meF;
+    var ctx = '<p>On dissout m<sub>s</sub> = ' + nb(ms, 2) + ' kg ' + P8.de(s.n) + ' (' + s.f + ') dans m<sub>eau</sub> = ' + nb(me) + ' kg d’eau pure.</p><p class="exo-aide">Donnée : solubilité ' + P8.du(s.n) + ' à 20 °C, s = ' + s.s + ' g par litre d’eau ; ρ<sub>eau</sub> = 1,00 kg.L<sup>-1</sup>.</p>';
+    var smax = s.s * me / 1000;
+    return { contexte: ctx, etapes: [
+      { type: 'choix', q: '<b>Prévoir</b> si la solution est saturée.',
+        options: [{ t: 'Non : on peut dissoudre jusqu’à ' + nb(smax) + ' kg de sel dans cette eau', ok: true },
+          { t: 'Oui : la masse de sel dépasse la masse maximale dissoluble', ok: false, pourquoi: 'Calculez m<sub>max</sub> = s × V<sub>eau</sub> = ' + s.s + ' × ' + nb(me) + ' g = ' + nb(smax) + ' kg.' },
+          { t: 'Oui : toute solution concentrée est saturée', ok: false, pourquoi: 'Une solution est saturée seulement si on atteint la solubilité.' },
+          { t: 'On ne peut pas savoir sans la masse volumique du sel', ok: false, pourquoi: 'La solubilité suffit : on la compare à la masse dissoute par litre d’eau.' }],
+        corr: 'V<sub>eau</sub> = ' + nb(me) + ' L, donc m<sub>max</sub> = ' + s.s + ' × ' + nb(me) + ' = ' + nb(smax * 1000) + ' g = ' + nb(smax) + ' kg > ' + nb(ms, 2) + ' kg : la solution n’est <b>pas saturée</b>. (Titres : ' + w() + ' = ' + P8.pct(wi) + ' < ' + w('sat') + ' = ' + P8.pct(wsat) + '.)' },
+      { type: 'nombre', q: '<b>Calculer</b> le titre massique initial ' + w() + ' en ' + s.n + '.', rep: 100 * wi, unite: '%', tol: 0.02,
+        pieges: [{ v: 100 * ms / me, msg: 'C’est le rapport massique : le titre se rapporte à la masse totale.' }],
+        corr: w() + ' = ' + nb(ms, 2) + ' / (' + nb(ms, 2) + ' + ' + nb(me) + ') = <b>' + P8.pct(wi) + '</b>.' },
+      { type: 'nombre', q: '<b>Déterminer</b> la masse d’eau à évaporer pour obtenir un titre massique ' + w('f') + ' = ' + P8.pct(wf, 2) + '.', rep: mev, unite: 'kg', tol: 0.02,
+        pieges: [{ v: me - ms / wf, msg: 'Vous avez écrit que la masse d’eau finale vaut m<sub>s</sub>/' + w('f') + ' : c’est la masse de <b>solution</b> finale ; il faut retirer le sel.' }, { v: mSf, msg: 'C’est la masse de solution finale, pas la masse d’eau évaporée.' }, { v: meF, msg: 'C’est la masse d’eau qui reste, pas celle qui est évaporée.' }, { v: me * (1 - wi / wf), msg: 'Le titre ne s’applique pas à la masse d’eau seule.' }].filter(function (p) { return Math.abs(p.v - mev) > 1e-9; }),
+        corr: 'Le sel ne s’évapore pas (bilan sur le sel) : m<sub>solution, f</sub> = m<sub>s</sub> / ' + w('f') + ' = ' + nb(ms, 2) + ' / ' + nb(wf, 2) + ' = ' + nb(mSf) + ' kg. Eau restante : ' + nb(mSf) + ' − ' + nb(ms, 2) + ' = ' + nb(meF) + ' kg. Eau à évaporer : ' + nb(me) + ' − ' + nb(meF) + ' = <b>' + nb(mev) + ' kg</b>.' },
+      { type: 'nombre', q: '<b>Calculer</b> la masse d’eau qui doit rester au minimum pour éviter toute cristallisation du sel.', rep: ms * 1000 / s.s, unite: 'kg', tol: 0.02,
+        pieges: [{ v: ms / wsat, msg: 'C’est la masse de solution saturée : retirez la masse de sel.' }, { v: s.s / ms / 1000, msg: 'Rapport inversé : m<sub>eau, min</sub> = m<sub>s</sub> / s.' }],
+        corr: 'À saturation, 1 L (1 kg) d’eau dissout ' + s.s + ' g de sel : m<sub>eau, min</sub> = ' + nb(ms * 1000, 3) + ' / ' + s.s + ' = <b>' + nb(ms * 1000 / s.s) + ' kg</b>.' }] };
+  }
+
+  Exo.lancer('exo-p8-titres', genTitres);
+  Exo.lancer('exo-p8-conversion', genConversion);
+  Exo.lancer('exo-p8-concentration', genConcentration);
+  Exo.lancer('exo-p8-evaporation', genEvaporation);
+})();
+</script>
+<script data-goatcounter="https://chimie-winckler.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
