@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nomenclature et formule topologique – Chimie de Synthèse</title>
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=20261105a">
+</head>
+<body>
+<header class="entete">
+  <div class="conteneur entete-inner">
+    <a class="marque" href="index.html">⚗️ Chimie de Synthèse</a>
+    <button class="burger" aria-label="Menu" onclick="document.body.classList.toggle('menu-ouvert')">☰</button>
+    <nav><ul class="menu">
+<li><a href="index.html">Accueil</a></li>
+<li><a href="matieres-premieres.html">Matières premières</a><ul class="sous-menu"><li><a href="fds.html">FDS</a></li><li><a href="fds-simplifiee.html">FDS simplifiée</a></li><li><a href="gestion-dechets.html">Gestion des déchets en salle de TP</a></li></ul></li>
+<li><a href="techniques.html">Techniques</a><ul class="sous-menu"><li><a href="verrerie-et-montages.html">Verrerie et montages</a></li><li><a href="techniques-experimentales.html">Techniques expérimentales</a></li></ul></li>
+<li><a href="ressources.html">Ressources</a><ul class="sous-menu"><li><a href="cours.html">Cours</a></li><li><a href="tp.html">TP</a></li><li><a href="evaluations.html">Évaluations</a></li><li><a href="autres.html">Autres</a></li></ul></li>
+<li><a href="entrainement.html" class="actif">S’entraîner</a></li>
+<li><a href="annonces.html">Annonces</a></li>
+    </ul></nav>
+    <button type="button" class="theme-btn" id="theme-btn" aria-label="Changer de thème">🌙</button>
+  </div>
+</header>
+<div class="bandeau">
+  <div class="conteneur">
+    <p class="fil"><a href="index.html">Accueil</a> › <a href="entrainement.html">S’entraîner</a> › Nomenclature et formule topologique</p>
+    <p class="surtitre">BTS Métiers de la Chimie – Partie 1 : nomenclature</p>
+    <h1>Nomenclature et formule topologique</h1>
+    <p class="intro">Nommer une molécule à partir de sa formule topologique, retrouver la formule à partir du nom, reconnaître les familles et les groupes caractéristiques. D’après les exercices d’entraînement de la partie 1.</p>
+  </div>
+</div>
+<main class="conteneur">
+<nav class="sommaire"><a href="#nommer">De la formule au nom</a><a href="#dessiner">Du nom à la formule</a><a href="#groupes">Groupes caractéristiques</a></nav><section class="exo exo-bloc" id="nommer">
+<div class="exo-tete"><h2>De la formule au nom</h2><button type="button" class="bouton" data-nouveau="exo-p1-nommer">Nouvel exercice</button></div>
+<p class="exo-consigne">Une molécule de la fiche d’entraînement est tirée au hasard : famille, chaîne principale, nom, formule brute.</p>
+<div id="exo-p1-nommer"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="dessiner">
+<div class="exo-tete"><h2>Du nom à la formule</h2><button type="button" class="bouton" data-nouveau="exo-p1-dessiner">Nouvel exercice</button></div>
+<p class="exo-consigne">Choisir la bonne formule topologique parmi quatre.</p>
+<div id="exo-p1-dessiner"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="groupes">
+<div class="exo-tete"><h2>Groupes caractéristiques</h2><button type="button" class="bouton" data-nouveau="exo-p1-groupes">Nouvel exercice</button></div>
+<p class="exo-consigne">Groupe caractéristique, suffixe du nom et, pour les alcools, classe (primaire, secondaire, tertiaire).</p>
+<div id="exo-p1-groupes"><p>Chargement…</p></div>
+</section><p><a href="entrainement.html">← Retour aux exercices</a></p>
+</main>
+<footer class="pied"><div class="conteneur">BTS Métiers de la Chimie – Synthèse</div></footer>
+<script src="theme.js?v=1"></script>
+<script src="exo.js?v=20261105a"></script>
+<script src="chem.js?v=20261105a"></script>
+<script>
+/* ===== Partie 1 : nomenclature et formule topologique ===== */
+(function () {
+  var C = Exo.choisir, M = Exo.melanger;
+  var FAM = {
+    alcane: { a: 'un', n: 'alcane', g: 'aucun groupe caractéristique (uniquement des liaisons simples C–C et C–H)', suf: 'terminaison « -ane »' },
+    alcene: { a: 'un', n: 'alcène', g: 'une double liaison C=C', suf: 'terminaison « -ène », précédée de l’indice de la double liaison' },
+    halo: { a: 'un', n: 'dérivé halogéné', g: 'un ou plusieurs atomes d’halogène (F, Cl, Br, I) liés à un carbone', suf: 'préfixes « fluoro-, chloro-, bromo-, iodo- »' },
+    alcool: { a: 'un', n: 'alcool', g: 'le groupe hydroxyle –OH porté par un carbone tétragonal', suf: 'suffixe « -ol »', grp: 'hydroxyle' },
+    aldehyde: { a: 'un', n: 'aldéhyde', g: 'le groupe carbonyle C=O en bout de chaîne (–CHO)', suf: 'suffixe « -al » (le carbone du groupe porte l’indice 1)', grp: 'carbonyle' },
+    cetone: { a: 'une', n: 'cétone', g: 'le groupe carbonyle C=O à l’intérieur de la chaîne', suf: 'suffixe « -one », précédé de son indice', grp: 'carbonyle' },
+    acide: { a: 'un', n: 'acide carboxylique', g: 'le groupe carboxyle –COOH (en bout de chaîne)', suf: '« acide … -oïque »', grp: 'carboxyle' },
+    amine: { a: 'une', n: 'amine', g: 'un atome d’azote lié à un ou plusieurs carbones (ici –NH<sub>2</sub>)', suf: 'suffixe « -amine »', grp: 'amino' }
+  };
+  var RAISON = {
+    num: 'Numérotation incorrecte : on numérote la chaîne principale pour donner l’indice le plus petit au groupe caractéristique (ou à la liaison multiple), puis aux ramifications.',
+    alpha: 'Les substituants se citent par ordre alphabétique (é<i>thyl</i> avant <i>m</i>éthyl, <i>b</i>romo avant <i>c</i>hloro), sans tenir compte des préfixes di, tri…',
+    mult: 'Un même substituant présent plusieurs fois : préfixe multiplicatif (di, tri…) et un indice pour chacun.',
+    chaine: 'Chaîne principale mal choisie : c’est la chaîne carbonée la plus longue contenant le groupe caractéristique (ou la double liaison).',
+    fam: 'Mauvais suffixe : identifiez d’abord le groupe caractéristique pour trouver la famille.',
+    lien: 'Ce nom ne correspond pas au type de liaison dessiné (simple, double ou triple).',
+    autre: 'Ce nom correspond à une autre molécule : relisez le nombre de carbones et la position des ramifications.'
+  };
+  /* s : chaîne en zigzag (C non écrits) ; dbl : liaisons doubles i–(i+1) ; br : ramifications */
+  var MOL = [
+    { n: '2,3-diméthylbutane', f: 'alcane', mc: 4, s: { chain: ['C', 'C', 'C', 'C'], br: [{ at: 1, atoms: ['C'] }, { at: 2, atoms: ['C'] }] },
+      faux: [['2,3-méthylbutane', 'mult'], ['hexane', 'chaine'], ['2-méthyl-3-méthylbutane', 'mult'], ['1,1,2-triméthylpropane', 'chaine']] },
+    { n: '3-éthyl-2-méthylpentane', f: 'alcane', mc: 5, s: { chain: ['C', 'C', 'C', 'C', 'C'], br: [{ at: 1, atoms: ['C'] }, { at: 2, atoms: ['C', 'C'] }] },
+      faux: [['2-méthyl-3-éthylpentane', 'alpha'], ['3-éthyl-4-méthylpentane', 'num'], ['octane', 'chaine'], ['3-méthyl-2-éthylpentane', 'alpha']] },
+    { n: '3,3-diméthylpentane', f: 'alcane', mc: 5, s: { chain: ['C', 'C', 'C', 'C', 'C'], br: [{ at: 2, atoms: ['C'] }, { at: 2, side: 'i', atoms: ['C'] }] },
+      faux: [['3-diméthylpentane', 'mult'], ['3,3-méthylpentane', 'mult'], ['heptane', 'chaine'], ['2,2-diéthylpropane', 'chaine']] },
+    { n: '4-méthylpent-2-ène', f: 'alcene', mc: 5, s: { chain: ['C', 'C', 'C', 'C', 'C'], dbl: [1], br: [{ at: 3, atoms: ['C'] }] },
+      faux: [['2-méthylpent-3-ène', 'num'], ['4-méthylpent-2-yne', 'lien'], ['4-méthylpentane', 'lien'], ['4-méthylhex-2-ène', 'chaine']] },
+    { n: '2,3-diméthylhex-3-ène', f: 'alcene', mc: 6, s: { chain: ['C', 'C', 'C', 'C', 'C', 'C'], dbl: [2], br: [{ at: 1, atoms: ['C'] }, { at: 2, atoms: ['C'] }] },
+      faux: [['4,5-diméthylhex-3-ène', 'num'], ['2,3-diméthylhex-2-ène', 'autre'], ['2,3-méthylhex-3-ène', 'mult'], ['2,3-diméthylhexane', 'lien']] },
+    { n: '2-éthyl-4-méthylpent-1-ène', f: 'alcene', mc: 5, s: { chain: ['C', 'C', 'C', 'C', 'C'], dbl: [0], br: [{ at: 1, atoms: ['C', 'C'] }, { at: 3, atoms: ['C'] }] },
+      faux: [['4-méthyl-2-éthylpent-1-ène', 'alpha'], ['4-éthyl-2-méthylpent-4-ène', 'num'], ['2-éthyl-4-méthylpentane', 'lien'], ['2-éthyl-4-méthylpent-2-ène', 'autre']] },
+    { n: '2,2-dibromo-3-chlorobutane', f: 'halo', mc: 4, s: { chain: ['C', 'C', 'C', 'C'], br: [{ at: 1, atoms: ['Br'] }, { at: 1, side: 'i', atoms: ['Br'] }, { at: 2, atoms: ['Cl'] }] },
+      faux: [['3,3-dibromo-2-chlorobutane', 'num'], ['3-chloro-2,2-dibromobutane', 'alpha'], ['2,2-bromo-3-chlorobutane', 'mult'], ['2-dibromo-3-chlorobutane', 'mult']] },
+    { n: '2-bromo-3-chlorobutane', f: 'halo', mc: 4, s: { chain: ['C', 'C', 'C', 'C'], br: [{ at: 1, atoms: ['Br'] }, { at: 2, atoms: ['Cl'] }] },
+      faux: [['3-bromo-2-chlorobutane', 'num'], ['2-chloro-3-bromobutane', 'alpha'], ['2-bromo-3-chlorobut-2-ène', 'lien']] },
+    { n: 'éthanol', f: 'alcool', cl: 1, mc: 2, s: { chain: ['C', 'C', 'OH'] },
+      faux: [['éthanal', 'fam'], ['méthanol', 'chaine'], ['propan-1-ol', 'chaine'], ['acide éthanoïque', 'fam']] },
+    { n: 'butan-2-ol', f: 'alcool', cl: 2, mc: 4, s: { chain: ['C', 'C', 'C', 'C'], br: [{ at: 1, atoms: ['OH'] }] },
+      faux: [['butan-3-ol', 'num'], ['butan-2-one', 'fam'], ['butan-1-ol', 'autre'], ['2-méthylpropan-1-ol', 'chaine']] },
+    { n: '2-méthylpropan-2-ol', f: 'alcool', cl: 3, mc: 3, s: { chain: ['C', 'C', 'C'], br: [{ at: 1, atoms: ['OH'] }, { at: 1, side: 'i', atoms: ['C'] }] },
+      faux: [['2-méthylpropan-1-ol', 'autre'], ['butan-2-ol', 'chaine'], ['2-méthylpropan-2-one', 'fam'], ['1,1-diméthyléthanol', 'chaine']] },
+    { n: '2-méthylbutan-1-ol', f: 'alcool', cl: 1, mc: 4, s: { chain: ['C', 'C', 'C', 'C', 'OH'], br: [{ at: 2, atoms: ['C'] }] },
+      faux: [['3-méthylbutan-4-ol', 'num'], ['3-méthylbutan-1-ol', 'autre'], ['pentan-1-ol', 'chaine'], ['2-éthylpropan-1-ol', 'chaine']] },
+    { n: '4-méthylpentan-2-ol', f: 'alcool', cl: 2, mc: 5, s: { chain: ['C', 'C', 'C', 'C', 'C'], br: [{ at: 1, atoms: ['OH'] }, { at: 3, atoms: ['C'] }] },
+      faux: [['2-méthylpentan-4-ol', 'num'], ['4-méthylpentan-2-one', 'fam'], ['4,4-diméthylbutan-2-ol', 'chaine'], ['2-méthylpentan-2-ol', 'autre']] },
+    { n: 'butanal', f: 'aldehyde', mc: 4, s: { chain: ['C', 'C', 'C', 'C', 'O'], dbl: [3] },
+      faux: [['butan-1-one', 'fam'], ['butan-1-ol', 'fam'], ['acide butanoïque', 'fam'], ['pentanal', 'chaine']] },
+    { n: 'pentanal', f: 'aldehyde', mc: 5, s: { chain: ['C', 'C', 'C', 'C', 'C', 'O'], dbl: [4] },
+      faux: [['pentan-1-one', 'fam'], ['pentan-5-al', 'num'], ['hexanal', 'chaine'], ['acide pentanoïque', 'fam']] },
+    { n: '2-éthylbutanal', f: 'aldehyde', mc: 4, s: { chain: ['O', 'C', 'C', 'C', 'C'], dbl: [0], br: [{ at: 2, atoms: ['C', 'C'] }] },
+      faux: [['3-éthylbutanal', 'num'], ['2-éthylpentanal', 'chaine'], ['2-éthylbutan-1-one', 'fam'], ['2-éthylbutan-1-ol', 'fam']] },
+    { n: 'butan-2-one', f: 'cetone', mc: 4, s: { chain: ['C', 'C', 'C', 'C'], br: [{ at: 1, atoms: ['O'], dbl: true }] },
+      faux: [['butan-3-one', 'num'], ['butanal', 'fam'], ['butan-2-ol', 'fam'], ['pentan-2-one', 'chaine']] },
+    { n: 'pentan-3-one', f: 'cetone', mc: 5, s: { chain: ['C', 'C', 'C', 'C', 'C'], br: [{ at: 2, atoms: ['O'], dbl: true }] },
+      faux: [['pentan-2-one', 'autre'], ['pentanal', 'fam'], ['pentan-3-ol', 'fam'], ['3-oxopentane', 'fam']] },
+    { n: '3-méthylpentan-2-one', f: 'cetone', mc: 5, s: { chain: ['C', 'C', 'C', 'C', 'C'], br: [{ at: 1, atoms: ['O'], dbl: true }, { at: 2, atoms: ['C'] }] },
+      faux: [['3-méthylpentan-4-one', 'num'], ['3-méthylpentanal', 'fam'], ['3-méthylpentan-2-ol', 'fam'], ['3-méthylhexan-2-one', 'chaine']] },
+    { n: 'acide éthanoïque', f: 'acide', mc: 2, s: { chain: ['C', 'C', 'OH'], br: [{ at: 1, atoms: ['O'], dbl: true }] },
+      faux: [['éthanal', 'fam'], ['éthanol', 'fam'], ['acide méthanoïque', 'chaine'], ['acide propanoïque', 'chaine']] },
+    { n: 'acide butanoïque', f: 'acide', mc: 4, s: { chain: ['C', 'C', 'C', 'C', 'OH'], br: [{ at: 3, atoms: ['O'], dbl: true }] },
+      faux: [['acide propanoïque', 'chaine'], ['butanal', 'fam'], ['acide butan-4-oïque', 'num'], ['butan-1-ol', 'fam']] },
+    { n: 'acide 2-méthylpentanoïque', f: 'acide', mc: 5, s: { chain: ['C', 'C', 'C', 'C', 'C', 'OH'], br: [{ at: 3, atoms: ['C'] }, { at: 4, atoms: ['O'], dbl: true }] },
+      faux: [['acide 4-méthylpentanoïque', 'num'], ['acide 2-méthylbutanoïque', 'chaine'], ['acide 2-méthylhexanoïque', 'chaine'], ['2-méthylpentanal', 'fam']] },
+    { n: 'butan-1-amine', f: 'amine', mc: 4, s: { chain: ['C', 'C', 'C', 'C', 'NH2'] },
+      faux: [['butan-4-amine', 'num'], ['pentan-1-amine', 'chaine'], ['butan-1-ol', 'fam'], ['butan-2-amine', 'autre']] },
+    { n: '2-méthylpropan-1-amine', f: 'amine', mc: 3, s: { chain: ['C', 'C', 'C', 'NH2'], br: [{ at: 1, atoms: ['C'] }] },
+      faux: [['2-méthylpropan-3-amine', 'num'], ['butan-1-amine', 'chaine'], ['2-méthylbutan-1-amine', 'chaine'], ['2-méthylpropan-1-ol', 'fam']] },
+    { n: '4,4-diméthylpentan-2-amine', f: 'amine', mc: 5, s: { chain: ['C', 'C', 'C', 'C', 'C'], br: [{ at: 1, atoms: ['NH2'] }, { at: 3, atoms: ['C'] }, { at: 3, side: 'i', atoms: ['C'] }] },
+      faux: [['2,2-diméthylpentan-4-amine', 'num'], ['4,4-méthylpentan-2-amine', 'mult'], ['4,4-diméthylhexan-2-amine', 'chaine'], ['4,4-diméthylpentan-2-ol', 'fam']] }
+  ];
+  var HET = { OH: { O: 1, H: 1 }, O: { O: 1 }, NH2: { N: 1, H: 2 }, Cl: { Cl: 1 }, Br: { Br: 1 } };
+  /* formule brute à partir du dessin */
+  function brute(s) {
+    var at = s.chain.map(function (l) { return { l: l, b: 0 }; }), i;
+    for (i = 0; i < s.chain.length - 1; i++) { var o = (s.dbl || []).indexOf(i) >= 0 ? 2 : 1; at[i].b += o; at[i + 1].b += o; }
+    (s.br || []).forEach(function (br) {
+      var prev = at[br.at];
+      br.atoms.forEach(function (l, k) { var a = { l: l, b: 0 }, o = (k === 0 && br.dbl) ? 2 : 1; prev.b += o; a.b += o; at.push(a); prev = a; });
+    });
+    var n = { C: 0, H: 0, Br: 0, Cl: 0, N: 0, O: 0 }, Hhet = 0;
+    at.forEach(function (a) {
+      if (a.l === 'C') { n.C++; n.H += 4 - a.b; }
+      else { var h = HET[a.l]; for (var e in h) { n[e] += h[e]; if (e === 'H') Hhet += h[e]; } }
+    });
+    n.Hhet = Hhet; return n;
+  }
+  function ecrire(n) {
+    return ['C', 'H', 'Br', 'Cl', 'N', 'O'].map(function (e) { return n[e] ? e + (n[e] > 1 ? '<sub>' + n[e] + '</sub>' : '') : ''; }).join('');
+  }
+  function dessin(m) { return '<div class="mol-cadre">' + Chem.topo(m.s, { L: 40 }) + '</div>'; }
+  function famOptions(m) {
+    var cles = ['alcane', 'alcene', 'halo', 'alcool', 'aldehyde', 'cetone', 'acide', 'amine'].filter(function (k) { return k !== m.f; });
+    return [{ t: FAM[m.f].n, ok: true }].concat(M(cles).slice(0, 3).map(function (k) {
+      return { t: FAM[k].n, ok: false, pourquoi: (k === 'alcane' ? 'Un alcane ne comporte ' + FAM[k].g : FAM[k].a.charAt(0).toUpperCase() + FAM[k].a.slice(1) + ' ' + FAM[k].n + ' possède ' + FAM[k].g) + '.' };
+    }));
+  }
+  function nomOptions(m) {
+    return [{ t: m.n, ok: true }].concat(M(m.faux).slice(0, 3).map(function (x) { return { t: x[0], ok: false, pourquoi: RAISON[x[1]] }; }));
+  }
+  function bruteOptions(m) {
+    var n = brute(m.s), ops = [{ t: ecrire(n), ok: true }], vus = [ecrire(n)];
+    function aj(d, msg) { var x = JSON.parse(JSON.stringify(n)); for (var e in d) x[e] += d[e]; var t = ecrire(x); if (vus.indexOf(t) < 0 && x.H > 0) { vus.push(t); ops.push({ t: t, ok: false, pourquoi: msg }); } }
+    if (n.Hhet) aj({ H: -n.Hhet }, 'Vous avez oublié les atomes d’hydrogène écrits sur O ou N.');
+    aj({ H: -2 }, 'Il manque des H : chaque carbone forme 4 liaisons, complétez avec des H.');
+    aj({ H: +2 }, (m.s.dbl || []).length || (m.s.br || []).some(function (b) { return b.dbl; }) ? 'Trop d’atomes H : une double liaison (C=C ou C=O) « remplace » deux liaisons C–H.' : 'Trop d’atomes H : chaque carbone ne forme que 4 liaisons (au plus 2n + 2 atomes H pour n carbones).');
+    aj({ C: -1 }, 'Recomptez les carbones : chaque extrémité de trait et chaque sommet de la ligne brisée est un atome de carbone.');
+    aj({ C: +1, H: +2 }, 'Recomptez les carbones : un atome écrit (O, N, Cl, Br) n’est pas un carbone.');
+    return ops.slice(0, 4);
+  }
+  function corrNom(m) {
+    return 'Famille : <b>' + FAM[m.f].n + '</b> (' + FAM[m.f].suf + '). Chaîne principale : ' + m.mc + ' atomes de carbone. Nom : <b>' + m.n + '</b>.';
+  }
+
+  /* 1. De la formule topologique au nom */
+  Exo.lancer('exo-p1-nommer', function () {
+    var m = C(MOL), n = brute(m.s);
+    var ctx = '<p>On donne la formule topologique d’une molécule :</p>' + dessin(m);
+    var et = [
+      { type: 'choix', q: 'À quelle famille appartient cette molécule ?', options: famOptions(m), corr: (m.f === 'alcane' ? 'La molécule ne comporte ' + FAM[m.f].g : 'La molécule possède ' + FAM[m.f].g) + ' : c’est ' + FAM[m.f].a + ' <b>' + FAM[m.f].n + '</b>.' },
+      { type: 'nombre', q: 'Combien d’atomes de carbone compte la chaîne principale ?', rep: m.mc, unite: '', tol: 0.001,
+        pieges: n.C !== m.mc ? [{ v: n.C, msg: 'Vous avez compté tous les carbones, ramifications comprises : la chaîne principale est la plus longue chaîne contenant le groupe caractéristique (ou la double liaison).' }] : [],
+        corr: 'La chaîne principale compte <b>' + m.mc + '</b> atomes de carbone' + (n.C !== m.mc ? ' (la molécule en compte ' + n.C + ' au total).' : '.') },
+      { type: 'choix', q: 'Quel est le nom de cette molécule ?', options: nomOptions(m), corr: corrNom(m) },
+      { type: 'choix', q: 'Quelle est sa formule brute ?', options: bruteOptions(m), corr: 'On compte ' + n.C + ' C' + (n.Br || n.Cl || n.N || n.O ? ', les hétéroatomes écrits' : '') + ' et on complète chaque carbone avec des H pour qu’il forme 4 liaisons : <b>' + ecrire(n) + '</b>.' }
+    ];
+    return { contexte: ctx, etapes: et };
+  });
+
+  /* 2. Du nom à la formule topologique */
+  Exo.lancer('exo-p1-dessiner', function () {
+    var m = C(MOL);
+    var meme = M(MOL.filter(function (x) { return x !== m && x.f === m.f; }));
+    var autres = M(MOL.filter(function (x) { return x !== m && x.f !== m.f; }));
+    var choix = meme.concat(autres).slice(0, 3);
+    var ops = [{ t: dessin(m), ok: true }].concat(choix.map(function (x) {
+      return { t: dessin(x), ok: false, pourquoi: 'Cette formule est celle de la molécule <b>' + x.n + '</b>.' + (x.f !== m.f ? ' Ce n’est pas ' + FAM[m.f].a + ' ' + FAM[m.f].n + '.' : '') };
+    }));
+    var et = [
+      { type: 'choix', q: 'Quelle formule topologique correspond à la molécule <b>' + m.n + '</b> ?', options: ops, corr: corrNom(m) + dessin(m) },
+      { type: 'choix', q: 'Combien d’atomes de carbone cette molécule compte-t-elle au total ?', options: (function () {
+        var n = brute(m.s).C, o = [{ t: String(n), ok: true }];
+        [n - 1, n + 1, n + 2].forEach(function (v) { if (v > 0) o.push({ t: String(v), ok: false, pourquoi: 'Ajoutez les carbones des ramifications à ceux de la chaîne principale.' }); });
+        return o; })(), corr: 'Chaîne principale : ' + m.mc + ' C ; total : <b>' + brute(m.s).C + '</b> C (formule brute ' + ecrire(brute(m.s)) + ').' }
+    ];
+    return { contexte: '<p>Retrouver la formule topologique à partir du nom.</p>', etapes: et };
+  });
+
+  /* 3. Groupes caractéristiques et classe des alcools */
+  Exo.lancer('exo-p1-groupes', function () {
+    var m = C(MOL.filter(function (x) { return FAM[x.f].grp; }));
+    var grps = ['hydroxyle', 'carbonyle', 'carboxyle', 'amino'];
+    var ex = { hydroxyle: '–OH', carbonyle: 'C=O', carboxyle: '–COOH', amino: '–NH<sub>2</sub>' };
+    var et = [
+      { type: 'choix', q: 'Quel groupe caractéristique cette molécule possède-t-elle ?', options: grps.map(function (g) {
+        return { t: 'groupe ' + g + ' ' + ex[g], ok: g === FAM[m.f].grp, pourquoi: g === 'carbonyle' && m.f === 'acide' ? 'Il y a bien un C=O, mais lié à un –OH sur le même carbone : c’est le groupe carboxyle –COOH.' : g === 'hydroxyle' && m.f === 'acide' ? 'Le –OH est porté par le carbone du C=O : l’ensemble forme le groupe carboxyle.' : 'Regardez les atomes écrits sur la formule et ce qui les entoure.' };
+      }), corr: 'Groupe <b>' + FAM[m.f].grp + '</b> : ' + FAM[m.f].g + '.' },
+      { type: 'choix', q: 'Comment ce groupe apparaît-il dans le nom ?', options: [
+        { t: 'suffixe « -ol »', ok: m.f === 'alcool', pourquoi: 'Le suffixe « -ol » est celui des alcools.' },
+        { t: 'suffixe « -al »', ok: m.f === 'aldehyde', pourquoi: 'Le suffixe « -al » est celui des aldéhydes (C=O en bout de chaîne).' },
+        { t: 'suffixe « -one »', ok: m.f === 'cetone', pourquoi: 'Le suffixe « -one » est celui des cétones (C=O dans la chaîne).' },
+        { t: '« acide … -oïque »', ok: m.f === 'acide', pourquoi: '« acide … -oïque » désigne les acides carboxyliques.' },
+        { t: 'suffixe « -amine »', ok: m.f === 'amine', pourquoi: 'Le suffixe « -amine » est celui des amines.' }].filter(function (o, i, t) { return o.ok || t.filter(function (x) { return !x.ok; }).indexOf(o) < 3; }),
+        corr: FAM[m.f].n.charAt(0).toUpperCase() + FAM[m.f].n.slice(1) + ' : ' + FAM[m.f].suf + '. Ici : <b>' + m.n + '</b>.' }
+    ];
+    if (m.f === 'alcool') {
+      var nom = ['', 'primaire', 'secondaire', 'tertiaire'];
+      et.push({ type: 'choix', q: 'Quelle est la classe de cet alcool ?', options: [1, 2, 3].map(function (k) {
+        return { t: 'alcool ' + nom[k], ok: k === m.cl, pourquoi: 'Comptez les atomes de carbone liés au carbone qui porte –OH : ' + (k === 1 ? 'un seul pour un alcool primaire.' : k === 2 ? 'deux pour un alcool secondaire.' : 'trois pour un alcool tertiaire.') };
+      }), corr: 'Le carbone qui porte –OH est lié à <b>' + m.cl + '</b> atome' + (m.cl > 1 ? 's' : '') + ' de carbone : alcool <b>' + nom[m.cl] + '</b>.' });
+    }
+    return { contexte: '<p>On donne la formule topologique d’une molécule :</p>' + dessin(m), etapes: et };
+  });
+})();
+
+</script>
+<script data-goatcounter="https://chimie-winckler.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

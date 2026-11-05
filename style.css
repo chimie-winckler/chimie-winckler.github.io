@@ -390,3 +390,9 @@ h3 { margin: 0 0 8px; font-size: 1.05rem; }
 .flux span { line-height: 1.35; }
 .flux .fleche { color: var(--doux); font-size: 1.4rem; flex: none; }
 @media (max-width: 600px) { .schema { grid-template-columns: 1fr; gap: 8px; } .flux.entree { justify-content: flex-start; text-align: left; } .schema-app { padding: 10px; } }
+
+/* ---- Molécules dessinées (chem.js) ---- */
+.mol-cadre { display: inline-block; background: #fff; border: 1px solid #d9e2e4; border-radius: 8px; padding: 4px 10px; margin: 6px 0; max-width: 100%; overflow-x: auto; vertical-align: middle; }
+.mol-cadre svg { max-width: 100%; height: auto; display: block; }
+.exo-option .mol-cadre { margin: 2px 0; }
+.mol-ligne { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
