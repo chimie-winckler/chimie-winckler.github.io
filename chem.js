@@ -309,7 +309,98 @@ var Chem = (function () {
     dessiner();
     return { rs: rs3d(groups) };
   }
+
+  /* ---------- Molécules réelles : graphe 2D (cycles), wedges, C* et R/S ----------
+     spec.at : [id, élément, idDépart, angle(°), ordre, stéréo]  (stéréo 'w' ou 'h' : pointe fine côté idDépart)
+     spec.cy : [[id1, id2, ordre]] fermetures de cycles */
+  function molGraphe(spec) {
+    var A = [], idx = {}, B = [];
+    spec.at.forEach(function (t) {
+      var a = { id: t[0], el: t[1], x: 0, y: 0, nb: [] };
+      if (t[2] !== undefined && t[2] !== null) { var p = A[idx[t[2]]], r = t[3] * Math.PI / 180; a.x = p.x + Math.cos(r); a.y = p.y + Math.sin(r); }
+      idx[t[0]] = A.length; A.push(a);
+      if (t[2] !== undefined && t[2] !== null) B.push({ a: idx[t[2]], b: idx[t[0]], o: t[4] || 1, st: t[5] || null });
+    });
+    (spec.cy || []).forEach(function (c) { B.push({ a: idx[c[0]], b: idx[c[1]], o: c[2] || 1, st: null }); });
+    B.forEach(function (b, k) { A[b.a].nb.push([b.b, b.o, k]); A[b.b].nb.push([b.a, b.o, k]); });
+    A.forEach(function (a) { var v = a.nb.reduce(function (s, e) { return s + e[1]; }, 0); a.h = a.el === 'Ph' ? 0 : Math.max(0, (VAL[a.el] || 0) - v); });
+    return { A: A, B: B, idx: idx };
+  }
+  function ph() { return { Z: 0, kids: [] }; }
+  function brancheG(g, k, parent, path, prof) {
+    var a = g.A[k];
+    if (a.el === 'Ph') return { Z: 6, kids: [0, 1, 2].map(function () { return { Z: 6, kids: [ph(), ph(), ph()] }; }) };
+    var kids = [];
+    if (prof < 7) a.nb.forEach(function (e) {
+      if (e[0] === parent) { for (var d = 1; d < e[1]; d++) kids.push({ Z: ZN[g.A[parent].el], kids: [ph(), ph(), ph()] }); return; }
+      if (path.indexOf(e[0]) >= 0) kids.push({ Z: ZN[g.A[e[0]].el] || 6, kids: [ph(), ph(), ph()] });
+      else kids.push(brancheG(g, e[0], k, path.concat([k]), prof + 1));
+      for (var d2 = 1; d2 < e[1]; d2++) kids.push({ Z: ZN[g.A[e[0]].el] || 6, kids: [ph(), ph(), ph()] });
+    });
+    for (var i = 0; i < a.h; i++) kids.push({ Z: 1, kids: [] });
+    return { Z: ZN[a.el], kids: kids };
+  }
+  function centres(g) {
+    var res = [];
+    g.A.forEach(function (a, k) {
+      if (a.el !== 'C' || a.h > 1 || a.nb.length + a.h !== 4 || a.nb.some(function (e) { return e[1] > 1; })) return;
+      var br = a.nb.map(function (e) { return { n: e[0], t: brancheG(g, e[0], k, [k], 0) }; });
+      if (a.h) br.push({ n: -1, t: { Z: 1, kids: [] } });
+      for (var i = 0; i < 4; i++) for (var j = i + 1; j < 4; j++) if (cmp(br[i].t, br[j].t) === 0) return;
+      br.sort(function (p, q) { return cmp(q.t, p.t); });
+      // vecteurs 3D (y vers le haut)
+      var vec = {};
+      a.nb.forEach(function (e) {
+        var b = g.B[e[2]], o = g.A[e[0]], v = [o.x - a.x, o.y - a.y, 0];
+        if (b.st && b.a === k) v[2] = b.st === 'w' ? 0.85 : -0.85;
+        var n = Math.hypot(v[0], v[1], v[2]); vec[e[0]] = [v[0] / n, v[1] / n, v[2] / n];
+      });
+      if (a.h) { var sx = 0, sy = 0, sz = 0; a.nb.forEach(function (e) { sx += vec[e[0]][0]; sy += vec[e[0]][1]; sz += vec[e[0]][2]; }); vec[-1] = [-sx, -sy, -sz]; }
+      var V = br.map(function (x) { return vec[x.n]; }), d = V[3];
+      var P = [0, 1, 2].map(function (i) { return [V[i][0] - d[0], V[i][1] - d[1], V[i][2] - d[2]]; });
+      var det = P[0][0] * (P[1][1] * P[2][2] - P[1][2] * P[2][1]) - P[0][1] * (P[1][0] * P[2][2] - P[1][2] * P[2][0]) + P[0][2] * (P[1][0] * P[2][1] - P[1][1] * P[2][0]);
+      var stereo = a.nb.some(function (e) { var b = g.B[e[2]]; return b.st && b.a === k; });
+      res.push({ k: k, id: a.id, rs: stereo && Math.abs(det) > 1e-6 ? (det < 0 ? 'R' : 'S') : null, prio: br.map(function (x) { return x.n; }), arbres: br.map(function (x) { return x.t; }) });
+    });
+    return res;
+  }
+  function descBranche(g, c, x, t) { // libellé d’une branche : « O (H) », « C (O, O, O) »…
+    if (x === -1) return 'H';
+    var el = g.A[x].el === 'Ph' ? 'C' : g.A[x].el;
+    var ks = t.kids.slice().sort(function (p, q) { return cmp(q, p); }).map(function (k) { return SYM[k.Z]; });
+    return el + (ks.length ? ' (' + ks.join(', ') + ')' : '');
+  }
+  var LH = { O: 'O', N: 'N', S: 'S', Cl: 'Cl', Br: 'Br', F: 'F', I: 'I' };
+  function molSvg(g, o) {
+    o = o || {};
+    var S = 34, body = '', A = g.A, cxs = A.map(function (a) { return a.x * S; }), cys = A.map(function (a) { return -a.y * S; });
+    function lab(a) { if (a.el === 'C') return ''; if (a.el === 'Ph') return 'C6H5'; var hh = a.h ? 'H' + (a.h > 1 ? a.h : '') : ''; var gauche = a.nb.length === 1 && A[a.nb[0][0]].x > a.x + 0.3; return gauche && hh ? hh + a.el : a.el + hh; }
+    (o.cercles || []).forEach(function (k) { body += '<circle cx="' + cxs[k].toFixed(1) + '" cy="' + cys[k].toFixed(1) + '" r="13" fill="#f6c343" opacity="0.55"/>'; });
+    g.B.forEach(function (b) {
+      var p = [cxs[b.a], cys[b.a]], q = [cxs[b.b], cys[b.b]], dx = q[0] - p[0], dy = q[1] - p[1], L2 = Math.hypot(dx, dy), ux = dx / L2, uy = dy / L2;
+      var la = lab(A[b.a]), lb = lab(A[b.b]), r1 = la ? 9 : 0, r2 = lb ? 9 : 0;
+      var x1 = p[0] + ux * r1, y1 = p[1] + uy * r1, x2 = q[0] - ux * r2, y2 = q[1] - uy * r2;
+      if (b.st === 'w') body += '<polygon points="' + x1.toFixed(1) + ',' + y1.toFixed(1) + ' ' + (x2 - uy * 4.5).toFixed(1) + ',' + (y2 + ux * 4.5).toFixed(1) + ' ' + (x2 + uy * 4.5).toFixed(1) + ',' + (y2 - ux * 4.5).toFixed(1) + '" fill="#1f2a30"/>';
+      else if (b.st === 'h') { for (var s2 = 1; s2 <= 7; s2++) { var f = s2 / 7.5, hw = 4.8 * f, xx = x1 + (x2 - x1) * f, yy = y1 + (y2 - y1) * f; body += line(xx - uy * hw, yy + ux * hw, xx + uy * hw, yy - ux * hw, { w: 1.4 }); } }
+      else body += line(x1, y1, x2, y2);
+      if (b.o === 2) {
+        var voisins = A[b.a].nb.concat(A[b.b].nb).filter(function (e) { return e[0] !== b.a && e[0] !== b.b; });
+        var nx = -uy, ny = ux, side = 0;
+        voisins.forEach(function (e) { side += (cxs[e[0]] - (p[0] + q[0]) / 2) * nx + (cys[e[0]] - (p[1] + q[1]) / 2) * ny; });
+        if (side < 0) { nx = -nx; ny = -ny; }
+        if (!voisins.length || Math.abs(side) < 1e-6 || la || lb) { body += line(x1 + nx * 5, y1 + ny * 5, x2 + nx * 5, y2 + ny * 5); }
+        else { var sh = 0.16; body += line(x1 + nx * 6 + dx * sh, y1 + ny * 6 + dy * sh, x2 + nx * 6 - dx * sh, y2 + ny * 6 - dy * sh); }
+      }
+    });
+    A.forEach(function (a, k) {
+      var t = lab(a); if (t) body += labelBox(cxs[k], cys[k], t, 14) + txt(cxs[k], cys[k], t, { size: 15 });
+    });
+    (o.etoiles || []).forEach(function (k) { body += txt(cxs[k] + 9, cys[k] - 11, '*', { size: 18, color: '#c0392b', weight: 'bold' }); });
+    var w = 14;
+    return svgWrap(body, Math.min.apply(null, cxs) - w, Math.min.apply(null, cys) - w, Math.max.apply(null, cxs) + w, Math.max.apply(null, cys) + w, o.cls);
+  }
+  function inverser(spec) { return { at: spec.at.map(function (t) { var u = t.slice(); if (u[5] === 'w') u[5] = 'h'; else if (u[5] === 'h') u[5] = 'w'; return u; }), cy: spec.cy }; }
   var MA = { H: 1, C: 12, N: 14, O: 16, F: 19, P: 31, S: 32, Cl: 35.5, Br: 79.9, I: 126.9 };
   function masse(sm) { var at = parse(sm), m = 0; at.forEach(function (a, i) { var b = a.nb.reduce(function (s, e) { return s + e[1]; }, 0) + (i === 0 ? 1 : 0); m += MA[a.el] + Math.max(0, (VAL[a.el] || 0) - b) * MA.H; }); return m; }
-  return { vue3d: vue3d, rs3d: rs3d, masse: masse, topo: topo, tree: tree, cmp: cmp, rank: rank, why: why, rs: rs, cram: cram, alkene: alkene, ze: ze, mech: mech, txt: txt };
+  return { molGraphe: molGraphe, centres: centres, descBranche: descBranche, molSvg: molSvg, inverser: inverser, vue3d: vue3d, rs3d: rs3d, masse: masse, topo: topo, tree: tree, cmp: cmp, rank: rank, why: why, rs: rs, cram: cram, alkene: alkene, ze: ze, mech: mech, txt: txt };
 })();

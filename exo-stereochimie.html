@@ -32,7 +32,7 @@
   </div>
 </div>
 <main class="conteneur">
-<nav class="sommaire"><a href="#rs">Configuration R / S en Cram</a><a href="#3d">Le carbone asymétrique en 3D</a><a href="#chrono">Mode chrono : R ou S ?</a><a href="#relation">Même molécule ou énantiomères ?</a><a href="#ze">Stéréoisomérie Z / E</a><a href="#cip">Réfléchir sur les règles CIP</a><a href="#multi">Plusieurs carbones asymétriques</a></nav><section class="exo exo-bloc" id="rs">
+<nav class="sommaire"><a href="#rs">Configuration R / S en Cram</a><a href="#3d">Le carbone asymétrique en 3D</a><a href="#chrono">Mode chrono : R ou S ?</a><a href="#relation">Même molécule ou énantiomères ?</a><a href="#reelles">Des C* dans des molécules réelles</a><a href="#ze">Stéréoisomérie Z / E</a><a href="#cip">Réfléchir sur les règles CIP</a><a href="#multi">Plusieurs carbones asymétriques</a></nav><section class="exo exo-bloc" id="rs">
 <div class="exo-tete"><h2>Configuration R / S en Cram</h2><button type="button" class="bouton" data-nouveau="exo-p3-rs">Nouvel exercice</button></div>
 <p class="exo-consigne">Classer les substituants du C*, repérer le n°4 dans l’espace, lire le sens de rotation. Molécules de la fiche (exercice Cram) et du cours.</p>
 <div id="exo-p3-rs"><p>Chargement…</p></div>
@@ -48,6 +48,10 @@
 <div class="exo-tete"><h2>Même molécule ou énantiomères ?</h2><button type="button" class="bouton" data-nouveau="exo-p3-relation">Nouvel exercice</button></div>
 <p class="exo-consigne">Deux représentations de Cram d’une même molécule, orientées différemment.</p>
 <div id="exo-p3-relation"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="reelles">
+<div class="exo-tete"><h2>Des C* dans des molécules réelles</h2><button type="button" class="bouton" data-nouveau="exo-p3-reelles">Nouvel exercice</button></div>
+<p class="exo-consigne">Ibuprofène, thalidomide, carvone, limonène, menthol, sertraline, méthadone, L-DOPA, adrénaline, éphédrine : repérer les C*, classer, attribuer R ou S… et découvrir pourquoi la configuration compte. Un énantiomère ou l’autre est tiré au hasard.</p>
+<div id="exo-p3-reelles"><p>Chargement…</p></div>
 </section><section class="exo exo-bloc" id="ze">
 <div class="exo-tete"><h2>Stéréoisomérie Z / E</h2><button type="button" class="bouton" data-nouveau="exo-p3-ze">Nouvel exercice</button></div>
 <p class="exo-consigne">Existence de la stéréoisomérie, groupes prioritaires sur chaque carbone, descripteur Z ou E.</p>
@@ -65,7 +69,7 @@
 <footer class="pied"><div class="conteneur">BTS Métiers de la Chimie – Synthèse</div></footer>
 <script src="theme.js?v=1"></script>
 <script src="exo.js?v=20261105a"></script>
-<script src="chem.js?v=20261105e"></script>
+<script src="chem.js?v=20261105f"></script>
 <script>
 /* ===== Partie 3 : représentation des molécules, stéréochimie ===== */
 (function () {
@@ -319,6 +323,65 @@
     accueil();
     var b = document.querySelector('[data-nouveau="exo-p3-chrono"]'); if (b) b.addEventListener('click', accueil);
   })();
+
+
+  /* 8. Les carbones asymétriques dans des molécules réelles */
+  var CYC = [['c6', 'c1', 1]];
+  function benz() { return [['c1', 'C'], ['c2', 'C', 'c1', 30, 2], ['c3', 'C', 'c2', 90], ['c4', 'C', 'c3', 150, 2], ['c5', 'C', 'c4', 210], ['c6', 'C', 'c5', 270, 2]]; }
+  var REELLES = [
+    { n: 'ibuprofène', d: 'anti-inflammatoire', s: { at: benz().concat([['i1', 'C', 'c4', 90], ['i2', 'C', 'i1', 30], ['i3', 'C', 'i2', 90], ['i4', 'C', 'i2', -30], ['s', 'C', 'c1', 270], ['me', 'C', 's', 210, 1, 'w'], ['co', 'C', 's', 330], ['o1', 'O', 'co', 30, 2], ['o2', 'O', 'co', 270]]), cy: CYC },
+      p: { S: 'l’énantiomère actif (anti-inflammatoire)', R: 'l’énantiomère peu actif (converti en partie en S dans l’organisme)' } },
+    { n: 'thalidomide', d: 'médicament des années 1950-1960 contre les nausées de la grossesse', s: { at: [['A', 'C'], ['B', 'C', 'A', 90, 2], ['h1', 'C', 'B', 150], ['h2', 'C', 'h1', 210, 2], ['h3', 'C', 'h2', 270], ['h4', 'C', 'h3', 330, 2], ['p1', 'C', 'B', 18], ['n', 'N', 'p1', -54], ['p3', 'C', 'n', -126], ['o1', 'O', 'p1', 72, 2], ['o2', 'O', 'p3', -72, 2],
+        ['g', 'C', 'n', 0], ['a1', 'C', 'g', 30], ['nh', 'N', 'a1', -30], ['a3', 'C', 'nh', -90], ['a4', 'C', 'a3', -150], ['a5', 'C', 'a4', 150], ['o3', 'O', 'a1', 90, 2], ['o4', 'O', 'a3', -30, 2], ['hg', 'H', 'g', 105, 1, 'w']], cy: [['h4', 'A', 1], ['p3', 'A', 1], ['a5', 'g', 1]] },
+      p: { R: 'l’énantiomère sédatif (effet recherché)', S: 'l’énantiomère tératogène (malformations du fœtus)' }, note: 'Les deux énantiomères s’interconvertissent dans l’organisme : administrer le seul énantiomère R ne suffit pas.' },
+    { n: 'carvone', d: 'arôme naturel', s: { at: [['r1', 'C'], ['r2', 'C', 'r1', 30], ['r3', 'C', 'r2', 90, 2], ['r4', 'C', 'r3', 150], ['r5', 'C', 'r4', 210], ['r6', 'C', 'r5', 270], ['o', 'O', 'r1', 270, 2], ['m', 'C', 'r2', -30], ['ip', 'C', 'r5', 150, 1, 'w'], ['ch2', 'C', 'ip', 90, 2], ['me2', 'C', 'ip', 210]], cy: [['r6', 'r1', 1]] },
+      p: { R: 'la carvone à odeur de menthe verte', S: 'la carvone à odeur de carvi (cumin des prés)' } },
+    { n: 'limonène', d: 'arôme d’agrumes', s: { at: [['r1', 'C'], ['r2', 'C', 'r1', 30, 2], ['r3', 'C', 'r2', 90], ['r4', 'C', 'r3', 150], ['r5', 'C', 'r4', 210], ['r6', 'C', 'r5', 270], ['m', 'C', 'r1', 270], ['ip', 'C', 'r4', 90, 1, 'w'], ['ch2', 'C', 'ip', 30, 2], ['me2', 'C', 'ip', 150]], cy: [['r6', 'r1', 1]] },
+      p: { R: 'le limonène à odeur d’orange', S: 'le limonène à odeur de citron et de térébenthine' } },
+    { n: 'menthol', d: 'agent rafraîchissant', loc: { r1: 1, r2: 2, r5: 5 }, s: { at: [['r1', 'C'], ['r2', 'C', 'r1', 30], ['r3', 'C', 'r2', 90], ['r4', 'C', 'r3', 150], ['r5', 'C', 'r4', 210], ['r6', 'C', 'r5', 270], ['oh', 'O', 'r1', 270, 1, 'h'], ['ip', 'C', 'r2', -30, 1, 'w'], ['ipa', 'C', 'ip', 30], ['ipb', 'C', 'ip', 270], ['m', 'C', 'r5', 150, 1, 'h']], cy: [['r6', 'r1', 1]] },
+      p: { '1R,2S,5R': 'le (−)-menthol naturel, très rafraîchissant', '1S,2R,5S': 'le (+)-menthol, son énantiomère, moins rafraîchissant' } },
+    { n: 'sertraline', d: 'antidépresseur (voir la partie 4, activité-cours 2)', loc: { k1: 1, k4: 4 }, s: { at: [['A', 'C'], ['B', 'C', 'A', 90, 2], ['h1', 'C', 'B', 150], ['h2', 'C', 'h1', 210, 2], ['h3', 'C', 'h2', 270], ['h4', 'C', 'h3', 330, 2], ['k1', 'C', 'B', 30], ['k2', 'C', 'k1', -30], ['k3', 'C', 'k2', -90], ['k4', 'C', 'k3', -150],
+        ['n', 'N', 'k1', 90, 1, 'w'], ['nm', 'C', 'n', 30], ['p1', 'C', 'k4', 270, 1, 'w'], ['p2', 'C', 'p1', 330, 2], ['p3', 'C', 'p2', 270], ['p4', 'C', 'p3', 210, 2], ['p5', 'C', 'p4', 150], ['p6', 'C', 'p5', 90, 2], ['cl1', 'Cl', 'p3', 330], ['cl2', 'Cl', 'p4', 270]], cy: [['h4', 'A', 1], ['k4', 'A', 1], ['p6', 'p1', 1]] },
+      p: { '1S,4S': 'la sertraline commercialisée (stéréoisomère 1S,4S)', '1R,4R': 'l’énantiomère (1R,4R), non commercialisé' } },
+    { n: 'méthadone', d: 'opiacé de synthèse (voir la partie 4, synthèse de la méthadone)', s: { at: [['c1', 'C'], ['c2', 'C', 'c1', -30], ['c3', 'C', 'c2', 30], ['o', 'O', 'c3', 90, 2], ['c4', 'C', 'c3', -30], ['ph1', 'Ph', 'c4', 218], ['ph2', 'Ph', 'c4', 322], ['c5', 'C', 'c4', 30], ['c6', 'C', 'c5', -30], ['n', 'N', 'c6', 270, 1, 'w'], ['nm1', 'C', 'n', 210], ['nm2', 'C', 'n', 330], ['c7', 'C', 'c6', 30]] },
+      p: { R: 'la lévométhadone, deux fois plus efficace que le racémique', S: 'la dextrométhadone, beaucoup moins active' } },
+    { n: 'DOPA (dihydroxyphénylalanine)', d: 'un énantiomère est utilisé dans le traitement de la maladie de Parkinson', s: { at: benz().concat([['oh1', 'O', 'c3', 30], ['oh2', 'O', 'c4', 90], ['b', 'C', 'c1', 270], ['a', 'C', 'b', 330], ['n', 'N', 'a', 270, 1, 'w'], ['co', 'C', 'a', 30], ['o1', 'O', 'co', 90, 2], ['o2', 'O', 'co', 330]]), cy: CYC },
+      p: { S: 'la L-DOPA, utilisée comme médicament', R: 'la D-DOPA, inactive et responsable d’effets indésirables' } },
+    { n: 'adrénaline', d: 'hormone et neurotransmetteur', s: { at: benz().concat([['oh1', 'O', 'c3', 30], ['oh2', 'O', 'c4', 90], ['a', 'C', 'c1', 270], ['oh', 'O', 'a', 210, 1, 'h'], ['b', 'C', 'a', 330], ['n', 'N', 'b', 270], ['nm', 'C', 'n', 330]]), cy: CYC },
+      p: { R: 'l’adrénaline naturelle, la plus active', S: 'l’énantiomère non naturel, beaucoup moins actif' } },
+    { n: 'éphédrine', d: 'décongestionnant et stimulant', loc: { a1: 1, a2: 2 }, s: { at: benz().concat([['a1', 'C', 'c1', 270], ['oh', 'O', 'a1', 210, 1, 'h'], ['a2', 'C', 'a1', 330], ['m', 'C', 'a2', 270, 1, 'w'], ['n', 'N', 'a2', 30], ['nm', 'C', 'n', 330]]), cy: CYC },
+      p: { '1R,2S': 'la (−)-éphédrine (1R,2S), forme naturelle', '1S,2R': 'son énantiomère (1S,2R)' } }];
+
+  function descr(m, c, liste) { return liste.map(function (x) { return (m.loc ? m.loc[x.id] : '') + x.rs; }).join(','); }
+  function libelles(g, c) {
+    var L = c.prio.map(function (n, i) { return Chem.descBranche(g, c.k, n, c.arbres[i]); });
+    L.forEach(function (l, i) { if (L.indexOf(l) !== i || L.lastIndexOf(l) !== i) {
+      L = L.map(function (x, j) { if (x !== l) return x; var t = c.arbres[j], best = t.kids.slice().sort(function (p, q) { return Chem.cmp(q, p); })[0]; var ks = best.kids.slice().sort(function (p, q) { return Chem.cmp(q, p); }).map(function (k) { return { 0: 'fantôme', 1: 'H', 6: 'C', 7: 'N', 8: 'O', 9: 'F', 16: 'S', 17: 'Cl', 35: 'Br', 53: 'I' }[k.Z]; }); return x + ' puis (' + ks.join(', ') + ')'; }); } });
+    return L;
+  }
+  Exo.lancer('exo-p3-reelles', function () {
+    var m = C(REELLES), inv = Math.random() < 0.5, spec = inv ? Chem.inverser(m.s) : m.s, g = Chem.molGraphe(spec), cs = Chem.centres(g), n = cs.length;
+    var cible = C(cs), D = descr(m, cible, cs), L = libelles(g, cible), conf = cible.rs, nomC = m.loc ? 'C' + m.loc[cible.id] : 'C*';
+    var et = [];
+    et.push({ type: 'nombre', q: 'Combien de carbones asymétriques possède cette molécule ?', rep: n, tol: 0.001,
+      pieges: [{ v: n + 1, msg: 'Un carbone d’une double liaison ou un CH<sub>2</sub> (deux H identiques) n’est jamais asymétrique ; un carbone portant deux groupes identiques non plus.' }],
+      corr: 'Carbones liés à quatre groupes différents : <b>' + n + '</b> (marqués d’une étoile).<div class="mol-cadre">' + Chem.molSvg(g, { etoiles: cs.map(function (x) { return x.k; }) }) + '</div>' });
+    var ord = L.join(' &gt; '), ops = [{ t: ord, ok: true }], vus = [ord];
+    for (var k = 0; k < 3; k++) { var x = L.slice(), t = x[k]; x[k] = x[k + 1]; x[k + 1] = t; var o = x.join(' &gt; '); if (vus.indexOf(o) < 0) { vus.push(o); ops.push({ t: o, ok: false, pourquoi: 'Comparez d’abord les atomes de 1<sup>er</sup> rang (Z), puis, en cas d’égalité, les ensembles d’atomes de 2<sup>e</sup> rang, en ouvrant les liaisons multiples.' }); } }
+    et.push({ type: 'choix', q: 'On s’intéresse au carbone surligné ' + (m.loc ? '(' + nomC + ')' : '') + ' :<div><div class="mol-cadre">' + Chem.molSvg(g, { cercles: [cible.k] }) + '</div></div>Classer ses substituants selon les règles CIP (chaque groupe est noté : atome lié au C* puis, entre parenthèses, les atomes de rang suivant).', options: ops,
+      corr: 'Ordre de priorité : <b>' + L.map(function (l, i) { return (i + 1) + ' = ' + l; }).join(' ; ') + '</b>.' });
+    et.push({ type: 'choix', q: 'Quelle est la configuration du carbone surligné ?', options: [
+      { t: 'R', ok: conf === 'R', pourquoi: 'Repérez le n°4 (souvent H, non dessiné : il pointe à l’opposé du trait en coin ou hachuré), puis lisez le sens 1 → 2 → 3.' },
+      { t: 'S', ok: conf === 'S', pourquoi: 'Repérez le n°4 (souvent H, non dessiné : il pointe à l’opposé du trait en coin ou hachuré), puis lisez le sens 1 → 2 → 3.' }],
+      corr: 'Avec 1 = ' + L[0] + ', 2 = ' + L[1] + ', 3 = ' + L[2] + ' et le n°4 (' + L[3] + ') ' + (cible.prio[3] === -1 ? 'non dessiné, dirigé à l’opposé des liaisons en perspective' : 'placé selon la perspective') + ' : ' + nomC + ' est <b>' + conf + '</b>.' + (n > 1 ? ' Descripteurs de la molécule représentée : (' + D + ').' : '') });
+    et.push({ type: 'nombre', q: 'Combien de stéréoisomères de configuration peut-on envisager au maximum ?', rep: Math.pow(2, n), tol: 0.001,
+      pieges: n > 2 ? [{ v: 2 * n, msg: 'Ce n’est pas 2 × n mais 2<sup>n</sup>.' }] : n === 1 ? [{ v: 1, msg: 'Un C* : deux énantiomères.' }] : [],
+      corr: n + ' C* : au plus 2<sup>' + n + '</sup> = <b>' + Math.pow(2, n) + '</b> stéréoisomères' + (n === 1 ? ' (deux énantiomères).' : '.') });
+    var cles = Object.keys(m.p), vrai = m.p[D] ? D : null;
+    if (vrai) et.push({ type: 'choix', q: 'La molécule représentée est :', options: cles.map(function (c) { return { t: m.p[c] + ' (' + c + ')', ok: c === vrai, pourquoi: 'La molécule représentée est (' + D + ').' }; }),
+      corr: 'La molécule représentée est <b>(' + D + ')</b> : ' + m.p[D] + '. ' + (m.note || 'Deux énantiomères peuvent avoir des propriétés biologiques (odeur, activité) très différentes : les récepteurs du vivant sont chiraux.') });
+    return { contexte: '<p><b>' + m.n.charAt(0).toUpperCase() + m.n.slice(1) + '</b> : ' + m.d + '.</p><div class="mol-cadre">' + Chem.molSvg(g) + '</div>', etapes: et };
+  });
 
 })();
 
