@@ -82,7 +82,9 @@ var Exo = (function () {
       return a + (w.charAt(0) === 'D' ? 'D’' : w.charAt(0) === 'd' ? 'd’' : w.charAt(0) === 'L' ? 'L’' : 'l’') + v;
     });
   }
-  function nettoyer(ex) {
+  var HMUET = /(^|[\s>(])(de|De|le|Le|la|La) (h(?:uile|exan|eptan|ydrog|ydrox|élium|ydrat|ydrocarbure|alog|ématite|umidité))/g;
+  function elider2(t) { if (typeof t !== 'string') return t; return elider(t).replace(HMUET, function (m, a, w, v) { return a + (w.charAt(0) === 'D' ? 'D’' : w.charAt(0) === 'd' ? 'd’' : w.charAt(0) === 'L' ? 'L’' : 'l’') + v; }); }
+  function nettoyer(ex) { var elider = elider2;
     ex.contexte = elider(ex.contexte);
     ex.etapes.forEach(function (e) {
       e.q = elider(e.q); e.corr = elider(e.corr);
