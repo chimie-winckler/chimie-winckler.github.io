@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Échanges thermiques – Chimie de Synthèse</title>
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=20261105a">
+</head>
+<body>
+<header class="entete">
+  <div class="conteneur entete-inner">
+    <a class="marque" href="index.html">⚗️ Chimie de Synthèse</a>
+    <button class="burger" aria-label="Menu" onclick="document.body.classList.toggle('menu-ouvert')">☰</button>
+    <nav><ul class="menu">
+<li><a href="index.html">Accueil</a></li>
+<li><a href="matieres-premieres.html">Matières premières</a><ul class="sous-menu"><li><a href="fds.html">FDS</a></li><li><a href="fds-simplifiee.html">FDS simplifiée</a></li><li><a href="gestion-dechets.html">Gestion des déchets en salle de TP</a></li></ul></li>
+<li><a href="techniques.html">Techniques</a><ul class="sous-menu"><li><a href="verrerie-et-montages.html">Verrerie et montages</a></li><li><a href="techniques-experimentales.html">Techniques expérimentales</a></li></ul></li>
+<li><a href="ressources.html">Ressources</a><ul class="sous-menu"><li><a href="cours.html">Cours</a></li><li><a href="tp.html">TP</a></li><li><a href="evaluations.html">Évaluations</a></li><li><a href="autres.html">Autres</a></li></ul></li>
+<li><a href="entrainement.html" class="actif">S’entraîner</a></li>
+<li><a href="annonces.html">Annonces</a></li>
+    </ul></nav>
+    <button type="button" class="theme-btn" id="theme-btn" aria-label="Changer de thème">🌙</button>
+  </div>
+</header>
+<div class="bandeau">
+  <div class="conteneur">
+    <p class="fil"><a href="index.html">Accueil</a> › <a href="entrainement.html">S’entraîner</a> › Échanges thermiques</p>
+    <p class="surtitre">BTS Métiers de la Chimie – Partie 9 : échanges thermiques</p>
+    <h1>Échanges thermiques</h1>
+    <p class="intro">Flux et bilans thermiques, coefficient global d’échange, surface d’échange, régimes d’écoulement.</p>
+  </div>
+</div>
+<main class="conteneur">
+<nav class="sommaire"><a href="#flux">Flux thermiques</a><a href="#bilan">Bilan thermique d’un échangeur</a><a href="#concentrateur">Dimensionner un concentrateur</a><a href="#reacteur">Réacteur à température constante</a><a href="#reynolds">Régime d’écoulement et notions de cours</a></nav><section class="exo exo-bloc" id="flux">
+<div class="exo-tete"><h2>Flux thermiques</h2><button type="button" class="bouton" data-nouveau="exo-p9-flux">Nouvelles valeurs</button></div>
+<p class="exo-consigne">Nombres : virgule acceptée ; puissances de 10 sous la forme 1,2e-3 ; signe − pour un flux cédé. Tolérance : 2 %. Changement de température, changement d’état, transformation chimique.</p>
+<div id="exo-p9-flux"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="bilan">
+<div class="exo-tete"><h2>Bilan thermique d’un échangeur</h2><button type="button" class="bouton" data-nouveau="exo-p9-bilan">Nouvelles valeurs</button></div>
+<p class="exo-consigne">Nombres : virgule acceptée ; puissances de 10 sous la forme 1,2e-3 ; signe − pour un flux cédé. Tolérance : 2 %. Liebig ou faisceau tubulaire : flux, pertes, Δθ<sub>ml</sub>, surface et coefficient K.</p>
+<div id="exo-p9-bilan"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="concentrateur">
+<div class="exo-tete"><h2>Dimensionner un concentrateur</h2><button type="button" class="bouton" data-nouveau="exo-p9-concentrateur">Nouvelles valeurs</button></div>
+<p class="exo-consigne">Nombres : virgule acceptée ; puissances de 10 sous la forme 1,2e-3 ; signe − pour un flux cédé. Tolérance : 2 %. D’après l’activité « concentration d’un jus de tomate ».</p>
+<div id="exo-p9-concentrateur"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="reacteur">
+<div class="exo-tete"><h2>Réacteur à température constante</h2><button type="button" class="bouton" data-nouveau="exo-p9-reacteur">Nouvelles valeurs</button></div>
+<p class="exo-consigne">Nombres : virgule acceptée ; puissances de 10 sous la forme 1,2e-3 ; signe − pour un flux cédé. Tolérance : 2 %. Énergie et puissance à évacuer, débit d’eau de refroidissement.</p>
+<div id="exo-p9-reacteur"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="reynolds">
+<div class="exo-tete"><h2>Régime d’écoulement et notions de cours</h2><button type="button" class="bouton" data-nouveau="exo-p9-reynolds">Nouvelles valeurs</button></div>
+<p class="exo-consigne">Nombres : virgule acceptée ; puissances de 10 sous la forme 1,2e-3 ; signe − pour un flux cédé. Tolérance : 2 %. Nombre de Reynolds, modes de transfert, appareillages.</p>
+<div id="exo-p9-reynolds"><p>Chargement…</p></div>
+</section><p><a href="entrainement.html">← Retour aux exercices</a></p>
+</main>
+<footer class="pied"><div class="conteneur">BTS Métiers de la Chimie – Synthèse</div></footer>
+<script src="theme.js?v=1"></script>
+<script src="exo.js?v=20261105a"></script>
+<script>
+/* ===== Partie 9 : échanges thermiques ===== */
+(function () {
+  var A = Exo.alea, C = Exo.choisir, cs = Exo.cs, nb = Exo.nb, MEL = Exo.melanger, PI = Math.PI;
+  function kW(x) { return nb(x / 1000) + ' kW'; }
+  function dml(a, b) { return Math.abs(a - b) < 1e-9 ? a : (a - b) / Math.log(a / b); }
+
+  /* 1. Flux thermiques : chauffage, changement d’état, réaction */
+  function genFlux() {
+    var F = C([
+      { nom: 'eau', cp: 4180 }, { nom: 'éthanol', cp: 2440 }, { nom: 'huile thermique', cp: 2100 }, { nom: 'jus de tomate', cp: 3500 }]);
+    var Dth = cs(A(0.5, 6), 2), Dm = Dth * 1000 / 3600, T1 = Math.round(A(10, 40)), T2 = Math.round(A(55, 95)), phi1 = Dm * F.cp * (T2 - T1);
+    var Dv = cs(A(50, 500), 2), Lv = 2257, phi2 = Dv / 3600 * Lv * 1000;
+    var R = C([{ eq: 'H<sub>2</sub>SO<sub>4</sub> + 2 NaOH → Na<sub>2</sub>SO<sub>4</sub> + 2 H<sub>2</sub>O (pour 1 mol d’acide)', H: -114.6, re: 'acide sulfurique' }, { eq: 'C<sub>6</sub>H<sub>6</sub> + HNO<sub>3</sub> → C<sub>6</sub>H<sub>5</sub>NO<sub>2</sub> + H<sub>2</sub>O (nitration du benzène)', H: -117, re: 'benzène' }, { eq: 'polymérisation du styrène (par mole de styrène)', H: -70, re: 'styrène' }, { eq: 'hydrogénation d’un alcène (par mole d’alcène)', H: -125, re: 'alcène' }]);
+    var Dn = cs(A(0.5, 20), 2), phi3 = Dn * Math.abs(R.H) * 1000;
+    var ctx = '<p class="exo-aide">Changement de température : Φ = D<sub>m</sub> × c<sub>p</sub> × ΔT ; changement d’état : Φ = D<sub>m</sub> × L ; transformation chimique : Φ = D<sub>n</sub> × Δ<sub>r</sub>H. Φ en W = J.s<sup>-1</sup>.</p>';
+    return { contexte: ctx, etapes: [
+      { type: 'nombre', q: 'Un débit de ' + nb(Dth, 2) + ' t.h<sup>-1</sup> de ' + F.nom + ' (c<sub>p</sub> = ' + nb(F.cp, 4) + ' J.kg<sup>-1</sup>.K<sup>-1</sup>) est chauffé de ' + T1 + ' °C à ' + T2 + ' °C. <b>Calculer</b> le flux thermique reçu, en kW.', rep: phi1 / 1000, unite: 'kW', tol: 0.02,
+        pieges: [{ v: Dth * F.cp * (T2 - T1) / 1000, msg: 'Le débit doit être en kg.s<sup>-1</sup> : 1 t.h<sup>-1</sup> = 1000/3600 kg.s<sup>-1</sup>.' }, { v: Dth * 1000 * F.cp * (T2 - T1) / 1000, msg: 'Convertissez les heures en secondes : divisez par 3600.' }, { v: phi1, msg: 'Le résultat est en W : divisez par 1000 pour l’avoir en kW.' }, { v: Dm * F.cp * (T2 + 273) / 1000, msg: 'Il faut l’écart de température ΔT (un écart en °C vaut un écart en K), pas la température finale.' }],
+        corr: 'D<sub>m</sub> = ' + nb(Dth, 2) + ' × 1000 / 3600 = ' + nb(Dm) + ' kg.s<sup>-1</sup> ; Φ = ' + nb(Dm) + ' × ' + nb(F.cp, 4) + ' × (' + T2 + ' − ' + T1 + ') = ' + nb(phi1, 4) + ' W = <b>' + kW(phi1) + '</b>.' },
+      { type: 'nombre', q: 'Un évaporateur vaporise ' + nb(Dv) + ' kg.h<sup>-1</sup> d’eau à 100 °C (L<sub>v</sub> = 2257 kJ.kg<sup>-1</sup>). <b>Calculer</b> le flux thermique nécessaire, en kW.', rep: phi2 / 1000, unite: 'kW', tol: 0.02,
+        pieges: [{ v: Dv * Lv, msg: 'Le débit doit être en kg.s<sup>-1</sup> : divisez par 3600.' }, { v: Dv / 3600 * Lv / 1000, msg: 'L<sub>v</sub> est en kJ.kg<sup>-1</sup> : D<sub>m</sub> × L<sub>v</sub> est déjà en kW.' }],
+        corr: 'Φ = D<sub>m</sub> × L<sub>v</sub> = (' + nb(Dv) + ' / 3600) × 2257 = <b>' + nb(phi2 / 1000) + ' kW</b>.' },
+      { type: 'nombre', q: 'Un réacteur continu consomme ' + nb(Dn, 2) + ' mol.s<sup>-1</sup> de ' + R.re + ' : ' + R.eq + ', Δ<sub>r</sub>H = ' + nb(R.H, 4) + ' kJ.mol<sup>-1</sup>. <b>Calculer</b> la puissance thermique à évacuer pour maintenir le réacteur à température constante, en kW.', rep: phi3 / 1000, unite: 'kW', tol: 0.02,
+        pieges: [{ v: Dn * Math.abs(R.H) * 3600, msg: 'Le débit molaire est déjà en mol.s<sup>-1</sup>.' }, { v: phi3, msg: 'Le résultat est en W ; il est demandé en kW.' }, { v: Math.abs(R.H) / Dn, msg: 'Φ = D<sub>n</sub> × |Δ<sub>r</sub>H| : on multiplie.' }],
+        corr: 'Φ = D<sub>n</sub> × |Δ<sub>r</sub>H| = ' + nb(Dn, 2) + ' × ' + nb(Math.abs(R.H), 4) + ' = <b>' + nb(phi3 / 1000) + ' kW</b>, à évacuer car la réaction est exothermique (Δ<sub>r</sub>H < 0).' },
+      { type: 'choix', q: 'Le ' + F.nom + ' précédent est chauffé puis entièrement vaporisé. Le flux thermique total reçu est :', options: [{ t: 'la somme du flux de chauffage et du flux de vaporisation', ok: true }, { t: 'le plus grand des deux flux', ok: false, pourquoi: 'Si plusieurs phénomènes ont lieu pour un même fluide, on additionne les flux.' }, { t: 'la différence des deux flux', ok: false, pourquoi: 'Les deux phénomènes consomment de l’énergie : les flux s’additionnent.' }, { t: 'seulement le flux de vaporisation, car le fluide finit à l’état gazeux', ok: false, pourquoi: 'Il faut aussi l’amener à sa température d’ébullition.' }], corr: 'On <b>additionne</b> les flux : Φ = D<sub>m</sub> c<sub>p</sub> ΔT + D<sub>m</sub> L<sub>v</sub>.' }] };
+  }
+
+  /* 2. Bilan thermique d’un échangeur double tube */
+  function genBilan() {
+    var Dh = cs(A(100, 600), 2), Dc = cs(A(150, 900), 2), cp = 4180, Thi = Math.round(A(60, 90)), Tho = Math.round(A(30, 45)), Tci = Math.round(A(8, 16));
+    var phih = Dh / 3600 * cp * (Tho - Thi), Tco = Tci - phih / (Dc / 3600 * cp);
+    while (Tco > Thi - 6) { Dc = cs(Dc * 1.5, 2); Tco = Tci - phih / (Dc / 3600 * cp); }
+    var pertes = Math.random() < 0.5, TcoM = pertes ? cs(Tci + (Tco - Tci) * A(0.8, 0.92), 3) : null;
+    var Tcu = pertes ? TcoM : Tco, phic = Dc / 3600 * cp * (Tcu - Tci), contre = Math.random() < 0.6;
+    if (!contre && Tcu >= Tho - 2) contre = true;
+    var d1 = contre ? Thi - Tcu : Thi - Tci, d2 = contre ? Tho - Tci : Tho - Tcu, DT = dml(d1, d2);
+    var D = cs(A(0.012, 0.03), 2), L = cs(A(0.8, 3), 2), n = C([1, 1, 7, 19]), S = n * PI * D * L, K = Math.abs(phic) / (S * DT);
+    var ctx = '<p>Dans un échangeur ' + (n === 1 ? 'double tube (type Liebig)' : 'à faisceau tubulaire de ' + n + ' tubes') + ', fonctionnant à <b>' + (contre ? 'contre-courant' : 'co-courant') + '</b>, de l’eau chaude est refroidie par de l’eau froide (c<sub>p</sub> = 4180 J.kg<sup>-1</sup>.K<sup>-1</sup> pour les deux fluides).</p><div class="exo-tableau"><table><tr><th></th><th>Débit (kg.h<sup>-1</sup>)</th><th>Entrée (°C)</th><th>Sortie (°C)</th></tr><tr><th>Eau chaude</th><td>' + nb(Dh) + '</td><td>' + Thi + '</td><td>' + Tho + '</td></tr><tr><th>Eau froide</th><td>' + nb(Dc) + '</td><td>' + Tci + '</td><td>' + (pertes ? nb(TcoM, 3) + ' (mesurée)' : '?') + '</td></tr></table></div><p>' + (n === 1 ? 'Tube intérieur' : 'Tubes') + ' : diamètre D = ' + nb(D * 1000, 3) + ' mm, longueur L = ' + nb(L, 2) + ' m.</p>';
+    var et = [{ type: 'nombre', q: '<b>Calculer</b> le flux thermique Φ<sub>chaud</sub> du fluide chaud (avec son signe).', rep: phih, unite: 'W', tol: 0.02,
+      pieges: [{ v: Dh * cp * (Tho - Thi), msg: 'Le débit doit être en kg.s<sup>-1</sup> : divisez par 3600.' }, { v: -phih, msg: 'Le fluide chaud cède de l’énergie : son flux est négatif (ΔT = T<sub>sortie</sub> − T<sub>entrée</sub> < 0).' }],
+      corr: 'Φ<sub>chaud</sub> = D<sub>m</sub> c<sub>p</sub> (T<sub>s</sub> − T<sub>e</sub>) = (' + nb(Dh) + ' / 3600) × 4180 × (' + Tho + ' − ' + Thi + ') = <b>' + nb(phih, 4) + ' W</b>.' }];
+    if (!pertes) et.push({ type: 'nombre', q: '<b>Déterminer</b>, en l’absence de pertes, la température de sortie de l’eau froide.', rep: Tco, unite: '°C', tol: 0.01,
+      pieges: [{ v: Tci + phih / (Dc / 3600 * cp), msg: 'Φ<sub>froid</sub> = −Φ<sub>chaud</sub> > 0 : l’eau froide se réchauffe.' }, { v: Tci - phih / (Dh / 3600 * cp), msg: 'Utilisez le débit de l’eau <b>froide</b>.' }],
+      corr: 'Sans pertes : Φ<sub>froid</sub> = −Φ<sub>chaud</sub> = ' + nb(-phih, 4) + ' W, donc T<sub>s,froid</sub> = ' + Tci + ' + ' + nb(-phih, 4) + ' / ((' + nb(Dc) + '/3600) × 4180) = <b>' + nb(Tco, 3) + ' °C</b>.' });
+    else et.push({ type: 'nombre', q: '<b>Évaluer</b> les pertes thermiques Φ<sub>pertes</sub> = Φ<sub>chaud</sub> + Φ<sub>froid</sub>.', rep: phih + phic, unite: 'W', tol: 0.03,
+      pieges: [{ v: -(phih + phic), msg: 'Attention au signe : Φ<sub>pertes</sub> = Φ<sub>chaud</sub> + Φ<sub>froid</sub>, négatif car le système perd de l’énergie.' }, { v: phih - phic, msg: 'On additionne les flux, chacun avec son signe.' }],
+      corr: 'Φ<sub>froid</sub> = (' + nb(Dc) + '/3600) × 4180 × (' + nb(TcoM, 3) + ' − ' + Tci + ') = ' + nb(phic, 4) + ' W ; Φ<sub>pertes</sub> = ' + nb(phih, 4) + ' + ' + nb(phic, 4) + ' = <b>' + nb(phih + phic, 3) + ' W</b>, soit ' + nb(100 * Math.abs((phih + phic) / phih), 2) + ' % du flux cédé.' });
+    et.push({ type: 'nombre', q: '<b>Calculer</b> la moyenne logarithmique des écarts de température Δθ<sub>ml</sub>.', rep: DT, unite: '°C', tol: 0.02,
+      pieges: [{ v: dml(contre ? Thi - Tci : Thi - Tcu, contre ? Tho - Tcu : Tho - Tci), msg: 'Vous avez pris les écarts d’un fonctionnement à ' + (contre ? 'co-courant' : 'contre-courant') + ' : ici, la circulation est à ' + (contre ? 'contre-courant' : 'co-courant') + '.' }, { v: (d1 + d2) / 2, msg: 'C’est la moyenne arithmétique : il faut la moyenne logarithmique (Δθ<sub>1</sub> − Δθ<sub>2</sub>) / ln(Δθ<sub>1</sub>/Δθ<sub>2</sub>).' }].filter(function (x) { return Math.abs(x.v - DT) > DT * 0.02; }),
+      corr: (contre ? 'Contre-courant : Δθ<sub>1</sub> = T<sub>e,chaud</sub> − T<sub>s,froid</sub> = ' : 'Co-courant : Δθ<sub>1</sub> = T<sub>e,chaud</sub> − T<sub>e,froid</sub> = ') + nb(d1, 3) + ' °C et Δθ<sub>2</sub> = ' + nb(d2, 3) + ' °C ; Δθ<sub>ml</sub> = (' + nb(d1, 3) + ' − ' + nb(d2, 3) + ') / ln(' + nb(d1, 3) + ' / ' + nb(d2, 3) + ') = <b>' + nb(DT, 3) + ' °C</b>.' });
+    et.push({ type: 'nombre', q: '<b>Calculer</b> la surface d’échange S de l’appareil.', rep: S, unite: 'm<sup>2</sup>', tol: 0.02,
+      pieges: [{ v: n * PI * D * D / 4, msg: 'La surface d’échange est la surface latérale des tubes (π D L), pas leur section.' }, { v: n * 2 * PI * D * L, msg: 'π D L utilise le diamètre (et non 2π D L).' }, { v: PI * D * L * 1e3, msg: 'Le diamètre doit être en m.' }].filter(function (x) { return Math.abs(x.v - S) > S * 0.02; }),
+      corr: 'S = n π D L = ' + n + ' × π × ' + nb(D, 2) + ' × ' + nb(L, 2) + ' = <b>' + nb(S) + ' m<sup>2</sup></b>.' });
+    et.push({ type: 'nombre', q: '<b>En déduire</b> le coefficient global d’échange K (à partir du flux reçu par l’eau froide).', rep: K, unite: 'W.m<sup>-2</sup>.K<sup>-1</sup>', tol: 0.03,
+      pieges: [{ v: Math.abs(phic) * S * DT, msg: 'K = Φ / (S × Δθ<sub>ml</sub>) : on divise.' }, { v: Math.abs(phic) / (S * (d1 + d2) / 2), msg: 'Utilisez Δθ<sub>ml</sub>, pas la moyenne arithmétique.' }].filter(function (x) { return Math.abs(x.v - K) > K * 0.03; }),
+      corr: 'K = Φ<sub>éch</sub> / (S × Δθ<sub>ml</sub>) = ' + nb(Math.abs(phic), 4) + ' / (' + nb(S) + ' × ' + nb(DT, 3) + ') = <b>' + nb(K) + ' W.m<sup>-2</sup>.K<sup>-1</sup></b>.' });
+    return { contexte: ctx, etapes: et };
+  }
+
+  /* 3. Dimensionnement d’un concentrateur (jus de tomate) */
+  function genConcentrateur() {
+    var Fth = cs(A(1.5, 5), 3), F = Fth * 1000 / 3600, w1 = cs(A(3, 8), 2), w2 = cs(A(20, 35), 2), Ti = Math.round(A(55, 85)), Teb = Math.round(A(97, 101)), Tv = Math.round(A(125, 150)), cp = 3.5, Lv = 2264, K = Math.round(A(8, 15)) * 100;
+    var nt = Math.round(A(30, 80)), L = cs(A(3, 6), 2), D = C([0.030, 0.038, 0.045, 0.050]);
+    var Cc = F * w1 / w2, V = F - Cc, ph = F * cp * (Teb - Ti), pv = V * Lv, Su = pv * 1000 / (K * (Tv - Teb)), Se = nt * PI * D * L;
+    var ctx = '<p>Un jus à ' + nb(w1, 2) + ' % en masse de matière sèche est concentré à ' + nb(w2, 2) + ' % dans un évaporateur à faisceau tubulaire, chauffé par de la vapeur.</p><div class="exo-tableau"><table><tr><th>Débit de jus dilué</th><td>' + nb(Fth, 3) + ' t.h<sup>-1</sup></td></tr><tr><th>Température d’entrée du jus</th><td>' + Ti + ' °C</td></tr><tr><th>Température d’ébullition du jus</th><td>' + Teb + ' °C</td></tr><tr><th>Température de la vapeur de chauffe</th><td>' + Tv + ' °C</td></tr><tr><th>c<sub>p</sub> du jus ; L<sub>v</sub> de l’eau</th><td>3,5 kJ.kg<sup>-1</sup>.K<sup>-1</sup> ; 2264 kJ.kg<sup>-1</sup></td></tr><tr><th>Échangeur</th><td>' + nt + ' tubes, L = ' + nb(L, 2) + ' m, D = ' + nb(D * 1000, 2) + ' mm, K = ' + K + ' W.m<sup>-2</sup>.K<sup>-1</sup></td></tr></table></div><p class="exo-aide">Pour la surface, on néglige le réchauffement du jus : Φ<sub>éch</sub> = K S (θ<sub>vapeur</sub> − θ<sub>ébullition</sub>).</p>';
+    return { contexte: ctx, etapes: [
+      { type: 'nombre', q: '<b>Prévoir</b> le débit massique de jus concentré.', rep: Cc, unite: 'kg.s<sup>-1</sup>', tol: 0.02,
+        pieges: [{ v: F * w2 / w1, msg: 'Rapport des titres inversé : la matière sèche se conserve, <span class="w">𝑤</span><sub>1</sub>F = <span class="w">𝑤</span><sub>2</sub>C.' }, { v: Fth * w1 / w2, msg: 'Convertissez le débit en kg.s<sup>-1</sup>.' }],
+        corr: 'Bilan sur la matière sèche : C = F × <span class="w">𝑤</span><sub>1</sub> / <span class="w">𝑤</span><sub>2</sub> = ' + nb(F) + ' × ' + nb(w1, 2) + ' / ' + nb(w2, 2) + ' = <b>' + nb(Cc) + ' kg.s<sup>-1</sup></b>.' },
+      { type: 'nombre', q: '<b>Calculer</b> le débit d’eau évaporée.', rep: V, unite: 'kg.s<sup>-1</sup>', tol: 0.02, pieges: [{ v: F + Cc, msg: 'Bilan global : V = F − C.' }], corr: 'V = F − C = ' + nb(F) + ' − ' + nb(Cc) + ' = <b>' + nb(V) + ' kg.s<sup>-1</sup></b>.' },
+      { type: 'nombre', q: '<b>Calculer</b> le flux nécessaire pour porter le jus dilué à ébullition.', rep: ph, unite: 'kW', tol: 0.02,
+        pieges: [{ v: Cc * cp * (Teb - Ti), msg: 'C’est tout le jus <b>dilué</b> qui est réchauffé.' }, { v: F * cp * (Tv - Ti), msg: 'Le jus est chauffé jusqu’à sa température d’ébullition (' + Teb + ' °C).' }],
+        corr: 'Φ<sub>réch</sub> = F × c<sub>p</sub> × (θ<sub>éb</sub> − θ<sub>e</sub>) = ' + nb(F) + ' × 3,5 × (' + Teb + ' − ' + Ti + ') = <b>' + nb(ph) + ' kW</b>.' },
+      { type: 'nombre', q: '<b>Calculer</b> le flux nécessaire pour évaporer l’eau.', rep: pv, unite: 'kW', tol: 0.02,
+        pieges: [{ v: F * Lv, msg: 'Seule l’eau évaporée (V) reçoit L<sub>v</sub>.' }, { v: V * Lv * 1000, msg: 'L<sub>v</sub> en kJ.kg<sup>-1</sup> donne directement des kW.' }],
+        corr: 'Φ<sub>vap</sub> = V × L<sub>v</sub> = ' + nb(V) + ' × 2264 = <b>' + nb(pv) + ' kW</b>. Le réchauffement ne représente que ' + nb(100 * ph / (ph + pv), 2) + ' % du flux total : on peut le négliger.' },
+      { type: 'nombre', q: '<b>En déduire</b> la surface d’échange utile S<sub>u</sub>.', rep: Su, unite: 'm<sup>2</sup>', tol: 0.03,
+        pieges: [{ v: pv / (K * (Tv - Teb)), msg: 'Φ doit être en W (et non en kW) avec K en W.m<sup>-2</sup>.K<sup>-1</sup>.' }, { v: pv * 1000 / (K * (Tv - Ti)), msg: 'L’écart est entre la vapeur et le jus en ébullition : θ<sub>vapeur</sub> − θ<sub>ébullition</sub>.' }, { v: (pv + ph) * 1000 / (K * (Tv - Teb)), msg: 'L’énoncé demande de négliger le réchauffement (vous obtenez une valeur proche, légèrement par excès).' }],
+        corr: 'S<sub>u</sub> = Φ / (K × (θ<sub>v</sub> − θ<sub>éb</sub>)) = ' + nb(pv * 1000, 4) + ' / (' + K + ' × ' + (Tv - Teb) + ') = <b>' + nb(Su) + ' m<sup>2</sup></b>.' },
+      { type: 'nombre', q: '<b>Calculer</b> la surface d’échange effective S<sub>e</sub> de l’échangeur disponible.', rep: Se, unite: 'm<sup>2</sup>', tol: 0.02,
+        pieges: [{ v: nt * PI * D * D / 4, msg: 'Il faut la surface latérale des tubes (π D L), pas leur section.' }, { v: PI * D * L, msg: 'Multipliez par le nombre de tubes (' + nt + ').' }],
+        corr: 'S<sub>e</sub> = n π D L = ' + nt + ' × π × ' + nb(D, 3) + ' × ' + nb(L, 2) + ' = <b>' + nb(Se) + ' m<sup>2</sup></b>.' },
+      { type: 'choix', q: '<b>Conclure</b> sur le dimensionnement de l’installation.',
+        options: [{ t: 'L’échangeur convient : S<sub>e</sub> ≥ S<sub>u</sub>', ok: Se >= Su, pourquoi: 'Comparez : S<sub>e</sub> = ' + nb(Se) + ' m<sup>2</sup> et S<sub>u</sub> = ' + nb(Su) + ' m<sup>2</sup>.' }, { t: 'L’échangeur est sous-dimensionné : S<sub>e</sub> < S<sub>u</sub>', ok: Se < Su, pourquoi: 'Comparez : S<sub>e</sub> = ' + nb(Se) + ' m<sup>2</sup> et S<sub>u</sub> = ' + nb(Su) + ' m<sup>2</sup>.' }, { t: 'On ne peut pas conclure sans le débit de vapeur', ok: false, pourquoi: 'La comparaison des surfaces suffit.' }, { t: 'L’échangeur convient toujours si K est supérieur à 1000 W.m<sup>-2</sup>.K<sup>-1</sup>', ok: false, pourquoi: 'K seul ne suffit pas : il faut comparer S<sub>e</sub> et S<sub>u</sub>.' }],
+        corr: 'S<sub>e</sub> = ' + nb(Se) + ' m<sup>2</sup> ' + (Se >= Su ? '≥' : '<') + ' S<sub>u</sub> = ' + nb(Su) + ' m<sup>2</sup> : ' + (Se >= Su ? 'l’installation est <b>adaptée</b>.' : 'l’installation est <b>sous-dimensionnée</b> (augmenter le nombre de tubes ou la température de la vapeur).') }] };
+  }
+
+  /* 4. Maintenir un réacteur à température constante */
+  function genReacteur() {
+    var R = C([{ n: 'neutralisation de l’acide chlorhydrique par la soude', H: -57.3, unit: 'HCl' }, { n: 'hydrogénation d’un alcène', H: -125, unit: 'alcène' }, { n: 'nitration du toluène', H: -125, unit: 'toluène' }, { n: 'oxydation du dioxyde de soufre (SO<sub>2</sub> + ½ O<sub>2</sub> → SO<sub>3</sub>)', H: -99, unit: 'SO<sub>2</sub>' }]);
+    var n = cs(A(20, 500), 2), t = C([0.5, 1, 2, 4]), E = n * Math.abs(R.H), P = E * 1000 / (t * 3600), dT = C([5, 8, 10, 15]), De = P / (4180 * dT) * 3600;
+    var ctx = '<p>Dans un réacteur discontinu, on réalise la ' + R.n + ' (Δ<sub>r</sub>H = ' + nb(R.H, 3) + ' kJ.mol<sup>-1</sup>, par mole de ' + R.unit + '). On transforme ' + nb(n) + ' mol de ' + R.unit + ' en ' + t + ' h, à vitesse supposée constante. Le réacteur est refroidi par une double enveloppe parcourue par de l’eau (c<sub>p</sub> = 4180 J.kg<sup>-1</sup>.K<sup>-1</sup>).</p>';
+    return { contexte: ctx, etapes: [
+      { type: 'choix', q: '<b>Prévoir</b> s’il faut chauffer ou refroidir le réacteur pour le maintenir à température constante.', options: [{ t: 'Le refroidir : la réaction est exothermique (Δ<sub>r</sub>H < 0)', ok: true }, { t: 'Le chauffer : la réaction consomme de la chaleur', ok: false, pourquoi: 'Δ<sub>r</sub>H < 0 : la réaction libère de la chaleur.' }, { t: 'Rien : la température reste constante d’elle-même', ok: false, pourquoi: 'Sans refroidissement, la chaleur libérée échaufferait le milieu (risque d’emballement).' }, { t: 'Le chauffer puis le refroidir', ok: false, pourquoi: 'Il faut évacuer en continu la chaleur produite.' }], corr: 'Réaction <b>exothermique</b> : il faut évacuer la chaleur produite, sinon la température monte (risque d’emballement thermique).' },
+      { type: 'nombre', q: '<b>Calculer</b> l’énergie thermique libérée par la réaction.', rep: E, unite: 'kJ', tol: 0.02, pieges: [{ v: E * 1000, msg: 'Résultat demandé en kJ.' }, { v: Math.abs(R.H) / n, msg: 'E = n × |Δ<sub>r</sub>H| : on multiplie.' }], corr: 'E = n × |Δ<sub>r</sub>H| = ' + nb(n) + ' × ' + nb(Math.abs(R.H), 3) + ' = <b>' + nb(E) + ' kJ</b>.' },
+      { type: 'nombre', q: '<b>En déduire</b> la puissance thermique moyenne à évacuer.', rep: P, unite: 'W', tol: 0.02, pieges: [{ v: E * 1000 / t, msg: 'La durée doit être en secondes : 1 h = 3600 s.' }, { v: E / (t * 3600), msg: 'L’énergie doit être en J pour obtenir des W.' }], corr: 'Φ = E / t = ' + nb(E * 1000, 4) + ' J / ' + nb(t * 3600, 4) + ' s = <b>' + nb(P) + ' W</b>.' },
+      { type: 'nombre', q: 'L’eau de refroidissement se réchauffe de ' + dT + ' °C dans la double enveloppe. <b>Calculer</b> son débit massique.', rep: De, unite: 'kg.h<sup>-1</sup>', tol: 0.02, pieges: [{ v: P / (4180 * dT), msg: 'C’est en kg.s<sup>-1</sup> : multipliez par 3600.' }, { v: P * 4180 * dT, msg: 'D<sub>m</sub> = Φ / (c<sub>p</sub> ΔT) : on divise.' }], corr: 'D<sub>m</sub> = Φ / (c<sub>p</sub> × ΔT) = ' + nb(P) + ' / (4180 × ' + dT + ') = ' + nb(P / (4180 * dT)) + ' kg.s<sup>-1</sup> = <b>' + nb(De) + ' kg.h<sup>-1</sup></b>.' }] };
+  }
+
+  /* 5. Nombre de Reynolds et notions de cours */
+  var BQ = [
+    ['La <b>conduction</b> est :', 'la propagation de la chaleur de proche en proche à travers la matière, sans déplacement de celle-ci', [['la propagation de la chaleur par un fluide en mouvement', 'C’est la convection.'], ['l’émission d’ondes électromagnétiques', 'C’est le rayonnement.'], ['un transfert qui nécessite le vide', 'La conduction nécessite au contraire de la matière.']]],
+    ['Dans un échangeur entre deux fluides, les modes de transfert pris en compte dans K sont :', 'la conduction et la convection', [['le rayonnement uniquement', 'Le rayonnement est négligé dans les échangeurs.'], ['la convection uniquement', 'La paroi transmet la chaleur par conduction.'], ['la conduction, la convection et le rayonnement à parts égales', 'Seules la conduction et la convection interviennent.']]],
+    ['Une pompe ou un agitateur qui met le fluide en mouvement réalise :', 'une convection forcée', [['une convection naturelle', 'La convection naturelle vient des différences de masse volumique (thermosiphon).'], ['une conduction', 'La conduction se fait sans déplacement de matière.'], ['un rayonnement', 'Aucun transport par ondes ici.']]],
+    ['On travaille de préférence en régime turbulent car :', 'les transferts de chaleur et de matière y sont meilleurs (couche limite plus mince)', [['les pertes de charge y sont plus faibles', 'Elles sont au contraire plus fortes ; c’est le meilleur transfert qui est recherché.'], ['le fluide y circule plus lentement', 'Le régime turbulent correspond à des vitesses élevées.'], ['il n’y a plus de couche limite', 'Une couche limite laminaire subsiste près des parois, mais plus mince.']]],
+    ['La circulation à <b>contre-courant</b> est souvent préférée car :', 'elle permet un échange plus efficace (Δθ plus régulier) : le fluide froid peut sortir plus chaud que la sortie du fluide chaud', [['les deux fluides vont dans le même sens', 'C’est le co-courant.'], ['elle supprime les pertes thermiques', 'Les pertes dépendent de l’isolation.'], ['elle ne nécessite pas de calculer Δθ<sub>ml</sub>', 'Δθ<sub>ml</sub> se calcule dans les deux cas.']]],
+    ['Dans un échangeur à faisceau tubulaire, l’enveloppe extérieure qui contient les tubes s’appelle :', 'la calandre', [['le serpentin', 'Un serpentin est un tube enroulé en spirale.'], ['la plaque', 'C’est l’élément d’un échangeur à plaques.'], ['le Liebig', 'C’est un échangeur à deux tubes concentriques.']]],
+    ['Le fluide « de service » d’un échangeur est :', 'le fluide qui apporte ou retire la chaleur (eau, vapeur, fluide thermique)', [['le produit fabriqué', 'C’est le fluide procédé.'], ['toujours le fluide chaud', 'Il peut être chaud (vapeur) ou froid (eau de refroidissement).'], ['le fluide qui ne change jamais de température', 'Sa température varie en général.']]],
+    ['Augmenter la vitesse d’écoulement d’un fluide dans un échangeur :', 'amincit la couche limite et augmente K', [['diminue K', 'Une couche limite plus mince facilite le transfert.'], ['ne change pas K', 'K dépend du régime d’écoulement.'], ['rend l’écoulement laminaire', 'Une vitesse plus élevée rend l’écoulement plus turbulent.']]]];
+  function genReynolds() {
+    var F = C([{ n: 'eau à 20 °C', rho: 998, mu: 1.0e-3 }, { n: 'eau à 60 °C', rho: 983, mu: 0.47e-3 }, { n: 'huile thermique', rho: 870, mu: 30e-3 }, { n: 'éthanol à 20 °C', rho: 789, mu: 1.2e-3 }, { n: 'glycérine diluée', rho: 1150, mu: 8e-3 }]);
+    var D = C([0.010, 0.015, 0.020, 0.026, 0.040]), Dv = cs(A(0.5, 30), 2), Q = Dv / 1000 / 60, Sx = PI * D * D / 4, v = Q / Sx, Re = F.rho * v * D / F.mu, reg = Re < 2000 ? 'laminaire' : Re > 3000 ? 'turbulent' : 'transitoire';
+    var et = [
+      { type: 'nombre', q: (/^[aeéiouh]/.test(F.n) ? 'De l’' : 'De la ') + F.n + ' (ρ = ' + F.rho + ' kg.m<sup>-3</sup>, μ = ' + nb(F.mu, 2) + ' Pa.s) circule avec un débit de ' + nb(Dv, 2) + ' L.min<sup>-1</sup> dans un tube de diamètre intérieur ' + nb(D * 1000, 2) + ' mm. <b>Calculer</b> la vitesse moyenne du fluide.', rep: v, unite: 'm.s<sup>-1</sup>', tol: 0.02,
+        pieges: [{ v: Q / (PI * D * D), msg: 'La section d’un tube vaut π D²/4 (ou π r²), pas π D².' }, { v: Dv / Sx, msg: 'Convertissez le débit en m<sup>3</sup>.s<sup>-1</sup> : 1 L.min<sup>-1</sup> = 10<sup>-3</sup>/60 m<sup>3</sup>.s<sup>-1</sup>.' }],
+        corr: 'D<sub>V</sub> = ' + nb(Dv, 2) + ' × 10<sup>-3</sup> / 60 = ' + nb(Q) + ' m<sup>3</sup>.s<sup>-1</sup> ; S = π D²/4 = ' + nb(Sx) + ' m<sup>2</sup> ; v = D<sub>V</sub>/S = <b>' + nb(v) + ' m.s<sup>-1</sup></b>.' },
+      { type: 'nombre', q: '<b>Calculer</b> le nombre de Reynolds.', rep: Re, unite: '', tol: 0.03,
+        pieges: [{ v: F.rho * v * D / 2 / F.mu, msg: 'Re utilise le diamètre D, pas le rayon.' }, { v: F.rho * v * D / (F.mu * 1000), msg: 'μ doit être en Pa.s.' }, { v: F.mu * v * D / F.rho, msg: 'Re = ρ v D / μ.' }],
+        corr: 'Re = ρ v D / μ = ' + F.rho + ' × ' + nb(v) + ' × ' + nb(D, 2) + ' / ' + nb(F.mu, 2) + ' = <b>' + nb(Re) + '</b> (sans dimension).' },
+      { type: 'choix', q: '<b>En déduire</b> le régime d’écoulement.', options: ['laminaire', 'transitoire', 'turbulent'].map(function (r) { return { t: 'Régime ' + r + (r === 'laminaire' ? ' (Re < 2000)' : r === 'turbulent' ? ' (Re > 3000)' : ' (2000 < Re < 3000)'), ok: r === reg, pourquoi: 'Re = ' + nb(Re) + '.' }; }).concat([{ t: 'On ne peut pas conclure sans la température', ok: false, pourquoi: 'Re suffit (la température intervient déjà dans ρ et μ).' }]),
+        corr: 'Re = ' + nb(Re) + ' : régime <b>' + reg + '</b>.' + (reg !== 'turbulent' ? ' Pour améliorer l’échange, on augmenterait la vitesse (débit) ou on choisirait un tube plus fin.' : '') }];
+    return { contexte: '<p>Régime d’écoulement, puis quatre questions de cours sur les transferts thermiques et les échangeurs.</p>', etapes: et.concat(MEL(BQ).slice(0, 4).map(function (b) { return { type: 'choix', q: '<b>Choisir</b> la bonne proposition. ' + b[0], options: [{ t: b[1], ok: true }].concat(b[2].map(function (f) { return { t: f[0], ok: false, pourquoi: f[1] }; })), corr: '<b>' + b[1] + '</b>.' }; })) };
+  }
+
+  Exo.lancer('exo-p9-flux', genFlux);
+  Exo.lancer('exo-p9-bilan', genBilan);
+  Exo.lancer('exo-p9-concentrateur', genConcentrateur);
+  Exo.lancer('exo-p9-reacteur', genReacteur);
+  Exo.lancer('exo-p9-reynolds', genReynolds);
+})();
+</script>
+<script data-goatcounter="https://chimie-winckler.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

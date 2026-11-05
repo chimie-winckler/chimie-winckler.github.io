@@ -206,7 +206,7 @@
   /* 5. Énergies de liaison */
   var EL = { 'C–C': 347, 'C=C': 611, 'C–H': 414, 'H–H': 436, 'Br–Br': 192, 'H–Br': 364, 'C–Br': 285, 'Cl–Cl': 243, 'H–Cl': 431, 'C–Cl': 339 };
   function genLiaisons() {
-    var alc = C([['éthène', 'CH<sub>2</sub>=CH<sub>2</sub>'], ['propène', 'CH<sub>2</sub>=CH–CH<sub>3</sub>'], ['but-2-ène', 'CH<sub>3</sub>–CH=CH–CH<sub>3</sub>']]);
+    var alc = C([['éthène', 'CH<sub>2</sub>=CH<sub>2</sub>', ['CH2', 'CH2', ''], 'l’'], ['propène', 'CH<sub>2</sub>=CH–CH<sub>3</sub>', ['CH2', 'CH', '–CH3'], 'le '], ['but-2-ène', 'CH<sub>3</sub>–CH=CH–CH<sub>3</sub>', ['CH3–CH', 'CH', '–CH3'], 'le ']]);
     var R5 = C([
       { nom: 'Addition de dibrome', reac: 'Br<sub>2</sub>', romp: ['C=C', 'Br–Br'], form: ['C–C', 'C–Br', 'C–Br'] },
       { nom: 'Addition de dichlore', reac: 'Cl<sub>2</sub>', romp: ['C=C', 'Cl–Cl'], form: ['C–C', 'C–Cl', 'C–Cl'] },
@@ -218,7 +218,11 @@
     var Er = R5.romp.reduce(function (a, l) { return a + EL[l]; }, 0), Ef = R5.form.reduce(function (a, l) { return a + EL[l]; }, 0), H = Er - Ef;
     var used = {}; R5.romp.concat(R5.form).forEach(function (l) { used[l] = 1; });
     var tab = '<div class="exo-tableau"><table><tr><th>Liaison</th>' + Object.keys(used).map(function (l) { return '<td>' + l + '</td>'; }).join('') + '</tr><tr><th>Énergie (kJ.mol<sup>-1</sup>)</th>' + Object.keys(used).map(function (l) { return '<td>' + EL[l] + '</td>'; }).join('') + '</tr></table></div>';
-    var ctx = '<p><b>' + R5.nom + '</b> sur le ' + alc[0] + ' (' + alc[1] + '), en phase gazeuse.</p>' + tab + '<p class="exo-aide">Δ<sub>r</sub>H° ≈ Σ E(liaisons rompues) − Σ E(liaisons formées).</p>';
+    function fx(g, a) { if (a === 'H') return g.replace(/CH(\d?)$/, function (m, k) { return 'CH' + ((+k || 1) + 1); }); return g + a; }
+    var add = { 'Br<sub>2</sub>': ['Br', 'Br'], 'Cl<sub>2</sub>': ['Cl', 'Cl'], 'H<sub>2</sub>': ['H', 'H'], 'HBr': ['H', 'Br'], 'HCl': ['H', 'Cl'] }[R5.reac];
+    var produit = sub ? 'CH<sub>2</sub>=CH–CH<sub>2</sub>Br + HBr' : s(fx(alc[2][0], add[0]) + '–' + fx(alc[2][1], add[1]) + alc[2][2]);
+    var equation = alc[1] + ' + ' + R5.reac + ' → ' + produit;
+    var ctx = '<p><b>' + R5.nom + '</b> sur ' + alc[3] + alc[0] + ', en phase gazeuse :</p><p class="exo-eq-chimique">' + equation + '</p>' + tab + '<p class="exo-aide">Δ<sub>r</sub>H° ≈ Σ E(liaisons rompues) − Σ E(liaisons formées).</p>';
     function lst(a) { var c = {}; a.forEach(function (l) { c[l] = (c[l] || 0) + 1; }); return Object.keys(c).map(function (l) { return (c[l] > 1 ? c[l] + ' ' : '') + l; }).join(' + '); }
     var fauxR = sub ? [['C=C + Br–Br', 'Dans une substitution, la double liaison est conservée.'], ['C–Br + H–Br', 'Ce sont les liaisons formées.'], ['C–H + H–Br', 'H–Br est formée, pas rompue.']] : [[lst(R5.form), 'Ce sont les liaisons formées.'], ['C=C seulement', 'La liaison du réactif ' + R5.reac + ' est aussi rompue.'], ['C–C + ' + R5.romp[1], 'La liaison C=C est rompue (elle devient C–C).']];
     return { contexte: ctx, etapes: [
