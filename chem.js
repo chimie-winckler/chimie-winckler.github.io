@@ -220,13 +220,14 @@ var Chem = (function () {
     m.atoms.forEach(function (a) { P[a.id] = a; });
     m.bonds.forEach(function (b) {
       var p = P[b[0]], q = P[b[1]], dx = q.x - p.x, dy = q.y - p.y, len = Math.hypot(dx, dy), ux = dx / len, uy = dy / len;
-      var r1 = p.lab ? 11 : 0, r2 = q.lab ? 11 : 0, x1 = p.x + ux * r1, y1 = p.y + uy * r1, x2 = q.x - ux * r2, y2 = q.y - uy * r2;
-      if (b[2] === 2) { body += line(x1 - uy * 3.5, y1 + ux * 3.5, x2 - uy * 3.5, y2 + ux * 3.5) + line(x1 + uy * 3.5, y1 - ux * 3.5, x2 + uy * 3.5, y2 - ux * 3.5); }
+      var r1 = p.lab ? (p.r || 11) : 0, r2 = q.lab ? (q.r || 11) : 0, x1 = p.x + ux * r1, y1 = p.y + uy * r1, x2 = q.x - ux * r2, y2 = q.y - uy * r2;
+      if (b[2] === 3) { body += line(x1, y1, x2, y2) + line(x1 - uy * 4.5, y1 + ux * 4.5, x2 - uy * 4.5, y2 + ux * 4.5) + line(x1 + uy * 4.5, y1 - ux * 4.5, x2 + uy * 4.5, y2 - ux * 4.5); }
+      else if (b[2] === 2) { body += line(x1 - uy * 3.5, y1 + ux * 3.5, x2 - uy * 3.5, y2 + ux * 3.5) + line(x1 + uy * 3.5, y1 - ux * 3.5, x2 + uy * 3.5, y2 - ux * 3.5); }
       else if (b[2] === 'dash') body += '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" stroke="#1f2a30" stroke-width="2" stroke-dasharray="4 4"/>';
       else body += line(x1, y1, x2, y2);
     });
     m.atoms.forEach(function (a) {
-      if (a.lab) body += txt(a.x, a.y, a.lab, { size: fs, nosub: false });
+      if (a.lab) body += labelBox(a.x, a.y, a.lab, fs * 0.9) + txt(a.x, a.y, a.lab, { size: fs, nosub: false });
       (a.lp || []).forEach(function (ang) { var r = ang * Math.PI / 180, cx = a.x + Math.cos(r) * 14, cy = a.y + Math.sin(r) * 14, tx = -Math.sin(r) * 6, ty = Math.cos(r) * 6; body += line(cx - tx, cy - ty, cx + tx, cy + ty, { w: 2 }); });
       if (a.q) body += '<circle cx="' + (a.x + (a.qx || 13)) + '" cy="' + (a.y + (a.qy || -13)) + '" r="7" fill="#fff" stroke="#1f2a30" stroke-width="1.3"/>' + txt(a.x + (a.qx || 13), a.y + (a.qy || -13) - 0.5, a.q === '+' ? '+' : '−', { size: 12 });
       if (a.dq) body += txt(a.x + (a.dqx || 0), a.y + (a.dqy || -20), a.dq, { size: 12, color: '#c0392b' });
@@ -235,7 +236,7 @@ var Chem = (function () {
     (m.text || []).forEach(function (t) { body += txt(t[0], t[1], t[2], { size: t[3] || 14 }); });
     function pt(e) {
       if (e.atom && e.lp !== undefined) { var a = P[e.atom], r = e.lp * Math.PI / 180; return [a.x + Math.cos(r) * 15, a.y + Math.sin(r) * 15]; }
-      if (e.bond) { var p = P[e.bond[0]], q = P[e.bond[1]]; return [(p.x + q.x) / 2, (p.y + q.y) / 2]; }
+      if (e.bond) { var p = P[e.bond[0]], q = P[e.bond[1]]; return [(p.x + q.x) / 2 + (e.dx || 0), (p.y + q.y) / 2 + (e.dy || 0)]; }
       if (e.between) { var p2 = P[e.between[0]], q2 = P[e.between[1]]; return [p2.x * 0.6 + q2.x * 0.4, p2.y * 0.6 + q2.y * 0.4]; }
       var t = P[e.atom]; return [t.x + (e.dx || 0), t.y + (e.dy || 0)];
     }
