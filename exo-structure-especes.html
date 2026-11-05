@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Structure des espèces chimiques – Chimie de Synthèse</title>
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=20261105a">
+</head>
+<body>
+<header class="entete">
+  <div class="conteneur entete-inner">
+    <a class="marque" href="index.html">⚗️ Chimie de Synthèse</a>
+    <button class="burger" aria-label="Menu" onclick="document.body.classList.toggle('menu-ouvert')">☰</button>
+    <nav><ul class="menu">
+<li><a href="index.html">Accueil</a></li>
+<li><a href="matieres-premieres.html">Matières premières</a><ul class="sous-menu"><li><a href="fds.html">FDS</a></li><li><a href="fds-simplifiee.html">FDS simplifiée</a></li><li><a href="gestion-dechets.html">Gestion des déchets en salle de TP</a></li></ul></li>
+<li><a href="techniques.html">Techniques</a><ul class="sous-menu"><li><a href="verrerie-et-montages.html">Verrerie et montages</a></li><li><a href="techniques-experimentales.html">Techniques expérimentales</a></li></ul></li>
+<li><a href="ressources.html">Ressources</a><ul class="sous-menu"><li><a href="cours.html">Cours</a></li><li><a href="tp.html">TP</a></li><li><a href="evaluations.html">Évaluations</a></li><li><a href="autres.html">Autres</a></li></ul></li>
+<li><a href="entrainement.html" class="actif">S’entraîner</a></li>
+<li><a href="annonces.html">Annonces</a></li>
+    </ul></nav>
+    <button type="button" class="theme-btn" id="theme-btn" aria-label="Changer de thème">🌙</button>
+  </div>
+</header>
+<div class="bandeau">
+  <div class="conteneur">
+    <p class="fil"><a href="index.html">Accueil</a> › <a href="entrainement.html">S’entraîner</a> › Structure des espèces chimiques</p>
+    <p class="surtitre">BTS Métiers de la Chimie – Partie 2 : exploiter les structures des espèces chimiques</p>
+    <h1>Structure des espèces chimiques</h1>
+    <p class="intro">Configurations électroniques à l’état fondamental, ions monoatomiques, classification, géométrie VSEPR et nombres d’oxydation. D’après les exercices des chapitres 1 et 2.</p>
+  </div>
+</div>
+<main class="conteneur">
+<nav class="sommaire"><a href="#config">Configuration électronique</a><a href="#ions">Ions monoatomiques</a><a href="#recherche">À la recherche des atomes</a><a href="#vsepr">Lewis et géométrie VSEPR</a><a href="#no">Nombres d’oxydation</a></nav><section class="exo exo-bloc" id="config">
+<div class="exo-tete"><h2>Configuration électronique</h2><button type="button" class="bouton" data-nouveau="exo-p2-config">Nouvel exercice</button></div>
+<p class="exo-consigne">Klechkowski, Pauli, Hund : configuration, bloc, période, électrons célibataires et de valence (C, Na, Cl, Ti, Cs, Os, Cr, Cu… et bien d’autres).</p>
+<div id="exo-p2-config"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="ions">
+<div class="exo-tete"><h2>Ions monoatomiques</h2><button type="button" class="bouton" data-nouveau="exo-p2-ions">Nouvel exercice</button></div>
+<p class="exo-consigne">Nombre d’électrons, configuration de l’ion (Fe<sup>2+</sup>, Cu<sup>2+</sup>, Cl<sup>−</sup>…), gaz noble isoélectronique.</p>
+<div id="exo-p2-ions"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="recherche">
+<div class="exo-tete"><h2>À la recherche des atomes</h2><button type="button" class="bouton" data-nouveau="exo-p2-recherche">Nouvel exercice</button></div>
+<p class="exo-consigne">Retrouver un atome à partir de sa configuration ou d’une sous-couche à moitié remplie.</p>
+<div id="exo-p2-recherche"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="vsepr">
+<div class="exo-tete"><h2>Lewis et géométrie VSEPR</h2><button type="button" class="bouton" data-nouveau="exo-p2-vsepr">Nouvel exercice</button></div>
+<p class="exo-consigne">Électrons de valence, formule AX<sub>n</sub>E<sub>m</sub>, géométrie et angles (CO<sub>2</sub>, BF<sub>3</sub>, SO<sub>2</sub>, CH<sub>4</sub>, NH<sub>3</sub>, H<sub>2</sub>O, PCl<sub>5</sub>, SF<sub>6</sub>…).</p>
+<div id="exo-p2-vsepr"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="no">
+<div class="exo-tete"><h2>Nombres d’oxydation</h2><button type="button" class="bouton" data-nouveau="exo-p2-no">Nouvel exercice</button></div>
+<p class="exo-consigne">Règles de priorité (alcalins, F, H, O…), ions polyatomiques et carbone en chimie organique.</p>
+<div id="exo-p2-no"><p>Chargement…</p></div>
+</section><p><a href="entrainement.html">← Retour aux exercices</a></p>
+</main>
+<footer class="pied"><div class="conteneur">BTS Métiers de la Chimie – Synthèse</div></footer>
+<script src="theme.js?v=1"></script>
+<script src="exo.js?v=20261105a"></script>
+<script>
+/* ===== Partie 2 : structure des espèces chimiques ===== */
+(function () {
+  var C = Exo.choisir, M = Exo.melanger;
+  var NOMS = 'hydrogène H,hélium He,lithium Li,béryllium Be,bore B,carbone C,azote N,oxygène O,fluor F,néon Ne,sodium Na,magnésium Mg,aluminium Al,silicium Si,phosphore P,soufre S,chlore Cl,argon Ar,potassium K,calcium Ca,scandium Sc,titane Ti,vanadium V,chrome Cr,manganèse Mn,fer Fe,cobalt Co,nickel Ni,cuivre Cu,zinc Zn,gallium Ga,germanium Ge,arsenic As,sélénium Se,brome Br,krypton Kr,rubidium Rb,strontium Sr,yttrium Y,zirconium Zr,niobium Nb,molybdène Mo,technétium Tc,ruthénium Ru,rhodium Rh,palladium Pd,argent Ag,cadmium Cd,indium In,étain Sn,antimoine Sb,tellure Te,iode I,xénon Xe,césium Cs,baryum Ba'.split(',').map(function (s) { var p = s.split(' '); return { n: p[0], s: p[1] }; });
+  NOMS[75] = { n: 'osmium', s: 'Os' };
+  function el(Z) { return NOMS[Z - 1]; }
+  function ap(n) { return (/^[aeéèiouyh]/i.test(n) ? 'l’' : 'le ') + n; }       // l’azote, le carbone
+  function dap(n) { return (/^[aeéèiouyh]/i.test(n) ? 'd’' : 'de ') + n; }
+  var ORD = [[1, 0], [2, 0], [2, 1], [3, 0], [3, 1], [4, 0], [3, 2], [4, 1], [5, 0], [4, 2], [5, 1], [6, 0], [4, 3], [5, 2], [6, 1]];
+  var L = 'spdf';
+  function cap(l) { return 2 * (2 * l + 1); }
+  function remplir(Z, ordre) {
+    var r = [], e = Z;
+    for (var i = 0; i < ordre.length && e > 0; i++) { var k = Math.min(e, cap(ordre[i][1])); r.push([ordre[i][0], ordre[i][1], k]); e -= k; }
+    return r;
+  }
+  function config(Z) {
+    var r = remplir(Z, ORD);
+    if (Z === 24 || Z === 29) r.forEach(function (x) { if (x[0] === 4 && x[1] === 0) x[2] = 1; if (x[0] === 3 && x[1] === 2) x[2] += 1; });
+    return r;
+  }
+  function cle(r) { return r.filter(function (x) { return x[2] > 0; }).map(function (x) { return x.join('.'); }).join(' '); }
+  function ecr(r, abr) {
+    var t = r.filter(function (x) { return x[2] > 0; }), pre = '';
+    if (abr) {
+      var tot = 0, cut = -1, g = { 18: 'Ar', 36: 'Kr', 54: 'Xe' }, gz = null;
+      t.forEach(function (x, i) { tot += x[2]; if (g[tot] && x[1] === 1 && (abr === true || tot <= abr)) { cut = i; gz = g[tot]; } });
+      if (cut >= 0 && cut < t.length - 1) { pre = '[' + gz + '] '; t = t.slice(cut + 1); }
+    }
+    return pre + t.map(function (x) { return x[0] + L[x[1]] + '<sup>' + x[2] + '</sup>'; }).join(' ');
+  }
+  function total(r) { return r.reduce(function (s, x) { return s + x[2]; }, 0); }
+  function celib(r) { return r.reduce(function (s, x) { var k = 2 * x[1] + 1; return s + (x[2] <= k ? x[2] : 2 * k - x[2]); }, 0); }
+  function periode(r) { return Math.max.apply(null, r.filter(function (x) { return x[2] > 0; }).map(function (x) { return x[0]; })); }
+  function bloc(Z) { if (Z === 2) return 's'; var r = remplir(Z, ORD); return L[r[r.length - 1][1]]; }
+  function valence(r) { var n = periode(r); return r.filter(function (x) { return x[0] === n; }).reduce(function (s, x) { return s + x[2]; }, 0); }
+  function abrege(Z) { return Z > 36 ? true : false; }
+
+  /* atomes proposés : Z = 1 à 56 et Os, sans les exceptions hors programme (Nb à Ag) */
+  var ZS = []; for (var z = 1; z <= 56; z++) if (z < 41 || z > 47) ZS.push(z); ZS.push(76);
+  var COURS = [6, 11, 17, 22, 55, 76, 24, 29, 26, 27, 8, 7, 35, 20];
+
+  function optionsConfig(Z) {
+    var vrai = config(Z), ab = abrege(Z), ops = [{ t: ecr(vrai, ab), ok: true }], vus = [cle(vrai)];
+    function aj(r, msg) { var k = cle(r); if (vus.indexOf(k) < 0) { vus.push(k); ops.push({ t: ecr(r, ab), ok: false, pourquoi: msg }); } }
+    if (Z === 24 || Z === 29) aj(remplir(Z, ORD), 'C’est la configuration prévue par la règle de Klechkowski, mais ' + el(Z).s + ' est une exception : une sous-couche 3d ' + (Z === 24 ? 'à moitié remplie (3d<sup>5</sup>)' : 'pleine (3d<sup>10</sup>)') + ' et 4s<sup>1</sup> est plus stable.');
+    var parN = ORD.slice().sort(function (a, b) { return a[0] - b[0] || a[1] - b[1]; });
+    aj(remplir(Z, parN), 'Remplissage couche par couche (n croissant) : il faut suivre la règle de Klechkowski (n + ℓ croissant), par exemple 4s avant 3d.');
+    var ex = JSON.parse(JSON.stringify(vrai)), der = ex[ex.length - 1];
+    if (ex.length > 1 && der[2] < cap(der[1])) { ex[ex.length - 2][2] -= 1; der[2] += 1; aj(ex, 'Configuration d’un état excité : à l’état fondamental, on remplit entièrement une sous-couche avant de passer à la suivante (règle de stabilité).'); }
+    aj(config(Z + 1), 'Le nombre d’électrons est faux : un atome neutre possède Z = ' + Z + ' électrons.');
+    aj(config(Z - 1), 'Le nombre d’électrons est faux : un atome neutre possède Z = ' + Z + ' électrons.');
+    return ops.slice(0, 4);
+  }
+
+  /* 1. Configuration électronique d’un atome */
+  Exo.lancer('exo-p2-config', function () {
+    var Z = Math.random() < 0.5 ? C(COURS) : C(ZS), e = el(Z), r = config(Z), b = bloc(Z), P = periode(r), cel = celib(r);
+    var et = [
+      { type: 'choix', q: 'Quelle est la configuration électronique de l’atome ' + dap(e.n) + ' dans son état fondamental ?' + (abrege(Z) ? ' (écriture abrégée avec le gaz noble)' : ''), options: optionsConfig(Z),
+        corr: 'On répartit Z = ' + Z + ' électrons selon la règle de Klechkowski (1s 2s 2p 3s 3p 4s 3d 4p 5s 4d 5p 6s 4f 5d 6p) et le principe de Pauli (s : 2, p : 6, d : 10, f : 14 électrons au maximum) : <b>' + ecr(r, abrege(Z)) + '</b>.' + (Z === 24 || Z === 29 ? ' Exception : une sous-couche d ' + (Z === 24 ? 'à moitié remplie' : 'pleine') + ' est particulièrement stable.' : '') + (b === 'd' ? ' On peut aussi l’écrire en regroupant par couche (3d avant 4s).' : '') },
+      { type: 'choix', q: 'À quel bloc de la classification appartient cet élément ?', options: ['s', 'p', 'd', 'f'].map(function (x) {
+        return { t: 'bloc ' + x, ok: x === b, pourquoi: 'Le bloc est donné par la dernière sous-couche en cours de remplissage selon Klechkowski.' }; }),
+        corr: 'La dernière sous-couche remplie (Klechkowski) est une sous-couche <b>' + b + '</b> : bloc ' + b + '.' + (b === 'd' ? ' C’est un métal de transition.' : '') },
+      { type: 'nombre', q: 'Dans quelle période (ligne) se trouve-t-il ?', rep: P, tol: 0.001,
+        pieges: b === 'd' ? [{ v: P - 1, msg: 'La période est la plus grande valeur de n (ici celle de la sous-couche s), pas celle de la sous-couche d.' }] : [],
+        corr: 'La plus grande valeur de n est <b>' + P + '</b> : ' + e.s + ' est dans la ' + P + '<sup>e</sup> période.' },
+      { type: 'nombre', q: 'Combien d’électrons célibataires possède-t-il à l’état fondamental (règle de Hund) ?', rep: cel, tol: 0.001,
+        pieges: [{ v: cel === 0 ? -1 : cel % 2, msg: 'Règle de Hund : on place d’abord un électron dans chaque orbitale de la sous-couche (spins parallèles) avant de les apparier.' }].filter(function (p) { return p.v !== cel && p.v >= 0; }),
+        corr: (cel ? 'Seule' + (Z === 24 || Z === 29 ? 's les sous-couches 4s et 3d' : ' la dernière sous-couche') + ' incomplète' + (Z === 24 || Z === 29 ? 's apportent' : ' apporte') + ' des électrons célibataires : on remplit d’abord chaque orbitale avec un électron (Hund). ' : 'Toutes les sous-couches sont pleines : tous les électrons sont appariés. ') + 'Nombre d’électrons célibataires : <b>' + cel + '</b>.' }
+    ];
+    if (b === 's' || b === 'p') {
+      var v = valence(r);
+      et.push({ type: 'nombre', q: 'Combien d’électrons de valence possède-t-il ?', rep: v, tol: 0.001,
+        pieges: [{ v: Z, msg: 'Seuls les électrons de la couche externe (n = ' + P + ') sont des électrons de valence.' }, { v: r[r.length - 1][2], msg: 'Comptez tous les électrons de la couche n = ' + P + ' (sous-couches s et p).' }].filter(function (p) { return p.v !== v; }),
+        corr: 'Électrons de la couche n = ' + P + ' : <b>' + v + '</b> (colonne ' + (b === 's' ? (Z === 2 ? 18 : v) : 10 + v) + ' de la classification).' });
+    }
+    return { contexte: '<p>Atome : <b>' + e.n + '</b> (' + e.s + '), Z = ' + Z + '.</p>', etapes: et };
+  });
+
+  /* 2. Ions monoatomiques */
+  var IONS = [[11, 1], [19, 1], [3, 1], [12, 2], [20, 2], [13, 3], [9, -1], [17, -1], [35, -1], [8, -2], [16, -2], [7, -3], [26, 2], [26, 3], [30, 2], [29, 1], [29, 2], [27, 2], [25, 2], [22, 4]];
+  function ionConfig(Z, q) {
+    var r = JSON.parse(JSON.stringify(config(Z)));
+    if (q < 0) return config(Z - q);
+    for (var k = 0; k < q; k++) { // on retire d’abord les électrons de plus grand n (4s avant 3d)
+      var best = -1; r.forEach(function (x, i) { if (x[2] > 0 && (best < 0 || x[0] > r[best][0] || (x[0] === r[best][0] && x[1] > r[best][1]))) best = i; });
+      r[best][2]--;
+    }
+    return r;
+  }
+  function charge(q) { return (Math.abs(q) > 1 ? Math.abs(q) : '') + (q > 0 ? '+' : '−'); }
+  Exo.lancer('exo-p2-ions', function () {
+    var ion = C(IONS), Z = ion[0], q = ion[1], e = el(Z), N = Z - q, r = ionConfig(Z, q), dm = Z > 20 && Z < 31;
+    var nomIon = e.s + '<sup>' + charge(q) + '</sup>';
+    var ops = [{ t: ecr(r), ok: true }], vus = [cle(r)];
+    function aj(rr, msg) { var k = cle(rr); if (vus.indexOf(k) < 0) { vus.push(k); ops.push({ t: ecr(rr), ok: false, pourquoi: msg }); } }
+    if (dm && q > 0) aj(remplir(N, ORD), 'Pour un cation d’un métal de transition, on retire d’abord les électrons 4s (n le plus grand), pas les derniers placés en 3d.');
+    aj(config(Z + q), 'Erreur de signe : un ion ' + (q > 0 ? 'positif a perdu' : 'négatif a gagné') + ' des électrons.');
+    aj(config(Z), 'C’est la configuration de l’atome neutre, pas celle de l’ion.');
+    aj(config(N + (q > 0 ? -1 : 1)), 'Le nombre d’électrons de l’ion est faux.');
+    var gaz = { 2: 'hélium', 10: 'néon', 18: 'argon', 36: 'krypton' };
+    var et = [
+      { type: 'nombre', q: 'Combien d’électrons possède l’ion ' + nomIon + ' ?', rep: N, tol: 0.001,
+        pieges: [{ v: Z + q, msg: 'Erreur de signe : un cation (charge +) a perdu des électrons, un anion (charge −) en a gagné.' }, { v: Z, msg: 'Z est le nombre d’électrons de l’atome neutre : tenez compte de la charge.' }],
+        corr: 'N(électrons) = Z − (charge) = ' + Z + ' − (' + (q > 0 ? '+' : '−') + Math.abs(q) + ') = <b>' + N + '</b>.' },
+      { type: 'choix', q: 'Quelle est la configuration électronique de l’ion ' + nomIon + ' ?', options: ops.slice(0, 4),
+        corr: 'Atome : ' + ecr(config(Z)) + '. ' + (q > 0 ? 'On retire ' + q + ' électron' + (q > 1 ? 's' : '') + ' de la sous-couche de plus grand n' + (dm ? ' (4s avant 3d)' : '') : 'On ajoute ' + (-q) + ' électron' + (q < -1 ? 's' : '') + ' dans la sous-couche en cours de remplissage') + ' : <b>' + ecr(r) + '</b>.' }
+    ];
+    if (gaz[N]) et.push({ type: 'choix', q: 'L’ion ' + nomIon + ' a la même configuration que quel gaz noble ?', options: ['hélium', 'néon', 'argon', 'krypton'].map(function (g) {
+      return { t: g, ok: g === gaz[N], pourquoi: 'Comparez les nombres d’électrons : ' + nomIon + ' en possède ' + N + '.' }; }),
+      corr: nomIon + ' possède ' + N + ' électrons, comme ' + ap(gaz[N]) + ' : il est isoélectronique d’un gaz noble, d’où sa stabilité (règle de l’octet' + (N === 2 ? ' / du duet' : '') + ').' });
+    return { contexte: '<p>Ion : <b>' + nomIon + '</b> (' + e.n + ', Z = ' + Z + ').</p>', etapes: et };
+  });
+
+  /* 3. À la recherche des atomes */
+  function optEl(Z, fauxZ, msgs) {
+    var ops = [{ t: el(Z).n + ' (' + el(Z).s + ')', ok: true }], vus = [Z];
+    fauxZ.forEach(function (fz, i) { if (fz >= 1 && fz <= 56 && vus.indexOf(fz) < 0 && ops.length < 4) { vus.push(fz); ops.push({ t: el(fz).n + ' (' + el(fz).s + ')', ok: false, pourquoi: msgs[i] }); } });
+    return ops;
+  }
+  Exo.lancer('exo-p2-recherche', function () {
+    var et = [], type = C(['config', 'moitie']);
+    if (type === 'config') {
+      var Z = C(ZS.filter(function (z) { return z > 4 && z < 37 && (z < 20 || z > 29); }));
+      et.push({ type: 'choix', q: 'Quel atome a la configuration électronique ' + ecr(config(Z)) + ' ?', options: optEl(Z, [Z - 1, Z + 1, Z + 2, Z - 2], ['Comptez tous les électrons : Z = somme des exposants.', 'Comptez tous les électrons : Z = somme des exposants.', 'Comptez tous les électrons : Z = somme des exposants.', 'Comptez tous les électrons : Z = somme des exposants.']),
+        corr: 'Somme des exposants : Z = ' + Z + ' : <b>' + el(Z).n + '</b> (' + el(Z).s + ').' });
+      var Zp = Z + 1, Zm = Z - 1;
+      var cation = [10, 18, 36].indexOf(Z) < 0 || Math.random() < 0.5;
+      et.push({ type: 'choix', q: 'Quel atome donne un ion ' + (cation ? 'monopositif (charge +1)' : 'mononégatif (charge −1)') + ' ayant cette même configuration ?',
+        options: optEl(cation ? Zp : Zm, cation ? [Zm, Z, Zp + 1] : [Zp, Z, Zm - 1], ['Erreur de sens : un ion ' + (cation ? 'positif a perdu' : 'négatif a gagné') + ' un électron, l’atome en possède donc un de ' + (cation ? 'plus' : 'moins') + '.', 'C’est l’atome neutre ayant cette configuration, pas celui qui donne l’ion.', 'Un seul électron ' + (cation ? 'perdu' : 'gagné') + ' : Z diffère de 1.']),
+        corr: 'L’ion possède ' + Z + ' électrons. ' + (cation ? 'Ayant perdu un électron, l’atome en possède ' + Zp + ' : ' : 'Ayant gagné un électron, l’atome en possède ' + Zm + ' : ') + '<b>' + el(cation ? Zp : Zm).n + '</b>' + ' (' + el(cation ? Zp : Zm).s + '). ' });
+    } else {
+      var sp = C(['s', 'p']), n = sp === 's' ? C([2, 3, 4, 5, 6]) : C([2, 3, 4, 5]);
+      var Zr = sp === 's' ? { 2: 3, 3: 11, 4: 19, 5: 37, 6: 55 }[n] : { 2: 7, 3: 15, 4: 33, 5: 51 }[n];
+      var plein = sp === 's' ? Zr + 1 : Zr + 3, autreN = sp === 's' ? { 2: 11, 3: 19, 4: 37, 5: 55, 6: 37 }[n] : { 2: 15, 3: 33, 4: 51, 5: 33 }[n];
+      var vide = sp === 's' ? Zr - 1 : Zr - 2;
+      et.push({ type: 'choix', q: 'Quel atome a la sous-couche ' + n + sp + ' à moitié remplie (état fondamental) ?', options: optEl(Zr, [plein, autreN, vide],
+        ['Cette sous-couche est pleine (' + n + sp + '<sup>' + (sp === 's' ? 2 : 6) + '</sup>) ; à moitié remplie : ' + n + sp + '<sup>' + (sp === 's' ? 1 : 3) + '</sup>.', 'Bonne colonne, mais mauvaise période : la sous-couche concernée est ' + n + sp + '.', 'Cette sous-couche ' + n + sp + ' n’est pas à moitié remplie.']),
+        corr: 'Une sous-couche ' + sp + ' contient au plus ' + (sp === 's' ? 2 : 6) + ' électrons ; à moitié remplie : ' + n + sp + '<sup>' + (sp === 's' ? 1 : 3) + '</sup>. Configuration : ' + ecr(config(Zr), Zr > 36) + ' → <b>' + el(Zr).n + '</b> (' + el(Zr).s + ', Z = ' + Zr + ').' });
+      et.push({ type: 'nombre', q: 'Combien d’électrons célibataires possède cet atome ?', rep: sp === 's' ? 1 : 3, tol: 0.001,
+        pieges: sp === 'p' ? [{ v: 1, msg: 'Règle de Hund : les 3 électrons p occupent chacun une orbitale p différente, spins parallèles.' }] : [],
+        corr: (sp === 's' ? 'ns<sup>1</sup> : <b>1</b> électron célibataire.' : 'np<sup>3</sup> : un électron dans chacune des 3 orbitales p (Hund) : <b>3</b> électrons célibataires.') });
+    }
+    return { contexte: '<p>D’après l’exercice « À la recherche des atomes ».</p>', etapes: et };
+  });
+
+  /* 4. Lewis et géométrie VSEPR */
+  var GEO = { 'AX2': ['linéaire', '180°'], 'AX3': ['triangulaire plane', '120°'], 'AX2E': ['coudée', '≈ 119°'], 'AX4': ['tétraédrique', '109,5°'], 'AX3E': ['pyramidale à base triangulaire', '≈ 107°'], 'AX2E2': ['coudée', '≈ 104,5°'], 'AX5': ['bipyramide à base triangulaire', '90° et 120°'], 'AX6': ['octaédrique', '90°'] };
+  var MOLS = [
+    { f: 'CO<sub>2</sub>', c: 'C', ve: 16, q: 0, n: 2, m: 0, mult: 2, lw: 'O=C=O' },
+    { f: 'HCN', c: 'C', ve: 10, q: 0, n: 2, m: 0, mult: 1, lw: 'H–C≡N' },
+    { f: 'BF<sub>3</sub>', c: 'B', ve: 24, q: 0, n: 3, m: 0, mult: 0, lw: 'lacune électronique sur B' },
+    { f: 'CH<sub>2</sub>O (méthanal)', c: 'C', ve: 12, q: 0, n: 3, m: 0, mult: 1, lw: 'H<sub>2</sub>C=O' },
+    { f: 'NO<sub>3</sub><sup>−</sup>', c: 'N', ve: 24, q: -1, n: 3, m: 0, mult: 1, lw: 'une liaison N=O et deux N–O (mésomérie)' },
+    { f: 'SO<sub>2</sub>', c: 'S', ve: 18, q: 0, n: 2, m: 1, mult: 1, lw: 'O=S–O (charges formelles, mésomérie)' },
+    { f: 'CH<sub>4</sub>', c: 'C', ve: 8, q: 0, n: 4, m: 0, mult: 0 },
+    { f: 'NH<sub>4</sub><sup>+</sup>', c: 'N', ve: 8, q: 1, n: 4, m: 0, mult: 0 },
+    { f: 'CCl<sub>4</sub>', c: 'C', ve: 32, q: 0, n: 4, m: 0, mult: 0 },
+    { f: 'NH<sub>3</sub>', c: 'N', ve: 8, q: 0, n: 3, m: 1, mult: 0 },
+    { f: 'H<sub>3</sub>O<sup>+</sup>', c: 'O', ve: 8, q: 1, n: 3, m: 1, mult: 0 },
+    { f: 'PCl<sub>3</sub>', c: 'P', ve: 26, q: 0, n: 3, m: 1, mult: 0, noang: true },
+    { f: 'H<sub>2</sub>O', c: 'O', ve: 8, q: 0, n: 2, m: 2, mult: 0 },
+    { f: 'H<sub>2</sub>S', c: 'S', ve: 8, q: 0, n: 2, m: 2, mult: 0, noang: true },
+    { f: 'PCl<sub>5</sub>', c: 'P', ve: 40, q: 0, n: 5, m: 0, mult: 0, lw: 'hypervalence de P (3<sup>e</sup> période)' },
+    { f: 'SF<sub>6</sub>', c: 'S', ve: 48, q: 0, n: 6, m: 0, mult: 0, lw: 'hypervalence de S (3<sup>e</sup> période)' }];
+  function axe(n, m) { return 'AX' + (n > 1 ? n : '') + (m ? 'E' + (m > 1 ? m : '') : ''); }
+  function axeH(n, m) { return 'AX<sub>' + n + '</sub>' + (m ? 'E<sub>' + m + '</sub>' : ''); }
+  Exo.lancer('exo-p2-vsepr', function () {
+    var x = C(MOLS), k = axe(x.n, x.m), g = GEO[k];
+    var fo = [{ t: axeH(x.n, x.m), ok: true }], vus = [k];
+    function aj(n, m, msg) { var kk = axe(n, m); if (GEO[kk] && vus.indexOf(kk) < 0) { vus.push(kk); fo.push({ t: axeH(n, m), ok: false, pourquoi: msg }); } }
+    if (x.mult) aj(x.n + x.mult, x.m, 'Une liaison multiple compte pour un seul X.');
+    if (x.m) aj(x.n, 0, 'Vous avez oublié les doublets non liants de l’atome central (E).');
+    if (x.m) aj(x.n + x.m, 0, 'Les doublets non liants se notent E, pas X : X désigne les atomes liés à l’atome central.');
+    if (!x.m) aj(x.n, 1, 'L’atome central ' + x.c + ' n’a pas de doublet non liant ici.');
+    aj(x.n - 1, x.m + 1, 'Comptez les atomes liés à l’atome central : ' + x.n + '.');
+    aj(x.n + 1, x.m, 'Comptez les atomes liés à l’atome central : ' + x.n + '.');
+    M(Object.keys(GEO)).forEach(function (kk) { var mm = /E/.test(kk) ? +(kk.split('E')[1] || 1) : 0, nn = +(kk.replace('AX', '').split('E')[0] || 1); if (fo.length < 4) aj(nn, mm, 'Comptez les atomes liés à l’atome central (X) et ses doublets non liants (E).'); });
+    var geos = ['linéaire', 'triangulaire plane', 'coudée', 'tétraédrique', 'pyramidale à base triangulaire', 'bipyramide à base triangulaire', 'octaédrique'];
+    var go = [{ t: g[0], ok: true }].concat(M(geos.filter(function (t) { return t !== g[0]; })).slice(0, 3).map(function (t) {
+      var msg = 'La géométrie se déduit de la formule ' + axeH(x.n, x.m) + '.';
+      if (x.m && (t === 'tétraédrique' || t === 'triangulaire plane')) msg = 'C’est la figure de répartition des ' + (x.n + x.m) + ' doublets, mais la géométrie ne décrit que la position des atomes : les doublets non liants ne « se voient » pas.';
+      return { t: t, ok: false, pourquoi: msg }; }));
+    var et = [
+      { type: 'nombre', q: 'Combien d’électrons de valence au total faut-il répartir dans ' + x.f + ' ?', rep: x.ve, tol: 0.001,
+        pieges: x.q ? [{ v: x.ve + 2 * x.q, msg: 'Erreur de signe sur la charge : on <b>ajoute</b> un électron par charge négative et on en <b>retire</b> un par charge positive.' }, { v: x.ve + x.q, msg: 'Tenez compte de la charge de l’ion.' }] : [],
+        corr: 'Somme des électrons de valence des atomes' + (x.q ? (x.q < 0 ? ' + 1 (charge −)' : ' − 1 (charge +)') : '') + ' = <b>' + x.ve + '</b>, soit ' + x.ve / 2 + ' doublets.' },
+      { type: 'choix', q: 'Quelle est la formule VSEPR de l’atome central ' + x.c + ' ?', options: fo.slice(0, 4),
+        corr: x.c + ' est lié à ' + x.n + ' atome' + (x.n > 1 ? 's' : '') + ' (X) et porte ' + x.m + ' doublet' + (x.m > 1 ? 's' : '') + ' non liant' + (x.m > 1 ? 's' : '') + ' (E)' + (x.lw ? ' (' + x.lw + ')' : '') + ' : <b>' + axeH(x.n, x.m) + '</b>.' },
+      { type: 'choix', q: 'Quelle est la géométrie de l’édifice ?', options: go,
+        corr: axeH(x.n, x.m) + ' : géométrie <b>' + g[0] + '</b>.' + (x.m ? ' Les ' + (x.n + x.m) + ' doublets se répartissent selon une figure ' + (x.n + x.m === 4 ? 'tétraédrique' : 'triangulaire plane') + ', mais seuls les atomes définissent la forme.' : '') }
+    ];
+    if (!x.noang) {
+      var angs = ['180°', '120°', '109,5°', '≈ 107°', '≈ 104,5°', '90°'];
+      var ao = [{ t: g[1], ok: true }].concat(M(angs.filter(function (a) { return a !== g[1]; })).slice(0, 3).map(function (a) {
+        return { t: a, ok: false, pourquoi: (x.m && a === '109,5°') ? 'Un doublet non liant est plus encombrant qu’un doublet liant : il referme l’angle sous 109,5°.' : 'Angle associé à une autre géométrie.' }; }));
+      et.push({ type: 'choix', q: 'Quel angle de liaison attend-on ?', options: ao, corr: 'Géométrie ' + g[0] + ' : angle <b>' + g[1] + '</b>.' + (x.m ? ' Les doublets non liants, plus encombrants, referment les angles par rapport à 109,5°.' : '') });
+    }
+    return { contexte: '<p>Édifice étudié : <b>' + x.f + '</b> (atome central : ' + x.c + ').</p>', etapes: et };
+  });
+
+  /* 5. Nombres d’oxydation */
+  var ROM = ['0', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
+  function rom(x) { return x === 0 ? '0' : (x > 0 ? '+' : '−') + ROM[Math.abs(x)]; }
+  var NO = [
+    { f: 'CH<sub>4</sub>', e: 'C', x: -4, eq: 'x + 4 × (+I) = 0', r: 'H : +I' },
+    { f: 'NaH', e: 'H', x: -1, eq: '(+I) + x = 0', r: 'Na (alcalin) : +I, prioritaire sur H', faux: 1, fm: 'Dans les hydrures métalliques, la règle de l’alcalin (+I) s’applique d’abord : H est à −I.' },
+    { f: 'H<sub>2</sub>O<sub>2</sub>', e: 'O', x: -1, eq: '2 × (+I) + 2x = 0', r: 'H : +I, prioritaire sur O', faux: -2, fm: 'Dans un peroxyde, la règle de H (+I) s’applique d’abord : O est à −I.' },
+    { f: 'NaCl', e: 'Cl', x: -1, eq: '(+I) + x = 0', r: 'Na : +I' },
+    { f: 'SO<sub>4</sub><sup>2−</sup>', e: 'S', x: 6, eq: 'x + 4 × (−II) = −2', r: 'O : −II', faux: 8, fm: 'Vous avez oublié la charge de l’ion : la somme des n.o. vaut −2.' },
+    { f: 'CO<sub>2</sub>', e: 'C', x: 4, eq: 'x + 2 × (−II) = 0', r: 'O : −II' },
+    { f: 'SF<sub>6</sub>', e: 'S', x: 6, eq: 'x + 6 × (−I) = 0', r: 'F : toujours −I' },
+    { f: 'NO<sub>3</sub><sup>−</sup>', e: 'N', x: 5, eq: 'x + 3 × (−II) = −1', r: 'O : −II', faux: 6, fm: 'Vous avez oublié la charge de l’ion : la somme des n.o. vaut −1.' },
+    { f: 'NH<sub>4</sub><sup>+</sup>', e: 'N', x: -3, eq: 'x + 4 × (+I) = +1', r: 'H : +I', faux: -4, fm: 'Vous avez oublié la charge de l’ion : la somme des n.o. vaut +1.' },
+    { f: 'KMnO<sub>4</sub>', e: 'Mn', x: 7, eq: '(+I) + x + 4 × (−II) = 0', r: 'K (alcalin) : +I ; O : −II', faux: 8, fm: 'N’oubliez pas le potassium (+I).' },
+    { f: 'NiO<sub>2</sub>', e: 'Ni', x: 4, eq: 'x + 2 × (−II) = 0', r: 'O : −II' },
+    { f: 'Cr<sub>2</sub>O<sub>7</sub><sup>2−</sup>', e: 'Cr', x: 6, eq: '2x + 7 × (−II) = −2', r: 'O : −II', faux: 12, fm: 'Il y a deux atomes de chrome : divisez par 2.' },
+    { f: 'MnO<sub>2</sub>', e: 'Mn', x: 4, eq: 'x + 2 × (−II) = 0', r: 'O : −II' },
+    { f: 'H<sub>2</sub>SO<sub>4</sub>', e: 'S', x: 6, eq: '2 × (+I) + x + 4 × (−II) = 0', r: 'H : +I ; O : −II', faux: 8, fm: 'N’oubliez pas les deux H (+I chacun).' },
+    { f: 'ClO<sup>−</sup>', e: 'Cl', x: 1, eq: 'x + (−II) = −1', r: 'O : −II (prioritaire sur Cl)', faux: -1, fm: 'Le chlore lié à l’oxygène n’est pas à −I : la règle de O s’applique d’abord.' },
+    { f: 'HClO<sub>4</sub>', e: 'Cl', x: 7, eq: '(+I) + x + 4 × (−II) = 0', r: 'H : +I ; O : −II', faux: -1, fm: 'Cl lié à O n’est pas à −I : la règle de O s’applique d’abord.' },
+    { f: 'Fe<sub>2</sub>O<sub>3</sub>', e: 'Fe', x: 3, eq: '2x + 3 × (−II) = 0', r: 'O : −II', faux: 6, fm: 'Il y a deux atomes de fer : divisez par 2.' },
+    { f: 'N<sub>2</sub>', e: 'N', x: 0, eq: 'corps pur simple', r: 'corps pur simple : 0', faux: 3, fm: 'Dans un corps pur simple, le n.o. vaut 0.' },
+    { f: 'CO', e: 'C', x: 2, eq: 'x + (−II) = 0', r: 'O : −II' },
+    { f: 'CH<sub>3</sub>OH (méthanol)', e: 'C', x: -2, eq: 'x + 4 × (+I) + (−II) = 0', r: 'H : +I ; O : −II' },
+    { f: 'HCOOH (acide méthanoïque)', e: 'C', x: 2, eq: 'x + 2 × (+I) + 2 × (−II) = 0', r: 'H : +I ; O : −II' },
+    { f: 'H<sub>2</sub>CO (méthanal)', e: 'C', x: 0, eq: 'x + 2 × (+I) + (−II) = 0', r: 'H : +I ; O : −II' },
+    { f: 'C<sub>2</sub>H<sub>6</sub> (éthane)', e: 'C', x: -3, eq: '2x + 6 × (+I) = 0', r: 'H : +I ; la liaison C–C ne modifie pas le n.o.', faux: -6, fm: 'Il y a deux atomes de carbone : divisez par 2.' },
+    { f: 'C<sub>2</sub>H<sub>4</sub> (éthène)', e: 'C', x: -2, eq: '2x + 4 × (+I) = 0', r: 'H : +I', faux: -4, fm: 'Il y a deux atomes de carbone : divisez par 2.' },
+    { f: 'C<sub>2</sub>H<sub>2</sub> (éthyne)', e: 'C', x: -1, eq: '2x + 2 × (+I) = 0', r: 'H : +I', faux: -2, fm: 'Il y a deux atomes de carbone : divisez par 2.' }];
+  Exo.lancer('exo-p2-no', function () {
+    var d = C(NO), ops = [{ t: rom(d.x), ok: true }], vus = [d.x];
+    function aj(v, msg) { if (v >= -4 && v <= 8 && vus.indexOf(v) < 0 && ops.length < 4) { vus.push(v); ops.push({ t: rom(v), ok: false, pourquoi: msg }); } }
+    if (d.faux !== undefined) aj(d.faux, d.fm);
+    if (d.x) aj(-d.x, 'Erreur de signe : écrivez l’équation « somme des n.o. = charge ».');
+    M([1, -1, 2, -2]).forEach(function (s) { aj(d.x + s, 'Écrivez l’équation : la somme des n.o. de tous les atomes est égale à la charge de l’espèce.'); });
+    var et = [{ type: 'choix', q: 'Quel est le nombre d’oxydation de l’élément <b>' + d.e + '</b> dans ' + d.f + ' ?', options: ops,
+      corr: 'Règles prioritaires : ' + d.r + '. ' + (d.eq === 'corps pur simple' ? 'Corps pur simple : n.o. = 0.' : 'Équation : ' + d.eq + ', d’où x = <b>' + rom(d.x) + '</b>.') }];
+    if (d.e === 'C') et.push({ type: 'choix', q: 'Le n.o. du carbone varie entre quelles valeurs ?', options: [
+      { t: '−IV et +IV', ok: true }, { t: '0 et +IV', ok: false, pourquoi: 'Le carbone peut aussi gagner formellement 4 électrons (CH<sub>4</sub> : −IV).' },
+      { t: '−II et +II', ok: false, pourquoi: 'Le carbone possède 4 électrons de valence : n.o. de −IV (CH<sub>4</sub>) à +IV (CO<sub>2</sub>).' },
+      { t: '−VIII et +VIII', ok: false, pourquoi: 'Le carbone possède 4 électrons de valence, pas 8.' }],
+      corr: 'Avec 4 électrons de valence, le carbone a un n.o. compris entre <b>−IV</b> (CH<sub>4</sub>) et <b>+IV</b> (CO<sub>2</sub>). Une oxydation augmente le n.o. du carbone fonctionnel.' });
+    return { contexte: '<p>Espèce : <b>' + d.f + '</b>. Le n.o. se note en chiffres romains.</p>', etapes: et };
+  });
+})();
+
+</script>
+<script data-goatcounter="https://chimie-winckler.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
