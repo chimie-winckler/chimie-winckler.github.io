@@ -68,7 +68,7 @@
 </main>
 <footer class="pied"><div class="conteneur">BTS Métiers de la Chimie – Synthèse</div></footer>
 <script src="theme.js?v=1"></script>
-<script src="exo.js?v=20261105d"></script>
+<script src="exo.js?v=20261106a"></script>
 <script src="chem.js?v=20261105d"></script>
 <script>
 /* ===== Partie 4 : réactivité, mécanismes ===== */
@@ -355,7 +355,8 @@
     et.push({ type: 'choix', q: 'Les deux produits possibles sont des isomères :', options: [
       { t: 'de position (isomères de constitution)', ok: true }, { t: 'énantiomères', ok: false, pourquoi: 'Ils diffèrent par la position du groupe fixé : ce sont des isomères de constitution.' }, { t: 'Z et E', ok: false, pourquoi: 'Les produits n’ont plus de double liaison C=C.' }],
       corr: 'Même formule brute, position différente du groupe : isomères <b>de position</b>. La réaction est <b>régiosélective</b>.' });
-    return { contexte: '<p>On fait réagir le <b>' + a.n + '</b> (' + s(a.f) + ') avec ' + reac + '.</p>', etapes: et };
+    var react = { HCl: 'H–Cl', HBr: 'H–Br', HBrRad: 'H–Br', H2O: 'H2O' }[r];
+    return { contexte: '<p>On fait réagir le <b>' + a.n + '</b> (' + s(a.f) + ') avec ' + reac + '.</p><p class="exo-eq-chimique">' + s(a.f) + ' + ' + s(react) + ' ⟶ ? ' + (rad ? '(lumière ou peroxydes)' : r === 'H2O' ? '(H<sup>+</sup>)' : '') + '</p>', etapes: et };
   });
 
   /* ---------- 5. Formation ou rupture de liaison (exercice 7) ---------- */

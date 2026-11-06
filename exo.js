@@ -84,10 +84,27 @@ var Exo = (function () {
   }
   var HMUET = /(^|[\s>(])(de|De|le|Le|la|La) (h(?:uile|exan|eptan|ydrog|ydrox|élium|ydrat|ydrocarbure|alog|ématite|umidité))/g;
   function elider2(t) { if (typeof t !== 'string') return t; return elider(t).replace(HMUET, function (m, a, w, v) { return a + (w.charAt(0) === 'D' ? 'D’' : w.charAt(0) === 'd' ? 'd’' : w.charAt(0) === 'L' ? 'L’' : 'l’') + v; }); }
+  /* écriture chimique : « SO4^2- » → SO<sub>4</sub><sup>2−</sup> */
+  function ch(t) {
+    return t.split(/(<[^>]+>)/).map(function (x) {
+      if (x.charAt(0) === '<') return x;
+      return x.replace(/\^(\d*[+-])/g, function (m, c) { return '\u0001' + c.replace('-', '−') + '\u0002'; })
+        .replace(/_([a-z0-9]+)/g, '<sub>$1</sub>').replace(/\]n\b/g, ']<sub>n</sub>').replace(/([A-Za-z\)\]])(\d+)/g, '$1<sub>$2</sub>').replace(/\u0001/g, '<sup>').replace(/\u0002/g, '</sup>');
+    }).join('');
+  }
+  /* équations à afficher automatiquement : [expression régulière sur le texte, équation] */
+  var eqs = [];
+  function sansBalise(t) { return String(t || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' '); }
+  function ajouterEq(t) {
+    if (!t || /⟶|→|⇄|exo-eq-chimique/.test(t)) return t;
+    var txt = sansBalise(t), aj = '';
+    eqs.forEach(function (e) { if (e[0].test(txt) && aj.indexOf(e[1]) < 0) aj += '<p class="exo-eq-chimique">' + ch(e[1]) + '</p>'; });
+    return t + aj;
+  }
   function nettoyer(ex) { var elider = elider2;
-    ex.contexte = elider(ex.contexte);
+    ex.contexte = elider(ajouterEq(ex.contexte));
     ex.etapes.forEach(function (e) {
-      e.q = elider(e.q); e.corr = elider(e.corr);
+      e.q = elider(/exo-eq-chimique|⟶|→|⇄/.test(ex.contexte) && eqs.some(function (x) { return x[0].test(sansBalise(ex.contexte)); }) ? e.q : ajouterEq(e.q)); e.corr = elider(e.corr);
       (e.options || []).forEach(function (o) { o.t = elider(o.t); o.pourquoi = elider(o.pourquoi); });
       (e.pieges || []).forEach(function (p) { p.msg = elider(p.msg); });
     });
@@ -161,5 +178,5 @@ var Exo = (function () {
     var b = document.querySelector('[data-nouveau="' + id + '"]');
     if (b) b.addEventListener('click', nouvelle);
   }
-  return { gens: gens, alea: alea, choisir: choisir, melanger: melanger, cs: cs, nb: nb, lire: lire, regression: regression, graphique: graphique, lancer: lancer };
+  return { eqs: eqs, ch: ch, gens: gens, alea: alea, choisir: choisir, melanger: melanger, cs: cs, nb: nb, lire: lire, regression: regression, graphique: graphique, lancer: lancer };
 })();
