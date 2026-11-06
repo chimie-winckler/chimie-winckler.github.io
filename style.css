@@ -412,3 +412,6 @@ h3 { margin: 0 0 8px; font-size: 1.05rem; }
 .chrono-rs button { font-size: 1.6em; min-width: 110px; padding: 10px 0; }
 .chrono-erreurs { display: grid; gap: 10px; }
 .chrono-erreur { border-left: 4px solid #c0392b; padding: 6px 10px; background: rgba(192, 57, 43, .06); }
+.exo-figure { margin: 8px 0 10px; background: #fff; border: 1px solid #d9e2e4; border-radius: 8px; padding: 8px; max-width: 760px; }
+.exo-figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+.exo-figure figcaption { font-size: .85em; color: #5b6870; text-align: center; margin-top: 4px; }

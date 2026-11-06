@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Schémas de synthèse – Chimie de Synthèse</title>
 <script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
-<link rel="stylesheet" href="style.css?v=20261105a">
+<link rel="stylesheet" href="style.css?v=20261106a">
 </head>
 <body>
 <header class="entete">
@@ -32,7 +32,7 @@
   </div>
 </div>
 <main class="conteneur">
-<nav class="sommaire"><a href="#lineaire">Rendement d’une synthèse linéaire</a><a href="#convergente">Synthèse linéaire ou convergente ?</a><a href="#select">Sélectivités</a><a href="#protection">Protection de fonction</a><a href="#rotation">Pouvoir rotatoire et excès énantiomérique</a><a href="#enjeux">Enjeux d’une synthèse</a></nav><section class="exo exo-bloc" id="lineaire">
+<nav class="sommaire"><a href="#lineaire">Rendement d’une synthèse linéaire</a><a href="#convergente">Synthèse linéaire ou convergente ?</a><a href="#rosuvastatine">Rosuvastatine</a><a href="#select">Sélectivités</a><a href="#protection">Protection de fonction</a><a href="#rotation">Pouvoir rotatoire et excès énantiomérique</a><a href="#enjeux">Enjeux d’une synthèse</a></nav><section class="exo exo-bloc" id="lineaire">
 <div class="exo-tete"><h2>Rendement d’une synthèse linéaire</h2><button type="button" class="bouton" data-nouveau="exo-p5-lineaire">Nouvelles valeurs</button></div>
 <p class="exo-consigne">Nombres : virgule acceptée ; puissances de 10 sous la forme 1,2e-3 ; angles en degrés (°). Tolérance : 2 %. Rendement global, rendement moyen par étape, masse de réactif nécessaire (dont la rosuvastatine).</p>
 <div id="exo-p5-lineaire"><p>Chargement…</p></div>
@@ -40,6 +40,10 @@
 <div class="exo-tete"><h2>Synthèse linéaire ou convergente ?</h2><button type="button" class="bouton" data-nouveau="exo-p5-convergente">Nouvelles valeurs</button></div>
 <p class="exo-consigne">Nombres : virgule acceptée ; puissances de 10 sous la forme 1,2e-3 ; angles en degrés (°). Tolérance : 2 %. Le modèle des « billes » du cours.</p>
 <div id="exo-p5-convergente"><p>Chargement…</p></div>
+</section><section class="exo exo-bloc" id="rosuvastatine">
+<div class="exo-tete"><h2>Rosuvastatine : linéaire ou convergente ?</h2><button type="button" class="bouton" data-nouveau="exo-p5-rosu">Recommencer</button></div>
+<p class="exo-consigne">D’après l’activité-cours 2 : schémas des deux synthèses, rendements globaux et comparaison des stratégies. Tolérance : 2 %.</p>
+<div id="exo-p5-rosu"><p>Chargement…</p></div>
 </section><section class="exo exo-bloc" id="select">
 <div class="exo-tete"><h2>Sélectivités</h2><button type="button" class="bouton" data-nouveau="exo-p5-select">Nouvelles valeurs</button></div>
 <p class="exo-consigne">Nombres : virgule acceptée ; puissances de 10 sous la forme 1,2e-3 ; angles en degrés (°). Tolérance : 2 %. Chimiosélectivité, régiosélectivité, stéréosélectivité, stéréospécificité.</p>
@@ -76,7 +80,7 @@
     else { var n = C([5, 6, 7, 8]); r = []; for (var i = 0; i < n; i++) r.push(Math.round(A(65, 98))); noms = r.map(function (x, i) { return (i + 1) + ''; }); nom = 'Synthèse linéaire en ' + n + ' étapes'; }
     var R = prod(r), n2 = r.length, moy = Math.pow(R, 1 / n2), M = C([180, 250, 320, 410]), mc = C([1, 5, 10, 50]), M0 = C([90, 120, 150]);
     var n0 = mc * 1000 / M / R, m0 = n0 * M0 / 1000;
-    var ctx = '<p><b>' + nom + '</b> :</p>' + tabR(noms, r);
+    var ctx = '<p><b>' + nom + '</b> :</p>' + (rosu ? fig('rosuvastatine-lineaire.png', 'Synthèse linéaire de la rosuvastatine (d’après chemdrug.com ; ZD-4522 = rosuvastatine)') : '') + tabR(noms, r);
     return { contexte: ctx, etapes: [
       { type: 'nombre', q: '<b>Calculer</b> le rendement global de la synthèse.', rep: 100 * R, unite: '%', tol: 0.02,
         pieges: [{ v: r.reduce(function (a, x) { return a + x; }, 0) / n2, msg: 'C’est la moyenne des rendements : le rendement global est leur <b>produit</b>.' }, { v: Math.min.apply(null, r), msg: 'Ce n’est pas le rendement de l’étape la moins efficace : toutes les pertes se cumulent.' }, { v: r.reduce(function (a, x) { return a * x; }, 1) / Math.pow(100, n2 - 1) * 100, msg: 'Écrivez les rendements sous forme décimale avant de les multiplier.' }].filter(function (x) { return Math.abs(x.v - 100 * R) > 1; }),
@@ -182,7 +186,41 @@
     return { contexte: '<p>Enjeux économiques et environnementaux d’une synthèse.</p>', etapes: et.concat(banque(ENJ, 3)) };
   }
 
+  /* 2 bis. Rosuvastatine : synthèse linéaire ou convergente (activité-cours 2) */
+  var IMG = 'Ressources%20site%20internet/images/exercices/';
+  function fig(f, leg) { return '<figure class="exo-figure"><img src="' + IMG + f + '" alt="' + leg + '" loading="lazy"><figcaption>' + leg + '</figcaption></figure>'; }
+  function genRosu() {
+    var rl = [95, 78, 91, 75, 72, 76, 89, 78, 99], nl = ['(I) → (III)', '(III) → (V)', '(V) → (VI)', '(VI) → (VII)', '(VII) → (VIII)', '(VIII) → (X)', '(X) → (XI)', '(XI) → (XII)', '(XII) → rosuvastatine'];
+    var rc = [98, 78, 82, 89, 79, 89], nc = ['R1', 'R2', 'R3', 'R4', 'R5', 'R6'];
+    var RL = prod(rl), RC = prod([98, 78, 82, 79, 89]), RT = prod(rc), R7 = prod([95, 78, 91, 75]);
+    var ctx = '<p>La rosuvastatine est un médicament hypolipidémiant (famille des statines).</p>' +
+      '<p><b>1. Synthèse linéaire « médicinale »</b> (Shionogi, 1993) :</p>' + fig('rosuvastatine-lineaire.png', 'Synthèse linéaire de la rosuvastatine (d’après chemdrug.com ; ZD-4522 = rosuvastatine)') + tabR(nl, rl) +
+      '<p><b>2. Synthèse convergente « industrielle »</b> : deux fragments, 1 et 2, sont préparés séparément puis assemblés.</p>' + fig('rosuvastatine-convergente.png', 'Synthèse convergente (4th Annual Florida Heterocyclic Course and Conference)') + tabR(nc, rc) +
+      '<p class="exo-aide">Le produit de l’étape R6 correspond au composé (VII) de la synthèse linéaire (avec R = éthyle).</p>';
+    return { contexte: ctx, etapes: [
+      { type: 'nombre', q: '<b>Calculer</b> le rendement global de la synthèse linéaire (I) → rosuvastatine.', rep: 100 * RL, unite: '%', tol: 0.02,
+        pieges: [{ v: rl.reduce(function (a, x) { return a + x; }, 0) / rl.length, msg: 'C’est la moyenne des rendements : le rendement global est leur <b>produit</b>.' }, { v: 72, msg: 'Ce n’est pas le rendement de l’étape la moins efficace : toutes les pertes se cumulent.' }],
+        corr: 'r = ' + rl.map(function (x) { return nb(x / 100, 2); }).join(' × ') + ' = <b>' + nb(100 * RL) + ' %</b>.' },
+      { type: 'choix', q: '<b>Identifier</b> les étapes qui conduisent au fragment 1 et celle qui conduit au fragment 2.', options: [
+        { t: 'fragment 1 : R1, R2, R3 ; fragment 2 : R4', ok: true },
+        { t: 'fragment 1 : R1, R2 ; fragment 2 : R3, R4', ok: false, pourquoi: 'R3 conduit encore au fragment 1 (énamine encadrée « 1 »).' },
+        { t: 'fragment 1 : R1, R2, R3, R4 ; fragment 2 : R5', ok: false, pourquoi: 'R4 (sulfonamide + chlorure de cyanogène) donne le fragment 2 ; R5 est l’assemblage 1 + 2.' },
+        { t: 'fragment 1 : R5, R6 ; fragment 2 : R4', ok: false, pourquoi: 'R5 et R6 viennent après l’assemblage des deux fragments.' }],
+        corr: 'R1, R2, R3 conduisent au <b>fragment 1</b> ; R4 conduit au <b>fragment 2</b> ; R5 assemble 1 + 2 et R6 forme le cycle pyrimidine.' },
+      { type: 'nombre', q: '<b>Calculer</b> le rendement global de la synthèse convergente (sur la séquence la plus longue, celle du fragment 1).', rep: 100 * RC, unite: '%', tol: 0.02,
+        pieges: [{ v: 100 * RT, msg: 'R4 est réalisée en parallèle (fragment 2) : elle ne s’ajoute pas à la séquence du fragment 1.' }, { v: 100 * prod([98, 78, 82]), msg: 'C’est le rendement du fragment 1 seul : il faut aussi les étapes R5 et R6.' }],
+        corr: 'Séquence la plus longue : R1, R2, R3, puis R5, R6 : r = 0,98 × 0,78 × 0,82 × 0,79 × 0,89 = <b>' + nb(100 * RC) + ' %</b> (R4, réalisée en parallèle, ne s’ajoute pas).' },
+      { type: 'nombre', q: '<b>Calculer</b> le rendement de la synthèse linéaire de (I) à (VII).', rep: 100 * R7, unite: '%', tol: 0.02,
+        pieges: [{ v: 100 * RL, msg: 'On s’arrête au composé (VII) : 4 étapes seulement.' }, { v: 100 * prod([95, 78, 91]), msg: '(I) → (VII) comporte 4 étapes : (I)→(III), (III)→(V), (V)→(VI), (VI)→(VII).' }],
+        corr: 'r = 0,95 × 0,78 × 0,91 × 0,75 = <b>' + nb(100 * R7) + ' %</b>.' },
+      { type: 'choix', q: '<b>Comparer</b> les deux stratégies pour obtenir (VII).', options: [
+        { t: 'Le rendement est du même ordre (' + nb(100 * R7) + ' % en linéaire contre ' + nb(100 * RC) + ' % en convergente) : le choix industriel repose aussi sur d’autres critères (coût et sécurité des réactifs, nombre d’opérations, fragments préparés en parallèle).', ok: true },
+        { t: 'La synthèse convergente a toujours un meilleur rendement que la synthèse linéaire.', ok: false, pourquoi: 'Ici, la voie linéaire jusqu’à (VII) donne ' + nb(100 * R7) + ' %, contre ' + nb(100 * RC) + ' % pour la voie convergente : ce n’est pas « toujours » vrai.' },
+        { t: 'La synthèse linéaire est préférable car elle comporte moins de réactifs.', ok: false, pourquoi: 'Comparez les rendements calculés et pensez aux autres critères d’une synthèse industrielle.' }],
+        corr: 'Linéaire (I) → (VII) : ' + nb(100 * R7) + ' % ; convergente : ' + nb(100 * RC) + ' %. Les rendements sont voisins : l’intérêt de la voie industrielle tient aussi aux réactifs utilisés et à l’organisation de la production (fragments préparés en parallèle).' }] };
+  }
   Exo.lancer('exo-p5-lineaire', genLineaire);
+  Exo.lancer('exo-p5-rosu', genRosu);
   Exo.lancer('exo-p5-convergente', genConvergente);
   Exo.lancer('exo-p5-select', genSelect);
   Exo.lancer('exo-p5-protection', genProtection);
