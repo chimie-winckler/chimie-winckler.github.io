@@ -415,3 +415,5 @@ h3 { margin: 0 0 8px; font-size: 1.05rem; }
 .exo-figure { margin: 8px 0 10px; background: #fff; border: 1px solid #d9e2e4; border-radius: 8px; padding: 8px; max-width: 760px; }
 .exo-figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
 .exo-figure figcaption { font-size: .85em; color: #5b6870; text-align: center; margin-top: 4px; }
+.tuiles-accueil { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.tuiles-accueil .tuile-home img { height: auto; aspect-ratio: 400 / 220; }
