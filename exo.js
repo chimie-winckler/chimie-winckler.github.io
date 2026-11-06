@@ -118,6 +118,20 @@ var Exo = (function () {
     });
     return ex;
   }
+  /* équations sur une seule ligne : on réduit la taille du texte jusqu’à ce qu’elle tienne (sinon défilement horizontal) */
+  function ajuster(zone) {
+    (zone || document).querySelectorAll('.exo-eq-chimique').forEach(function (e) {
+      if (!e.offsetWidth) return;
+      if (e.dataset.ta === undefined) e.dataset.ta = e.style.textAlign || '';
+      e.style.whiteSpace = 'nowrap'; e.style.fontSize = ''; e.style.textAlign = e.dataset.ta;
+      var t = parseFloat(getComputedStyle(e).fontSize), min = 12;
+      while (e.scrollWidth > e.clientWidth + 1 && t > min) { t -= 0.5; e.style.fontSize = t + 'px'; }
+      e.classList.toggle('defile', e.scrollWidth > e.clientWidth + 1);
+      if (e.scrollWidth > e.clientWidth + 1) e.scrollLeft = 0;
+    });
+  }
+  var minuteur = null;
+  window.addEventListener('resize', function () { clearTimeout(minuteur); minuteur = setTimeout(function () { ajuster(); }, 150); });
   var gens = {};
   function lancer(id, generer0) {
     var generer = function () { return nettoyer(generer0()); };
@@ -149,6 +163,7 @@ var Exo = (function () {
         if (inp) inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') valider(li, et, i, ex); });
       });
       if (ex.apres) ex.apres(racine);
+      ajuster(racine);
     }
     function valider(li, et, i, ex) {
       var retour = li.querySelector('.exo-retour'), ok = false, msg = '';
@@ -176,6 +191,7 @@ var Exo = (function () {
       retour.innerHTML = (ok ? '<b>Exact.</b> ' : '<b>Pas tout à fait.</b> ' + (msg ? '<span class="exo-piege">' + msg + '</span> ' : '')) + '<div class="exo-corr">' + et.corr + '</div>';
       var suiv = li.nextElementSibling;
       if (suiv) { suiv.hidden = false; }
+      ajuster(li); if (suiv) ajuster(suiv);
       else {
         var fin = racine.querySelector('.exo-fin'); fin.hidden = false;
         fin.innerHTML = '<p class="exo-score">Score : <b>' + score.ok + ' / ' + score.tot + '</b></p><button type="button" class="bouton exo-nouveau">Nouvel exercice (nouvelles valeurs)</button>';
@@ -186,5 +202,5 @@ var Exo = (function () {
     var b = document.querySelector('[data-nouveau="' + id + '"]');
     if (b) b.addEventListener('click', nouvelle);
   }
-  return { eqs: eqs, ch: ch, fleches: fleches, gens: gens, alea: alea, choisir: choisir, melanger: melanger, cs: cs, nb: nb, lire: lire, regression: regression, graphique: graphique, lancer: lancer };
+  return { ajuster: ajuster, eqs: eqs, ch: ch, fleches: fleches, gens: gens, alea: alea, choisir: choisir, melanger: melanger, cs: cs, nb: nb, lire: lire, regression: regression, graphique: graphique, lancer: lancer };
 })();

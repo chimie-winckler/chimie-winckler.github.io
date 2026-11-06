@@ -337,7 +337,7 @@ h3 { margin: 0 0 8px; font-size: 1.05rem; }
 .exo-tete .bouton { border: 0; cursor: pointer; font: inherit; font-weight: 600; }
 .exo-consigne { color: var(--doux); margin: 0 0 14px; }
 .exo-contexte { margin-bottom: 14px; }
-.exo-eq-chimique { text-align: center; font-size: 1.1rem; font-weight: 600; padding: 10px; background: var(--accent-clair); border-radius: 8px; overflow-x: auto; }
+.exo-eq-chimique { text-align: center; font-size: 1.1rem; font-weight: 600; padding: 10px; background: var(--accent-clair); border-radius: 8px; overflow-x: auto; white-space: nowrap; }
 .exo-tableau { overflow-x: auto; margin: 10px 0; }
 .exo-tableau table { border-collapse: collapse; font-size: .92rem; min-width: 100%; }
 .exo-tableau th, .exo-tableau td { border: 1px solid var(--bord); padding: 5px 8px; text-align: center; white-space: nowrap; }
@@ -425,3 +425,9 @@ h3 { margin: 0 0 8px; font-size: 1.05rem; }
 .fl-c .fl-a.fl-eq { height: 5px; border-bottom: 1.6px solid currentColor; }
 .fl-c .fl-a.fl-eq::after { top: -5.5px; border-left: 8px solid currentColor; border-top: 4.5px solid transparent; border-bottom: 0; }
 .fl-c .fl-a.fl-eq::before { content: ''; position: absolute; left: -1px; bottom: -1.6px; border-right: 8px solid currentColor; border-bottom: 4.5px solid transparent; border-top: 0; }
+@media (max-width: 600px) {
+  .exo-etapes { padding-left: 16px; }
+  .exo-etape { padding: 10px 8px; }
+  .exo-eq-chimique { padding: 8px 6px; }
+}
+.exo-eq-chimique.defile { text-align: left; -webkit-mask-image: linear-gradient(90deg, #000 92%, transparent); mask-image: linear-gradient(90deg, #000 92%, transparent); }
