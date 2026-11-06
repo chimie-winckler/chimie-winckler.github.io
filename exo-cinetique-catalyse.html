@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cinétique et catalyse – Chimie de Synthèse</title>
 <script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
-<link rel="stylesheet" href="style.css?v=20261106b">
+<link rel="stylesheet" href="style.css?v=20261106c">
 </head>
 <body>
 <header class="entete">
@@ -68,21 +68,21 @@
 </main>
 <footer class="pied"><div class="conteneur">BTS Métiers de la Chimie – Synthèse</div></footer>
 <script src="theme.js?v=1"></script>
-<script src="exo.js?v=20261106a"></script>
+<script src="exo.js?v=20261106b"></script>
 <script id="eqs">
 [
 [/saponification avec 18OH/, 'CH3–CO–O–C2H5 + HO^- ⟶ CH3–COO^- + C2H5–OH'],
 [/ordre global 2 \(1 pour l’ester/, 'CH3–CO–O–C2H5 + HO^- ⟶ CH3–COO^- + C2H5–OH'],
 [/formation du diiode I2/, '2 I^- + S2O8^2- ⟶ I2 + 2 SO4^2-'],
 [/Oxydation d’un alcène dissous dans le dichlorométhane/, '3 R–CH=CH–R′ + 2 MnO4^- + 4 H2O ⟶ 3 R–CH(OH)–CH(OH)–R′ + 2 MnO2 + 2 HO^-'],
-[/Oxydation du glucose/, 'C6H12O6 + O2 ⟶ C6H10O6 (gluconolactone) + H2O2 (glucose oxydase)'],
-[/complexe de Wilkinson/, 'R–CH=CH2 + H2 ⟶ R–CH2–CH3 ([RhCl(PPh3)3])'],
-[/Hydrogénation d’une huile végétale/, '–CH=CH– (chaîne grasse insaturée) + H2 ⟶ –CH2–CH2– (nickel de Raney)'],
-[/Couplage de Heck/, 'C6H5–Br + CH2=CH–R + base ⟶ C6H5–CH=CH–R + base·HBr (complexe du palladium)'],
-[/Pot catalytique/, '2 CO + 2 NO ⟶ 2 CO2 + N2 (Pt, Pd, Rh)'],
-[/Estérification de l’acide éthanoïque/, 'CH3–COOH + C2H5–OH ⇄ CH3–COO–C2H5 + H2O (H^+)'],
-[/Dismutation de l’eau oxygénée/, '2 H2O2 ⟶ 2 H2O + O2 (Fe^3+)'],
-[/Synthèse d’un éther-oxyde entre une solution aqueuse/, 'R–OH + HO^- ⇄ R–O^- + H2O ;   R–O^- + R′–Br ⟶ R–O–R′ + Br^- (Q^+ = (C4H9)4N^+)'],
+[/Oxydation du glucose/, 'C6H12O6 + O2 ⟶[glucose oxydase] C6H10O6 (gluconolactone) + H2O2'],
+[/complexe de Wilkinson/, 'R–CH=CH2 + H2 ⟶[[RhCl(PPh3)3]] R–CH2–CH3'],
+[/Hydrogénation d’une huile végétale/, '–CH=CH– (chaîne grasse insaturée) + H2 ⟶[nickel de Raney] –CH2–CH2–'],
+[/Couplage de Heck/, 'C6H5–Br + CH2=CH–R + base ⟶[complexe du Pd] C6H5–CH=CH–R + base·HBr'],
+[/Pot catalytique/, '2 CO + 2 NO ⟶[Pt, Pd, Rh] 2 CO2 + N2'],
+[/Estérification de l’acide éthanoïque/, 'CH3–COOH + C2H5–OH ⇄[H^+] CH3–COO–C2H5 + H2O'],
+[/Dismutation de l’eau oxygénée/, '2 H2O2 ⟶[Fe^3+] 2 H2O + O2'],
+[/Synthèse d’un éther-oxyde entre une solution aqueuse/, 'R–OH + HO^- ⇄ R–O^- + H2O<br>R–O^- + R′–Br ⟶[Q^+ = (C4H9)4N^+] R–O–R′ + Br^-'],
 [/La molécule H2 se scinde/, 'L_nM + H2 ⟶ L_nM(H)2'],
 [/Le bromobenzène Ph–Br se fixe/, 'Pd(PPh3)2 + Ph–Br ⟶ PhPdBr(PPh3)2'],
 [/Les ligands H et alkyle portés par le métal/, 'L_nM(H)(CH2–CH2R) ⟶ L_nM + CH3–CH2R'],
@@ -207,14 +207,14 @@
   /* ---------- 5. Utilisation atomique ---------- */
   function genUA() {
     var P = C([
-      { nom: 'ibuprofène – procédé Boots (6 étapes)', reac: [['C10H14', 134], ['C4H6O3', 102], ['C4H7ClO2', 122.5], ['C2H5ONa', 68], ['H3O+', 19], ['NH2OH', 33], ['H4O2', 36]], prod: ['C13H18O2', 206], cat: '', eq: Exo.ch('1. C10H14 + C4H6O3 ⟶ C12H16O + C2H4O2<br>2. C12H16O + C4H7ClO2 + C2H5ONa ⟶ C16H22O3 + NaCl + C2H5OH<br>3. C16H22O3 + H3O^+ ⟶ C13H18O + CO2 + C2H5OH + H^+<br>4. C13H18O + NH2OH ⟶ C13H19NO + H2O<br>5. C13H19NO ⟶ C13H17N + H2O<br>6. C13H17N + 2 H2O ⟶ C13H18O2 + NH3') },
-      { nom: 'ibuprofène – procédé BHC (3 étapes catalysées)', reac: [['C10H14', 134], ['C4H6O3', 102], ['H2', 2], ['CO', 28]], prod: ['C13H18O2', 206], cat: 'HF, nickel de Raney, palladium', eq: Exo.ch('1. C10H14 + C4H6O3 ⟶ C12H16O + CH3COOH (HF)<br>2. C12H16O + H2 ⟶ C12H18O (nickel de Raney)<br>3. C12H18O + CO ⟶ C13H18O2 (palladium)<br>Bilan : C10H14 + C4H6O3 + H2 + CO ⟶ C13H18O2 + CH3COOH') },
+      { nom: 'ibuprofène – procédé Boots (6 étapes)', reac: [['C10H14', 134], ['C4H6O3', 102], ['C4H7ClO2', 122.5], ['C2H5ONa', 68], ['H3O+', 19], ['NH2OH', 33], ['H4O2', 36]], prod: ['C13H18O2', 206], cat: '', eq: Exo.ch('1. C10H14 + C4H6O3 ⟶[AlCl3] C12H16O + C2H4O2<br>2. C12H16O + C4H7ClO2 + C2H5ONa ⟶ C16H22O3 + NaCl + C2H5OH<br>3. C16H22O3 + H3O^+ ⟶ C13H18O + CO2 + C2H5OH + H^+<br>4. C13H18O + NH2OH ⟶ C13H19NO + H2O<br>5. C13H19NO ⟶ C13H17N + H2O<br>6. C13H17N + 2 H2O ⟶ C13H18O2 + NH3') },
+      { nom: 'ibuprofène – procédé BHC (3 étapes catalysées)', reac: [['C10H14', 134], ['C4H6O3', 102], ['H2', 2], ['CO', 28]], prod: ['C13H18O2', 206], cat: 'HF, nickel de Raney, palladium', eq: Exo.ch('1. C10H14 + C4H6O3 ⟶[HF] C12H16O + CH3COOH<br>2. C12H16O + H2 ⟶[nickel de Raney] C12H18O<br>3. C12H18O + CO ⟶[Pd] C13H18O2<br>Bilan : C10H14 + C4H6O3 + H2 + CO ⟶ C13H18O2 + CH3COOH') },
       { nom: 'éther-oxyde E par synthèse de Williamson', reac: [['C7H8O', 108], ['C3H7Br', 123], ['NaOH', 40]], prod: ['C10H14O', 150], cat: 'bromure de tétrabutylammonium', eq: 'C<sub>7</sub>H<sub>8</sub>O + C<sub>3</sub>H<sub>7</sub>Br + NaOH → C<sub>10</sub>H<sub>14</sub>O + NaBr + H<sub>2</sub>O' },
       { nom: 'éthanoate d’éthyle par estérification', reac: [['C2H4O2', 60], ['C2H6O', 46]], prod: ['C4H8O2', 88], cat: 'acide sulfurique', eq: 'CH<sub>3</sub>COOH + C<sub>2</sub>H<sub>5</sub>OH ⇄ CH<sub>3</sub>COOC<sub>2</sub>H<sub>5</sub> + H<sub>2</sub>O' },
       { nom: 'méthanol à partir du gaz de synthèse', reac: [['CO', 28], ['2 H2', 4]], prod: ['CH4O', 32], cat: 'Cu/ZnO', eq: 'CO + 2 H<sub>2</sub> → CH<sub>3</sub>OH' }]);
     var S = P.reac.reduce(function (a, r) { return a + r[1]; }, 0), UA = P.prod[1] / S, prodT = C([1000, 5000, 13000, 20000]), dech = prodT * (1 / UA - 1);
     var tab = '<div class="exo-tableau"><table><tr><th>Réactifs</th>' + P.reac.map(function (r) { return '<td>' + ch(r[0]).replace('+', '<sup>+</sup>') + '</td>'; }).join('') + '</tr><tr><th>M (g.mol<sup>-1</sup>)</th>' + P.reac.map(function (r) { return '<td>' + nb(r[1], 4) + '</td>'; }).join('') + '</tr></table></div>';
-    var ctx = '<p>Synthèse de l’<b>' + P.nom + '</b>. Produit recherché : ' + ch(P.prod[0]) + ' (M = ' + P.prod[1] + ' g.mol<sup>-1</sup>).</p>' + (P.eq ? '<p class="exo-eq-chimique">' + P.eq + '</p>' : '') + (/Boots/.test(P.nom) ? '<p class="exo-aide">Synthèse en 6 étapes : on additionne tous les réactifs utilisés dans l’ensemble des étapes.</p>' : '') + tab + (P.cat ? '<p>Catalyseur(s) : ' + P.cat + '.</p>' : '') + '<p class="exo-aide">UA = M(produit recherché) / Σ M(réactifs) (chaque réactif compté avec son nombre stœchiométrique dans le bilan).</p>';
+    var ctx = '<p>Synthèse de l’<b>' + P.nom + '</b>. Produit recherché : ' + ch(P.prod[0]) + ' (M = ' + P.prod[1] + ' g.mol<sup>-1</sup>).</p>' + (P.eq ? '<p class="exo-eq-chimique">' + (P.cat && !/<br>/.test(P.eq) ? P.eq.replace(/ (→|⟶|⇄) /, function (m, f) { return ' ' + f + '[' + P.cat + '] '; }) : P.eq) + '</p>' : '') + (/Boots/.test(P.nom) ? '<p class="exo-aide">Synthèse en 6 étapes : on additionne tous les réactifs utilisés dans l’ensemble des étapes.</p>' : '') + tab + (P.cat ? '<p>Catalyseur(s) : ' + P.cat + '.</p>' : '') + '<p class="exo-aide">UA = M(produit recherché) / Σ M(réactifs) (chaque réactif compté avec son nombre stœchiométrique dans le bilan).</p>';
     return { contexte: ctx, etapes: [
       { type: 'nombre', q: '<b>Calculer</b> la somme des masses molaires des réactifs.', rep: S, unite: 'g.mol<sup>-1</sup>', tol: 0.005, corr: 'Σ M(réactifs) = ' + P.reac.map(function (r) { return nb(r[1], 4); }).join(' + ') + ' = <b>' + nb(S, 4) + ' g.mol<sup>-1</sup></b>.' + (P.cat ? ' Le catalyseur n’est pas compté : il est régénéré.' : '') },
       { type: 'nombre', q: '<b>Calculer</b> l’utilisation atomique UA du procédé.', rep: 100 * UA, unite: '%', tol: 0.01,
@@ -297,7 +297,7 @@
     var pv = cs(A(90, 99.7), 3), ee = 2 * pv - 100, ms = cs(A(5, 200), 3), ns = ms / X.Ms, SC = C([1000, 2000, 5000, 10000, 20000]), nc = ns / SC, mc = nc * X.Mc * 1000, mcR = cs(mc, 3);
     var eta = cs(A(0.9, 0.99), 2), np = eta * ns, mp = np * X.Mp, mMin = mp * (100 - pv) / 100, TON = np / (mcR / 1000 / X.Mc);
     var eeMes = cs(A(85, 99), 3), aMes = X.alpha ? cs(X.alpha * eeMes / 100, 3) : null, mRac = 0.5 * eta * ns * X.Mp, mVoulu = mp * pv / 100;
-    var ctx = '<p><b>' + X.nom + '</b> : on hydrogène ' + nb(ms) + ' g de ' + X.sub + ' (M = ' + X.Ms + ' g.mol<sup>-1</sup>) par H<sub>2</sub>, avec ' + nb(mcR) + ' mg de catalyseur ' + X.cat + ' (M ≈ ' + X.Mc + ' g.mol<sup>-1</sup>). On obtient ' + X.prod + ' (M = ' + X.Mp + ' g.mol<sup>-1</sup>), avec un rendement de ' + Math.round(eta * 100) + ' %.</p><p class="exo-eq-chimique">' + X.eq + '</p><p>Analyse par chromatographie chirale du produit : <b>' + nb(pv, 3) + ' % d’énantiomère (' + X.voulu + ')</b> et ' + nb(100 - pv, 3) + ' % d’énantiomère (' + X.autre + ').</p><p class="exo-aide">Excès énantiomérique : ee = (n<sub>maj</sub> − n<sub>min</sub>) / (n<sub>maj</sub> + n<sub>min</sub>) = %(maj) − %(min). Un mélange racémique (50/50) a ee = 0 % ; un énantiomère pur a ee = 100 %.</p>';
+    var ctx = '<p><b>' + X.nom + '</b> : on hydrogène ' + nb(ms) + ' g de ' + X.sub + ' (M = ' + X.Ms + ' g.mol<sup>-1</sup>) par H<sub>2</sub>, avec ' + nb(mcR) + ' mg de catalyseur ' + X.cat + ' (M ≈ ' + X.Mc + ' g.mol<sup>-1</sup>). On obtient ' + X.prod + ' (M = ' + X.Mp + ' g.mol<sup>-1</sup>), avec un rendement de ' + Math.round(eta * 100) + ' %.</p><p class="exo-eq-chimique">' + X.eq.replace(/ (→|⟶) /, function (m, f) { return ' ' + f + '[' + X.cat + '] '; }) + '</p><p>Analyse par chromatographie chirale du produit : <b>' + nb(pv, 3) + ' % d’énantiomère (' + X.voulu + ')</b> et ' + nb(100 - pv, 3) + ' % d’énantiomère (' + X.autre + ').</p><p class="exo-aide">Excès énantiomérique : ee = (n<sub>maj</sub> − n<sub>min</sub>) / (n<sub>maj</sub> + n<sub>min</sub>) = %(maj) − %(min). Un mélange racémique (50/50) a ee = 0 % ; un énantiomère pur a ee = 100 %.</p>';
     var et = [
       { type: 'choix', q: '<b>Identifier</b> la transformation et le stéréocentre créé.',
         options: [{ t: 'Addition de H<sub>2</sub> sur la liaison ' + X.lia + ' : le carbone de cette liaison devient le stéréocentre C*', ok: true }, { t: 'Substitution d’un H par un groupe OH', ok: false, pourquoi: 'On ajoute H<sub>2</sub> sur une liaison double : c’est une addition (hydrogénation).' }, { t: 'Le stéréocentre existait déjà dans le réactif', ok: false, pourquoi: 'Le réactif (trigonal au niveau de ' + X.lia + ') n’est pas chiral : le stéréocentre est créé par la réaction.' }, { t: 'Le catalyseur cède son atome de métal au produit', ok: false, pourquoi: 'Le catalyseur est régénéré : il n’entre pas dans le produit.' }],

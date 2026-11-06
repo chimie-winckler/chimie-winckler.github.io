@@ -417,3 +417,11 @@ h3 { margin: 0 0 8px; font-size: 1.05rem; }
 .exo-figure figcaption { font-size: .85em; color: #5b6870; text-align: center; margin-top: 4px; }
 .tuiles-accueil { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
 .tuiles-accueil .tuile-home img { height: auto; aspect-ratio: 400 / 220; }
+/* flèche de réaction avec conditions au-dessus / au-dessous */
+.fl-c { display: inline-flex; flex-direction: column; align-items: stretch; vertical-align: middle; margin: 0 .35em; font-size: .72em; line-height: 1.15; text-align: center; font-weight: 600; }
+.fl-c .fl-h, .fl-c .fl-b { padding: 0 .35em; white-space: nowrap; }
+.fl-c .fl-a { position: relative; min-width: 2.6em; height: 0; border-top: 1.6px solid currentColor; margin: 3px 0; }
+.fl-c .fl-a::after { content: ''; position: absolute; right: -1px; top: -5.5px; border-left: 9px solid currentColor; border-top: 4.5px solid transparent; border-bottom: 4.5px solid transparent; }
+.fl-c .fl-a.fl-eq { height: 5px; border-bottom: 1.6px solid currentColor; }
+.fl-c .fl-a.fl-eq::after { top: -5.5px; border-left: 8px solid currentColor; border-top: 4.5px solid transparent; border-bottom: 0; }
+.fl-c .fl-a.fl-eq::before { content: ''; position: absolute; left: -1px; bottom: -1.6px; border-right: 8px solid currentColor; border-bottom: 4.5px solid transparent; border-top: 0; }

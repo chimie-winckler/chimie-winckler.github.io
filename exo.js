@@ -92,16 +92,24 @@ var Exo = (function () {
         .replace(/_([a-z0-9]+)/g, '<sub>$1</sub>').replace(/\]n\b/g, ']<sub>n</sub>').replace(/([A-Za-z\)\]])(\d+)/g, '$1<sub>$2</sub>').replace(/\u0001/g, '<sup>').replace(/\u0002/g, '</sup>');
     }).join('');
   }
+  /* flèche avec conditions : « ⟶[HF] », « ⇄[H^+|Δ] » (au-dessus | au-dessous) */
+  function fleches(t) {
+    if (typeof t !== 'string' || !/(⟶|→|⇄)\[/.test(t)) return t;
+    return t.replace(/(⟶|→|⇄)\[([^\]\[]*(?:\[[^\]]*\][^\]\[]*)*)\]/g, function (m, f, c) {
+      var p = c.split('|');
+      return '<span class="fl-c"><span class="fl-h">' + (p[0] || '&nbsp;') + '</span><span class="fl-a' + (f === '⇄' ? ' fl-eq' : '') + '" aria-label="' + (f === '⇄' ? 'équilibre' : 'donne') + '"></span><span class="fl-b">' + (p[1] || '&nbsp;') + '</span></span>';
+    });
+  }
   /* équations à afficher automatiquement : [expression régulière sur le texte, équation] */
   var eqs = [];
   function sansBalise(t) { return String(t || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' '); }
   function ajouterEq(t) {
     if (!t || /⟶|→|⇄|exo-eq-chimique/.test(t)) return t;
     var txt = sansBalise(t), aj = '';
-    eqs.forEach(function (e) { if (e[0].test(txt) && aj.indexOf(e[1]) < 0) aj += '<p class="exo-eq-chimique">' + ch(e[1]) + '</p>'; });
+    eqs.forEach(function (e) { if (e[0].test(txt) && aj.indexOf(e[1]) < 0) aj += '<p class="exo-eq-chimique">' + fleches(ch(e[1])) + '</p>'; });
     return t + aj;
   }
-  function nettoyer(ex) { var elider = elider2;
+  function nettoyer(ex) { var elider = function (t) { return fleches(elider2(t)); };
     ex.contexte = elider(ajouterEq(ex.contexte));
     ex.etapes.forEach(function (e) {
       e.q = elider(/exo-eq-chimique|⟶|→|⇄/.test(ex.contexte) && eqs.some(function (x) { return x[0].test(sansBalise(ex.contexte)); }) ? e.q : ajouterEq(e.q)); e.corr = elider(e.corr);
@@ -178,5 +186,5 @@ var Exo = (function () {
     var b = document.querySelector('[data-nouveau="' + id + '"]');
     if (b) b.addEventListener('click', nouvelle);
   }
-  return { eqs: eqs, ch: ch, gens: gens, alea: alea, choisir: choisir, melanger: melanger, cs: cs, nb: nb, lire: lire, regression: regression, graphique: graphique, lancer: lancer };
+  return { eqs: eqs, ch: ch, fleches: fleches, gens: gens, alea: alea, choisir: choisir, melanger: melanger, cs: cs, nb: nb, lire: lire, regression: regression, graphique: graphique, lancer: lancer };
 })();
