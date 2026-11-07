@@ -79,15 +79,37 @@
     if (Z === 24 || Z === 29) r.forEach(function (x) { if (x[0] === 4 && x[1] === 0) x[2] = 1; if (x[0] === 3 && x[1] === 2) x[2] += 1; });
     return r;
   }
-  function cle(r) { return r.filter(function (x) { return x[2] > 0; }).map(function (x) { return x.join('.'); }).join(' '); }
-  function ecr(r, abr) {
+  function cle(r) { return r.filter(function (x) { return x[2] > 0; }).map(function (x) { return x.join('.'); }).sort().join(' '); }
+  function parNL(a, b) { return a[0] - b[0] || a[1] - b[1]; }
+  /* écriture : on remplit selon Klechkowski, mais une sous-couche d ou f occupée est plus basse en énergie
+     que la sous-couche s de n supérieur : on écrit par n croissant (3d avant 4s). ordreK = écriture dans l’ordre de remplissage */
+  function visible(r, abr) {
     var t = r.filter(function (x) { return x[2] > 0; }), pre = '';
     if (abr) {
-      var tot = 0, cut = -1, g = { 18: 'Ar', 36: 'Kr', 54: 'Xe' }, gz = null;
-      t.forEach(function (x, i) { tot += x[2]; if (g[tot] && x[1] === 1 && i < t.length - 1 && (abr === true || tot <= abr)) { cut = i; gz = g[tot]; } });
-      if (cut >= 0 && cut < t.length - 1) { pre = '[' + gz + '] '; t = t.slice(cut + 1); }
+      var tot = total(t);
+      [54, 36, 18].some(function (zg) {
+        if (zg >= tot) return false;
+        var coeur = remplir(zg, ORD), ok = coeur.every(function (c) { return t.some(function (x) { return x[0] === c[0] && x[1] === c[1] && x[2] === c[2]; }); });
+        if (!ok) return false;
+        pre = '[' + { 18: 'Ar', 36: 'Kr', 54: 'Xe' }[zg] + '] ';
+        t = t.filter(function (x) { return !coeur.some(function (c) { return c[0] === x[0] && c[1] === x[1]; }); });
+        return true;
+      });
     }
-    return pre + t.map(function (x) { return x[0] + L[x[1]] + '<sup>' + x[2] + '</sup>'; }).join(' ');
+    return { pre: pre, t: t };
+  }
+  function ecr(r, abr, ordreK) {
+    var v = visible(r, abr), t = ordreK ? v.t : v.t.slice().sort(parNL);
+    return v.pre + t.map(function (x) { return x[0] + L[x[1]] + '<sup>' + x[2] + '</sup>'; }).join(' ');
+  }
+  /* vrai si, dans la partie écrite, l’ordre de remplissage diffère de l’ordre d’écriture */
+  function inverse(r, abr) { return ecr(r, abr, true) !== ecr(r, abr, false); }
+  function regleEcriture(r, abr) {
+    var t = visible(r, abr).t;
+    var sH = t.filter(function (x) { return x[1] === 0 && t.some(function (y) { return y[1] >= 2 && y[0] < x[0]; }); });
+    var d = t.filter(function (x) { return x[1] >= 2 && sH.some(function (y) { return y[0] > x[0]; }); });
+    var nd = d.map(function (x) { return x[0] + L[x[1]]; }), ns = sH.map(function (x) { return x[0] + 's'; });
+    return 'Dès qu’elles sont occupées, les orbitales ' + nd.join(' et ') + ' sont plus basses en énergie que ' + ns.join(' et ') + ' : on remplit selon Klechkowski, mais on écrit la configuration par n croissant (' + nd[0] + ' avant ' + ns[ns.length - 1] + ').';
   }
   function total(r) { return r.reduce(function (s, x) { return s + x[2]; }, 0); }
   function celib(r) { return r.reduce(function (s, x) { var k = 2 * x[1] + 1; return s + (x[2] <= k ? x[2] : 2 * k - x[2]); }, 0); }
@@ -102,10 +124,11 @@
 
   function optionsConfig(Z) {
     var vrai = config(Z), ab = abrege(Z), ops = [{ t: ecr(vrai, ab), ok: true }], vus = [cle(vrai)];
-    function aj(r, msg) { var k = cle(r); if (vus.indexOf(k) < 0) { vus.push(k); ops.push({ t: ecr(r, ab), ok: false, pourquoi: msg }); } }
+    function aj(r, msg, oK) { var k = cle(r) + (oK ? 'K' : ''); if (vus.indexOf(k) < 0) { vus.push(k); ops.push({ t: ecr(r, ab, oK), ok: false, pourquoi: msg }); } }
+    if (inverse(vrai, ab)) aj(vrai, 'Les électrons sont bien répartis, mais l’ordre d’écriture est faux. ' + regleEcriture(vrai, ab), true);
     if (Z === 24 || Z === 29) aj(remplir(Z, ORD), 'C’est la configuration prévue par la règle de Klechkowski, mais ' + el(Z).s + ' est une exception : une sous-couche 3d ' + (Z === 24 ? 'à moitié remplie (3d<sup>5</sup>)' : 'pleine (3d<sup>10</sup>)') + ' et 4s<sup>1</sup> est plus stable.');
     var parN = ORD.slice().sort(function (a, b) { return a[0] - b[0] || a[1] - b[1]; });
-    aj(remplir(Z, parN), 'Remplissage couche par couche (n croissant) : il faut suivre la règle de Klechkowski (n + ℓ croissant), par exemple 4s avant 3d.');
+    aj(remplir(Z, parN), 'Remplissage couche par couche (n croissant) : le remplissage suit la règle de Klechkowski (n + ℓ croissant), par exemple 4s se remplit avant 3d.');
     var ex = JSON.parse(JSON.stringify(vrai)), der = ex[ex.length - 1];
     if (ex.length > 1 && der[2] < cap(der[1])) { ex[ex.length - 2][2] -= 1; der[2] += 1; aj(ex, 'Configuration d’un état excité : à l’état fondamental, on remplit entièrement une sous-couche avant de passer à la suivante (règle de stabilité).'); }
     aj(config(Z + 1), 'Le nombre d’électrons est faux : un atome neutre possède Z = ' + Z + ' électrons.');
@@ -118,7 +141,7 @@
     var Z = Math.random() < 0.5 ? C(COURS) : C(ZS), e = el(Z), r = config(Z), b = bloc(Z), P = periode(r), cel = celib(r);
     var et = [
       { type: 'choix', q: 'Quelle est la configuration électronique de l’atome ' + dap(e.n) + ' dans son état fondamental ?' + (abrege(Z) ? ' (écriture abrégée avec le gaz noble)' : ''), options: optionsConfig(Z),
-        corr: 'On répartit Z = ' + Z + ' électrons selon la règle de Klechkowski (1s 2s 2p 3s 3p 4s 3d 4p 5s 4d 5p 6s 4f 5d 6p) et le principe de Pauli (s : 2, p : 6, d : 10, f : 14 électrons au maximum) : <b>' + ecr(r, abrege(Z)) + '</b>.' + (Z === 24 || Z === 29 ? ' Exception : une sous-couche d ' + (Z === 24 ? 'à moitié remplie' : 'pleine') + ' est particulièrement stable.' : '') + (b === 'd' ? ' On peut aussi l’écrire en regroupant par couche (3d avant 4s).' : '') },
+        corr: 'On répartit Z = ' + Z + ' électrons selon la règle de Klechkowski (1s 2s 2p 3s 3p 4s 3d 4p 5s 4d 5p 6s 4f 5d 6p) et le principe de Pauli (s : 2, p : 6, d : 10, f : 14 électrons au maximum) : <b>' + ecr(r, abrege(Z)) + '</b>.' + (Z === 24 || Z === 29 ? ' Exception : une sous-couche d ' + (Z === 24 ? 'à moitié remplie' : 'pleine') + ' est particulièrement stable.' : '') + (inverse(r, abrege(Z)) ? ' ' + regleEcriture(r, abrege(Z)) : '') },
       { type: 'choix', q: 'À quel bloc de la classification appartient cet élément ?', options: ['s', 'p', 'd', 'f'].map(function (x) {
         return { t: 'bloc ' + x, ok: x === b, pourquoi: 'Le bloc est donné par la dernière sous-couche en cours de remplissage selon Klechkowski.' }; }),
         corr: 'La dernière sous-couche remplie (Klechkowski) est une sous-couche <b>' + b + '</b> : bloc ' + b + '.' + (b === 'd' ? ' C’est un métal de transition.' : '') },
