@@ -32,6 +32,7 @@
           '<p class="coffre-verrou"><button type="button" id="coffre-fermer">🔒 Se déconnecter</button></p>';
         ouvert.hidden = false; form.hidden = true; attente.hidden = true;
         document.getElementById('coffre-fermer').addEventListener('click', function () { oublier(NOM); location.reload(); });
+        if (window.construireAller) window.construireAller(ouvert);
         if (location.hash) { var c = document.getElementById(location.hash.slice(1)); if (c) c.scrollIntoView(); }
       });
     });

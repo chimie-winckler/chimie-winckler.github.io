@@ -27,7 +27,7 @@ def dechiffre(k, blob): return AESGCM(k).decrypt(blob[:12], blob[12:], None)
 
 def lire_page():
     s = open(PAGE, encoding='utf-8').read()
-    m = re.search(r'<main class="conteneur">(.*?)</main>', s, re.S)
+    m = re.search(r'<main class="conteneur"[^>]*>(.*?)</main>', s, re.S)
     return s, m
 
 def deverrouiller(mdp, clair):
