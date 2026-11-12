@@ -59,6 +59,9 @@
 .fdss-plus ol { columns: 2 280px; margin: 10px 0 0; font-size: .92rem; }
 .fdss-cadre { display: inline-block; padding: 1px 8px; border: 3px solid #92d050; border-radius: 4px; font-weight: 600; }
 .fdss-aide ol { margin: 10px 0 0; }
+.fdss-rendu { margin: 14px 0; padding: 12px 16px; border-left: 4px solid #c9a400; background: #fff8d6; border-radius: 6px; color: #2b2b2b; }
+.fdss-rendu ol { margin: 8px 0 0; }
+.fdss-rendu a { color: #0b5f63; }
 </style>
 
 <section id="creer">
@@ -83,7 +86,7 @@
       <button type="button" class="bouton fdss-go" id="fdss-go" disabled>Télécharger ma FDS simplifiée (Excel)</button>
       <p class="fdss-info" id="fdss-etat">Choisissez d’abord votre établissement.</p>
       <div class="fdss-apres" id="fdss-apres" hidden>
-        <strong>Et maintenant ?</strong> Ouvrez le fichier dans Excel, faites glisser les pictogrammes, EPI et bidons de la réserve (à droite) dans les cases de la fiche, complétez les autres cases avec la FDS complète, enregistrez, puis imprimez <a href="#imprimer">uniquement le tableau à cadre vert</a>.
+        <strong>Et maintenant ?</strong> Ouvrez le fichier dans Excel, faites glisser les pictogrammes, EPI et bidons de la réserve (à droite) dans les cases de la fiche, complétez les autres cases avec la FDS complète, enregistrez, puis suivez les consignes de <a href="#imprimer">rendu</a> : tableau à cadre vert seul, centré, en PDF, envoyé par courriel.
       </div>
     </div>
   </div>
@@ -134,14 +137,25 @@
 </section>
 
 <section id="imprimer">
-  <h2>Imprimer ma fiche</h2>
+  <h2>Imprimer et rendre ma fiche</h2>
   <p>Seul le <span class="fdss-cadre">tableau à cadre vert</span> doit être imprimé, sur une seule page A4 : pas la réserve de pictogrammes, d’EPI et de bidons située à droite. C’est à vous de régler l’impression dans Excel, et de vérifier l’aperçu avant d’imprimer.</p>
+  <div class="fdss-rendu">
+    <strong>À rendre</strong>
+    <ol>
+      <li>Complétez la ligne <em>Fiche réalisée par</em> (votre nom et la date) en bas du tableau.</li>
+      <li>Imprimez uniquement le tableau à cadre vert, <strong>centré sur la page</strong> (une seule page A4).</li>
+      <li>Enregistrez cette impression au <strong>format PDF</strong>.</li>
+      <li>Envoyez le PDF par courriel à <a href="mailto:winckler.btsmch@gmail.com">winckler.btsmch@gmail.com</a> avec pour objet <strong>FDS_TPn°X_NOM</strong> (X = numéro du TP, NOM = votre nom). Exemple : <em>FDS_TPn°3_DUPONT</em>.</li>
+    </ol>
+  </div>
   <details class="fdss-aide">
     <summary>Coup de pouce</summary>
     <ol>
       <li>Sélectionnez toutes les cellules du tableau à cadre vert.</li>
       <li>Onglet <em>Mise en page</em> › <em>Zone d’impression</em> › <em>Définir</em>.</li>
+      <li>Onglet <em>Mise en page</em> › <em>Marges</em> › <em>Marges personnalisées</em> : cochez <em>Centrer sur la page</em> horizontalement et verticalement.</li>
       <li><em>Fichier</em> › <em>Imprimer</em> : choisissez <em>Ajuster la feuille à une page</em> et vérifiez l’aperçu.</li>
+      <li>Pour obtenir le PDF, choisissez l’imprimante <em>Microsoft Print to PDF</em> (ou <em>Fichier</em> › <em>Exporter</em> › <em>PDF</em>).</li>
     </ol>
   </details>
 </section>
