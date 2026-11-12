@@ -1,4 +1,4 @@
-/* Rubrique Cours protégée : déchiffrement AES-GCM dans le navigateur (clé PBKDF2 dérivée du mot de passe). */
+/* Rubriques protégées (Cours, S’entraîner, exercices) : déchiffrement AES-GCM dans le navigateur (clé PBKDF2 dérivée du mot de passe). */
 (function () {
   var box = document.getElementById('coffre');
   if (!box) return;
@@ -6,6 +6,18 @@
       msg = document.getElementById('coffre-msg'), garder = document.getElementById('coffre-garder'),
       ouvert = document.getElementById('coffre-ouvert'), attente = document.getElementById('coffre-attente');
   var NOM = 'coffre-cours';
+  var SEP = '<!--coffre-scripts-->';
+  function executer(html) {
+    var t = document.createElement('div'); t.innerHTML = html;
+    var liste = Array.prototype.slice.call(t.querySelectorAll('script'));
+    (function suivant() {
+      var s0 = liste.shift(); if (!s0) return;
+      var s = document.createElement('script');
+      for (var i = 0; i < s0.attributes.length; i++) s.setAttribute(s0.attributes[i].name, s0.attributes[i].value);
+      if (s0.src) { s.onload = s.onerror = suivant; document.body.appendChild(s); }
+      else { s.text = s0.textContent; document.body.appendChild(s); suivant(); }
+    })();
+  }
   function b64(s) { var b = atob(s), u = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; }
   function enB64(buf) { var u = new Uint8Array(buf), s = ''; for (var i = 0; i < u.length; i++) s += String.fromCharCode(u[i]); return btoa(s); }
   function lire(k) { try { return localStorage.getItem(k) || sessionStorage.getItem(k); } catch (e) { return null; } }
@@ -28,11 +40,13 @@
     return crypto.subtle.importKey('raw', bits, 'AES-GCM', false, ['decrypt']).then(function (k) {
       return dechiffrer(k, donnees).then(function (html) {
         cle = k;
-        ouvert.innerHTML = new TextDecoder().decode(html) +
+        var parts = new TextDecoder().decode(html).split(SEP);
+        ouvert.innerHTML = parts[0] +
           '<p class="coffre-verrou"><button type="button" id="coffre-fermer">🔒 Se déconnecter</button></p>';
         ouvert.hidden = false; form.hidden = true; attente.hidden = true;
         document.getElementById('coffre-fermer').addEventListener('click', function () { oublier(NOM); location.reload(); });
-        if (window.construireAller) window.construireAller(ouvert);
+        if (parts[1]) executer(parts[1]);
+        if (window.construireAller && box.closest('main[data-aller]')) window.construireAller(ouvert);
         if (location.hash) { var c = document.getElementById(location.hash.slice(1)); if (c) c.scrollIntoView(); }
       });
     });
