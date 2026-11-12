@@ -32,6 +32,119 @@
   </div>
 </div>
 <main class="conteneur">
+<style>
+.fdss-etapes { display: grid; gap: 18px; }
+.fdss-etape { background: var(--carte); border: 1px solid var(--bord); border-radius: var(--rayon); padding: 16px 18px; }
+.fdss-etape h3 { margin: 0 0 12px; font-size: 1.05rem; display: flex; align-items: center; gap: 10px; }
+.fdss-num { flex: none; width: 28px; height: 28px; border-radius: 50%; background: #92d050; color: #1d2b1a; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; }
+.fdss-sites { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.fdss-site { position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 12px; border: 2px solid var(--bord); border-radius: 10px; cursor: pointer; background: var(--fond); text-align: center; font-weight: 600; }
+.fdss-site input { position: absolute; opacity: 0; pointer-events: none; }
+.fdss-site img { height: 64px; max-width: 100%; object-fit: contain; background: #fff; border-radius: 6px; padding: 4px 8px; }
+.fdss-site:has(input:checked) { border-color: #5a9e2f; box-shadow: 0 0 0 3px rgba(146,208,80,.35); }
+.fdss-site:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+.fdss-produit { width: 100%; max-width: 520px; box-sizing: border-box; padding: 10px 12px; font: inherit; border: 1px solid var(--bord); border-radius: 8px; background: var(--fond); color: var(--texte); }
+.fdss-info { margin: 8px 0 0; font-size: .9rem; color: var(--doux); min-height: 1.4em; }
+.fdss-info.ok { color: #2e7d32; }
+.fdss-go { border: 0; cursor: pointer; font: inherit; font-size: 1rem; background: #3f7d20; }
+.fdss-go:disabled { opacity: .5; cursor: not-allowed; }
+.fdss-apres { margin-top: 12px; padding: 10px 14px; border-left: 4px solid #92d050; background: var(--accent-clair); border-radius: 6px; }
+.fdss-table { overflow-x: auto; }
+.fdss-table table { border-collapse: collapse; width: 100%; font-size: .93rem; }
+.fdss-table th, .fdss-table td { border: 1px solid var(--bord); padding: 7px 10px; text-align: left; vertical-align: top; }
+.fdss-table th { background: var(--accent-clair); }
+.fdss-rub { display: inline-block; min-width: 26px; padding: 1px 7px; border-radius: 999px; color: #fff; font-weight: 700; text-align: center; font-size: .85rem; }
+.r-rouge { background: #c00000; } .r-bleu { background: #1f4e79; } .r-vert { background: #375623; }
+.fdss-plus summary, .fdss-aide summary { cursor: pointer; color: var(--accent); font-weight: 600; margin-top: 12px; }
+.fdss-plus ol { columns: 2 280px; margin: 10px 0 0; font-size: .92rem; }
+.fdss-cadre { display: inline-block; padding: 1px 8px; border: 3px solid #92d050; border-radius: 4px; font-weight: 600; }
+.fdss-aide ol { margin: 10px 0 0; }
+</style>
+
+<section id="creer">
+  <h2>Créer ma FDS simplifiée</h2>
+  <p>Le site prépare votre fiche Excel : choisissez votre établissement et le produit, puis téléchargez le fichier. Vous le complétez ensuite à l’aide de la FDS complète du produit.</p>
+  <div class="fdss-etapes">
+    <div class="fdss-etape">
+      <h3><span class="fdss-num">1</span>Établissement</h3>
+      <div class="fdss-sites" role="radiogroup" aria-label="Établissement">
+        <label class="fdss-site"><input type="radio" name="fdss-site" value="Calais"><img src="Ressources%20site%20internet/images/logo-lycee-vinci-calais.png" alt="">Lycée Léonard de Vinci – Calais</label>
+        <label class="fdss-site"><input type="radio" name="fdss-site" value="Armentières"><img src="Ressources%20site%20internet/images/logo-lycee-eiffel-armentieres.png" alt="">Lycée Gustave Eiffel – Armentières</label>
+      </div>
+    </div>
+    <div class="fdss-etape">
+      <h3><span class="fdss-num">2</span>Produit</h3>
+      <input class="fdss-produit" id="fdss-produit" list="fdss-liste" placeholder="Ex. : Acétone" autocomplete="off" aria-label="Nom du produit">
+      <datalist id="fdss-liste"></datalist>
+      <p class="fdss-info" id="fdss-info">Choisissez un produit de la liste des FDS du site, ou tapez le nom d’un autre produit.</p>
+    </div>
+    <div class="fdss-etape">
+      <h3><span class="fdss-num">3</span>Téléchargement</h3>
+      <button type="button" class="bouton fdss-go" id="fdss-go" disabled>Télécharger ma FDS simplifiée (Excel)</button>
+      <p class="fdss-info" id="fdss-etat">Choisissez d’abord votre établissement.</p>
+      <div class="fdss-apres" id="fdss-apres" hidden>
+        <strong>Et maintenant ?</strong> Ouvrez le fichier dans Excel, faites glisser les pictogrammes, EPI et bidons de la réserve (à droite) dans les cases de la fiche, complétez les autres cases avec la FDS complète, enregistrez, puis imprimez <a href="#imprimer">uniquement le tableau à cadre vert</a>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="rubriques">
+  <h2>Où chercher dans la FDS complète ?</h2>
+  <p>Une FDS comporte toujours 16 rubriques, dans le même ordre. Le numéro de la rubrique à consulter est aussi rappelé sous chaque titre de la fiche simplifiée.</p>
+  <div class="fdss-table">
+    <table>
+      <thead><tr><th>Case de la FDS simplifiée</th><th>Rubrique de la FDS</th><th>Ce que vous y trouvez</th></tr></thead>
+      <tbody>
+        <tr><td>Désignation du composé</td><td><span class="fdss-rub r-vert">1</span></td><td>Identification de la substance ou du mélange (nom, fournisseur)</td></tr>
+        <tr><td>Date de la FDS</td><td>en-tête</td><td>Date de révision, en haut de chaque page de la FDS (postérieure à juin 2021)</td></tr>
+        <tr><td>N° CAS</td><td><span class="fdss-rub r-vert">1</span> ou <span class="fdss-rub r-vert">3</span></td><td>Rubrique 1 pour une substance, rubrique 3 (composition) pour un mélange</td></tr>
+        <tr><td>Mention d’avertissement, pictogrammes</td><td><span class="fdss-rub r-rouge">2</span></td><td>Identification des dangers – éléments d’étiquetage (2.2)</td></tr>
+        <tr><td>Mentions de danger (H)</td><td><span class="fdss-rub r-rouge">2</span></td><td>Codes H et leur libellé (le texte complet est souvent repris en rubrique 16)</td></tr>
+        <tr><td>Conseils de prudence (P)</td><td><span class="fdss-rub r-bleu">2</span></td><td>Codes P et leur libellé</td></tr>
+        <tr><td>Caractéristiques : type, aspect, odeur, T fusion, T ébullition, densité, solubilité, point éclair, pH</td><td><span class="fdss-rub r-vert">9</span></td><td>Propriétés physiques et chimiques</td></tr>
+        <tr><td>EPI et VLEP</td><td><span class="fdss-rub r-bleu">8</span></td><td>Contrôles de l’exposition / protection individuelle : valeurs limites (8.1) et équipements de protection (8.2)</td></tr>
+        <tr><td>Danger CMR</td><td><span class="fdss-rub r-rouge">2</span> et <span class="fdss-rub r-rouge">11</span></td><td>Mentions H340 à H362 (rubrique 2) ; cancérogénicité, mutagénicité, toxicité pour la reproduction (rubrique 11)</td></tr>
+        <tr><td>Récupération</td><td><span class="fdss-rub r-vert">13</span></td><td>Considérations relatives à l’élimination. Voir aussi <a href="gestion-dechets.html">Gestion des déchets en salle de TP</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <details class="fdss-plus">
+    <summary>Les 16 rubriques d’une FDS</summary>
+    <ol>
+      <li>Identification de la substance/du mélange et de la société/l’entreprise</li>
+      <li>Identification des dangers</li>
+      <li>Composition/informations sur les composants</li>
+      <li>Premiers secours</li>
+      <li>Mesures de lutte contre l’incendie</li>
+      <li>Mesures à prendre en cas de dispersion accidentelle</li>
+      <li>Manipulation et stockage</li>
+      <li>Contrôles de l’exposition/protection individuelle</li>
+      <li>Propriétés physiques et chimiques</li>
+      <li>Stabilité et réactivité</li>
+      <li>Informations toxicologiques</li>
+      <li>Informations écologiques</li>
+      <li>Considérations relatives à l’élimination</li>
+      <li>Informations relatives au transport</li>
+      <li>Informations relatives à la réglementation</li>
+      <li>Autres informations</li>
+    </ol>
+  </details>
+  <p>Une fiche toxicologique de l’INRS n’est pas une FDS : elle n’est pas organisée en 16 rubriques. Cherchez-y les parties « Propriétés physiques », « Valeurs limites d’exposition professionnelle » et « Réglementation » (classification et étiquetage).</p>
+</section>
+
+<section id="imprimer">
+  <h2>Imprimer ma fiche</h2>
+  <p>Seul le <span class="fdss-cadre">tableau à cadre vert</span> doit être imprimé, sur une seule page A4 : pas la réserve de pictogrammes, d’EPI et de bidons située à droite. C’est à vous de régler l’impression dans Excel, et de vérifier l’aperçu avant d’imprimer.</p>
+  <details class="fdss-aide">
+    <summary>Coup de pouce</summary>
+    <ol>
+      <li>Sélectionnez toutes les cellules du tableau à cadre vert.</li>
+      <li>Onglet <em>Mise en page</em> › <em>Zone d’impression</em> › <em>Définir</em>.</li>
+      <li><em>Fichier</em> › <em>Imprimer</em> : choisissez <em>Ajuster la feuille à une page</em> et vérifiez l’aperçu.</li>
+    </ol>
+  </details>
+</section>
 
 <section id="fdss">
   <h2>Modèles vierges</h2>
@@ -42,6 +155,98 @@
     <a class="doc doc-xlsx" href="Ressources%20site%20internet/FDS%20simplifiees/FDS%20simplifi%C3%A9e%20vierge%20Armenti%C3%A8res.xlsx" download><span class="doc-ico">XLS</span>FDS simplifiée vierge – Armentières</a>
   </div>
 </section>
+
+<script src="jszip.min.js"></script>
+<script>
+(function () {
+  var DOSSIER = "Ressources%20site%20internet/FDS%20simplifiees/";
+  var MODELES = { "Calais": "FDS%20simplifi%C3%A9e%20vierge%20Calais.xlsx",
+                  "Armentières": "FDS%20simplifi%C3%A9e%20vierge%20Armenti%C3%A8res.xlsx" };
+  var fds = {};               // nom normalisé -> {nom, url}
+  var champ = document.getElementById("fdss-produit");
+  var info = document.getElementById("fdss-info");
+  var go = document.getElementById("fdss-go");
+  var etat = document.getElementById("fdss-etat");
+  var apres = document.getElementById("fdss-apres");
+
+  function norm(t) { return t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim(); }
+  function xml(t) { return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+  function site() { var r = document.querySelector('input[name="fdss-site"]:checked'); return r ? r.value : null; }
+
+  // Liste des FDS : lue sur la page FDS du site, pour rester à jour automatiquement
+  fetch("fds.html").then(function (r) { return r.text(); }).then(function (html) {
+    var doc = new DOMParser().parseFromString(html, "text/html");
+    var dl = document.getElementById("fdss-liste");
+    doc.querySelectorAll("#liste-fds a").forEach(function (a) {
+      var ico = a.querySelector(".doc-ico"); if (ico) ico.remove();
+      var nom = a.textContent.trim();
+      fds[norm(nom)] = { nom: nom, url: new URL(a.getAttribute("href"), location.href).href };
+      var o = document.createElement("option"); o.value = nom; dl.appendChild(o);
+    });
+    majProduit();
+  }).catch(function () {});
+
+  function trouve() { return fds[norm(champ.value)] || null; }
+
+  function majProduit() {
+    var f = trouve();
+    if (f) {
+      info.className = "fdss-info ok";
+      info.innerHTML = "✓ FDS trouvée sur le site : son lien sera écrit dans la fiche. <a href=\"" + f.url + "\" target=\"_blank\" rel=\"noopener\">Ouvrir la FDS</a>";
+    } else if (champ.value.trim()) {
+      info.className = "fdss-info";
+      info.textContent = "Produit absent de la liste du site : le nom sera écrit dans la fiche, à vous de trouver la FDS du fournisseur.";
+    } else {
+      info.className = "fdss-info";
+      info.textContent = "Choisissez un produit de la liste des FDS du site, ou tapez le nom d’un autre produit.";
+    }
+  }
+
+  function majBouton() {
+    go.disabled = !site();
+    etat.textContent = site() ? "" : "Choisissez d’abord votre établissement.";
+  }
+
+  champ.addEventListener("input", majProduit);
+  document.querySelectorAll('input[name="fdss-site"]').forEach(function (r) { r.addEventListener("change", majBouton); });
+
+  go.addEventListener("click", function () {
+    var s = site(); if (!s) return;
+    var nom = champ.value.trim(), f = trouve();
+    if (f) nom = f.nom;
+    go.disabled = true; etat.textContent = "Préparation du fichier…"; apres.hidden = true;
+    fetch(DOSSIER + MODELES[s]).then(function (r) {
+      if (!r.ok) throw new Error(r.status); return r.arrayBuffer();
+    }).then(function (buf) { return JSZip.loadAsync(buf); }).then(function (zip) {
+      var chemin = "xl/worksheets/sheet1.xml";
+      return zip.file(chemin).async("string").then(function (x) {
+        if (nom) {
+          x = x.replace(/(<c r="C4"[^>]*>)<is>[\s\S]*?<\/is>/, "$1<is><t>" + xml(nom) + "</t></is>");
+        }
+        if (f) {
+          x = x.replace(/(<c r="C6"[^>]*>)<is>[\s\S]*?<\/is>/,
+            "$1<is><t>" + xml("Source : " + decodeURI(f.url)) + "</t></is>");
+        }
+        zip.file(chemin, x);
+        return zip.generateAsync({ type: "blob", mimeType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+      });
+    }).then(function (blob) {
+      // nom de fichier sans accents ni caractères spéciaux (accepté partout)
+      var base = ("FDS simplifiee " + (nom ? nom + " " : "") + s)
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^A-Za-z0-9()+,.-]+/g, "_").replace(/_+/g, "_").replace(/^_|_$/g, "");
+      var fichier = base + ".xlsx";
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(blob); a.download = fichier;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+      etat.textContent = "Fichier téléchargé : " + fichier;
+      apres.hidden = false;
+    }).catch(function () {
+      etat.textContent = "Le fichier n’a pas pu être préparé. Téléchargez le modèle vierge en bas de page.";
+    }).then(function () { go.disabled = !site(); });
+  });
+})();
+</script>
 
 </main>
 <footer class="pied"><div class="conteneur">BTS Métiers de la Chimie – Synthèse</div></footer>
