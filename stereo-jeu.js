@@ -14,7 +14,7 @@
   Exo.lancer('exo-p3-jeu-rs', function () {
     var ex = ctx('Série de ' + N + ' cartes : donner la configuration du carbone marqué d’un astérisque (*).');
     serie(D.rs).forEach(function (c, k) {
-      ex.etapes.push({ type: 'choix', q: '<b>Carte ' + (k + 1) + '.</b> Configuration du C* ?' + img('rs-' + num(c[0]), 'Molécule dont un carbone est marqué d’un astérisque'),
+      ex.etapes.push({ type: 'choix', q: '<b>Carte ' + (k + 1) + '.</b> <b>Déterminer</b> la configuration du carbone marqué d’un astérisque (*).' + img('rs-' + num(c[0]), 'Molécule dont un carbone est marqué d’un astérisque'),
         options: [{ t: 'R', ok: c[1] === 'R' }, { t: 'S', ok: c[1] === 'S' }],
         corr: 'Classer les quatre substituants du C* (règles CIP), placer le n°4 en arrière, puis lire le sens 1 → 2 → 3 : configuration <b>' + c[1] + '</b>.' });
     });
@@ -23,10 +23,10 @@
 
   /* Chiral ou achiral */
   Exo.lancer('exo-p3-jeu-chiral', function () {
-    var ex = ctx('Série de ' + N + ' cartes : la molécule représentée est-elle chirale ou achirale ?');
+    var ex = ctx('Série de ' + N + ' cartes : indiquer si la molécule représentée est chirale ou achirale.');
     serie(D.ch).forEach(function (c, k) {
       var chir = c[1] === 'chiral';
-      ex.etapes.push({ type: 'choix', q: '<b>Carte ' + (k + 1) + '.</b> Cette molécule est-elle chirale ?' + img('chiral-' + num(c[0]), 'Molécule à classer chirale ou achirale'),
+      ex.etapes.push({ type: 'choix', q: '<b>Carte ' + (k + 1) + '.</b> <b>Indiquer</b> si cette molécule est chirale ou achirale.' + img('chiral-' + num(c[0]), 'Molécule à classer chirale ou achirale'),
         options: [{ t: 'chirale', ok: chir }, { t: 'achirale', ok: !chir }],
         corr: (chir ? 'Molécule <b>chirale</b> : aucun plan ni centre de symétrie, elle n’est pas superposable à son image dans un miroir.'
                     : 'Molécule <b>achirale</b> : elle possède un plan (ou un centre) de symétrie, ou aucun carbone stéréogène ; elle est superposable à son image dans un miroir.')
@@ -44,9 +44,9 @@
     C: 'même formule brute, mais enchaînement des atomes différent.'
   };
   Exo.lancer('exo-p3-jeu-relation', function () {
-    var ex = ctx('Série de ' + N + ' cartes : quelle relation existe entre les deux molécules représentées ?');
+    var ex = ctx('Série de ' + N + ' cartes : identifier la relation entre les deux molécules représentées.');
     serie(D.rel).forEach(function (c, k) {
-      ex.etapes.push({ type: 'choix', q: '<b>Carte ' + (k + 1) + '.</b> Ces deux molécules sont…' + img('relation-' + num(c[0]), 'Deux molécules à comparer'),
+      ex.etapes.push({ type: 'choix', q: '<b>Carte ' + (k + 1) + '.</b> <b>Identifier</b> la relation entre ces deux molécules.' + img('relation-' + num(c[0]), 'Deux molécules à comparer'),
         options: ['E', 'D', 'I', 'C'].map(function (x) { return { t: REL[x], ok: c[1] === x }; }),
         corr: 'Ce sont des <b>' + REL[c[1]] + '</b> : ' + EXPL[c[1]] + (c[2] ? ' ' + c[2] : '') });
     });
@@ -55,7 +55,7 @@
 
   /* Vrai ou faux */
   Exo.lancer('exo-p3-jeu-vf', function () {
-    var ex = ctx('Série de ' + N + ' affirmations sur la stéréochimie et le pouvoir rotatoire : vrai ou faux ?');
+    var ex = ctx('Série de ' + N + ' affirmations sur la stéréochimie et le pouvoir rotatoire : indiquer si chacune est vraie ou fausse.');
     serie(D.vf).forEach(function (c, k) {
       ex.etapes.push({ type: 'choix', q: '<b>Affirmation ' + (k + 1) + '.</b> ' + c[1] + (c[0] ? img('vf-' + num(c[0]), 'Représentation de la molécule citée') : ''),
         options: [{ t: 'Vrai', ok: c[2] === 'V' }, { t: 'Faux', ok: c[2] === 'F' }],
