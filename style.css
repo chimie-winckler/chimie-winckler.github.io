@@ -465,3 +465,12 @@ main section, main article.partie { scroll-margin-top: 80px; }
 .exo-clic .zone.faux { fill: rgba(192,57,43,.22); stroke: #c0392b; }
 .exo-clic .zone.manque { fill: rgba(211,84,0,.10); stroke: #D35400; stroke-dasharray: 8 5; }
 .fait .exo-clic .zone { cursor: default; }
+
+/* Corrections structurées */
+.cc { margin: 2px 0; }
+.cc-calc, .cc-use { border-left: 3px solid #1F5FAD; background: rgba(31,95,173,.08); padding: 5px 9px; margin: 5px 0; border-radius: 0 6px 6px 0; }
+.cc-use { border-left-color: #2E8B3E; background: rgba(46,139,62,.09); }
+.cc-t { display: block; font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 2px; }
+.cc-calc .cc-t { color: #1F5FAD; } .cc-use .cc-t { color: #2E8B3E; }
+:root[data-theme="dark"] .cc-calc .cc-t { color: #8db8ef; } :root[data-theme="dark"] .cc-use .cc-t { color: #7fd08f; }
+.cc-l { margin: 2px 0; }

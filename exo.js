@@ -110,10 +110,61 @@ var Exo = (function () {
     eqs.forEach(function (e) { if (e[0].test(txt) && aj.indexOf(e[1]) < 0) aj += '<p class="exo-eq-chimique">' + fleches(ch(e[1])) + '</p>'; });
     return t + aj;
   }
+
+  /* ---------- corrections structurées : blocs « Calcul » (bleu) et « Exploitation » / « Raisonnement » (vert) ---------- */
+  var MAJ = /^(\s+)(?=[A-ZÀ-ÖØ-ÞΑ-Ω«(<0-9−–\-ΔτσηξλμρΦφθ𝑤])/;
+  function decouper(h, pointVirgule) { // phrases, coupées au niveau 0 des balises
+    var out = [], cur = '', prof = 0, i = 0;
+    while (i < h.length) {
+      if (h.charAt(i) === '<') {
+        var j = h.indexOf('>', i); if (j < 0) j = h.length - 1;
+        var tag = h.slice(i, j + 1);
+        if (/^<br\s*\/?>$/i.test(tag) && prof === 0) { if (cur.trim()) out.push(cur.trim()); cur = ''; i = j + 1; continue; }
+        if (/^<\//.test(tag)) prof = Math.max(0, prof - 1); else if (!/\/>$/.test(tag) && !/^<(br|img|hr|input)\b/i.test(tag)) prof++;
+        cur += tag; i = j + 1; continue;
+      }
+      var c = h.charAt(i); cur += c; i++;
+      if (prof > 0) continue;
+      if (c === '.' || c === '!' || c === '?') {
+        var m = MAJ.exec(h.slice(i));
+        if (m && !/\b(env|cf|ex|éq|etc)\.$/.test(cur)) { out.push(cur.trim()); cur = ''; i += m[1].length; }
+      } else if (pointVirgule && c === ';' && /^\s/.test(h.slice(i))) { out.push(cur.trim()); cur = ''; i++; }
+      else if (pointVirgule && c === ',' && /^\s+donc\s/.test(h.slice(i)) && /[=≈]/.test(cur.replace(/<[^>]+>/g, ''))) { out.push(cur.trim().replace(/,$/, '')); cur = ''; i++; }
+    }
+    if (cur.trim()) out.push(cur.trim());
+    return out;
+  }
+
+  /* conversion écrite en égalité (« 1,72 × 10⁵ W = 172 kW ») → « 1,72 × 10⁵ W, soit 172 kW » */
+  var U1 = '[kmµMG]?(?:W|J|g|L|s|Pa|bar|mol|t|h|min|°C|K|m)(?:<sup>-?\\d</sup>)?', UN = '(?:' + U1 + '(?:[.·/]' + U1 + ')*)';
+  var NB = '(?:<b>)?(?:[−-])?\\d[\\d,]*(?:\\s×\\s10<sup>[−-]?\\d+</sup>)?\\s+';
+  var CONV = new RegExp('(=\\s)(' + NB + ')(' + UN + ')\\s=\\s(' + NB + ')(' + UN + ')(?![\\w])', 'g');
+  function soit(l) { return l.replace(CONV, function (m, e, a, u, b, v) { return u === v ? m : e + a + u + ', soit ' + b + v; }); }
+  function txt(t) { return t.replace(/<[^>]+>/g, ''); }
+  function estCalcul(t) { t = txt(t); return /[=≈]/.test(t) && !/^(Vérification|Remarque)/.test(t); }
+  function structurer(h, type) {
+    if (typeof h !== 'string' || !h || /class="cc"/.test(h)) return h;
+    if (/<(p|div|table|ul|ol|svg|figure)\b/i.test(h)) return '<div class="cc"><div class="cc-use"><span class="cc-t">' + (type === 'nombre' ? 'Correction' : 'Raisonnement') + '</span>' + h + '</div></div>';
+    var ph = decouper(h, type === 'nombre').map(function (l) { return l.replace(/\s*;$/, ''); }), lignes = [];
+    if (ph.length) ph[0] = ph[0].replace(/^([a-zàâéèêîôûç])/, function (x) { return x.toUpperCase(); });
+    ph = ph.map(soit);
+    if (!ph.length) return h;
+    if (type !== 'nombre') return '<div class="cc"><div class="cc-use"><span class="cc-t">Raisonnement</span>' + ph.map(function (l) { return '<div class="cc-l">' + l + '</div>'; }).join('') + '</div></div>';
+    ph.forEach(function (p) { // « calcul : conclusion » → deux lignes
+      var k = p.lastIndexOf(' : ');
+      if (k > 0 && estCalcul(p.slice(0, k)) && !/[=≈\d]/.test(txt(p.slice(k + 3)))) { lignes.push({ t: 'c', l: p.slice(0, k) }); lignes.push({ t: 'u', l: p.slice(k + 3).replace(/^./, function (x) { return x.toUpperCase(); }) }); }
+      else lignes.push({ t: estCalcul(p) ? 'c' : 'u', l: p });
+    });
+    if (!lignes.some(function (x) { return x.t === 'c'; })) lignes.forEach(function (x) { x.t = 'r'; });
+    var blocs = [];
+    lignes.forEach(function (x) { if (blocs.length && blocs[blocs.length - 1].t === x.t) blocs[blocs.length - 1].l.push(x.l); else blocs.push({ t: x.t, l: [x.l] }); });
+    var nom = { c: 'Calcul', u: 'Exploitation', r: 'Raisonnement' };
+    return '<div class="cc">' + blocs.map(function (b) { return '<div class="' + (b.t === 'c' ? 'cc-calc' : 'cc-use') + '"><span class="cc-t">' + nom[b.t] + '</span>' + b.l.map(function (l) { return '<div class="cc-l">' + l + '</div>'; }).join('') + '</div>'; }).join('') + '</div>';
+  }
   function nettoyer(ex) { var elider = function (t) { return fleches(elider2(t)); };
     ex.contexte = elider(ajouterEq(ex.contexte));
     ex.etapes.forEach(function (e) {
-      e.q = elider(/exo-eq-chimique|⟶|→|⇄/.test(ex.contexte) && eqs.some(function (x) { return x[0].test(sansBalise(ex.contexte)); }) ? e.q : ajouterEq(e.q)); e.corr = elider(e.corr);
+      e.q = elider(/exo-eq-chimique|⟶|→|⇄/.test(ex.contexte) && eqs.some(function (x) { return x[0].test(sansBalise(ex.contexte)); }) ? e.q : ajouterEq(e.q)); e.corr = structurer(elider(e.corr), e.type);
       (e.options || []).forEach(function (o) { o.t = elider(o.t); o.pourquoi = elider(o.pourquoi); });
       (e.pieges || []).forEach(function (p) { p.msg = elider(p.msg); });
     });
@@ -221,5 +272,5 @@ var Exo = (function () {
     var b = document.querySelector('[data-nouveau="' + id + '"]');
     if (b) b.addEventListener('click', nouvelle);
   }
-  return { ajuster: ajuster, eqs: eqs, ch: ch, fleches: fleches, gens: gens, alea: alea, choisir: choisir, melanger: melanger, cs: cs, nb: nb, lire: lire, regression: regression, graphique: graphique, lancer: lancer };
+  return { structurer: structurer, ajuster: ajuster, eqs: eqs, ch: ch, fleches: fleches, gens: gens, alea: alea, choisir: choisir, melanger: melanger, cs: cs, nb: nb, lire: lire, regression: regression, graphique: graphique, lancer: lancer };
 })();
