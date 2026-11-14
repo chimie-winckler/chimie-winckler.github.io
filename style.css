@@ -455,3 +455,13 @@ h3 { margin: 0 0 8px; font-size: 1.05rem; }
 .aller span { font-weight: 600; color: var(--doux); }
 .aller select { flex: 1; min-width: 0; max-width: 520px; padding: 9px 12px; border: 1px solid var(--bord); border-radius: 8px; background: var(--carte); color: var(--texte); font-size: 1rem; }
 main section, main article.partie { scroll-margin-top: 80px; }
+
+/* Étapes « clic » sur un schéma */
+.exo-clic svg { width: 100%; height: auto; display: block; }
+.exo-clic .zone { fill: rgba(31,95,173,0); stroke: rgba(31,95,173,0); stroke-width: 3; cursor: pointer; pointer-events: all; transition: fill .15s; }
+.exo-clic .zone:hover, .exo-clic .zone:focus { fill: rgba(31,95,173,.12); stroke: rgba(31,95,173,.5); outline: none; }
+.exo-clic .zone.sel { fill: rgba(31,95,173,.22); stroke: #1F5FAD; }
+.exo-clic .zone.juste { fill: rgba(30,125,69,.22); stroke: #1e7d45; }
+.exo-clic .zone.faux { fill: rgba(192,57,43,.22); stroke: #c0392b; }
+.exo-clic .zone.manque { fill: rgba(211,84,0,.10); stroke: #D35400; stroke-dasharray: 8 5; }
+.fait .exo-clic .zone { cursor: default; }

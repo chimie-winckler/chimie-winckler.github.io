@@ -3,6 +3,7 @@
    { contexte: html, etapes: [ ... ] }.
    Étape « choix »  : { type:'choix', q, options:[{t, ok, pourquoi}], corr }
    Étape « nombre » : { type:'nombre', q, rep, unite, tol, pieges:[{v, msg}], corr }
+   Étape « clic »   : { type:'clic', q, svg (zones : éléments .zone avec data-z), cibles:[ids], noms:{id: nom}, corr }
 */
 var Exo = (function () {
   /* ---------- outils numériques ---------- */
@@ -152,6 +153,8 @@ var Exo = (function () {
             h += '<label class="exo-option"><input type="radio" name="' + id + '-q' + i + '" value="' + j + '"> <span>' + op.t + '</span></label>';
           });
           h += '</div>';
+        } else if (et.type === 'clic') {
+          h += '<div class="exo-clic">' + et.svg + '</div><p class="exo-aide">Clique sur le schéma pour sélectionner (clique à nouveau pour désélectionner), puis valide.</p>';
         } else {
           h += '<div class="exo-saisie"><input type="text" inputmode="decimal" autocomplete="off" placeholder="valeur" aria-label="Réponse"> <span class="exo-unite">' + (et.unite || '') + '</span></div>';
         }
@@ -159,6 +162,12 @@ var Exo = (function () {
         li.innerHTML = h;
         liste.appendChild(li);
         li.querySelector('.exo-valider').addEventListener('click', function () { valider(li, et, i, ex); });
+        li.querySelectorAll('.exo-clic .zone').forEach(function (z) {
+          z.setAttribute('tabindex', '0'); z.setAttribute('role', 'button');
+          function bascule() { if (!li.classList.contains('fait')) z.classList.toggle('sel'); }
+          z.addEventListener('click', bascule);
+          z.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); bascule(); } });
+        });
         var inp = li.querySelector('input[type=text]');
         if (inp) inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') valider(li, et, i, ex); });
       });
@@ -174,6 +183,16 @@ var Exo = (function () {
         msg = ok ? '' : (op.pourquoi || '');
         li.querySelectorAll('.exo-option').forEach(function (lab, k) { if (et._aff[k].ok) lab.classList.add('juste'); else if (k === +c.value) lab.classList.add('faux'); });
         li.querySelectorAll('input[type=radio]').forEach(function (r) { r.disabled = true; });
+      } else if (et.type === 'clic') {
+        var zs = li.querySelectorAll('.exo-clic .zone'), choisis = [];
+        zs.forEach(function (z) { if (z.classList.contains('sel') && choisis.indexOf(z.dataset.z) < 0) choisis.push(z.dataset.z); });
+        if (!choisis.length) { retour.className = 'exo-retour attention'; retour.innerHTML = 'Clique sur au moins un élément du schéma.'; return; }
+        var trop = choisis.filter(function (c) { return et.cibles.indexOf(c) < 0; }), manque = et.cibles.filter(function (c) { return choisis.indexOf(c) < 0; });
+        ok = !trop.length && !manque.length;
+        function nm(t) { return t.map(function (c) { return (et.noms && et.noms[c]) || c; }).join(', '); }
+        if (!ok) msg = (trop.length ? 'En trop : ' + nm(trop) + '. ' : '') + (manque.length ? 'Oublié : ' + nm(manque) + '.' : '');
+        zs.forEach(function (z) { var c = z.dataset.z; z.classList.remove('sel'); if (et.cibles.indexOf(c) >= 0) z.classList.add(choisis.indexOf(c) >= 0 ? 'juste' : 'manque'); else if (choisis.indexOf(c) >= 0) z.classList.add('faux'); });
+        li.classList.add('fait');
       } else {
         var inp = li.querySelector('input[type=text]'), v = lire(inp.value);
         if (isNaN(v)) { retour.className = 'exo-retour attention'; retour.innerHTML = 'Entrez un nombre (virgule acceptée ; puissances de 10 : 1,2e-3).'; return; }
