@@ -474,3 +474,11 @@ main section, main article.partie { scroll-margin-top: 80px; }
 .cc-calc .cc-t { color: #1F5FAD; } .cc-use .cc-t { color: #2E8B3E; }
 :root[data-theme="dark"] .cc-calc .cc-t { color: #8db8ef; } :root[data-theme="dark"] .cc-use .cc-t { color: #7fd08f; }
 .cc-l { margin: 2px 0; }
+
+/* Noms des espèces sous les formules dans les équations */
+.exo-eq-chimique.noms { font-size: .95rem; line-height: 1.3; }
+.esp-g { display: inline-block; white-space: nowrap; vertical-align: top; }
+.esp { display: inline-flex; flex-direction: column; align-items: center; vertical-align: top; margin: 0 .12em; line-height: 1.25; }
+.esp-n { font-size: .72em; font-weight: 500; opacity: .8; margin-top: 2px; white-space: nowrap; }
+.exo-eq-chimique.noms .fl-c { vertical-align: top; }
+@media (max-width: 600px) { .exo-eq-chimique.noms { white-space: normal !important; font-size: .82rem !important; line-height: 2; text-align: center !important; -webkit-mask-image: none !important; mask-image: none !important; } }
