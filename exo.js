@@ -236,6 +236,22 @@ var Exo = (function () {
   }
   var minuteur = null;
   window.addEventListener('resize', function () { clearTimeout(minuteur); minuteur = setTimeout(function () { ajuster(); }, 150); });
+  /* ---------- aides : coup de pouce et renvoi au cours, déclarés par chaque page avec Exo.aides() ---------- */
+  var AIDES = { pdf: '', regles: [] };
+  function aides(pdf, regles) { AIDES.pdf = pdf || AIDES.pdf; AIDES.regles = AIDES.regles.concat(regles || []); }
+  function trouverAide(id, et) {
+    if (et.aide) return et.aide;
+    var t = sansBalise(et.q);
+    for (var k = 0; k < AIDES.regles.length; k++) { var r = AIDES.regles[k]; if ((!r.ex || r.ex === id) && r.q.test(t)) return r; }
+    return null;
+  }
+  function blocAide(a) {
+    if (!a) return '';
+    var h = '<div class="exo-aides">';
+    if (a.i) h += '<details class="exo-indice"><summary>Coup de pouce</summary><div>' + fleches(elider2(a.i)) + '</div></details>';
+    if (a.c) h += '<details class="exo-cours"><summary>Voir le cours</summary><div>' + a.c.t + (AIDES.pdf && a.c.p ? '<br><a href="#" data-enc="' + AIDES.pdf + '.enc" data-page="' + a.c.p + '">Ouvrir le cours à cette page</a>' : '') + '</div></details>';
+    return h + '</div>';
+  }
   var gens = {};
   function lancer(id, generer0) {
     var generer = function () { return nettoyer(generer0()); };
@@ -261,7 +277,7 @@ var Exo = (function () {
         } else {
           h += '<div class="exo-saisie"><input type="text" inputmode="decimal" autocomplete="off" placeholder="valeur" aria-label="Réponse"> <span class="exo-unite">' + (et.unite || '') + '</span></div>';
         }
-        h += '<button type="button" class="bouton exo-valider">Valider</button><div class="exo-retour" aria-live="polite"></div>';
+        h += blocAide(trouverAide(id, et)) + '<button type="button" class="bouton exo-valider">Valider</button><div class="exo-retour" aria-live="polite"></div>';
         li.innerHTML = h;
         liste.appendChild(li);
         li.querySelector('.exo-valider').addEventListener('click', function () { valider(li, et, i, ex); });
@@ -324,5 +340,5 @@ var Exo = (function () {
     var b = document.querySelector('[data-nouveau="' + id + '"]');
     if (b) b.addEventListener('click', nouvelle);
   }
-  return { inconnus: inconnus, NOMS: NOMS, structurer: structurer, ajuster: ajuster, eqs: eqs, ch: ch, fleches: fleches, gens: gens, alea: alea, choisir: choisir, melanger: melanger, cs: cs, nb: nb, lire: lire, regression: regression, graphique: graphique, lancer: lancer };
+  return { aides: aides, inconnus: inconnus, NOMS: NOMS, structurer: structurer, ajuster: ajuster, eqs: eqs, ch: ch, fleches: fleches, gens: gens, alea: alea, choisir: choisir, melanger: melanger, cs: cs, nb: nb, lire: lire, regression: regression, graphique: graphique, lancer: lancer };
 })();

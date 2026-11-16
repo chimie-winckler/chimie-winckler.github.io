@@ -76,7 +76,7 @@
     fetch(a.getAttribute('data-enc')).then(function (r) { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); })
       .then(function (buf) { return dechiffrer(cle, buf); })
       .then(function (pdf) {
-        var url = URL.createObjectURL(new Blob([pdf], { type: 'application/pdf' }));
+        var url = URL.createObjectURL(new Blob([pdf], { type: 'application/pdf' })) + (a.getAttribute('data-page') ? '#page=' + a.getAttribute('data-page') : '');
         if (w) w.location.href = url; else location.href = url;
       })
       .catch(function () { if (w) w.close(); alert('Impossible d’ouvrir ce document. Réessaie dans un instant.'); })

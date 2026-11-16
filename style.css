@@ -489,3 +489,13 @@ main section, main article.partie { scroll-margin-top: 80px; }
   border-radius: 999px; color: var(--accent); text-decoration: none; font-size: .95rem; }
 .wc-lien:hover { border-color: var(--accent); box-shadow: 0 4px 12px rgba(0,0,0,.08); }
 .wc-lien::after { content: " ↗"; font-size: .8em; }
+
+/* Aides des exercices : coup de pouce et renvoi au cours */
+.exo-aides { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 10px; }
+.exo-aides details { border: 1px dashed var(--bord); border-radius: 8px; padding: 4px 10px; font-size: .93rem; }
+.exo-aides details[open] { flex-basis: 100%; border-style: solid; background: var(--accent-clair); }
+.exo-aides summary { cursor: pointer; color: var(--accent); font-weight: 600; list-style: none; }
+.exo-aides summary::-webkit-details-marker { display: none; }
+.exo-indice summary::before { content: "💡 "; }
+.exo-cours summary::before { content: "📖 "; }
+.exo-aides details > div { padding: 6px 0 4px; }
