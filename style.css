@@ -482,3 +482,10 @@ main section, main article.partie { scroll-margin-top: 80px; }
 .esp-n { font-size: .72em; font-weight: 500; opacity: .8; margin-top: 2px; white-space: nowrap; }
 .exo-eq-chimique.noms .fl-c { vertical-align: top; }
 @media (max-width: 600px) { .exo-eq-chimique.noms { white-space: normal !important; font-size: .82rem !important; line-height: 2; text-align: center !important; -webkit-mask-image: none !important; mask-image: none !important; } }
+
+/* Quiz Wooclap (page S'entraîner) */
+.wc-liens { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 18px; }
+.wc-lien { display: inline-block; padding: 7px 14px; background: var(--carte); border: 1px solid var(--bord);
+  border-radius: 999px; color: var(--accent); text-decoration: none; font-size: .95rem; }
+.wc-lien:hover { border-color: var(--accent); box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+.wc-lien::after { content: " ↗"; font-size: .8em; }
