@@ -249,7 +249,7 @@ var Exo = (function () {
     if (!a) return '';
     var h = '<div class="exo-aides">';
     if (a.i) h += '<details class="exo-indice"><summary>Coup de pouce</summary><div>' + fleches(elider2(a.i)) + '</div></details>';
-    if (a.c) h += '<details class="exo-cours"><summary>Voir le cours</summary><div>' + a.c.t + (AIDES.pdf && a.c.p ? '<br><a href="#" data-enc="' + AIDES.pdf + '.enc" data-page="' + a.c.p + '">Ouvrir le cours à cette page</a>' : '') + '</div></details>';
+    if (a.c) h += '<details class="exo-cours"><summary>Voir le cours</summary><div>' + a.c.t + ((a.c.f || AIDES.pdf) && a.c.p ? '<br><a href="#" data-enc="' + (a.c.f || AIDES.pdf) + '.enc" data-page="' + a.c.p + '">Ouvrir le cours à cette page</a>' : '') + '</div></details>';
     return h + '</div>';
   }
   var gens = {};
