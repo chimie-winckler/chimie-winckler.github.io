@@ -236,9 +236,15 @@ var Chem = (function () {
     (m.text || []).forEach(function (t) { body += txt(t[0], t[1], t[2], { size: t[3] || 14 }); });
     function pt(e) {
       if (e.atom && e.lp !== undefined) { var a = P[e.atom], r = e.lp * Math.PI / 180; return [a.x + Math.cos(r) * 15, a.y + Math.sin(r) * 15]; }
-      if (e.bond) { var p = P[e.bond[0]], q = P[e.bond[1]]; return [(p.x + q.x) / 2 + (e.dx || 0), (p.y + q.y) / 2 + (e.dy || 0)]; }
+      if (e.bond) { // milieu du trait réellement dessiné (hors étiquettes)
+        var p = P[e.bond[0]], q = P[e.bond[1]], bx = q.x - p.x, by = q.y - p.y, bl = Math.hypot(bx, by) || 1;
+        var ra = p.lab ? (p.r || 11) : 0, rb = q.lab ? (q.r || 11) : 0, t = (ra + (bl - rb)) / 2 / bl;
+        return [p.x + bx * t + (e.dx || 0), p.y + by * t + (e.dy || 0)]; }
       if (e.between) { var p2 = P[e.between[0]], q2 = P[e.between[1]]; return [p2.x * 0.6 + q2.x * 0.4, p2.y * 0.6 + q2.y * 0.4]; }
-      var t = P[e.atom]; return [t.x + (e.dx || 0), t.y + (e.dy || 0)];
+      var t = P[e.atom], ddx = e.dx || 0, ddy = e.dy || 0, dl = Math.hypot(ddx, ddy);
+      if (!dl) return [t.x, t.y];
+      var rr = (t.lab ? (t.r || 11) : 0) + 4; // la pointe touche le bord de l'étiquette de l'atome
+      return [t.x + ddx / dl * rr, t.y + ddy / dl * rr];
     }
     var col = o.arrowColor || '#c0392b', mid = 'ah' + Math.random().toString(36).slice(2, 8);
     body = '<defs><marker id="' + mid + '" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="' + col + '"/></marker></defs>' + body;
@@ -246,7 +252,7 @@ var Chem = (function () {
       var s0 = pt(ar.from), e0 = pt(ar.to), dx = e0[0] - s0[0], dy = e0[1] - s0[1], len = Math.hypot(dx, dy) || 1, bend = ar.bend === undefined ? 0.45 : ar.bend;
       var nx = -dy / len * len * bend, ny = dx / len * len * bend;
       var c1 = [s0[0] + dx * 0.15 + nx, s0[1] + dy * 0.15 + ny], c2 = [s0[0] + dx * 0.85 + nx, s0[1] + dy * 0.85 + ny];
-      var short = 0.9, ex = s0[0] + dx * short + (1 - short) * 0, ey = s0[1] + dy * short;
+      var ex = e0[0], ey = e0[1];
       body += '<path d="M' + s0[0].toFixed(1) + ',' + s0[1].toFixed(1) + ' C' + c1[0].toFixed(1) + ',' + c1[1].toFixed(1) + ' ' + c2[0].toFixed(1) + ',' + c2[1].toFixed(1) + ' ' + ex.toFixed(1) + ',' + ey.toFixed(1) + '" fill="none" stroke="' + col + '" stroke-width="2" marker-end="url(#' + mid + ')"/>';
     });
     var xs = m.atoms.map(function (a) { return a.x - String(a.lab || '').replace(/\d/g, '').length * fs * 0.3; }), xs2 = m.atoms.map(function (a) { return a.x + String(a.lab || '').replace(/\d/g, '').length * fs * 0.3; }), ys = m.atoms.map(function (a) { return a.y; });
