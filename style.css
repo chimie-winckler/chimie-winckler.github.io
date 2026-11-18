@@ -499,3 +499,28 @@ main section, main article.partie { scroll-margin-top: 80px; }
 .exo-indice summary::before { content: "💡 "; }
 .exo-cours summary::before { content: "📖 "; }
 .exo-aides details > div { padding: 6px 0 4px; }
+/* Page Annonces : une carte par annonce */
+.annonces { display: flex; flex-direction: column; gap: 22px; margin: 28px 0 40px; }
+.annonces > .annonce { margin: 0; }
+.annonce { background: var(--carte); border: 1px solid var(--bord); border-left: 6px solid var(--annonce-c, var(--accent));
+  border-radius: var(--rayon); padding: 20px 24px 22px; box-shadow: 0 2px 12px rgba(15,60,70,.07); }
+.annonce-urgent { --annonce-c: #c9792b; --annonce-fond: #fbf1e6; }
+.annonce-info { --annonce-c: #2a7f8e; --annonce-fond: #e3f2f2; }
+.annonce-tete { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-bottom: 10px; }
+.annonce-cat { font-size: .72rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: #fff;
+  background: var(--annonce-c, var(--accent)); border-radius: 999px; padding: 3px 11px; }
+.annonce-date { font-size: .88rem; font-weight: 600; color: var(--annonce-c, var(--accent)); background: var(--annonce-fond, var(--accent-clair));
+  border-radius: 999px; padding: 3px 11px; }
+.annonce h2 { border-left: 0; padding-left: 0; margin: 0 0 10px; font-size: 1.3rem; }
+.annonce > p:first-of-type { margin-top: 0; }
+.annonce .consigne { border-left-color: var(--annonce-c, var(--accent)); background: var(--annonce-fond, var(--accent-clair)); }
+.annonce .docs-col { margin-top: 14px; }
+:root[data-theme="dark"] .annonce-urgent { --annonce-c: #e0a060; --annonce-fond: #3a2b1d; }
+:root[data-theme="dark"] .annonce-info { --annonce-c: #4fc3c7; --annonce-fond: #1f3437; }
+:root[data-theme="dark"] .annonce-cat { color: #121a1e; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .annonce-urgent { --annonce-c: #e0a060; --annonce-fond: #3a2b1d; }
+  :root:not([data-theme="light"]) .annonce-info { --annonce-c: #4fc3c7; --annonce-fond: #1f3437; }
+  :root:not([data-theme="light"]) .annonce-cat { color: #121a1e; }
+}
+@media (max-width: 600px) { .annonce { padding: 16px 16px 18px; } }
