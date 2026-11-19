@@ -15,6 +15,13 @@ jobs:
           python-version: '3.12'
       - run: pip install icalendar recurring-ical-events
       - run: python outils/agenda.py
+      - name: Compteur de visites (copie locale, lisible même avec un bloqueur de publicité)
+        run: |
+          code=$(curl -s -o /tmp/c.json -w '%{http_code}' https://chimie-winckler.goatcounter.com/counter/TOTAL.json || true)
+          echo "GoatCounter : HTTP $code"; head -c 300 /tmp/c.json; echo
+          if [ "$code" = "200" ] && python -c "import json;d=json.load(open('/tmp/c.json'));print(d['count'])"; then
+            python -c "import json;d=json.load(open('/tmp/c.json'));json.dump({'count':d['count']},open('compteur.json','w'))"
+          fi
       - name: Enregistrer si l'agenda a changé
         run: |
           git config user.name "agenda-bot"
@@ -27,5 +34,8 @@ jobs:
           except Exception:
               old = {}
           open('.change', 'w').write('1' if old.get('evts') != new['evts'] else '0')
+          import os
+          if os.path.exists('compteur.json') and subprocess.run(['git', 'diff', '--quiet', '--', 'compteur.json']).returncode or (os.path.exists('compteur.json') and subprocess.run(['git', 'ls-files', '--error-unmatch', 'compteur.json'], capture_output=True).returncode):
+              open('.change', 'w').write('1')
           PY
-          if [ "$(cat .change)" = "1" ]; then git add agenda.json && git commit -m "Agenda : mise à jour automatique" && git push; else echo "Aucun changement"; fi
+          if [ "$(cat .change)" = "1" ]; then git add agenda.json $(ls compteur.json 2>/dev/null) && git commit -m "Agenda : mise à jour automatique" && git push; else echo "Aucun changement"; fi
