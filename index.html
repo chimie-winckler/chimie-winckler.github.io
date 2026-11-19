@@ -100,7 +100,10 @@ if(!v){var u=document.querySelector('.une');if(u)u.style.display='none';}})();
 </script>
 <script src="theme.js?v=1"></script>
 <script>
-fetch('https://chimie-winckler.goatcounter.com/counter/TOTAL.json').then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){document.getElementById('gc-total').textContent=d.count;document.getElementById('gc-badge').hidden=false;}).catch(function(){});
+(function(){function aff(d){if(!d||d.count==null)throw 0;document.getElementById('gc-total').textContent=d.count;document.getElementById('gc-badge').hidden=false;}
+function lire(u){return fetch(u,{cache:'no-cache'}).then(function(r){if(!r.ok)throw 0;return r.json();});}
+/* direct chez GoatCounter (à jour), sinon la copie faite toutes les heures sur le site (si un bloqueur de publicité bloque GoatCounter) */
+lire('https://chimie-winckler.goatcounter.com/counter/TOTAL.json').then(aff).catch(function(){return lire('compteur.json').then(aff);}).catch(function(){});})();
 </script>
 <script data-goatcounter="https://chimie-winckler.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
