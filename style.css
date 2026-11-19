@@ -286,6 +286,7 @@ h3 { margin: 0 0 8px; font-size: 1.05rem; }
 .agenda-modes button.actif { background: var(--accent); border-color: var(--accent); color: #fff; }
 
 .compteur-haut { margin-left: 12px; height: 20px; flex: none; }
+.compteur-bandeau { margin-top: 10px; height: 20px; box-shadow: 0 1px 6px rgba(0,0,0,.25); }
 
 .consigne { margin: 10px 0 0; padding: 10px 14px; background: var(--accent-clair); border-left: 4px solid var(--accent); border-radius: 8px; color: var(--texte); }
 
