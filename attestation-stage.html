@@ -243,6 +243,12 @@
     $('bandeau-tuteur').hidden = false; $('mode-emploi').hidden = true; $('lien').hidden = true;
     history.replaceState(null, '', location.pathname);
     sauver();
+  } else if (location.hash.indexOf('#e=') === 0) { // venu du journal de stage de l'étudiant : on complète sa propre saisie
+    var bj = (stocke && stocke.d) || {}, ej = {};
+    try { ej = dec(location.hash.slice(3)); } catch (e) {}
+    Object.keys(ej).forEach(function (k) { if (ej[k] && (k === 'acts' ? ej[k].length : true)) bj[k] = ej[k]; });
+    if (stocke) images = stocke.img || images;
+    ecrire(bj); history.replaceState(null, '', location.pathname); sauver();
   } else if (stocke && stocke.d) { ecrire(stocke.d); images = stocke.img || images; }
   else ecrire({});
   if (!$('fait_le').value) $('fait_le').value = new Date().toISOString().slice(0, 10);
