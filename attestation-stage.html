@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Attestation de stage – Chimie de Synthèse</title>
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=20261114c">
+<style>
+  .att { max-width: 860px; margin: 0 auto 48px; display: grid; gap: 20px; }
+  .att .bloc { background: var(--carte); border: 1px solid var(--bord); border-radius: var(--rayon); padding: 18px 18px 20px; }
+  .att h2 { margin: 0 0 4px; font-size: 1.2rem; }
+  .att .qui { font-size: .85rem; color: var(--doux); margin: 0 0 14px; }
+  .att .grille { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px 16px; }
+  .att .large { grid-column: 1 / -1; }
+  .att label { display: grid; gap: 4px; font-size: .9rem; font-weight: 600; min-width: 0; }
+  .att label small { font-weight: 400; color: var(--doux); }
+  .att input, .att select, .att textarea { font: inherit; font-weight: 400; padding: 9px 10px; border: 1px solid var(--bord); border-radius: 8px; background: var(--fond); color: var(--texte); width: 100%; min-width: 0; }
+  .att textarea { resize: vertical; min-height: 64px; }
+  .att input:focus, .att select:focus, .att textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .att .radios { display: flex; flex-wrap: wrap; gap: 6px 18px; font-weight: 400; padding-top: 6px; }
+  .att .radios label { display: flex; align-items: center; gap: 6px; font-weight: 400; }
+  .att .radios input { width: auto; }
+  .etapes { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 10px 0 0; padding: 0; list-style: none; counter-reset: e; }
+  .etapes li { counter-increment: e; background: var(--accent-clair); border-radius: 10px; padding: 12px 14px 12px 46px; position: relative; font-size: .92rem; }
+  .etapes li::before { content: counter(e); position: absolute; left: 12px; top: 12px; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: var(--carte); font-weight: 700; display: grid; place-items: center; font-size: .85rem; }
+  .note { font-size: .88rem; color: var(--doux); margin: 12px 0 0; }
+  .bandeau-tuteur { background: var(--accent-clair); border: 1px solid var(--accent); border-radius: var(--rayon); padding: 14px 16px; }
+  .bandeau-tuteur p { margin: 0; }
+  .act-ligne { display: grid; grid-template-columns: 1fr 1fr 3fr auto; gap: 8px; align-items: start; margin-bottom: 8px; }
+  .act-ligne textarea { min-height: 44px; }
+  @media (max-width: 600px) { .act-ligne { grid-template-columns: 1fr 1fr auto; } .act-ligne textarea { grid-column: 1 / -1; grid-row: 2; } }
+  .btn { font: inherit; font-weight: 600; border-radius: 8px; padding: 10px 16px; cursor: pointer; border: 1px solid var(--accent); background: var(--accent); color: var(--carte); }
+  .btn.sec { background: transparent; color: var(--accent); }
+  .btn.discret { background: transparent; border-color: var(--bord); color: var(--doux); font-weight: 400; }
+  .btn:focus-visible { outline: 2px solid var(--texte); outline-offset: 2px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .sig-zone { display: grid; gap: 8px; }
+  .sig-zone canvas { width: 100%; max-width: 480px; height: 160px; border: 1px dashed var(--doux); border-radius: 8px; background: #fff; touch-action: none; }
+  .apercu-img { max-height: 60px; border: 1px solid var(--bord); border-radius: 6px; background: #fff; padding: 4px; }
+  .lien-box { display: grid; gap: 8px; margin-top: 12px; }
+  .lien-box input { font-size: .8rem; }
+  .ok { color: var(--accent); font-weight: 600; font-size: .9rem; }
+  .rgpd { font-size: .85rem; color: var(--doux); }
+</style>
+</head>
+<body>
+<header class="entete">
+  <div class="conteneur entete-inner">
+    <a class="marque" href="index.html">⚗️ Chimie de Synthèse</a>
+    <button type="button" class="theme-btn" id="theme-btn" aria-label="Changer de thème">🌙</button>
+  </div>
+</header>
+<div class="bandeau">
+  <div class="conteneur">
+    <p class="surtitre">BTS Métiers de la Chimie – Lycée Léonard de Vinci, Calais</p>
+    <h1>Attestation de stage et tableau des activités</h1>
+    <p class="intro">Épreuve E6 – Conduite de projet en milieu professionnel. Annexes 8 et 9 de la circulaire nationale, à remplir en ligne puis à télécharger en PDF.</p>
+  </div>
+</div>
+<main class="conteneur">
+<form class="att" id="f" autocomplete="on" novalidate>
+
+  <div class="bandeau-tuteur" id="bandeau-tuteur" hidden>
+    <p><strong>Madame, Monsieur,</strong> votre stagiaire a déjà renseigné ses informations. Merci de vérifier l’ensemble, de compléter les parties marquées « Tuteur », de signer en bas de page puis de télécharger le PDF. Merci de le remettre au stagiaire et d’en adresser une copie à l’équipe pédagogique : <strong>winckler.btsmch@gmail.com</strong>.</p>
+  </div>
+
+  <section class="bloc" id="mode-emploi">
+    <h2>Comment ça marche ?</h2>
+    <ol class="etapes">
+      <li><strong>L’étudiant remplit</strong> ses informations, celles de l’entreprise et les activités réalisées.</li>
+      <li><strong>Il envoie le lien</strong> créé en bas de page à son tuteur, par mail.</li>
+      <li><strong>Le tuteur vérifie</strong>, complète la gratification, signe et télécharge le PDF des deux annexes.</li>
+    </ol>
+    <p class="note"><strong>Sauvegarde :</strong> ce que tu tapes est gardé automatiquement dans ce navigateur, sur cet appareil. Tu peux fermer la page et revenir plus tard sur le même téléphone ou le même ordinateur. Rien n’est envoyé sur internet : les informations voyagent seulement dans le lien que tu transmets à ton tuteur. Une navigation privée ou un nettoyage du navigateur efface la saisie.</p>
+  </section>
+
+  <section class="bloc">
+    <h2>Organisme d’accueil</h2>
+    <p class="qui">Étudiant</p>
+    <div class="grille">
+      <label class="large">Nom ou dénomination sociale<input id="org_nom" name="org_nom"></label>
+      <label class="large">Adresse<input id="org_adr" name="org_adr" autocomplete="off"></label>
+      <label>Code postal<input id="org_cp" name="org_cp" inputmode="numeric"></label>
+      <label>Ville<input id="org_ville" name="org_ville"></label>
+      <label>Téléphone<input id="org_tel" name="org_tel" type="tel"></label>
+      <label>Nom et prénom du tuteur<input id="tut_nom" name="tut_nom"></label>
+      <label>Emploi occupé par le tuteur<input id="tut_emploi" name="tut_emploi"></label>
+    </div>
+  </section>
+
+  <section class="bloc">
+    <h2>Stagiaire</h2>
+    <p class="qui">Étudiant</p>
+    <div class="grille">
+      <label>Nom<input id="st_nom" name="st_nom" autocomplete="family-name"></label>
+      <label>Prénom<input id="st_prenom" name="st_prenom" autocomplete="given-name"></label>
+      <div><span style="font-size:.9rem;font-weight:600">Sexe</span>
+        <div class="radios"><label><input type="radio" name="st_sexe" id="st_sexe_f" value="F"> F</label><label><input type="radio" name="st_sexe" id="st_sexe_m" value="M"> M</label></div></div>
+      <label>Date de naissance<input id="st_naiss" name="st_naiss" type="date" autocomplete="bday"></label>
+      <label class="large">Adresse<input id="st_adr" name="st_adr" autocomplete="street-address"></label>
+      <label>Téléphone<input id="st_tel" name="st_tel" type="tel" autocomplete="tel"></label>
+      <label>Mél<input id="st_mel" name="st_mel" type="email" autocomplete="email"></label>
+      <label class="large">Formation suivie<input id="st_form" name="st_form" value="BTS Métiers de la Chimie"></label>
+      <label class="large">Établissement<input id="st_etab" name="st_etab" value="Lycée polyvalent Léonard de Vinci, Calais"></label>
+      <label>Académie<input id="acad" name="acad" value="Lille"></label>
+      <label>Session d’examen<input id="session" name="session" value="2027"></label>
+      <div class="large"><span style="font-size:.9rem;font-weight:600">Statut</span>
+        <div class="radios"><label><input type="radio" name="statut" id="statut_st" value="Stagiaire" checked> Stagiaire</label><label><input type="radio" name="statut" id="statut_alt" value="Alternant"> Alternant</label><label><input type="radio" name="statut" id="statut_sal" value="Salarié"> Salarié</label></div></div>
+      <label class="large" id="l_contrat" hidden>Type de contrat <small>(alternant ou salarié : joindre une photocopie du contrat de travail)</small><input id="contrat" name="contrat"></label>
+    </div>
+  </section>
+
+  <section class="bloc">
+    <h2>Période de stage</h2>
+    <p class="qui">Étudiant, vérifié par le tuteur</p>
+    <div class="grille">
+      <label>Du<input id="du" name="du" type="date"></label>
+      <label>Au<input id="au" name="au" type="date"></label>
+      <label>Durée totale<input id="duree_n" name="duree_n" inputmode="decimal" placeholder="4"></label>
+      <label>Unité<select id="duree_u" name="duree_u"><option value="semaines">semaines</option><option value="mois">mois</option></select></label>
+    </div>
+  </section>
+
+  <section class="bloc">
+    <h2>Tableau des activités</h2>
+    <p class="qui">Étudiant, vérifié par le tuteur. Une ligne par période ou par activité principale.</p>
+    <div id="activites"></div>
+    <div class="actions"><button type="button" class="btn sec" id="add-act">+ Ajouter une ligne</button></div>
+  </section>
+
+  <section class="bloc">
+    <h2>Gratification</h2>
+    <p class="qui">Tuteur</p>
+    <div class="grille">
+      <label>Montant total versé au stagiaire (€) <small>0 si aucune gratification</small><input id="grat" name="grat" inputmode="decimal"></label>
+    </div>
+  </section>
+
+  <section class="bloc">
+    <h2>Signature de l’organisme d’accueil</h2>
+    <p class="qui">Tuteur ou représentant de l’organisme</p>
+    <div class="grille">
+      <label>Fait à<input id="fait_a" name="fait_a"></label>
+      <label>Le<input id="fait_le" name="fait_le" type="date"></label>
+      <label class="large">Nom et fonction du représentant<input id="rep" name="rep"></label>
+      <div class="large sig-zone">
+        <span style="font-size:.9rem;font-weight:600">Signature <small style="font-weight:400;color:var(--doux)">au doigt ou à la souris</small></span>
+        <canvas id="sig" width="960" height="320" aria-label="Zone de signature"></canvas>
+        <div class="actions"><button type="button" class="btn discret" id="sig-eff">Effacer la signature</button></div>
+      </div>
+      <label>Logo de l’organisme <small>image, facultatif</small><input id="logo" type="file" accept="image/png,image/jpeg"></label>
+      <label>Cachet de l’entreprise <small>photo ou image, facultatif</small><input id="cachet" type="file" accept="image/png,image/jpeg"></label>
+      <div id="apercus" class="actions large"></div>
+    </div>
+  </section>
+
+  <section class="bloc">
+    <h2>Terminer</h2>
+    <div class="actions">
+      <button type="button" class="btn" id="pdf">Télécharger le PDF (annexes 8 et 9)</button>
+      <button type="button" class="btn sec" id="lien">Créer le lien pour mon tuteur</button>
+    </div>
+    <div class="lien-box" id="lien-box" hidden>
+      <input id="lien-txt" readonly aria-label="Lien à envoyer au tuteur">
+      <div class="actions"><button type="button" class="btn sec" id="copier">Copier le lien</button><a class="btn discret" id="mail" href="#">Ouvrir un mail au tuteur</a><span class="ok" id="copie-ok" hidden>Lien copié</span></div>
+      <p class="note">Envoie ce lien à ton tuteur. En l’ouvrant, il retrouve tout ce que tu as rempli. La signature et les images ne passent pas dans le lien : c’est le tuteur qui les ajoute.</p>
+    </div>
+    <p class="note" id="erreur" hidden></p>
+    <div class="actions" style="margin-top:14px"><button type="button" class="btn discret" id="raz">Tout effacer sur cet appareil</button><span class="ok" id="raz-ok" hidden></span></div>
+    <p class="rgpd">Aucune donnée n’est conservée par le site : la saisie reste dans le navigateur de la personne qui remplit, jusqu’au téléchargement du PDF.</p>
+  </section>
+</form>
+</main>
+<footer class="pied"><div class="conteneur"><p>BTS Métiers de la Chimie – Lycée Léonard de Vinci, Calais</p></div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="theme.js"></script>
+<script>
+(function () {
+  var CLE = 'attestation-stage-v1';
+  var f = document.getElementById('f');
+  var champs = ['org_nom','org_adr','org_cp','org_ville','org_tel','tut_nom','tut_emploi','st_nom','st_prenom','st_naiss','st_adr','st_tel','st_mel','st_form','st_etab','acad','session','contrat','du','au','duree_n','duree_u','grat','fait_a','fait_le','rep'];
+  var radios = ['st_sexe','statut'];
+  var images = { sig: null, logo: null, cachet: null };
+  var $ = function (id) { return document.getElementById(id); };
+
+  // ---------- activités ----------
+  function ligneAct(a) {
+    a = a || {};
+    var d = document.createElement('div'); d.className = 'act-ligne';
+    d.innerHTML = '<input type="date" aria-label="Du" class="a-du"><input type="date" aria-label="Au" class="a-au"><textarea aria-label="Activités" class="a-txt" rows="3" placeholder="Ex. : contrôle qualité des matières premières (CPG, IR), rédaction des fiches d’analyse"></textarea><button type="button" class="btn discret a-sup" aria-label="Supprimer la ligne">✕</button>';
+    d.querySelector('.a-du').value = a.du || ''; d.querySelector('.a-au').value = a.au || ''; d.querySelector('.a-txt').value = a.t || '';
+    d.querySelector('.a-sup').onclick = function () { d.remove(); sauver(); };
+    $('activites').appendChild(d);
+  }
+  function lireActs() {
+    return Array.prototype.map.call(document.querySelectorAll('.act-ligne'), function (d) {
+      return { du: d.querySelector('.a-du').value, au: d.querySelector('.a-au').value, t: d.querySelector('.a-txt').value };
+    }).filter(function (a) { return a.du || a.au || a.t.trim(); });
+  }
+  $('add-act').onclick = function () { ligneAct(); };
+
+  // ---------- état ----------
+  function lire() {
+    var o = {};
+    champs.forEach(function (k) { o[k] = $(k).value; });
+    radios.forEach(function (k) { var r = f.querySelector('input[name="' + k + '"]:checked'); o[k] = r ? r.value : ''; });
+    o.acts = lireActs();
+    return o;
+  }
+  function ecrire(o) {
+    champs.forEach(function (k) { if (o[k] != null) $(k).value = o[k]; });
+    radios.forEach(function (k) { if (o[k]) { var r = f.querySelector('input[name="' + k + '"][value="' + o[k] + '"]'); if (r) r.checked = true; } });
+    $('activites').innerHTML = '';
+    (o.acts && o.acts.length ? o.acts : [{}, {}, {}]).forEach(ligneAct);
+    majContrat();
+  }
+  function sauver() {
+    try { localStorage.setItem(CLE, JSON.stringify({ d: lire(), img: images })); } catch (e) {}
+  }
+  function majContrat() { $('l_contrat').hidden = $('statut_st').checked; }
+  f.addEventListener('input', function () { majContrat(); sauver(); });
+  f.addEventListener('change', function () { majContrat(); sauver(); });
+
+  // lien : données encodées dans l'ancre (#d=...), jamais envoyées au serveur
+  function enc(o) { return btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
+  function dec(s) { s = s.replace(/-/g, '+').replace(/_/g, '/'); while (s.length % 4) s += '='; return JSON.parse(decodeURIComponent(escape(atob(s)))); }
+
+  var depuisLien = null;
+  if (location.hash.indexOf('#d=') === 0) { try { depuisLien = dec(location.hash.slice(3)); } catch (e) { depuisLien = null; } }
+  var stocke = null;
+  try { stocke = JSON.parse(localStorage.getItem(CLE) || 'null'); } catch (e) {}
+  if (depuisLien) {
+    var base = depuisLien;
+    // si le tuteur avait déjà commencé (même stagiaire), on garde ses ajouts
+    if (stocke && stocke.d && stocke.d.st_nom === base.st_nom && stocke.d.st_prenom === base.st_prenom) {
+      ['grat', 'fait_a', 'fait_le', 'rep'].forEach(function (k) { if (stocke.d[k]) base[k] = stocke.d[k]; });
+      images = stocke.img || images;
+    }
+    ecrire(base);
+    $('bandeau-tuteur').hidden = false; $('mode-emploi').hidden = true; $('lien').hidden = true;
+    history.replaceState(null, '', location.pathname);
+    sauver();
+  } else if (stocke && stocke.d) { ecrire(stocke.d); images = stocke.img || images; }
+  else ecrire({});
+  if (!$('fait_le').value) $('fait_le').value = new Date().toISOString().slice(0, 10);
+
+  // ---------- signature ----------
+  var cv = $('sig'), cx = cv.getContext('2d'), trace = false, vide = true;
+  function fondSig() { cx.fillStyle = '#fff'; cx.fillRect(0, 0, cv.width, cv.height); }
+  fondSig();
+  if (images.sig) { var im0 = new Image(); im0.onload = function () { cx.drawImage(im0, 0, 0, cv.width, cv.height); vide = false; }; im0.src = images.sig; }
+  function pos(e) { var r = cv.getBoundingClientRect(); return [(e.clientX - r.left) * cv.width / r.width, (e.clientY - r.top) * cv.height / r.height]; }
+  cv.addEventListener('pointerdown', function (e) { trace = true; cv.setPointerCapture(e.pointerId); var p = pos(e); cx.beginPath(); cx.moveTo(p[0], p[1]); });
+  cv.addEventListener('pointermove', function (e) { if (!trace) return; var p = pos(e); cx.lineWidth = 5; cx.lineCap = 'round'; cx.lineJoin = 'round'; cx.strokeStyle = '#13233f'; cx.lineTo(p[0], p[1]); cx.stroke(); vide = false; });
+  function fin() { if (!trace) return; trace = false; images.sig = vide ? null : cv.toDataURL('image/png'); sauver(); }
+  cv.addEventListener('pointerup', fin); cv.addEventListener('pointercancel', fin);
+  $('sig-eff').onclick = function () { fondSig(); vide = true; images.sig = null; sauver(); };
+
+  // ---------- images ----------
+  function chargerImg(input, cle) {
+    input.addEventListener('change', function () {
+      var fi = input.files[0]; if (!fi) return;
+      var rd = new FileReader();
+      rd.onload = function () {
+        var im = new Image();
+        im.onload = function () { // réduit l'image pour garder un PDF léger
+          var k = Math.min(1, 600 / Math.max(im.width, im.height)), c = document.createElement('canvas');
+          c.width = Math.round(im.width * k); c.height = Math.round(im.height * k);
+          var g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height); g.drawImage(im, 0, 0, c.width, c.height);
+          images[cle] = c.toDataURL('image/jpeg', 0.9); sauver(); apercus();
+        };
+        im.src = rd.result;
+      };
+      rd.readAsDataURL(fi);
+    });
+  }
+  chargerImg($('logo'), 'logo'); chargerImg($('cachet'), 'cachet');
+  function apercus() {
+    var z = $('apercus'); z.innerHTML = '';
+    [['logo', 'Logo'], ['cachet', 'Cachet']].forEach(function (p) {
+      if (!images[p[0]]) return;
+      var w = document.createElement('div'); w.className = 'actions';
+      w.innerHTML = '<img class="apercu-img" alt="' + p[1] + '"><button type="button" class="btn discret">Retirer le ' + p[1].toLowerCase() + '</button>';
+      w.querySelector('img').src = images[p[0]];
+      w.querySelector('button').onclick = function () { images[p[0]] = null; sauver(); apercus(); };
+      z.appendChild(w);
+    });
+  }
+  apercus();
+
+  // ---------- lien tuteur ----------
+  $('lien').onclick = function () {
+    var o = lire(); delete o.grat; delete o.rep;
+    var url = location.origin + location.pathname + '#d=' + enc(o);
+    $('lien-txt').value = url; $('lien-box').hidden = false;
+    var sujet = 'Attestation de stage BTS Métiers de la Chimie – ' + (o.st_prenom + ' ' + o.st_nom).trim();
+    var corps = 'Bonjour,\n\nPour finaliser mon stage, pouvez-vous ouvrir ce lien, vérifier et compléter mon attestation de stage, la signer puis télécharger le PDF ?\n\n' + url + '\n\nMerci beaucoup,\n' + (o.st_prenom + ' ' + o.st_nom).trim();
+    $('mail').href = 'mailto:?subject=' + encodeURIComponent(sujet) + '&body=' + encodeURIComponent(corps);
+  };
+  $('copier').onclick = function () {
+    var t = $('lien-txt');
+    var ok = function () { $('copie-ok').hidden = false; setTimeout(function () { $('copie-ok').hidden = true; }, 2500); };
+    if (navigator.clipboard) navigator.clipboard.writeText(t.value).then(ok, function () { t.select(); });
+    else { t.select(); try { document.execCommand('copy'); ok(); } catch (e) {} }
+  };
+  var razArme = false;
+  $('raz').onclick = function () {
+    if (!razArme) { razArme = true; $('raz').textContent = 'Confirmer : tout effacer'; $('raz-ok').hidden = false; $('raz-ok').textContent = 'Clique à nouveau pour confirmer.'; return; }
+    try { localStorage.removeItem(CLE); } catch (e) {}
+    images = { sig: null, logo: null, cachet: null }; fondSig(); vide = true; apercus();
+    champs.forEach(function (k) { $(k).value = $(k).defaultValue; });
+    f.querySelectorAll('input[type=radio]').forEach(function (r) { r.checked = r.defaultChecked; });
+    ecrire({}); $('fait_le').value = new Date().toISOString().slice(0, 10);
+    razArme = false; $('raz').textContent = 'Tout effacer sur cet appareil'; $('raz-ok').textContent = 'Saisie effacée.';
+  };
+
+  // ---------- PDF ----------
+  function fd(s) { if (!s) return ''; var p = s.split('-'); return p.length === 3 ? p[2] + '/' + p[1] + '/' + p[0] : s; }
+  window.genererPDF = function () {
+    var o = lire(), J = window.jspdf.jsPDF, doc = new J({ unit: 'mm', format: 'a4' });
+    var BLEU = [19, 50, 110], NOIR = [0, 0, 0], GRIS = [90, 90, 90], L = 15, R = 195, W = R - L;
+    function txt(x, y, s, o2) {
+      o2 = o2 || {}; doc.setFont('helvetica', o2.b ? (o2.i ? 'bolditalic' : 'bold') : (o2.i ? 'italic' : 'normal'));
+      doc.setFontSize(o2.sz || 9); doc.setTextColor.apply(doc, o2.c || NOIR);
+      doc.text(String(s), x, y, { align: o2.al || 'left', maxWidth: o2.mw });
+      return doc.getTextWidth(String(s));
+    }
+    function souligne(x, y, s, o2) { var w = txt(x, y, s, o2), x0 = o2 && o2.al === 'center' ? x - w / 2 : x; doc.setDrawColor(0); doc.setLineWidth(0.25); doc.line(x0, y + 0.8, x0 + w, y + 0.8); }
+    // libellé + valeur remplie (en bleu) sur pointillés
+    function champ(x, y, lab, val, larg, sz) {
+      sz = sz || 9; var w = txt(x, y, lab, { sz: sz }), x1 = x + w + 1.5, x2 = x + larg;
+      doc.setDrawColor(150); doc.setLineWidth(0.15); doc.setLineDashPattern([0.4, 0.8], 0); doc.line(x1, y + 0.9, x2, y + 0.9); doc.setLineDashPattern([], 0);
+      if (val) {
+        doc.setFont('helvetica', 'normal'); doc.setFontSize(sz); var v = String(val);
+        while (doc.getTextWidth(v) > x2 - x1 - 1 && v.length > 1) v = v.slice(0, -1);
+        txt(x1 + 0.5, y, v, { sz: sz, c: BLEU });
+      }
+    }
+    function caseC(x, y, coche, lab, sz) {
+      doc.setDrawColor(0); doc.setLineWidth(0.25); doc.rect(x, y - 2.6, 2.8, 2.8);
+      if (coche) { doc.setLineWidth(0.4); doc.setDrawColor.apply(doc, BLEU); doc.line(x + 0.5, y - 1.2, x + 1.2, y - 0.3); doc.line(x + 1.2, y - 0.3, x + 2.4, y - 2.2); }
+      return txt(x + 4, y, lab, { sz: sz || 9 }) + 4;
+    }
+    function cadre(y, h) { doc.setDrawColor(0); doc.setLineWidth(0.3); doc.rect(L, y, W, h); }
+    function para(x, y, s, larg, sz, o2) { o2 = o2 || {}; doc.setFont('helvetica', o2.i ? 'italic' : 'normal'); doc.setFontSize(sz); doc.setTextColor.apply(doc, o2.c || NOIR); var ls = doc.splitTextToSize(s, larg); doc.text(ls, x, y, { lineHeightFactor: 1.2 }); return ls.length * sz * 0.3528 * 1.2; }
+    function image(data, x, y, wmax, hmax) {
+      if (!data) return; var p = doc.getImageProperties(data), k = Math.min(wmax / p.width, hmax / p.height);
+      doc.addImage(data, data.indexOf('image/png') > 0 ? 'PNG' : 'JPEG', x, y, p.width * k, p.height * k);
+    }
+    var nomSt = o.st_nom, prenom = o.st_prenom, adrOrg = [o.org_adr, [o.org_cp, o.org_ville].filter(Boolean).join(' ')].filter(Boolean).join(', ');
+    var duree = o.duree_n ? o.duree_n + ' ' + o.duree_u : '';
+
+    // ===== Annexe 8 =====
+    souligne(L, 13, 'Annexe 8', { b: true, sz: 9 });
+    txt(105, 21, 'ATTESTATION DE STAGE EN ENTREPRISE – E6', { b: true, sz: 12, al: 'center' });
+    txt(105, 26.5, 'Conduite de projet en milieu professionnel', { b: true, sz: 10, al: 'center' });
+    doc.setLineWidth(0.3); doc.rect(L, 32, 90, 22); doc.rect(112, 32, 83, 22);
+    if (images.logo) image(images.logo, L + 2, 34, 86, 18); else txt(L + 2, 36, 'Logo de l’organisme d’accueil', { sz: 8 });
+    txt(153.5, 41, 'ATTESTATION DE STAGE', { b: true, sz: 10, al: 'center' });
+    txt(153.5, 46, 'à remettre au stagiaire à l’issue du stage', { b: true, sz: 8.5, al: 'center' });
+    var y = 59; cadre(y, 27);
+    souligne(105, y + 5, 'ORGANISME D’ACCUEIL', { b: true, sz: 9, al: 'center' });
+    champ(L + 2, y + 11, 'Nom ou dénomination sociale :', o.org_nom, W - 4);
+    champ(L + 2, y + 17, 'Adresse :', adrOrg, W - 4);
+    champ(L + 2, y + 23, 'Tél. :', o.org_tel, 80);
+    txt(L, y + 33, 'Certifie que', { b: true, sz: 9.5 });
+    y = 96; cadre(y, 50);
+    souligne(L + 2, y + 5, 'LE STAGIAIRE', { b: true, sz: 9 });
+    champ(L + 2, y + 11, 'Nom :', nomSt, 52); champ(L + 56, y + 11, 'Prénom :', prenom, 52);
+    var xs = L + 112; xs += txt(xs, y + 11, 'Sexe :', { sz: 9 }) + 2; xs += caseC(xs, y + 11, o.st_sexe === 'F', 'F') + 2; xs += caseC(xs, y + 11, o.st_sexe === 'M', 'M') + 3;
+    champ(xs, y + 11, 'Né(e) le', fd(o.st_naiss), R - 2 - xs);
+    champ(L + 2, y + 17, 'Adresse :', o.st_adr, W - 4);
+    champ(L + 2, y + 23, 'Tél. :', o.st_tel, 70); champ(L + 76, y + 23, 'Mél :', o.st_mel, W - 78);
+    txt(L + 2, y + 29, 'ÉTUDIANT EN (intitulé de la formation ou du cursus de l’enseignement supérieur suivi par le ou la stagiaire) :', { sz: 8 });
+    champ(L + 2, y + 34, '', o.st_form, W - 4);
+    txt(L + 2, y + 40, 'AU SEIN DE (nom de l’établissement d’enseignement supérieur ou de l’organisme de formation) :', { sz: 8 });
+    champ(L + 2, y + 45, '', o.st_etab, W - 4);
+    txt(L, y + 55, 'A effectué un stage prévu dans le cadre de ses études', { b: true, sz: 9.5 });
+    y = 156; cadre(y, 40);
+    souligne(L + 2, y + 5, 'DURÉE DU STAGE', { b: true, sz: 9 });
+    txt(L + 2, y + 11, 'Dates de début et de fin de stage :', { sz: 9 });
+    champ(L + 58, y + 11, 'Du', fd(o.du), 50); champ(L + 112, y + 11, 'au', fd(o.au), W - 114);
+    var xd = L + 2 + txt(L + 2, y + 17, 'Représentant une durée totale de', { sz: 9 }) + 2;
+    txt(xd, y + 17, o.duree_n || '…………', { sz: 9, c: o.duree_n ? BLEU : NOIR, b: !!o.duree_n }); xd += 14;
+    var wsem = txt(xd, y + 17, 'nombre de semaines', { sz: 9 }); txt(xd + wsem, y + 17, ' / ', { sz: 9 }); var xm = xd + wsem + doc.getTextWidth(' / ');
+    var wmois = txt(xm, y + 17, 'de mois', { sz: 9 }); txt(xm + wmois + 1, y + 17, '(rayer la mention inutile).', { sz: 9 });
+    doc.setDrawColor.apply(doc, BLEU); doc.setLineWidth(0.4);
+    if (o.duree_n && o.duree_u === 'semaines') doc.line(xm, y + 16.2, xm + wmois, y + 16.2);
+    if (o.duree_n && o.duree_u === 'mois') doc.line(xd, y + 16.2, xd + wsem, y + 16.2);
+    para(L + 2, y + 23, 'La durée totale du stage est appréciée en tenant compte de la présence effective du stagiaire dans l’organisme, sous réserve des droits et congés et autorisations d’absence prévus à l’article L.124-13 du code de l’éducation (art. L. 124-18 du code de l’éducation). Chaque période au moins égale à 7 heures de présence consécutives ou non est considérée comme équivalente à un jour de stage et chaque période au moins égale à 22 jours de présence consécutifs ou non est considérée comme équivalente à un mois.', W - 4, 7.5);
+    y = 200; cadre(y, 15);
+    souligne(L + 2, y + 5, 'MONTANT DE LA GRATIFICATION VERSÉE AU STAGIAIRE', { b: true, sz: 9 });
+    var xg = L + 2 + txt(L + 2, y + 11, 'Le stagiaire a perçu une gratification de stage pour un montant total de', { sz: 9 }) + 2;
+    champ(xg, y + 11, '', o.grat !== '' ? o.grat : '', 30); txt(xg + 31, y + 11, '€', { sz: 9 });
+    y = 219; doc.setDrawColor(0); doc.setLineWidth(0.3); doc.rect(L, y, 92, 54); doc.rect(L + 92, y, W - 92, 54);
+    para(L + 2, y + 4, 'L’attestation de stage est indispensable pour pouvoir, sous réserve du versement d’une cotisation, faire prendre en compte le stage dans les droits à la retraite. La législation sur les retraites (loi n°2014-40 du 20 janvier 2014) ouvre aux étudiants dont le stage a été gratifié la possibilité de faire valider celui-ci dans la limite de deux trimestres, sous réserve du versement d’une cotisation. La demande est à faire par l’étudiant dans les deux années suivant la fin du stage et sur présentation obligatoire de l’attestation de stage mentionnant la durée totale du stage et le montant total de la gratification perçue. Les informations précises sur la cotisation à verser et sur la procédure à suivre sont à demander auprès de la Sécurité sociale (code de la Sécurité sociale art. L351-17 / code de l’éducation art. D. 124-9).', 88, 7.2);
+    var xr = L + 94; champ(xr, y + 6, 'FAIT À', o.fait_a, 44); champ(xr + 46, y + 6, 'LE', fd(o.fait_le), R - 2 - xr - 46);
+    txt(xr, y + 12, 'Nom, fonction et signature du représentant de l’organisme d’accueil', { sz: 7.5 });
+    if (o.rep) txt(xr, y + 17, o.rep, { sz: 9, c: BLEU, mw: R - 2 - xr });
+    image(images.sig, xr, y + 20, 48, 30); image(images.cachet, xr + 50, y + 19, 34, 33);
+    para(L, 279, 'Pour les candidats se présentant au titre de leur activité professionnelle, cette attestation sera remplacée par des certificats de travail ou contrats de travail.', W, 7.5, { i: true });
+    txt(L, 290, 'Circulaire nationale BTS Métiers de la chimie – annexe 8', { sz: 7, c: GRIS });
+
+    // ===== Annexe 9 =====
+    doc.addPage();
+    souligne(L, 13, 'Annexe 9', { b: true, sz: 9 });
+    doc.setDrawColor(0); doc.setLineWidth(0.3); doc.rect(L, 18, 70, 24); doc.rect(95, 18, 100, 24);
+    txt(L + 2, 40, 'Cachet ou nom du centre d’examen', { sz: 7, i: true });
+    champ(97, 25, 'Académie de', o.acad, 96); txt(97, 31, 'BTS MÉTIERS DE LA CHIMIE', { b: true, sz: 9 }); champ(97, 37, 'Session :', o.session, 60);
+    var wt = txt(105, 51, 'Tableau récapitulatif des activités en entreprise – E6', { b: true, sz: 11, al: 'center' });
+    txt(105, 56, 'Conduite de projet en milieu professionnel', { b: true, sz: 10, al: 'center' });
+    txt(105 + wt / 2 + 0.5, 49, '6', { b: true, sz: 6 });
+    y = 61; cadre(y, 40);
+    souligne(L + 2, y + 5, 'Entreprise', { b: true, sz: 9 });
+    champ(L + 2, y + 11, 'Dénomination :', o.org_nom, W - 4);
+    champ(L + 2, y + 17, 'Adresse :', o.org_adr, W - 4);
+    champ(L + 2, y + 23, 'Code postal :', o.org_cp, 70); champ(L + 80, y + 23, 'Ville :', o.org_ville, W - 82);
+    champ(L + 2, y + 29, 'Nom et prénom du tuteur :', o.tut_nom, W - 4);
+    champ(L + 2, y + 35, 'Emploi occupé :', o.tut_emploi, W - 4);
+    y = 105; cadre(y, 40);
+    souligne(L + 2, y + 5, 'Stagiaire ou Alternant', { b: true, sz: 9 });
+    champ(L + 2, y + 11, 'Nom :', nomSt, 85); champ(L + 92, y + 11, 'Prénom :', prenom, W - 94);
+    champ(L + 2, y + 17, 'Lycée ou centre de formation :', o.st_etab, W - 4);
+    champ(L + 2, y + 23, 'Session d’examen :', o.session, 46);
+    var xt = L + 52; xt += txt(xt, y + 23, 'Statut', { sz: 9 }); txt(xt + 0.3, y + 21.3, '7', { sz: 6 }); xt += 2; xt += txt(xt, y + 23, ':', { sz: 9 }) + 2;
+    var xs8 = xt; xt += caseC(xt, y + 23, o.statut === 'Stagiaire', 'Stagiaire'); txt(xt + 0.3, y + 21.3, '8', { sz: 6 }); xt += 4; xt += caseC(xt, y + 23, o.statut === 'Alternant', 'Alternant') + 3; xt += caseC(xt, y + 23, o.statut === 'Salarié', 'Salarié') + 3;
+    txt(xt + doc.getTextWidth('Type de contrat') + 0.3, y + 21.3, '9', { sz: 6 });
+    champ(xt, y + 23, 'Type de contrat :', o.statut === 'Stagiaire' ? '' : o.contrat, R - 2 - xt);
+    souligne(L + 2, y + 30, 'Période en entreprise :', { b: true, sz: 9 });
+    champ(L + 2, y + 36, 'Du :', fd(o.du), 50); champ(L + 58, y + 36, 'au :', fd(o.au), 50); champ(L + 114, y + 36, 'Durée :', duree, W - 116);
+    txt(105, 153, 'Tableau des Activités', { b: true, sz: 10, al: 'center' });
+    // tableau
+    var c1 = 26, c2 = 26, ty = 156, hEnt = 7, lim = 246;
+    doc.setLineWidth(0.3); doc.setDrawColor(0);
+    doc.rect(L, ty, c1, hEnt); doc.rect(L + c1, ty, c2, hEnt); doc.rect(L + c1 + c2, ty, W - c1 - c2, hEnt);
+    txt(L + 2, ty + 4.8, 'Du', { b: true, sz: 9 }); txt(L + c1 + 2, ty + 4.8, 'au', { b: true, sz: 9 }); txt(L + c1 + c2 + 2, ty + 4.8, 'Activités', { b: true, sz: 9 });
+    var yy = ty + hEnt, acts = o.acts.slice();
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5);
+    var lignes = acts.map(function (a) { return { a: a, ls: doc.splitTextToSize(a.t || '', W - c1 - c2 - 4) }; });
+    var htot = lignes.reduce(function (s, l) { return s + Math.max(8, l.ls.length * 3.7 + 3); }, 0);
+    var sz = 8.5; if (yy + htot > lim) { sz = 7.5; doc.setFontSize(sz); lignes.forEach(function (l) { l.ls = doc.splitTextToSize(l.a.t || '', W - c1 - c2 - 4); }); }
+    lignes.forEach(function (l) {
+      var h = Math.max(8, l.ls.length * sz * 0.43 + 3); if (yy + h > lim) h = Math.max(4, lim - yy);
+      doc.setDrawColor(0); doc.setLineWidth(0.3); doc.rect(L, yy, c1, h); doc.rect(L + c1, yy, c2, h); doc.rect(L + c1 + c2, yy, W - c1 - c2, h);
+      txt(L + 2, yy + 5, fd(l.a.du), { sz: 8.5, c: BLEU }); txt(L + c1 + 2, yy + 5, fd(l.a.au), { sz: 8.5, c: BLEU });
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(sz); doc.setTextColor.apply(doc, BLEU); doc.text(l.ls, L + c1 + c2 + 2, yy + 4.6, { lineHeightFactor: 1.2 });
+      yy += h;
+    });
+    while (yy + 8 <= lim - 6 && yy < ty + hEnt + 8 * 6) { doc.setDrawColor(0); doc.rect(L, yy, c1, 8); doc.rect(L + c1, yy, c2, 8); doc.rect(L + c1 + c2, yy, W - c1 - c2, 8); yy += 8; }
+    var yf = Math.max(yy + 7, 222); if (yf > 250) yf = 250;
+    champ(L, yf, 'Fait à :', o.fait_a, 70); champ(L + 74, yf, 'le', fd(o.fait_le), 50);
+    txt(L, yf + 5, 'Nom, signature et cachet de l’entreprise', { sz: 9 });
+    if (o.rep) txt(L, yf + 10, o.rep, { sz: 9, c: BLEU });
+    image(images.sig, L, yf + 12, 48, 22); image(images.cachet, L + 54, yf + 9, 30, 26);
+    var yn = 282; doc.setDrawColor(0); doc.setLineWidth(0.2); doc.line(L, yn - 4, L + 50, yn - 4);
+    [['6', 'Bulletin Officiel de l’Éducation Nationale n°32 du 28 août 2008 (contrôle de conformité des dossiers)'], ['7', 'Cochez la case correspondante'], ['8', 'Joindre une attestation de stage'], ['9', 'Uniquement pour les alternants ou les salariés : joindre une photocopie du contrat de travail']].forEach(function (n, i) {
+      txt(L, yn + i * 2.6, n[0], { sz: 5 }); txt(L + 2, yn + i * 2.6 + 0.3, n[1], { sz: 6.5 });
+    });
+    txt(L, 293, 'Circulaire nationale BTS Métiers de la chimie – annexe 9', { sz: 7, c: GRIS });
+    // appels de notes en exposant
+    return doc;
+  };
+  $('pdf').onclick = function () {
+    $('erreur').hidden = true;
+    try {
+      var o = lire(), doc = window.genererPDF();
+      doc.save('Attestation de stage - ' + ((o.st_nom || '') + ' ' + (o.st_prenom || '')).trim() + '.pdf');
+    } catch (e) { $('erreur').hidden = false; $('erreur').textContent = 'Le PDF n’a pas pu être créé. Vérifie ta connexion internet puis réessaie.'; }
+  };
+})();
+</script>
+</body>
+</html>
