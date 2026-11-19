@@ -7,86 +7,7 @@
 <title>Livret de stage – Chimie de Synthèse</title>
 <script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <link rel="stylesheet" href="style.css?v=20261119c">
-<style>
-  :root { --en: #3d6fb6; --fr: #0f7c80; --chaud: #c46a1b; }
-  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --en: #7fa6e0; --fr: #4fc3c7; --chaud: #e59a55; } }
-  :root[data-theme="dark"] { --en: #7fa6e0; --fr: #4fc3c7; --chaud: #e59a55; }
-  .liv { max-width: 900px; margin: 0 auto 48px; display: grid; gap: 22px; }
-  .liv .bloc { background: var(--carte); border: 1px solid var(--bord); border-radius: var(--rayon); padding: 20px 18px; min-width: 0; }
-  .liv h2 { margin: 0 0 12px; font-size: 1.3rem; text-wrap: balance; }
-  .liv h3 { margin: 18px 0 8px; font-size: 1.02rem; }
-  .liv p { margin: 0 0 10px; }
-  .sommaire { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none; }
-  .sommaire a { display: inline-block; padding: 6px 12px; border-radius: 999px; background: var(--accent-clair); color: var(--accent); text-decoration: none; font-size: .9rem; font-weight: 600; }
-  /* frise */
-  .frise { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; margin: 8px 0 4px; }
-  .frise::before { content: ""; position: absolute; left: 12%; right: 12%; top: 15px; height: 3px; background: var(--bord); }
-  .frise .et { position: relative; text-align: center; padding: 0 6px; }
-  .frise .pt { width: 30px; height: 30px; border-radius: 50%; margin: 0 auto 8px; display: grid; place-items: center; font-weight: 700; font-size: .8rem; color: var(--carte); background: var(--accent); position: relative; }
-  .frise .pt.chaud { background: var(--chaud); }
-  .frise strong { display: block; font-size: .95rem; }
-  .frise span { display: block; font-size: .85rem; color: var(--doux); }
-  @media (max-width: 640px) {
-    .frise { grid-template-columns: 1fr; gap: 14px; }
-    .frise::before { left: 14px; right: auto; top: 10px; bottom: 10px; width: 3px; height: auto; }
-    .frise .et { display: grid; grid-template-columns: 30px 1fr; gap: 0 12px; text-align: left; padding: 0; }
-    .frise .pt { margin: 0; grid-row: span 3; }
-  }
-  /* barres proportionnelles */
-  .barre { display: flex; border-radius: 8px; overflow: hidden; border: 1px solid var(--bord); font-size: .82rem; font-weight: 600; }
-  .barre > div { padding: 10px 8px; color: #fff; min-width: 0; overflow-wrap: anywhere; }
-  .barre .en { background: var(--en); } .barre .fr { background: var(--fr); } .barre .ch { background: var(--chaud); }
-  .barre .neutre { background: var(--accent-clair); color: var(--texte); }
-  .legende { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: .85rem; color: var(--doux); margin-top: 8px; }
-  .legende i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin-right: 5px; }
-  .graduation { display: flex; justify-content: space-between; font-size: .75rem; color: var(--doux); margin-top: 4px; font-variant-numeric: tabular-nums; }
-  .phase { display: grid; grid-template-columns: 1fr 2fr; gap: 0; font-size: .8rem; color: var(--doux); margin-bottom: 4px; text-align: center; }
-  /* cartes */
-  .cartes { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; }
-  .carte-p { border: 1px solid var(--bord); border-radius: 10px; padding: 12px 14px; font-size: .93rem; }
-  .carte-p strong { display: block; margin-bottom: 4px; }
-  .feuille { width: 100%; max-width: 170px; }
-  .page-garde { display: grid; grid-template-columns: minmax(0, 170px) 1fr; gap: 18px; align-items: start; }
-  @media (max-width: 560px) { .page-garde { grid-template-columns: 1fr; } }
-  .feuille { aspect-ratio: 21 / 29.7; max-width: 100%; border: 1px solid var(--bord); border-radius: 4px; background: var(--fond); padding: 14px 12px; display: grid; align-content: space-between; text-align: center; font-size: .72rem; color: var(--doux); }
-  .feuille b { color: var(--texte); font-size: .85rem; }
-  ol.ordre { margin: 0; padding-left: 1.3em; display: grid; gap: 3px; }
-  .info { background: var(--accent-clair); border-radius: 10px; padding: 12px 14px; font-size: .93rem; }
-  /* journal */
-  .att input, .att select, .att textarea, .jr input, .jr textarea { font: inherit; padding: 8px 10px; border: 1px solid var(--bord); border-radius: 8px; background: var(--fond); color: var(--texte); width: 100%; min-width: 0; }
-  .jr label { display: grid; gap: 4px; font-size: .88rem; font-weight: 600; min-width: 0; }
-  .jr .grille { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px 14px; }
-  .jr textarea { resize: vertical; min-height: 58px; font-weight: 400; }
-  .jr input { font-weight: 400; }
-  .jr input:focus, .jr textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
-  .onglets { display: flex; gap: 6px; margin: 16px 0 12px; flex-wrap: wrap; }
-  .onglets button { font: inherit; font-weight: 600; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--bord); background: var(--fond); color: var(--texte); cursor: pointer; }
-  .onglets button[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--carte); }
-  details.sem { border: 1px solid var(--bord); border-radius: 10px; margin-bottom: 10px; background: var(--carte); }
-  details.sem > summary { cursor: pointer; padding: 12px 14px; font-weight: 600; display: flex; align-items: center; gap: 8px 10px; flex-wrap: wrap; list-style: none; }
-  details.sem > summary > span:first-child { flex: 1 1 auto; min-width: 0; }
-  details.sem > summary::-webkit-details-marker { display: none; }
-  details.sem > summary::before { content: "▸"; color: var(--accent); margin-right: 6px; }
-  details.sem[open] > summary::before { content: "▾"; }
-  .puce { font-size: .78rem; font-weight: 600; padding: 2px 9px; border-radius: 999px; background: var(--fond); color: var(--doux); border: 1px solid var(--bord); white-space: nowrap; }
-  .puce.plein { background: var(--accent-clair); color: var(--accent); border-color: var(--accent); }
-  .sem-corps { padding: 0 14px 14px; display: grid; gap: 12px; }
-  .jour { border-left: 3px solid var(--bord); padding-left: 12px; display: grid; gap: 6px; }
-  .jour.auj { border-left-color: var(--chaud); }
-  .jour h4 { margin: 0; font-size: .95rem; }
-  .jour .deux { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  @media (max-width: 600px) { .jour .deux { grid-template-columns: 1fr; } }
-  .btn { font: inherit; font-weight: 600; border-radius: 8px; padding: 10px 16px; cursor: pointer; border: 1px solid var(--accent); background: var(--accent); color: var(--carte); text-decoration: none; display: inline-block; }
-  .btn.sec { background: transparent; color: var(--accent); }
-  .btn.discret { background: transparent; border-color: var(--bord); color: var(--doux); font-weight: 400; }
-  .btn:focus-visible, .onglets button:focus-visible { outline: 2px solid var(--texte); outline-offset: 2px; }
-  .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-  .ok { color: var(--accent); font-weight: 600; font-size: .9rem; }
-  .note { font-size: .88rem; color: var(--doux); }
-  .etat { font-size: .85rem; color: var(--doux); }
-  .sauve { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
-  .sauve .carte-p strong { color: var(--accent); }
-</style>
+<link rel="stylesheet" href="stage.css?v=2">
 </head>
 <body>
 <header class="entete">
@@ -109,128 +30,13 @@
   <div class="conteneur">
     <p class="fil"><a href="index.html">Accueil</a> › <a href="stage.html">Stage</a> › Livret de stage</p>
     <p class="surtitre">BTS Métiers de la Chimie – Lycée Léonard de Vinci, Calais – promotion 2025-2027</p>
-    <h1>Livret de formation en milieu professionnel</h1>
-    <p class="intro">Tout ce qu’il faut savoir sur tes deux périodes de stage, le rapport et la soutenance, avec ton journal de stage à remplir au fil des jours.</p>
+    <h1>Livret de stage : mon journal</h1>
+    <p class="intro">Ton journal de stage à remplir au fil des jours, avec sauvegarde, export PDF et passage vers l’attestation.</p>
   </div>
 </div>
 <main class="conteneur">
 <div class="liv">
 
-  <nav class="bloc" aria-label="Sommaire">
-    <ul class="sommaire">
-      <li><a href="#periodes">Les périodes</a></li>
-      <li><a href="#rapport">Le rapport</a></li>
-      <li><a href="#objectifs">Les objectifs</a></li>
-      <li><a href="#evaluation">L’évaluation</a></li>
-      <li><a href="#journal">Mon journal de stage</a></li>
-      <li><a href="attestation-stage.html">Attestation de stage</a></li>
-    </ul>
-  </nav>
-
-  <section class="bloc" id="periodes">
-    <h2>Deux périodes de 4 semaines</h2>
-    <p>L’obtention du BTS Métiers de la Chimie nécessite une <strong>période de formation en milieu professionnel (PFMP) de 8 semaines</strong>, en deux fois.</p>
-    <div class="frise">
-      <div class="et"><div class="pt">1</div><strong>Période 1 · 4 semaines</strong><span>1ʳᵉ année, entre le lundi 1ᵉʳ juin et le vendredi 3 juillet 2026</span></div>
-      <div class="et"><div class="pt">2</div><strong>Période 2 · 4 semaines</strong><span>2ᵉ année, du lundi 23 novembre au vendredi 18 décembre 2026</span></div>
-      <div class="et"><div class="pt chaud">R</div><strong>Rapport en PDF</strong><span>à une date nationale fixée en 2027, fin avril ou début mai</span></div>
-      <div class="et"><div class="pt chaud">S</div><strong>Soutenance · 30 min</strong><span>au cours du 4ᵉ semestre, session 2027</span></div>
-    </div>
-    <h3>La visite</h3>
-    <p>Les deux périodes donnent lieu à un <strong>bilan oral</strong> mené ensemble par ton tuteur et l’enseignant qui te suit, en présentiel ou à distance selon les disponibilités de chacun.</p>
-    <h3>L’attestation</h3>
-    <p>À la fin du stage, ton tuteur remplit l’<strong>attestation de stage</strong> et le <strong>tableau récapitulatif des activités</strong> (annexes 8 et 9 de l’épreuve E6). Prépare-les en ligne et envoie le lien à ton tuteur : <a href="attestation-stage.html">attestation de stage à remplir</a>.</p>
-  </section>
-
-  <section class="bloc" id="rapport">
-    <h2>Le rapport de stage</h2>
-    <p>Tu fais un bilan complet de ton stage dans un document rédigé en français, avec un résumé en anglais (abstract). Il est remis <strong>en version numérique, au format PDF</strong>, aux enseignants du BTS.</p>
-    <h3>30 pages au plus, hors annexes</h3>
-    <div class="barre" role="img" aria-label="Répartition des 30 pages du rapport : présentation de l’entreprise en moins de 8 pages, le reste pour les activités">
-      <div class="ch" style="flex: 8">Entreprise : moins de 8 p.</div>
-      <div class="fr" style="flex: 21.5">Une ou plusieurs activités réalisées : description et analyse</div>
-      <div class="en" style="flex: 3" title="Abstract">½ p.</div>
-    </div>
-    <div class="graduation"><span>0</span><span>8 p.</span><span>30 p.</span></div>
-    <div class="legende"><span><i style="background:var(--chaud)"></i>l’entreprise d’accueil : productions, structure, organisation</span><span><i style="background:var(--fr)"></i>les activités, en lien avec les compétences évaluées</span><span><i style="background:var(--en)"></i>l’abstract en anglais, au début ou avant les annexes</span></div>
-    <p style="margin-top:12px">Explicite les <strong>objectifs</strong> qui t’ont été fixés, les <strong>résultats</strong> obtenus ou observés, et les obligations prises en compte, notamment la <strong>réglementation et la politique QHSSE</strong> de l’entreprise ou du laboratoire. Une courte conclusion fait ressortir ce que tu retiens du stage pour ton projet professionnel.</p>
-    <p>Privilégie tes propres développements : limite au maximum les reproductions de documents de l’entreprise. Les extraits de bibliographie ou de sites internet sont possibles s’ils sont clairement référencés et peu nombreux.</p>
-    <h3>Page de garde et plan</h3>
-    <div class="page-garde">
-      <div class="feuille" aria-hidden="true"><div><b>NOM Prénom</b><br>Session 2027</div><div><b>Titre du sujet</b></div><div>Nom de l’entreprise<br>Dates du stage</div></div>
-      <div>
-        <ol class="ordre">
-          <li>Page de garde : nom, prénom, session de l’examen, nom de l’entreprise, titre du sujet, dates du stage</li>
-          <li>Sommaire : plan détaillé avec les numéros de pages</li>
-          <li>Remerciements</li>
-          <li>Introduction</li>
-          <li>Présentation de l’entreprise et du laboratoire</li>
-          <li>Sujet du stage : analyses, appareils, techniques, intérêt de ton travail, exploitation des résultats…</li>
-          <li>Conclusion, sur le sujet du stage et personnelle</li>
-          <li>Abstract en anglais (ou juste après l’introduction)</li>
-          <li>Annexes, paginées et appelées dans le texte</li>
-        </ol>
-      </div>
-    </div>
-    <h3>Mise en forme</h3>
-    <div class="cartes">
-      <div class="carte-p"><strong>Texte justifié</strong>Toutes les pages numérotées, sauf la page de garde.</div>
-      <div class="carte-p"><strong>Rien d’écrit à la main</strong>Équations avec un éditeur d’équations, molécules avec un logiciel de dessin.</div>
-      <div class="carte-p"><strong>Structuré et concis</strong>Renvoie aux annexes depuis le corps du texte.</div>
-    </div>
-  </section>
-
-  <section class="bloc" id="objectifs">
-    <h2>Ce qu’on attend de toi en entreprise</h2>
-    <h3>Savoir-être</h3>
-    <div class="cartes">
-      <div class="carte-p"><strong>Assiduité</strong>Être assidu et respecter les horaires.</div>
-      <div class="carte-p"><strong>Respect</strong>Être respectueux des collègues ; s’informer du règlement intérieur et le respecter.</div>
-      <div class="carte-p"><strong>Tenue et langage</strong>Tenue adaptée, langage adapté et vocabulaire professionnel.</div>
-      <div class="carte-p"><strong>Méthodes</strong>S’adapter aux méthodes de travail et appliquer les consignes.</div>
-      <div class="carte-p"><strong>Implication</strong>S’impliquer dans son travail, faire preuve d’autonomie et rendre compte.</div>
-      <div class="carte-p"><strong>Intégration</strong>S’intégrer à l’équipe, rechercher l’information, interroger les collègues.</div>
-    </div>
-    <h3>Compétences professionnelles</h3>
-    <div class="cartes">
-      <div class="carte-p"><strong>Communication</strong>Adapter sa communication à différents interlocuteurs.</div>
-      <div class="carte-p"><strong>QHSSE</strong>Prendre en compte la réglementation et la politique QHSSE de l’entreprise.</div>
-      <div class="carte-p"><strong>Clients</strong>Prendre en compte en permanence les besoins des clients.</div>
-      <div class="carte-p"><strong>Adaptation</strong>Adapter ses méthodes de travail et son comportement aux situations et aux évolutions.</div>
-      <div class="carte-p"><strong>Image de l’entreprise</strong>Respecter l’image, les valeurs et les règles de l’entreprise.</div>
-    </div>
-  </section>
-
-  <section class="bloc" id="evaluation">
-    <h2>L’évaluation du stage</h2>
-    <h3>Une note sur 30</h3>
-    <div class="barre" role="img" aria-label="Rapport 10 points sur 30, soutenance orale 20 points sur 30">
-      <div class="ch" style="flex: 10">Rapport · 10/30</div>
-      <div class="fr" style="flex: 20">Soutenance orale · 20/30</div>
-    </div>
-    <p class="note" style="margin-top:6px">Les deux sont évalués par les membres du jury.</p>
-    <h3>La soutenance : 30 minutes au plus</h3>
-    <div class="barre" role="img" aria-label="Exposé : 5 minutes en anglais puis 10 minutes en français ; entretien : 5 minutes en anglais puis 10 minutes en français">
-      <div class="en" style="flex: 5">EN 5′</div>
-      <div class="fr" style="flex: 10">Exposé en français 10′</div>
-      <div class="en" style="flex: 5">EN 5′</div>
-      <div class="fr" style="flex: 10">Entretien en français 10′</div>
-    </div>
-    <div class="graduation"><span>0</span><span>15 min</span><span>30 min</span></div>
-    <div class="cartes" style="margin-top:12px">
-      <div class="carte-p"><strong>Exposé en anglais · 5 min</strong>L’entreprise, le contexte du stage, son déroulement et tes activités.</div>
-      <div class="carte-p"><strong>Exposé en français · 10 min</strong>La partie scientifique et technique de ton travail.</div>
-      <div class="carte-p"><strong>Entretien en anglais · 5 min</strong>Questions sur l’entreprise et le stage.</div>
-      <div class="carte-p"><strong>Entretien en français · 10 min</strong>Questions sur la partie scientifique et technique.</div>
-    </div>
-    <h3>Le jury : trois examinateurs</h3>
-    <div class="cartes">
-      <div class="carte-p"><strong>Professeur de physique-chimie</strong>Extérieur à l’établissement, enseignant en STS Métiers de la Chimie.</div>
-      <div class="carte-p"><strong>Représentant de la profession</strong>N’ayant pas encadré le candidat.</div>
-      <div class="carte-p"><strong>Professeur d’anglais</strong>ou d’ESLV.</div>
-    </div>
-    <p class="info" style="margin-top:12px">Ton maître de stage peut assister à l’épreuve, mais il n’intervient pas et ne participe pas à l’évaluation. Demande à ton responsable de stage l’autorisation d’utiliser les informations confidentielles de ton rapport : l’épreuve ne te libère pas de l’obligation de confidentialité.</p>
-  </section>
 
   <section class="bloc jr" id="journal">
     <h2>Mon journal de stage</h2>

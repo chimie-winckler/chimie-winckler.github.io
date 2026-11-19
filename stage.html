@@ -6,6 +6,7 @@
 <title>Stage – Chimie de Synthèse</title>
 <script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <link rel="stylesheet" href="style.css?v=20261119c">
+<link rel="stylesheet" href="stage.css?v=2">
 <style>
   .stage-dates { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 0 0 24px; }
   .stage-dates div { background: var(--carte); border: 1px solid var(--bord); border-radius: var(--rayon); padding: 14px 16px; }
@@ -43,15 +44,27 @@
 </div>
 <main class="conteneur">
 
-<section class="stage-dates" aria-label="Calendrier">
-  <div><strong>Période 1 · 4 semaines</strong><span>1ʳᵉ année, entre le 1ᵉʳ juin et le 3 juillet 2026</span></div>
-  <div><strong>Période 2 · 4 semaines</strong><span>2ᵉ année, du 23 novembre au 18 décembre 2026</span></div>
-  <div><strong>Rapport et soutenance</strong><span>rapport en PDF fin avril ou début mai 2027, soutenance au 4ᵉ semestre (session 2027)</span></div>
-</section>
+<div class="liv" style="max-width:none;margin-bottom:24px">
+<section class="bloc" id="periodes">
+    <h2>Deux périodes de 4 semaines</h2>
+    <p>L’obtention du BTS Métiers de la Chimie nécessite une <strong>période de formation en milieu professionnel (PFMP) de 8 semaines</strong>, en deux fois.</p>
+    <div class="frise">
+      <div class="et"><div class="pt">1</div><strong>Période 1 · 4 semaines</strong><span>1ʳᵉ année, entre le lundi 1ᵉʳ juin et le vendredi 3 juillet 2026</span></div>
+      <div class="et"><div class="pt">2</div><strong>Période 2 · 4 semaines</strong><span>2ᵉ année, du lundi 23 novembre au vendredi 18 décembre 2026</span></div>
+      <div class="et"><div class="pt chaud">R</div><strong>Rapport en PDF</strong><span>à une date nationale fixée en 2027, fin avril ou début mai</span></div>
+      <div class="et"><div class="pt chaud">S</div><strong>Soutenance · 30 min</strong><span>au cours du 4ᵉ semestre, session 2027</span></div>
+    </div>
+    <h3>La visite</h3>
+    <p>Les deux périodes donnent lieu à un <strong>bilan oral</strong> mené ensemble par ton tuteur et l’enseignant qui te suit, en présentiel ou à distance selon les disponibilités de chacun.</p>
+  </section>
+</div>
 
-<section class="tuiles">
-  <a class="tuile" href="livret-stage.html"><h2>Livret de stage</h2><p>Les périodes, le rapport, les objectifs et l’évaluation, et ton journal de stage à remplir chaque soir.</p><span class="etiq">Journal sauvegardé · PDF</span></a>
+<section class="tuiles" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))">
+  <a class="tuile" href="livret-stage.html"><h2>Livret de stage</h2><p>Ton journal de stage à remplir chaque soir, sauvegardé sur ton appareil et téléchargeable en PDF.</p><span class="etiq">Journal · PDF</span></a>
   <a class="tuile" href="attestation-stage.html"><h2>Attestation de stage</h2><p>Annexes 8 et 9 de l’épreuve E6 : tu remplis ta partie et tu envoies le lien à ton tuteur, qui complète, signe et télécharge le PDF.</p><span class="etiq">Lien pour le tuteur · signature</span></a>
+  <a class="tuile" href="rapport-stage.html"><h2>Rapport de stage</h2><p>30 pages au plus : contenu attendu, plan, page de garde et mise en forme.</p><span class="etiq">À rendre en PDF</span></a>
+  <a class="tuile" href="objectifs-stage.html"><h2>Objectifs en entreprise</h2><p>Le savoir-être et les compétences professionnelles attendus pendant le stage.</p><span class="etiq">Savoir-être · compétences</span></a>
+  <a class="tuile" href="evaluation-stage.html"><h2>Évaluation et soutenance</h2><p>La note sur 30, les 30 minutes de soutenance en anglais et en français, le jury.</p><span class="etiq">Rapport 10 · oral 20</span></a>
 </section>
 
 <div class="stage-note">
