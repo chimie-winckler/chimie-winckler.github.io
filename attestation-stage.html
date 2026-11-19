@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex">
 <title>Attestation de stage – Chimie de Synthèse</title>
 <script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
-<link rel="stylesheet" href="style.css?v=20261114c">
+<link rel="stylesheet" href="style.css?v=20261119a">
 <style>
   .att { max-width: 860px; margin: 0 auto 48px; display: grid; gap: 20px; }
   .att .bloc { background: var(--carte); border: 1px solid var(--bord); border-radius: var(--rayon); padding: 18px 18px 20px; }
@@ -49,11 +49,22 @@
 <header class="entete">
   <div class="conteneur entete-inner">
     <a class="marque" href="index.html">⚗️ Chimie de Synthèse</a>
+    <button class="burger" aria-label="Menu" onclick="document.body.classList.toggle('menu-ouvert')">☰</button>
+    <nav><ul class="menu">
+<li><a href="index.html">Accueil</a></li>
+<li><a href="matieres-premieres.html">Matières premières</a><ul class="sous-menu"><li><a href="fds.html">FDS</a></li><li><a href="fds-simplifiee.html">FDS simplifiée</a></li><li><a href="gestion-dechets.html">Gestion des déchets en salle de TP</a></li></ul></li>
+<li><a href="techniques.html">Techniques</a><ul class="sous-menu"><li><a href="verrerie-et-montages.html">Verrerie et montages</a></li><li><a href="techniques-experimentales.html">Techniques expérimentales</a></li></ul></li>
+<li><a href="ressources.html">Ressources</a><ul class="sous-menu"><li><a href="cours.html">Cours</a></li><li><a href="tp.html">TP</a></li><li><a href="evaluations.html">Évaluations</a></li><li><a href="autres.html">Autres</a></li></ul></li>
+<li><a href="entrainement.html">S’entraîner</a></li>
+<li><a href="stage.html" class="actif">Stage</a></li>
+<li><a href="annonces.html">Annonces</a></li>
+    </ul></nav>
     <button type="button" class="theme-btn" id="theme-btn" aria-label="Changer de thème">🌙</button>
   </div>
 </header>
 <div class="bandeau">
   <div class="conteneur">
+    <p class="fil"><a href="index.html">Accueil</a> › <a href="stage.html">Stage</a> › Attestation de stage</p>
     <p class="surtitre">BTS Métiers de la Chimie – Lycée Léonard de Vinci, Calais</p>
     <h1>Attestation de stage et tableau des activités</h1>
     <p class="intro">Épreuve E6 – Conduite de projet en milieu professionnel. Annexes 8 et 9 de la circulaire nationale, à remplir en ligne puis à télécharger en PDF.</p>
