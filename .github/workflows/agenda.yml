@@ -1,0 +1,31 @@
+name: Agenda
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  recopie:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install icalendar recurring-ical-events
+      - run: python outils/agenda.py
+      - name: Enregistrer si l'agenda a changé
+        run: |
+          git config user.name "agenda-bot"
+          git config user.email "agenda-bot@users.noreply.github.com"
+          python - <<'PY'
+          import json, subprocess
+          new = json.load(open('agenda.json'))
+          try:
+              old = json.loads(subprocess.run(['git', 'show', 'HEAD:agenda.json'], capture_output=True, text=True).stdout)
+          except Exception:
+              old = {}
+          open('.change', 'w').write('1' if old.get('evts') != new['evts'] else '0')
+          PY
+          if [ "$(cat .change)" = "1" ]; then git add agenda.json && git commit -m "Agenda : mise à jour automatique" && git push; else echo "Aucun changement"; fi

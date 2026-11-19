@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Accueil – Chimie de Synthèse</title>
 <script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
-<link rel="stylesheet" href="style.css?v=20261119b">
+<link rel="stylesheet" href="style.css?v=20261119c">
 </head>
 <body>
 <header class="entete">
@@ -78,27 +78,20 @@
 <section>
   <h2>Agenda de Monsieur WINCKLER</h2>
   <div class="agenda-modes" role="tablist" aria-label="Affichage de l'agenda">
-    <button type="button" data-mode="WEEK" class="actif">Semaine</button>
-    <button type="button" data-mode="AGENDA">Liste</button>
-    <button type="button" data-mode="MONTH">Mois</button>
+    <button type="button" data-mode="sem" class="actif">Semaine</button>
+    <button type="button" data-mode="liste">Liste</button>
+    <button type="button" data-mode="mois">Mois</button>
   </div>
-  <div class="agenda"><iframe id="agenda-frame" src="https://calendar.google.com/calendar/embed?hl=fr&mode=WEEK&wkst=2&showTitle=0&showPrint=0&showTz=0&showTabs=0&showCalendars=0&bgcolor=%23ffffff&color=%230f7c80&color=%23e07a1f&ctz=Europe%2FParis&src=p6ghh5mdm3u9jir7j6t6fm6i7ms74dlu%40import.calendar.google.com&src=winckler.btsmch%40gmail.com" title="Agenda de Monsieur WINCKLER" loading="lazy"></iframe></div>
-  <script>
-  (function(){
-    var f=document.getElementById('agenda-frame');
-    document.querySelectorAll('.agenda-modes button').forEach(function(b){
-      b.addEventListener('click',function(){
-        document.querySelectorAll('.agenda-modes button').forEach(function(x){x.classList.remove('actif');});
-        b.classList.add('actif');
-        f.src=f.src.replace(/mode=[A-Z]+/,'mode='+b.dataset.mode);
-      });
-    });
-  })();
-  </script></div>
+  <div class="agenda ag">
+    <div class="ag-nav"><button type="button" id="ag-prec" aria-label="Période précédente">‹</button><strong id="ag-titre"></strong><button type="button" id="ag-suiv" aria-label="Période suivante">›</button><button type="button" id="ag-auj" class="ag-auj">Aujourd’hui</button></div>
+    <div id="ag-vue"><p class="ag-vide">Chargement de l’agenda…</p></div>
+    <p class="ag-maj" id="ag-maj"></p>
+  </div>
+  <script src="agenda.js?v=1"></script>
 </section>
 
 </main>
-<footer class="pied"><div class="conteneur">BTS Métiers de la Chimie – Synthèse</div></footer>
+<footer class="pied"><div class="conteneur">BTS Métiers de la Chimie – Synthèse · <a href="mentions-legales.html">Mentions légales et confidentialité</a></div></footer>
 <script>
 (function(){var d=new Date(),j=d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);
 var c=document.querySelectorAll('.une-carte[data-fin]'),v=0;
