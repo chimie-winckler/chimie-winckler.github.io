@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Référentiel INCI – Chimie de Synthèse</title>
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=20261119c">
+<style>
+.inci-intro { max-width: 75ch; color: var(--doux); }
+.inci-outils { display: grid; grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr)); gap: 10px; margin: 18px 0 8px; }
+.inci-outils input, .inci-outils select { width: 100%; padding: 9px 11px; border: 1px solid var(--bord); border-radius: 8px; background: var(--carte); color: var(--texte); font: inherit; }
+.inci-outils input:focus, .inci-outils select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.inci-compte { color: var(--doux); font-size: .92rem; margin: 6px 0 14px; }
+.inci-grille { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); gap: 14px; }
+.inci-carte { background: var(--carte); border: 1px solid var(--bord); border-radius: var(--rayon); padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.inci-carte h3 { margin: 0; font-size: 1.02rem; overflow-wrap: anywhere; }
+.inci-commun { margin: -4px 0 0; color: var(--doux); font-size: .9rem; }
+.inci-puces { display: flex; flex-wrap: wrap; gap: 5px; }
+.inci-puce { font-size: .74rem; padding: 2px 8px; border-radius: 20px; background: var(--accent-clair); color: var(--texte); }
+.inci-puce.ta { background: #e8e4f6; color: #3d2f7a; }
+.inci-puce.st-ok { background: #e3f4e1; color: #24602a; }
+.inci-puce.st-res { background: #fdecd6; color: #8a4b0b; }
+.inci-puce.st-all { background: #fbe3ef; color: #8a1f55; }
+.inci-puce.st-int { background: #f9d6d5; color: #8e1d1a; font-weight: 600; }
+.inci-puce.st-sur { background: #eceff1; color: #455a64; }
+.inci-puce.verif { background: #fff1bf; color: #6b5200; }
+.inci-fb { font-family: Consolas, "Courier New", monospace; font-size: .92rem; overflow-wrap: anywhere; }
+.inci-struct { background: #fff; border-radius: 8px; border: 1px solid var(--bord); display: flex; justify-content: center; padding: 4px; }
+.inci-struct img { width: 100%; max-height: 150px; object-fit: contain; }
+.inci-fct { font-size: .92rem; }
+.inci-fct b { color: var(--doux); font-weight: 600; }
+.inci-carte details { font-size: .9rem; border-top: 1px solid var(--bord); padding-top: 6px; margin-top: auto; }
+.inci-carte summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+.inci-carte dl { margin: 8px 0 0; display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 10px; }
+.inci-carte dt { color: var(--doux); }
+.inci-carte dd { margin: 0; overflow-wrap: anywhere; }
+.inci-plus { display: block; margin: 18px auto 0; padding: 9px 18px; border-radius: 8px; border: 1px solid var(--accent); background: var(--carte); color: var(--accent); font: inherit; font-weight: 600; cursor: pointer; }
+.inci-plus[hidden] { display: none; }
+.inci-fb.txt { font-family: inherit; font-style: italic; color: var(--doux); font-size: .9rem; }
+.inci-vide { color: var(--doux); font-style: italic; }
+mark { background: #fff1bf; color: inherit; border-radius: 2px; }
+@media (max-width: 760px) { .inci-outils { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .inci-outils input { grid-column: 1 / -1; } }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .inci-puce.ta { background: #2c2747; color: #c9bff5; }
+  :root:not([data-theme="light"]) .inci-puce.st-ok { background: #1f3a24; color: #9fdca6; }
+  :root:not([data-theme="light"]) .inci-puce.st-res { background: #3d2c17; color: #f1bd7c; }
+  :root:not([data-theme="light"]) .inci-puce.st-all { background: #3d1f2e; color: #f1a6c9; }
+  :root:not([data-theme="light"]) .inci-puce.st-int { background: #4a1f1e; color: #f5a8a5; }
+  :root:not([data-theme="light"]) .inci-puce.st-sur { background: #2b3439; color: #b8c6cc; }
+  :root:not([data-theme="light"]) .inci-puce.verif { background: #3d3412; color: #f0d77a; }
+  :root:not([data-theme="light"]) .inci-struct { background: #1b252a; }
+  :root:not([data-theme="light"]) .inci-struct img { filter: invert(1) hue-rotate(180deg); }
+  :root:not([data-theme="light"]) mark { background: #5a4b10; }
+}
+:root[data-theme="dark"] .inci-puce.ta { background: #2c2747; color: #c9bff5; }
+:root[data-theme="dark"] .inci-puce.st-ok { background: #1f3a24; color: #9fdca6; }
+:root[data-theme="dark"] .inci-puce.st-res { background: #3d2c17; color: #f1bd7c; }
+:root[data-theme="dark"] .inci-puce.st-all { background: #3d1f2e; color: #f1a6c9; }
+:root[data-theme="dark"] .inci-puce.st-int { background: #4a1f1e; color: #f5a8a5; }
+:root[data-theme="dark"] .inci-puce.st-sur { background: #2b3439; color: #b8c6cc; }
+:root[data-theme="dark"] .inci-puce.verif { background: #3d3412; color: #f0d77a; }
+:root[data-theme="dark"] .inci-struct { background: #1b252a; }
+:root[data-theme="dark"] .inci-struct img { filter: invert(1) hue-rotate(180deg); }
+:root[data-theme="dark"] mark { background: #5a4b10; }
+</style>
+</head>
+<body>
+<header class="entete">
+  <div class="conteneur entete-inner">
+    <a class="marque" href="index.html">⚗️ Chimie de Synthèse</a>
+    <button class="burger" aria-label="Menu" onclick="document.body.classList.toggle('menu-ouvert')">☰</button>
+    <nav><ul class="menu">
+<li><a href="index.html">Accueil</a></li>
+<li><a href="matieres-premieres.html">Matières premières</a><ul class="sous-menu"><li><a href="fds.html">FDS</a></li><li><a href="fds-simplifiee.html">FDS simplifiée</a></li><li><a href="gestion-dechets.html">Gestion des déchets en salle de TP</a></li></ul></li>
+<li><a href="techniques.html">Techniques</a><ul class="sous-menu"><li><a href="verrerie-et-montages.html">Verrerie et montages</a></li><li><a href="techniques-experimentales.html">Techniques expérimentales</a></li></ul></li>
+<li><a href="ressources.html" class="actif">Ressources</a><ul class="sous-menu"><li><a href="cours.html">Cours</a></li><li><a href="tp.html">TP</a></li><li><a href="evaluations.html">Évaluations</a></li><li><a href="autres.html" class="actif">Autres</a></li></ul></li>
+<li><a href="entrainement.html">S’entraîner</a></li>
+<li><a href="stage.html">Stage</a></li>
+<li><a href="annonces.html">Annonces</a></li>
+    </ul></nav>
+    <button type="button" class="theme-btn" id="theme-btn" aria-label="Changer de thème">🌙</button>
+  </div>
+</header>
+<div class="bandeau">
+  <div class="conteneur">
+    <p class="fil"><a href="index.html">Accueil</a> › <a href="ressources.html">Ressources</a> › <a href="autres.html">Autres</a> › Référentiel INCI</p>
+    <p class="surtitre">BTS Métiers de la Chimie – Formulation</p>
+    <h1>Référentiel des ingrédients INCI</h1>
+  </div>
+</div>
+<main class="conteneur">
+<p class="inci-intro">524 ingrédients cosmétiques avec leur nom INCI, leur n° CAS, leurs formules (brute, semi-développée et topologique quand la molécule est définie), leurs fonctions et leur statut au regard du règlement (CE) n° 1223/2009. Les mélanges, polymères et extraits végétaux n’ont pas de formule topologique unique. Les fiches marquées <span class="inci-puce verif">En cours de vérification</span> sont encore en cours de relecture.</p>
+<div class="docs"><a class="doc doc-xlsx" href="Ressources%20site%20internet/autres/Formulation/Referentiel-INCI-cosmetiques.xlsx" download><span class="doc-ico">XLSX</span>Télécharger le tableau complet (Excel)</a></div>
+
+<div class="inci-outils">
+  <input id="q" type="search" placeholder="Rechercher : nom INCI, nom commun, n° CAS, fonction…" aria-label="Rechercher">
+  <select id="fcat" aria-label="Catégorie"><option value="">Toutes les catégories</option></select>
+  <select id="fta" aria-label="Nature tensioactif"><option value="">Tensioactif ou non</option></select>
+  <select id="fst" aria-label="Statut"><option value="">Tous les statuts</option></select>
+</div>
+<p class="inci-compte" id="compte" aria-live="polite">Chargement…</p>
+<div class="inci-grille" id="grille"></div>
+<button type="button" class="inci-plus" id="plus" hidden>Afficher plus</button>
+</main>
+<footer class="pied"><div class="conteneur">BTS Métiers de la Chimie – Synthèse · <a href="mentions-legales.html">Mentions légales et confidentialité</a></div></footer>
+<script>
+(function () {
+  var D = [], vue = [], n = 0, PAS = 48;
+  var q = document.getElementById('q'), fcat = document.getElementById('fcat'), fta = document.getElementById('fta'), fst = document.getElementById('fst');
+  var grille = document.getElementById('grille'), compte = document.getElementById('compte'), plus = document.getElementById('plus');
+  function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function sans(t) { return String(t).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
+  function famille(c) {
+    var f = c.split(/[,(\/]/)[0].trim();
+    if (/^Tensioactif/.test(f) || /^Savon/.test(f) || /^Émulsionnant/.test(f)) return 'Tensioactif';
+    if (/^Corps gras/.test(f)) return 'Corps gras';
+    if (/^Polymère/.test(f) || f === 'Filmogène') return 'Polymère';
+    if (/^Acide gras/.test(f)) return 'Acide gras';
+    if (/^Hydrocarbure|^Huile minérale|^Cire minérale/.test(f)) return 'Huile, cire ou hydrocarbure minéral';
+    if (/^Extrait/.test(f)) return 'Extrait végétal';
+    if (/^Mélange|^Complexe/.test(f)) return 'Mélange ou complexe';
+    if (/^Humectant|^Sucre/.test(f)) return 'Humectant';
+    if (/^Sel|^Électrolyte/.test(f)) return 'Sel';
+    if (/^Parfum|^Matière première parfumée/.test(f)) return 'Matière première parfumée';
+    if (/^Ester|^Éther/.test(f)) return 'Ester ou éther';
+    if (/^Actif|^Agent/.test(f)) return 'Actif';
+    if (/^Solvant/.test(f)) return 'Solvant';
+    if (/^Ajusteur/.test(f)) return 'Ajusteur de pH';
+    if (/^Additif|^Intermédiaire|^Gaz|^Dérivé|^Protéine|^Ferment|^Opacifiant|^Acide$/.test(f)) return 'Autres';
+    return f;
+  }
+  function groupeSt(s) {
+    if (/INTERDIT|Non autorisé/i.test(s)) return ['Interdit ou non autorisé', 'st-int'];
+    if (/vérification/i.test(s)) return ['En cours de vérification', 'verif'];
+    if (/Allergène/i.test(s)) return ['Allergène à déclarer', 'st-all'];
+    if (/Restreint/i.test(s)) return ['Restreint', 'st-res'];
+    if (/^Autorisé/i.test(s)) return ['Autorisé', 'st-ok'];
+    return ['À surveiller', 'st-sur'];
+  }
+  function sub(f) { return esc(f).replace(/([A-Za-z\)\]])(\d+(?:-\d+)?)/g, '$1<sub>$2</sub>'); }
+  function surl(t, m) {
+    var h = esc(t); if (!m) return h;
+    var s = sans(h), i = s.indexOf(m);
+    return i < 0 ? h : h.slice(0, i) + '<mark>' + h.slice(i, i + m.length) + '</mark>' + h.slice(i + m.length);
+  }
+  function carte(e, m) {
+    var g = groupeSt(e.st), h = '<article class="inci-carte"><h3>' + surl(e.n, m) + '</h3>';
+    if (e.c) h += '<p class="inci-commun">' + surl(e.c, m) + '</p>';
+    h += '<div class="inci-puces"><span class="inci-puce">' + esc(e.cat) + '</span>';
+    if (e.t && e.t !== 'Non tensioactif') h += '<span class="inci-puce ta">' + esc(e.t) + '</span>';
+    h += '<span class="inci-puce ' + g[1] + '">' + esc(e.st) + '</span>';
+    if (e.v) h += '<span class="inci-puce verif">En cours de vérification</span>';
+    h += '</div>';
+    if (e.fb) h += /[a-zà-ÿ]{4,}/.test(e.fb.replace(/moyen|ou |hydraté/g, '')) ? '<div class="inci-fb txt">' + esc(e.fb) + '</div>' : '<div class="inci-fb">' + sub(e.fb) + '</div>';
+    if (e.s) h += '<div class="inci-struct"><img src="inci/svg/' + e.s + '" alt="Formule topologique de ' + esc(e.n) + '" loading="lazy" width="360" height="180"></div>';
+    if (e.f) h += '<div class="inci-fct"><b>Fonctions :</b> ' + surl(e.f, m) + '</div>';
+    h += '<details><summary>Détails</summary><dl>';
+    [['N° CAS', e.cas], ['Origine', e.o], ['Formule semi-développée', e.sd], ['Remarques', e.k]].forEach(function (x) {
+      if (x[1]) h += '<dt>' + x[0] + '</dt><dd>' + (x[0] === 'N° CAS' ? surl(x[1], m) : esc(x[1])) + '</dd>';
+    });
+    return h + '</dl></details></article>';
+  }
+  function remplir(sel, vals) {
+    vals.forEach(function (v) { var o = document.createElement('option'); o.value = o.textContent = v; sel.appendChild(o); });
+  }
+  function filtrer() {
+    var m = sans(q.value.trim()), c = fcat.value, t = fta.value, s = fst.value;
+    vue = D.filter(function (e) {
+      if (c && e._fam !== c) return false;
+      if (t && e.t !== t) return false;
+      if (s && !(s === 'En cours de vérification' ? e.v : e._st === s)) return false;
+      return !m || e._q.indexOf(m) >= 0;
+    });
+    n = 0; grille.innerHTML = ''; montrer();
+  }
+  function montrer() {
+    var m = sans(q.value.trim()), h = '';
+    vue.slice(n, n + PAS).forEach(function (e) { h += carte(e, m); });
+    grille.insertAdjacentHTML('beforeend', h); n = Math.min(vue.length, n + PAS);
+    compte.textContent = vue.length ? vue.length + ' ingrédient' + (vue.length > 1 ? 's' : '') + (vue.length > n ? ' (' + n + ' affichés)' : '') : '';
+    if (!vue.length) grille.innerHTML = '<p class="inci-vide">Aucun ingrédient ne correspond à ta recherche.</p>';
+    plus.hidden = n >= vue.length;
+  }
+  fetch('inci/inci.json').then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (d) {
+    D = d.sort(function (a, b) { return a.n.localeCompare(b.n, 'fr', { sensitivity: 'base' }); });
+    D.forEach(function (e) { e._fam = famille(e.cat); e._st = groupeSt(e.st)[0]; e._q = sans([e.n, e.c, e.cas, e.cat, e.f].join(' ')); });
+    var fams = {}; D.forEach(function (e) { fams[e._fam] = 1; });
+    remplir(fcat, Object.keys(fams).sort(function (a, b) { return a === 'Autres' ? 1 : b === 'Autres' ? -1 : a.localeCompare(b, 'fr'); }));
+    remplir(fta, ['Non tensioactif', 'Anionique (-)', 'Cationique (+)', 'Amphotère (zwitterionique)', 'Non ionique (non chargé)']);
+    remplir(fst, ['Autorisé', 'Restreint', 'Allergène à déclarer', 'Interdit ou non autorisé', 'À surveiller', 'En cours de vérification']);
+    filtrer();
+  }).catch(function () { compte.textContent = 'Le tableau n’a pas pu être chargé. Réessaie dans un moment.'; });
+  var tm; q.addEventListener('input', function () { clearTimeout(tm); tm = setTimeout(filtrer, 150); });
+  [fcat, fta, fst].forEach(function (s) { s.addEventListener('change', filtrer); });
+  plus.addEventListener('click', montrer);
+})();
+</script>
+<script src="theme.js?v=1"></script>
+<script data-goatcounter="https://chimie-winckler.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
