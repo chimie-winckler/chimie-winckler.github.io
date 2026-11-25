@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ressources – Chimie de Synthèse</title>
 <script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
-<link rel="stylesheet" href="style.css?v=20261119c">
+<link rel="stylesheet" href="style.css?v=20261125a">
 </head>
 <body>
 <header class="entete">
@@ -16,7 +16,7 @@
 <li><a href="index.html">Accueil</a></li>
 <li><a href="matieres-premieres.html">Matières premières</a><ul class="sous-menu"><li><a href="fds.html">FDS</a></li><li><a href="fds-simplifiee.html">FDS simplifiée</a></li><li><a href="gestion-dechets.html">Gestion des déchets en salle de TP</a></li></ul></li>
 <li><a href="techniques.html">Techniques</a><ul class="sous-menu"><li><a href="verrerie-et-montages.html">Verrerie et montages</a></li><li><a href="techniques-experimentales.html">Techniques expérimentales</a></li></ul></li>
-<li><a href="ressources.html" class="actif">Ressources</a><ul class="sous-menu"><li><a href="cours.html">Cours</a></li><li><a href="tp.html">TP</a></li><li><a href="evaluations.html">Évaluations</a></li><li><a href="autres.html">Autres</a></li></ul></li>
+<li><a href="ressources.html" class="actif">Ressources</a><ul class="sous-menu"><li class="sm-titre">Synthèse</li><li><a href="cours.html">Cours</a></li><li><a href="tp.html">TP</a></li><li><a href="evaluations.html">Évaluations</a></li><li class="sm-titre">Formulation</li><li><a href="tp-formulation.html">TP</a></li><li><a href="fiches-methodes.html">Fiches méthodes</a></li></ul></li>
 <li><a href="entrainement.html">S’entraîner</a></li>
 <li><a href="stage.html">Stage</a></li>
 <li><a href="annonces.html">Annonces</a></li>
@@ -27,19 +27,22 @@
 <div class="bandeau">
   <div class="conteneur">
     <p class="fil"><a href="index.html">Accueil</a> › Ressources</p>
-    <p class="surtitre">BTS Métiers de la Chimie – Synthèse</p>
+    <p class="surtitre">BTS Métiers de la Chimie</p>
     <h1>Ressources</h1>
-    <p class="intro">Cours, TP, évaluations et autres documents.</p>
+    <p class="intro">Synthèse et formulation : cours, TP, évaluations et fiches méthodes.</p>
   </div>
 </div>
 <main class="conteneur">
 
-<section class="tuiles">
-  <a class="tuile" href="cours.html"><h2>Cours Synthèse 🔒</h2><p>Supports de cours (accès par mot de passe).</p></a>
-  <a class="tuile" href="tp.html"><h2>TP Synthèse</h2><p>Sujets et documents de travaux pratiques.</p></a>
-  <a class="tuile" href="evaluations.html"><h2>Évaluations Synthèse</h2><p>Devoirs en classe et devoirs maison.</p></a>
-  <a class="tuile" href="autres.html"><h2>Autres</h2><p>TP formulation et fiches méthodes.</p></a>
-</section>
+<section id="synthese"><h2>Synthèse</h2><div class="tuiles">
+  <a class="tuile" href="cours.html"><h3>Cours 🔒</h3><p>Supports de cours (accès par mot de passe).</p></a>
+  <a class="tuile" href="tp.html"><h3>TP</h3><p>Sujets, feuilles de résultats et corrections des TP de synthèse.</p></a>
+  <a class="tuile" href="evaluations.html"><h3>Évaluations</h3><p>Devoirs en classe et devoirs maison.</p></a>
+</div></section>
+<section id="formulation"><h2>Formulation</h2><div class="tuiles">
+  <a class="tuile" href="tp-formulation.html"><h3>TP</h3><p>Sujets des TP de formulation.</p></a>
+  <a class="tuile" href="fiches-methodes.html"><h3>Fiches méthodes</h3><p>Viscosité, rhéologie, densité, moussabilité, et le référentiel des ingrédients INCI.</p></a>
+</div></section>
 
 </main>
 <footer class="pied"><div class="conteneur">BTS Métiers de la Chimie – Synthèse · <a href="mentions-legales.html">Mentions légales et confidentialité</a></div></footer>
