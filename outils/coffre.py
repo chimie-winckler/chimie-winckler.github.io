@@ -23,7 +23,7 @@ ITER = 300000
 PUBLICS = ('theme.js', 'exo.js', 'chem.js', 'aller.js', 'coffre.js', 'goatcounter')
 SEP = '<!--coffre-scripts-->'
 
-def pages(): return ['cours.html', 'entrainement.html'] + sorted(os.path.basename(f) for f in glob.glob(os.path.join(R, 'exo-*.html')))
+def pages(): return ['cours.html', 'entrainement.html', 'fiches-methodes.html'] + sorted(os.path.basename(f) for f in glob.glob(os.path.join(R, 'exo-*.html')))
 def cle(mdp, sel): return PBKDF2HMAC(hashes.SHA256(), 32, sel, ITER).derive(mdp.encode('utf-8'))
 def chiffre(k, d): iv = os.urandom(12); return iv + AESGCM(k).encrypt(iv, d, None)
 def dechiffre(k, b): return AESGCM(k).decrypt(b[:12], b[12:], None)
