@@ -1,0 +1,64 @@
+/* Formules des molécules */
+.formules [hidden] { display: none !important; }
+.fm-intro { color: var(--doux); max-width: 80ch; }
+.fm-carte { background: var(--carte); border: 1px solid var(--bord); border-radius: var(--rayon); padding: 14px 16px; margin-top: 14px; min-width: 0; }
+.fm-ligne { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.fm-saisie input { flex: 1 1 260px; min-width: 0; padding: 9px 11px; border: 1px solid var(--bord); border-radius: 8px; background: var(--fond); color: var(--texte); font: inherit; }
+.formules button { padding: 7px 12px; border: 1px solid var(--accent); border-radius: 8px; background: var(--carte); color: var(--accent); font: inherit; font-weight: 600; cursor: pointer; }
+.formules button:hover { background: var(--accent-clair); }
+.formules button.actif { background: var(--accent); color: #fff; }
+.fm-err { color: #b3261e; margin: 6px 0 0; font-size: .92rem; }
+.fm-barre { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0 8px; }
+.fm-groupe { display: flex; flex-wrap: wrap; gap: 4px; padding-right: 10px; border-right: 1px solid var(--bord); }
+.fm-groupe:last-child { border-right: 0; }
+.fm-groupe button { min-width: 38px; padding: 6px 8px; }
+.fm-groupe .el-o { color: #d32f2f; } .fm-groupe .el-n { color: #1e4fd8; }
+.fm-groupe button.actif.el-o, .fm-groupe button.actif.el-n { color: #fff; }
+.fm-canevas { width: 100%; height: 340px; display: block; background: var(--fond); border: 1px solid var(--bord); border-radius: 10px; touch-action: none; cursor: crosshair; color: var(--texte);
+  background-image: radial-gradient(circle, var(--bord) 1px, transparent 1px); background-size: 21px 21px; }
+.fm-canevas text, .fm-svg text { font: 16px Arial, Helvetica, sans-serif; fill: currentColor; }
+.fm-canevas .ind, .fm-svg .ind { font-size: 11px; }
+.fm-canevas line { stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; }
+.fm-canevas line.sv { stroke: var(--accent); stroke-width: 3; }
+.fm-canevas .sv-c { fill: var(--accent-clair); stroke: var(--accent); }
+.fm-canevas .pt { fill: currentColor; }
+.fm-canevas .fantome { stroke: var(--accent); stroke-dasharray: 4 4; }
+.fm-canevas .err { fill: #d32f2f; font-weight: 700; }
+.fm-canevas .vide { fill: var(--doux); font-size: 14px; }
+.fm-options { margin-top: 8px; justify-content: space-between; }
+.fm-case { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+.fm-aide { font-size: .85rem; color: var(--doux); }
+.fm-info { margin-bottom: 8px; }
+.fm-info p { margin: 2px 0; }
+.fm-nomc { font-size: 1.15rem; font-weight: 700; }
+.fm-doux { color: var(--doux); font-weight: 400; }
+.fm-alerte { color: #d32f2f; }
+.fm-lien { font-size: .92rem; }
+.fm-onglets { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+.fm-resultats { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; background: var(--fond); border: 1px solid var(--bord); border-radius: 10px; padding: 14px; min-height: 220px; overflow-x: auto; }
+.fm-fig { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 0; }
+.fm-fig figcaption { font-size: .88rem; color: var(--doux); text-align: center; }
+.fm-svg { width: 100%; height: auto; max-height: 380px; color: var(--texte); }
+.fm-svg line { stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; }
+.fm-svg line.doublet { stroke-width: 2.2; }
+.fm-svg line.fin { stroke-width: 1.2; }
+.fm-svg .charge { fill: none; stroke: currentColor; stroke-width: 1.2; }
+.fm-svg .point { fill: currentColor; }
+.fm-svg .baton { stroke: #8a8a8a; stroke-width: 7; }
+.fm-svg.fm-brute { max-width: 340px; }
+.fm-svg.fm-brute text { font-size: 30px; }
+.fm-svg.fm-brute .ind { font-size: 20px; }
+.fm-bas { margin-top: 10px; justify-content: space-between; }
+.fm-vide { color: var(--doux); font-style: italic; }
+.fm-credits { font-size: .85rem; color: var(--doux); margin-top: 16px; }
+.fm-svg .plus { font-size: 22px; }
+.fm-meca .fm-svg { max-height: 460px; }
+.fm-svg .fleche path { fill: none; stroke: #c62828; stroke-width: 1.8; }
+.fm-svg .fleche polygon { fill: #c62828; }
+.fm-svg .fleche .fl-zone { stroke: transparent; stroke-width: 12; cursor: pointer; }
+.fm-svg .fleche.sel path:not(.fl-zone) { stroke-width: 3; }
+.fm-svg .cible { fill: transparent; cursor: pointer; }
+.fm-meca.choix-debut .c-doublet:hover, .fm-meca.choix-debut .c-liaison:hover { fill: rgba(46, 160, 67, .3); }
+.fm-meca.choix-fin .c-atome:hover, .fm-meca.choix-fin .c-liaison:hover { fill: rgba(198, 40, 40, .2); }
+.fm-meca.choix-debut .c-atome { cursor: not-allowed; }
+.fm-svg .depart { fill: rgba(46, 160, 67, .35); stroke: #2e7d32; }
