@@ -30,6 +30,16 @@ const MesoDessin = (() => {
     return best;
   }
 
+  // direction visée par les flèches qui partent d'un doublet (pour placer ce doublet du bon côté)
+  function vises(m, fleches) {
+    const v = {};
+    (fleches || []).forEach(fl => {
+      if (fl.de.a === undefined) return;
+      const a = m.atomes[fl.de.a], c = fl.vers.a !== undefined ? m.atomes[fl.vers.a] : { x: (m.atomes[fl.vers.l[0]].x + m.atomes[fl.vers.l[1]].x) / 2, y: (m.atomes[fl.vers.l[0]].y + m.atomes[fl.vers.l[1]].y) / 2 };
+      v[fl.de.a] = Math.atan2(c.y - a.y, c.x - a.x) / RAD;
+    });
+    return v;
+  }
   // ───────── géométrie d'une forme ─────────
   function geometrie(m, f, opt = {}) {
     const an = Meso.analyser(m, f), n = m.atomes.length;
@@ -41,19 +51,33 @@ const MesoDessin = (() => {
     const lourds = m.atomes.map((a, i) => i).filter(i => m.atomes[i].el !== 'H');
     const centroide = [lourds.reduce((s, i) => s + P[i][0], 0) / lourds.length, lourds.reduce((s, i) => s + P[i][1], 0) / lourds.length];
     const atomes = m.atomes.map((a, i) => {
-      const vis = !a.cache, angs = vois[i].map(j => Math.atan2(P[j][1] - P[i][1], P[j][0] - P[i][0]) / RAD);
+      // un carbone du squelette est écrit (avec ses H) dès qu'il porte un doublet, un électron célibataire, une lacune ou une charge
+      const porte = an.at[i].paires + an.at[i].radical + an.at[i].lacune > 0 || an.at[i].q !== 0;
+      const vis = !a.cache || porte || !!(opt.vis && opt.vis.has(i)), angs = vois[i].map(j => Math.atan2(P[j][1] - P[i][1], P[j][0] - P[i][0]) / RAD);
       const sx = vois[i].reduce((s, j) => s + Math.sign(P[j][0] - P[i][0]) * (Math.abs(P[j][0] - P[i][0]) > 1 ? 1 : 0), 0);
-      const h = a.h || 0, hVis = vis && h > 0, prefixe = hVis && sx > 0 && vois[i].length === 1;
+      const h = a.h || 0, hVis = vis && h > 0, prefixe = hVis && (a.cache && cycleDe.has(i)
+        ? (P[i][0] - centres[cycleDe.get(i)][0]) < -U * 0.3       // dans un cycle : H écrit du côté extérieur
+        : sx > 0 && vois[i].length === 1);
+      // dans un cycle : ni doublet ni charge vers l'intérieur du cycle
+      const vers = a.cache && cycleDe.has(i) ? [Math.atan2(centres[cycleDe.get(i)][1] - P[i][1], centres[cycleDe.get(i)][0] - P[i][0]) / RAD] : [];
       const occ = angs.concat(hVis ? [prefixe ? 180 : 0] : []);
       const A = an.at[i], slots = [];
-      const nb = A.paires + A.radical + A.lacune, dirs = directions(occ, nb);
+      const nb = A.paires + A.radical + A.lacune;
+      let dirs = directions(occ.concat(vers), nb);
+      // un seul doublet et une flèche qui en part : on le place dans l'espace libre le plus proche de la cible
+      if (nb === 1 && opt.vise && opt.vise[i] !== undefined) {
+        const t = occ.concat(vers).map(x => (x + 360) % 360).sort((x, y) => x - y), cand = [];
+        t.forEach((x, k) => { const y = k + 1 < t.length ? t[k + 1] : t[0] + 360; if (y - x >= 90) cand.push(nm(x + (y - x) / 2)); });
+        if (cand.length) dirs = [cand.sort((x, y) => ecartAng(x, opt.vise[i]) - ecartAng(y, opt.vise[i]))[0]];
+      }
       // électron célibataire / lacune : au milieu de la série
       const types = Array(A.paires).fill('p');
       const mil = Math.floor(types.length / 2);
       if (A.radical) types.splice(mil, 0, 'r');
       if (A.lacune) types.splice(mil, 0, 'l');
       dirs.forEach((d, k) => slots.push({ type: types[k], ang: d }));
-      const angQ = A.q ? angleLibre(occ.concat(dirs), -45) : null;
+      // dans un cycle (carbone non écrit) : la charge ne va jamais à l'intérieur du cycle
+      const angQ = A.q ? angleLibre(occ.concat(dirs, vers), -45) : null;
       return { i, vis, el: a.el, h, hVis, prefixe, p: P[i], occ, slots, q: A.q, angQ };
     });
     const liaisons = m.liaisons.map(([i, j]) => {
@@ -73,8 +97,8 @@ const MesoDessin = (() => {
     return Math.min(tx, ty);
   }
   const dirU = a => [Math.cos(a * RAD), Math.sin(a * RAD)];
-  const posSlot = (at, sl, plus = 0) => { const d = (at.vis ? rayon(at, sl.ang) + 3.5 : 10) + plus; return [at.p[0] + Math.cos(sl.ang * RAD) * d, at.p[1] + Math.sin(sl.ang * RAD) * d]; };
-  const posCharge = (at, ang) => { const d = at.vis ? rayon(at, ang) + 9.5 : 15; return [at.p[0] + Math.cos(ang * RAD) * d, at.p[1] + Math.sin(ang * RAD) * d]; };
+  const posSlot = (at, sl, plus = 0) => { const d = (at.vis ? rayon(at, sl.ang) + 3.5 : 13) + plus; return [at.p[0] + Math.cos(sl.ang * RAD) * d, at.p[1] + Math.sin(sl.ang * RAD) * d]; };
+  const posCharge = (at, ang) => { const d = at.vis ? rayon(at, ang) + 9.5 : 19; return [at.p[0] + Math.cos(ang * RAD) * d, at.p[1] + Math.sin(ang * RAD) * d]; };
 
   // ───────── primitives ─────────
   const ligne = (a, b, op = 1, ep = 1.7, tir) => (op <= 0.01 ? '' : `<line x1="${f1(a[0])}" y1="${f1(a[1])}" x2="${f1(b[0])}" y2="${f1(b[1])}" stroke="currentColor" stroke-width="${ep}" stroke-linecap="round"${op < 1 ? ` opacity="${op.toFixed(2)}"` : ''}${tir ? ' stroke-dasharray="4 3.5"' : ''}/>`);
@@ -166,7 +190,7 @@ const MesoDessin = (() => {
   // géométrie d'une flèche pour un départ, un côté de courbure (sg) et une amplitude (km) donnés
   function construireFleche(G, fl, dep, sg, km) {
     const cibleBrute = fl.vers.a !== undefined ? G.P[fl.vers.a] : milieu(G, fl.vers.l);
-    let s0 = fl.de.a !== undefined ? (dep ? posSlot(G.atomes[fl.de.a], dep, dep.type === 'r' ? 1 : 0) : G.P[fl.de.a]) : milieu(G, fl.de.l);
+    let s0 = fl.de.a !== undefined ? (dep ? posSlot(G.atomes[fl.de.a], dep, dep.type === 'r' ? 4 : 3) : G.P[fl.de.a]) : milieu(G, fl.de.l);
     let e0 = cibleBrute;
     const dx = e0[0] - s0[0], dy = e0[1] - s0[1], len = Math.hypot(dx, dy) || 1, nx = -dy / len, ny = dx / len;
     const k = Math.min(34, Math.max(13, len * 0.5)) * km;
@@ -294,7 +318,7 @@ const MesoDessin = (() => {
 
   // une forme, avec ses flèches éventuelles et (option) les zones cliquables
   function forme(m, f, opt = {}) {
-    const G = geometrie(m, f), fl = flechesGeom(G, opt.fleches);
+    const G = geometrie(m, f, { vise: vises(m, opt.fleches) }), fl = flechesGeom(G, opt.fleches);
     let c = corps(G, null, 0, opt);
     c += fl.map((g, i) => svgFleche(g, 1, BLEU, opt.cibles ? ` data-f="${i}" class="ms-fl${opt.choisie === i ? ' sel' : ''}"` : '')).join('');
     if (opt.depart) c += marqueDepart(G, opt.depart);
@@ -324,7 +348,8 @@ const MesoDessin = (() => {
 
   // image d'une transition : phase 0→0.5 électrons en mouvement le long des flèches, 0.4→1 morphing vers la forme suivante
   function transition(m, fA, fB, fleches, T, opt = {}) {
-    const A = geometrie(m, fA), B = geometrie(m, fB), fl = flechesGeom(A, fleches);
+    const vis = new Set(); [fA, fB].forEach(f => { const an = Meso.analyser(m, f); an.at.forEach((x, i) => { if (x.paires + x.radical + x.lacune > 0 || x.q) vis.add(i); }); });
+    const A = geometrie(m, fA, { vis, vise: vises(m, fleches) }), B = geometrie(m, fB, { vis }), fl = flechesGeom(A, fleches);
     const tm = Math.min(1, Math.max(0, (T - 0.42) / 0.58)), tm2 = tm * tm * (3 - 2 * tm);
     let c = corps(A, B, tm2, { ...opt, tf: Math.min(1, T / 0.12) });
     const opF = T < 0.5 ? 1 : Math.max(0, 1 - (T - 0.5) / 0.2);
@@ -367,7 +392,7 @@ const MesoDessin = (() => {
   }
 
   function boiteChaine(m, formes, fleches) {
-    const Gs = formes.map(f => geometrie(m, f));
+    const Gs = formes.map((f, i) => geometrie(m, f, { vise: vises(m, (fleches || [])[i]) }));
     const fl = []; (fleches || []).forEach((l, i) => flechesGeom(Gs[i], l).forEach(g => fl.push(g)));
     return boite(Gs, fl);
   }
