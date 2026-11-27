@@ -154,7 +154,7 @@ const Rendu = (() => {
         const d = an.doublets[k];
         const angs = directionsDoublets(occ, d.paires + d.seul);
         angs.slice(0, d.paires).forEach(an0 => {
-          const ux = Math.cos(an0 * RAD), uy = Math.sin(an0 * RAD), c0 = [p[0] + ux * 14, p[1] + uy * 14];
+          const ux = Math.cos(an0 * RAD), uy = Math.sin(an0 * RAD), c0 = [p[0] + ux * 11.5, p[1] + uy * 11.5];
           out.push(L([c0[0] - uy * 6, c0[1] + ux * 6], [c0[0] + uy * 6, c0[1] - ux * 6], 'doublet'));
           pts.push(c0);
         });
@@ -268,7 +268,7 @@ const Rendu = (() => {
         let n = 0;
         angs.forEach(an0 => {
           if (an0 === angCharge) return; if (n >= d.paires) return;
-          const ux = Math.cos(an0 * RAD), uy = Math.sin(an0 * RAD), dd = rayon(t, ux, uy) + 4, c0 = [p[0] + ux * dd, p[1] + uy * dd];
+          const ux = Math.cos(an0 * RAD), uy = Math.sin(an0 * RAD), dd = rayon(t, ux, uy) + 1.5, c0 = [p[0] + ux * dd, p[1] + uy * dd];
           out.push(L([c0[0] - uy * 6, c0[1] + ux * 6], [c0[0] + uy * 6, c0[1] - ux * 6], 'doublet'));
           ancres.push({ type: 'doublet', id: (a.src || a.id) + ':' + n, atome: a.src || a.id, x: c0[0], y: c0[1] });
           pts.push(c0); n++;
