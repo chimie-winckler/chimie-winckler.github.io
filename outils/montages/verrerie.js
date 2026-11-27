@@ -138,7 +138,9 @@ const Verrerie = (() => {
     potence: { nom: 'Potence', cat: 'Chauffage et support',
       dessin: it => R(-60, -8, 120, 8, 'appareil', 2) + R(-36, -((it && it.h) || 420), 6, ((it && it.h) || 420) - 8, 'tige'), haut: -420, joints: { bas: [0, 0, 90] } },
     pince: { nom: 'Pince et noix', cat: 'Chauffage et support',
-      dessin: it => { const L = (it && it.bras) || 44; return R(-8, -8, 16, 16, 'noix', 2) + R(8, -3, L, 6, 'tige') + P(`M${L + 8},-9 C${L + 18},-12 ${L + 22},-6 ${L + 22},0 C${L + 22},6 ${L + 18},12 ${L + 8},9`, 'pince'); }, joints: { tige: [0, 0, 180], serre: [62, 0, 0] } },
+      // bras = distance de la noix à l'axe du tube serré ; ouv = demi-largeur du tube serré (les deux mors l'enserrent)
+      dessin: it => { const L = (it && it.bras) || 62, o = (it && it.ouv) || 9; return R(-8, -8, 16, 16, 'noix', 2) + R(8, -3, Math.max(2, L - o - 13), 6, 'tige') + R(L - o - 6, -10, 5, 20, 'noix', 1.5) + R(L + o + 1, -10, 5, 20, 'noix', 1.5) + Ln(L - o - 4, -10, L + o + 4, -10, 'trait'); },
+      joints: { tige: [0, 0, 180] } },
     olive: { nom: 'Olive aimantée', cat: 'Chauffage et support', dessin: () => R(-9, -4, 18, 8, 'olive', 4), joints: { bas: [0, 4, 90] } },
     support_ampoule: { nom: 'Anneau (support d’ampoule)', cat: 'Chauffage et support', dessin: it => P(`M-26,0 A26,6 0 1 0 26,0 A26,6 0 1 0 -26,0 M-26,0 L${-((it && it.bras) || 60)},0`, 'pince'), joints: { centre: [0, 0, -90] } },
     // ───── chromatographie ─────

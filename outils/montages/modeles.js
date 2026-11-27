@@ -19,7 +19,7 @@ const Modeles = (() => {
   // potence + pinces (pinces serrées sur les points donnés)
   function support(items, xTige, serrages) {
     const pot = pc('potence', xTige + 33, 0); items.unshift(pot);
-    serrages.forEach(([x, y]) => { const p = pc('pince', xTige, y); p.bras = Math.max(10, x - xTige - 15); items.push(p); });
+    serrages.forEach(([x, y, o]) => { const p = pc('pince', xTige, y); p.bras = Math.max(20, x - xTige); p.ouv = o || 9; items.splice(1, 0, p); });
     const yMin = Math.min(...items.filter(i => i.t === 'piece' && i !== pot).map(i => M.boite(i)[1]));
     pot.h = Math.max(260, Math.min(-yMin - 20, ...serrages.map(s => -s[1] + 60)) );
     pot.h = Math.max(pot.h, ...serrages.map(s => -s[1] + 40));
@@ -47,7 +47,7 @@ const Modeles = (() => {
     reflux: { nom: 'Chauffage à reflux', f() {
       const it = [], { b, bain, ag, elev } = chauffage(it, 'bain');
       const r = at(pc('refrigerant_boules', 0, 0, { eau: true }), 'bas', b, 'haut'); it.push(r);
-      support(it, b.x - 80, [[b.x, J(b, 'haut')[1] + 14], [r.x, r.y + 10]]);
+      support(it, b.x - 80, [[b.x, J(b, 'haut')[1] + 14], [r.x, r.y + 10, 19]]);
       return legendes(it, [[J(r, 'haut', 0, 60), 'réfrigérant à boules'], [J(b, 'haut', 7, 20), 'ballon'], [[b.x + 18, b.y + 25], 'milieu réactionnel'], [[b.x - 4, b.y + 35], 'olive aimantée', 'gauche'], [[bain.x + 60, bain.y - 10], 'bain d’huile'], [[ag.x + 50, ag.y + 15], 'agitateur magnétique chauffant'], [[elev.x + 50, elev.y + 30], 'support élévateur']]);
     } },
     reflux_controle: { nom: 'Reflux contrôlé (ampoule de coulée, thermomètre)', f() {
@@ -56,7 +56,7 @@ const Modeles = (() => {
       const a = at(pc('ampoule_coulee', 0, 0, { rot: -37, liq: { niv: 0.6, coul: ORGA } }), 'bas', b, 'gauche'); it.push(a);
       const tq = M.monde(b, Verrerie.pieces.tricol.joints.droite), dir = [Math.cos(-53 * Math.PI / 180), Math.sin(-53 * Math.PI / 180)];
       const t = pc('thermometre', tq[0] - dir[0] * 50, tq[1] - dir[1] * 50, { rot: 37, sc: 0.8 }); it.push(t);
-      support(it, b.x - 120, [[b.x, J(b, 'haut')[1] + 14], [r.x, r.y + 20]]);
+      support(it, b.x - 120, [[b.x, J(b, 'haut')[1] + 14], [r.x, r.y + 20, 15]]);
       return legendes(it, [[J(r, 'haut', 0, 50), 'réfrigérant droit'], [[a.x - 10, a.y], 'ampoule de coulée isobare', 'gauche'], [[t.x + 70, t.y - 100], 'thermomètre'], [[b.x + 25, b.y + 15], 'ballon tricol'], [[cb.x + 55, cb.y + 20], 'chauffe-ballon agitateur'], [[elev.x + 50, elev.y + 30], 'support élévateur']]);
     } },
     distillation: { nom: 'Distillation simple', f() { return distillation(false); } },
@@ -78,14 +78,14 @@ const Modeles = (() => {
       const it = [], { b, bain, ag, elev } = chauffage(it, 'bain');
       const d = at(pc('dean_stark', 0, 0, { liq: { niv: 0.45, coul: EAU } }), 'bas', b, 'haut'); it.push(d);
       const r = at(pc('refrigerant_boules', 0, 0, { eau: true }), 'bas', d, 'haut'); it.push(r);
-      support(it, r.x - 90, [[r.x, r.y + 10], [d.x - 80, J(d, 'haut')[1] + 70], [b.x, J(b, 'haut')[1] + 30]]);
+      support(it, r.x - 90, [[r.x, r.y + 10, 19], [d.x - 80, J(d, 'haut')[1] + 70, 9], [b.x, J(b, 'haut')[1] + 30, 9]]);
       return legendes(it, [[J(r, 'haut', 18, 60), 'réfrigérant à eau'], [[J(d, 'haut')[0] - 8, J(d, 'haut')[1] + 110], 'appareil de Dean-Stark (eau recueillie)', 'gauche'], [[b.x + 18, b.y + 25], 'milieu réactionnel'], [[bain.x + 60, bain.y - 10], 'bain d’huile'], [[ag.x + 50, ag.y + 15], 'agitateur magnétique chauffant'], [[elev.x + 50, elev.y + 30], 'support élévateur']]);
     } },
     soxhlet: { nom: 'Extraction au Soxhlet', f() {
       const it = [], { b, cb, elev } = chauffage(it, 'chauffe', 'ballon', { niv: 0.5, coul: ORGA });
       const s = at(pc('soxhlet', 0, 0, { liq: { niv: 0.35, coul: ORGA } }), 'bas', b, 'haut'); it.push(s);
       const r = at(pc('refrigerant_boules', 0, 0, { eau: true }), 'bas', s, 'haut'); it.push(r);
-      support(it, b.x - 90, [[b.x, J(b, 'haut')[1] + 14], [r.x, r.y + 10]]);
+      support(it, b.x - 90, [[b.x, J(b, 'haut')[1] + 14], [r.x, r.y + 10, 19]]);
       return legendes(it, [[J(r, 'haut', 0, 60), 'réfrigérant à eau'], [[s.x + 16, s.y - 130], 'cartouche poreuse (solide)'], [[s.x + 44, s.y - 100], 'tube d’admission des vapeurs'], [[s.x - 54, s.y - 90], 'siphon', 'gauche'], [[b.x + 18, b.y + 20], 'solvant'], [[cb.x + 55, cb.y + 20], 'chauffe-ballon agitateur']]);
     } },
     filtration: { nom: 'Filtration par gravité', f() {
@@ -105,7 +105,7 @@ const Modeles = (() => {
     recristallisation: { nom: 'Recristallisation (dissolution à chaud)', f() {
       const it = [], { b, bain, ag } = chauffage(it, 'bain', 'ballon', { niv: 0.35, coul: '#e9f3fb', solide: true });
       const r = at(pc('refrigerant_droit', 0, 0, { eau: true }), 'bas', b, 'haut'); it.push(r);
-      support(it, b.x - 80, [[b.x, J(b, 'haut')[1] + 14], [r.x, r.y + 10]]);
+      support(it, b.x - 80, [[b.x, J(b, 'haut')[1] + 14], [r.x, r.y + 10, 15]]);
       return legendes(it, [[J(r, 'haut', 0, 50), 'réfrigérant droit'], [[b.x + 18, b.y + 22], 'solide + solvant de recristallisation'], [[bain.x + 60, bain.y - 10], 'bain-marie'], [[ag.x + 50, ag.y + 15], 'agitateur magnétique chauffant']]);
     } },
     extraction: { nom: 'Extraction liquide-liquide / lavage', f() {
