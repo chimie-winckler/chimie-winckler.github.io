@@ -163,34 +163,79 @@ const MesoDessin = (() => {
     return cand.length ? cand[0].s : null;
   }
   const milieu = (G, l) => { const a = G.P[l[0]], b = G.P[l[1]]; return [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2]; };
-  function geomFleche(G, fl) {
+  // géométrie d'une flèche pour un départ, un côté de courbure (sg) et une amplitude (km) donnés
+  function construireFleche(G, fl, dep, sg, km) {
     const cibleBrute = fl.vers.a !== undefined ? G.P[fl.vers.a] : milieu(G, fl.vers.l);
-    let s0, dep = null;
-    if (fl.de.a !== undefined) { dep = slotDepart(G, fl.de.a, cibleBrute, fl.n, fl.k); s0 = dep ? posSlot(G.atomes[fl.de.a], dep, dep.type === 'r' ? 1 : 0) : G.P[fl.de.a]; }
-    else s0 = milieu(G, fl.de.l);
+    let s0 = fl.de.a !== undefined ? (dep ? posSlot(G.atomes[fl.de.a], dep, dep.type === 'r' ? 1 : 0) : G.P[fl.de.a]) : milieu(G, fl.de.l);
     let e0 = cibleBrute;
     const dx = e0[0] - s0[0], dy = e0[1] - s0[1], len = Math.hypot(dx, dy) || 1, nx = -dy / len, ny = dx / len;
-    const k = Math.min(34, Math.max(13, len * 0.5)), mid = [(s0[0] + e0[0]) / 2, (s0[1] + e0[1]) / 2];
-    const c1 = [mid[0] + nx * k, mid[1] + ny * k], c2 = [mid[0] - nx * k, mid[1] - ny * k];
-    // côté de la courbure : vers l'intérieur d'un cycle si départ et arrivée y sont, sinon vers l'extérieur de la molécule
-    const dansCycle = x => (x.l ? G.cycleDe.has(x.l[0]) && G.cycleDe.has(x.l[1]) && G.cycleDe.get(x.l[0]) === G.cycleDe.get(x.l[1]) ? G.cycleDe.get(x.l[0]) : null : null);
-    const cy1 = dansCycle(fl.de), cy2 = dansCycle(fl.vers);
-    const d2 = (p, q) => Math.hypot(p[0] - q[0], p[1] - q[1]);
-    let sg;
-    if (cy1 !== null && cy1 === cy2) { const C = G.centres[cy1]; sg = d2(c1, C) < d2(c2, C) ? 1 : -1; }
-    else { const C = G.centroide, e = d2(c1, C) - d2(c2, C); sg = Math.abs(e) < 1 ? (c1[1] < c2[1] ? 1 : -1) : (e > 0 ? 1 : -1); }
-    if (fl.s === -1) sg = -sg;
-    // départ d'une liaison multiple : sur le trait π, côté courbure ; arrivée sur un atome : arrêt avant l'étiquette
-    if (fl.de.l) { s0 = [s0[0] + nx * sg * 3.5, s0[1] + ny * sg * 3.5]; }
-    let ctrl = [mid[0] + nx * k * sg, mid[1] + ny * k * sg];
+    const k = Math.min(34, Math.max(13, len * 0.5)) * km;
+    if (fl.de.l) s0 = [s0[0] + nx * sg * 3.5, s0[1] + ny * sg * 3.5];
+    let ctrl = [(s0[0] + e0[0]) / 2 + nx * k * sg, (s0[1] + e0[1]) / 2 + ny * k * sg];
     if (fl.vers.a !== undefined) {
       const at = G.atomes[fl.vers.a], vx = e0[0] - ctrl[0], vy = e0[1] - ctrl[1], vn = Math.hypot(vx, vy) || 1, ang = Math.atan2(-vy, -vx) / RAD;
       const r = (at.vis ? rayon(at, ang) : 0) + 5;
       e0 = [e0[0] - vx / vn * r, e0[1] - vy / vn * r];
     } else e0 = [e0[0] + nx * sg * 2.5, e0[1] + ny * sg * 2.5];
     ctrl = [(s0[0] + e0[0]) / 2 + nx * k * sg, (s0[1] + e0[1]) / 2 + ny * k * sg];
-    return { s: s0, c: ctrl, e: e0, sg, n: fl.n };
+    return { s: s0, c: ctrl, e: e0, sg, n: fl.n, dep };
   }
+  const distSeg = (p, a, b) => { const vx = b[0] - a[0], vy = b[1] - a[1], l2 = vx * vx + vy * vy || 1; let t = ((p[0] - a[0]) * vx + (p[1] - a[1]) * vy) / l2; t = Math.max(0, Math.min(1, t)); return Math.hypot(p[0] - a[0] - t * vx, p[1] - a[1] - t * vy); };
+  // pénalité : la courbe ne doit chevaucher ni les liaisons, ni les symboles, ni les doublets, ni les charges, ni les autres flèches
+  function chevauchement(G, fl, g, autres) {
+    const srcB = fl.de.l ? Meso.cle(...fl.de.l) : null, dstB = fl.vers.l ? Meso.cle(...fl.vers.l) : null;
+    const srcA = fl.de.a, dstA = fl.vers.a;
+    let pen = 0;
+    for (let u = 0.08; u <= 0.93; u += 0.035) {
+      const p = bez(g, u), debut = u < 0.28, fin = u > 0.72;
+      G.liaisons.forEach(L => {
+        if ((debut && (L.k === srcB || L.i === srcA || L.j === srcA)) || (fin && (L.k === dstB || L.i === dstA || L.j === dstA))) return;
+        if ((L.k === srcB || L.k === dstB) && (debut || fin)) return;
+        const d = distSeg(p, G.P[L.i], G.P[L.j]); if (d < 8) pen += (8 - d) / 2 + 1;
+      });
+      G.atomes.forEach(at => {
+        if ((debut && at.i === srcA) || (fin && at.i === dstA)) return;
+        if (at.vis) { const ang = Math.atan2(p[1] - at.p[1], p[0] - at.p[0]) / RAD, d = Math.hypot(p[0] - at.p[0], p[1] - at.p[1]); if (d < rayon(at, ang) + 5) pen += 3; }
+        at.slots.forEach(sl => { if (sl === g.dep) return; if (debut && at.i === srcA) return; const q = posSlot(at, sl); if (Math.hypot(p[0] - q[0], p[1] - q[1]) < 8) pen += 2; });
+        if (at.q && !(fin && at.i === dstA)) { const q = posCharge(at, at.angQ); if (Math.hypot(p[0] - q[0], p[1] - q[1]) < 10) pen += 2; }
+      });
+      const prochesBouts = Math.hypot(p[0] - g.e[0], p[1] - g.e[1]) < 16 || Math.hypot(p[0] - g.s[0], p[1] - g.s[1]) < 16;
+      if (!prochesBouts) autres.forEach(o => { for (let v = 0.15; v <= 0.85; v += 0.07) { const q = bez(o, v); if (Math.hypot(p[0] - q[0], p[1] - q[1]) < 7) pen += 1.5; } });
+    }
+    return pen;
+  }
+  function geomFleche(G, fl, autres = []) {
+    const cibleBrute = fl.vers.a !== undefined ? G.P[fl.vers.a] : milieu(G, fl.vers.l);
+    // départs possibles : le doublet imposé, ou chacun des doublets de l'atome (le plus proche de la cible d'abord)
+    let deps = [null];
+    if (fl.de.a !== undefined) {
+      const at = G.atomes[fl.de.a];
+      if (fl.k !== undefined && at.slots[fl.k]) deps = [at.slots[fl.k]];
+      else {
+        const veutR = fl.n === 1 && at.slots.some(x => x.type === 'r');
+        const angC = Math.atan2(cibleBrute[1] - at.p[1], cibleBrute[0] - at.p[0]) / RAD;
+        deps = at.slots.filter(o => (veutR ? o.type === 'r' : o.type === 'p')).sort((x, y) => ecartAng(x.ang, angC) - ecartAng(y.ang, angC));
+        if (!deps.length) deps = [null];
+      }
+    }
+    // côté « naturel » : intérieur d'un cycle si départ et arrivée y sont, sinon extérieur de la molécule
+    const dansCycle = x => (x.l ? G.cycleDe.has(x.l[0]) && G.cycleDe.has(x.l[1]) && G.cycleDe.get(x.l[0]) === G.cycleDe.get(x.l[1]) ? G.cycleDe.get(x.l[0]) : null : null);
+    const cy1 = dansCycle(fl.de), cy2 = dansCycle(fl.vers), d2 = (p, q) => Math.hypot(p[0] - q[0], p[1] - q[1]);
+    const naturel = g0 => {
+      const C = cy1 !== null && cy1 === cy2 ? G.centres[cy1] : G.centroide, m = [(g0.s[0] + g0.e[0]) / 2, (g0.s[1] + g0.e[1]) / 2];
+      const dc = d2(g0.c, C) - d2(m, C);
+      return cy1 !== null && cy1 === cy2 ? dc < 0 : (Math.abs(dc) < 1 ? g0.c[1] < m[1] : dc > 0);
+    };
+    let best = null, bp = 1e9;
+    deps.forEach((dep, rang) => [1, -1].forEach(sg => [1, 1.45].forEach(km => {
+      const g = construireFleche(G, fl, dep, sg, km);
+      const pen = chevauchement(G, fl, g, autres) + (naturel(g) ? 0 : 0.6) + (km > 1 ? 0.8 : 0) + rang * 0.4;
+      if (pen < bp - 1e-9) { bp = pen; best = g; }
+    })));
+    if (fl.s === -1) best = construireFleche(G, fl, best.dep, -best.sg, 1);
+    return best;
+  }
+  const flechesGeom = (G, liste) => { const out = []; (liste || []).forEach(x => out.push(geomFleche(G, x, out))); return out; };
   function svgFleche(g, op = 1, coul = BLEU, attrs = '') {
     const tx = g.e[0] - g.c[0], ty = g.e[1] - g.c[1], tn = Math.hypot(tx, ty) || 1, ux = tx / tn, uy = ty / tn;
     const p1 = [g.e[0] - ux * 9 - uy * 4.5, g.e[1] - uy * 9 + ux * 4.5], p2 = [g.e[0] - ux * 9 + uy * 4.5, g.e[1] - uy * 9 - ux * 4.5];
@@ -249,7 +294,7 @@ const MesoDessin = (() => {
 
   // une forme, avec ses flèches éventuelles et (option) les zones cliquables
   function forme(m, f, opt = {}) {
-    const G = geometrie(m, f), fl = (opt.fleches || []).map(x => geomFleche(G, x));
+    const G = geometrie(m, f), fl = flechesGeom(G, opt.fleches);
     let c = corps(G, null, 0, opt);
     c += fl.map((g, i) => svgFleche(g, 1, BLEU, opt.cibles ? ` data-f="${i}" class="ms-fl${opt.choisie === i ? ' sel' : ''}"` : '')).join('');
     if (opt.depart) c += marqueDepart(G, opt.depart);
@@ -279,7 +324,7 @@ const MesoDessin = (() => {
 
   // image d'une transition : phase 0→0.5 électrons en mouvement le long des flèches, 0.4→1 morphing vers la forme suivante
   function transition(m, fA, fB, fleches, T, opt = {}) {
-    const A = geometrie(m, fA), B = geometrie(m, fB), fl = fleches.map(x => geomFleche(A, x));
+    const A = geometrie(m, fA), B = geometrie(m, fB), fl = flechesGeom(A, fleches);
     const tm = Math.min(1, Math.max(0, (T - 0.42) / 0.58)), tm2 = tm * tm * (3 - 2 * tm);
     let c = corps(A, B, tm2, { ...opt, tf: Math.min(1, T / 0.12) });
     const opF = T < 0.5 ? 1 : Math.max(0, 1 - (T - 0.5) / 0.2);
@@ -323,7 +368,7 @@ const MesoDessin = (() => {
 
   function boiteChaine(m, formes, fleches) {
     const Gs = formes.map(f => geometrie(m, f));
-    const fl = []; (fleches || []).forEach((l, i) => (l || []).forEach(x => fl.push(geomFleche(Gs[i], x))));
+    const fl = []; (fleches || []).forEach((l, i) => flechesGeom(Gs[i], l).forEach(g => fl.push(g)));
     return boite(Gs, fl);
   }
 

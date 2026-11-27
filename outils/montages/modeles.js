@@ -110,9 +110,9 @@ const Modeles = (() => {
     } },
     extraction: { nom: 'Extraction liquide-liquide / lavage', f() {
       const it = [], bc = pc('becher', 0, 0, { liq: { niv: 0.2, coul: EAU } }); it.push(bc);
-      const a = pc('ampoule_decanter', 0, -170, { liq: { niv: 0.75, coul: ORGA, niv2: 0.4, coul2: EAU } }); it.push(a);
-      it.push(pc('support_ampoule', 0, -205)); support(it, -110, []);
-      return legendes(it, [[[a.x + 20, a.y - 110], 'phase organique (moins dense)'], [[a.x + 18, a.y - 40], 'phase aqueuse (plus dense)'], [[a.x + 12, a.y + 24], 'robinet'], [[bc.x + 30, bc.y - 15], 'bécher']]);
+      const a = pc('ampoule_decanter', 0, -170, { liq: { niv: 0.82, coul: ORGA, niv2: 0.53, coul2: EAU } }); it.push(a);
+      it.push(pc('support_ampoule', 0, -230, { ouv: 38 })); support(it, -110, []);
+      return legendes(it, [[[a.x + 30, a.y - 100], 'phase organique (moins dense)'], [[a.x + 20, a.y - 45], 'phase aqueuse (plus dense)'], [[a.x + 12, a.y + 24], 'robinet'], [[bc.x + 30, bc.y - 15], 'bécher']]);
     } }
   };
   function distillation(fract, hydro) {

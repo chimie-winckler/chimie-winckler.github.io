@@ -100,8 +100,9 @@ const Verrerie = (() => {
       dessin: () => P('M-7,-120 L-7,-104 L-24,-84 L-24,-10 L-5,12 L-5,40 M7,-120 L7,-104 L24,-84 L24,-10 L5,12 L5,40', 'trait') + P('M7,-108 L34,-108 L34,30 L5,34', 'trait') + robinet(0, 18) + P('M-11,-120 L11,-120 L9,-132 L-9,-132 Z', 'bouchon') + Ln(-6.5, 34, -6.5, 40, 'rodage') + Ln(6.5, 34, 6.5, 40, 'rodage'),
       interieur: () => 'M-24,-84 L-24,-10 L-5,12 L5,12 L24,-10 L24,-84 Z', haut: -84, bas: 12, joints: { bas: [0, 40, 90], haut: [0, -132, -90] } },
     ampoule_decanter: { nom: 'Ampoule à décanter', cat: 'Ajout et séparation',
-      dessin: () => P('M-7,-150 L-7,-130 C-60,-60 -40,-10 -5,10 L-5,60 M7,-150 L7,-130 C60,-60 40,-10 5,10 L5,60', 'trait') + robinet(0, 24) + P('M-11,-150 L11,-150 L9,-162 L-9,-162 Z', 'bouchon'),
-      interieur: () => 'M-7,-130 C-60,-60 -40,-10 -5,10 L5,10 C40,-10 60,-60 7,-130 Z', haut: -130, bas: 10, deuxPhases: true, joints: { bas: [0, 60, 90], haut: [0, -162, -90] } },
+      // boule sphérique, col court, longue tige à robinet (comme les schémas du site)
+      dessin: () => P('M-7,-150 L-7,-124.4 A40,40 0 0 0 -12,-46.8 L-5,-30 L-5,60 M7,-150 L7,-124.4 A40,40 0 0 1 12,-46.8 L5,-30 L5,60', 'trait') + robinet(0, 24) + P('M-11,-150 L11,-150 L9,-162 L-9,-162 Z', 'bouchon'),
+      interieur: () => 'M-7,-124.4 A40,40 0 0 0 -12,-46.8 L-5,-30 L5,-30 L12,-46.8 A40,40 0 0 0 7,-124.4 Z', haut: -124, bas: -30, deuxPhases: true, joints: { bas: [0, 60, 90], haut: [0, -162, -90], anneau: [0, -60, 0] } },
     entonnoir: { nom: 'Entonnoir', cat: 'Ajout et séparation',
       dessin: () => P('M-45,-60 L-4,-8 L-4,40 M45,-60 L4,-8 L4,40', 'trait'),
       interieur: () => 'M-45,-60 L-4,-8 L4,-8 L45,-60 Z', haut: -60, bas: -8, joints: { bas: [0, 40, 90], haut: [0, -60, -90] } },
@@ -142,7 +143,8 @@ const Verrerie = (() => {
       dessin: it => { const L = (it && it.bras) || 62, o = (it && it.ouv) || 9; return R(-8, -8, 16, 16, 'noix', 2) + R(8, -3, Math.max(2, L - o - 13), 6, 'tige') + R(L - o - 6, -10, 5, 20, 'noix', 1.5) + R(L + o + 1, -10, 5, 20, 'noix', 1.5) + Ln(L - o - 4, -10, L + o + 4, -10, 'trait'); },
       joints: { tige: [0, 0, 180] } },
     olive: { nom: 'Olive aimantée', cat: 'Chauffage et support', dessin: () => R(-9, -4, 18, 8, 'olive', 4), joints: { bas: [0, 4, 90] } },
-    support_ampoule: { nom: 'Anneau (support d’ampoule)', cat: 'Chauffage et support', dessin: it => P(`M-26,0 A26,6 0 1 0 26,0 A26,6 0 1 0 -26,0 M-26,0 L${-((it && it.bras) || 60)},0`, 'pince'), joints: { centre: [0, 0, -90] } },
+    support_ampoule: { nom: 'Anneau (support d’ampoule)', cat: 'Chauffage et support', dessin: it => { const o = (it && it.ouv) || 26, br = Math.max(o + 4, (it && it.bras) || 60);
+      return P(`M${-o},0 A${o},8 0 1 0 ${o},0 A${o},8 0 1 0 ${-o},0 M${-o + 4.5},0 A${o - 4.5},5.5 0 1 0 ${o - 4.5},0 A${o - 4.5},5.5 0 1 0 ${-o + 4.5},0 M${-o},0 L${-br},0`, 'pince'); }, joints: { centre: [0, 0, -90] } },
     // ───── chromatographie ─────
     cuve_ccm: { nom: 'Cuve et plaque de CCM', cat: 'Chromatographie',
       dessin: () => P('M-50,-120 L-50,0 L50,0 L50,-120') + R(-56, -128, 112, 8, 'bouchon', 2) + P('M-26,-112 L-6,-112 L26,-8 L6,-8 Z', 'plaque-ccm') + Ln(-14, -30, 24, -30, 'grad') + C(4, -44, 3, 'tache') + C(-6, -70, 3, 'tache'),
