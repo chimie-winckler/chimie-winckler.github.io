@@ -238,12 +238,17 @@
     const svgs = [...$('fm-resultats').querySelectorAll('svg')]; if (!svgs.length) return;
     const s = svgs[0].cloneNode(true), vb = s.viewBox.baseVal, k = 3;
     const st = document.createElementNS('http://www.w3.org/2000/svg', 'style');
-    st.textContent = 'text{font:17px Arial,sans-serif;fill:#111}.ind{font-size:12px}line{stroke:#111;stroke-width:1.6;stroke-linecap:round}.doublet{stroke-width:2}.charge{fill:none;stroke:#111;stroke-width:1.2}.fin{stroke-width:1.2}.point{fill:#111}.baton{stroke:#888;stroke-width:6}';
+    st.textContent = 'text{font-size:17px;font-family:' + getComputedStyle(document.querySelector('.formules')).getPropertyValue('--fm-police') + ';fill:#111}.ind{font-size:12px}line{stroke:#111;stroke-width:1.6;stroke-linecap:round}.doublet{stroke-width:2}.charge{fill:none;stroke:#111;stroke-width:1.2}.fin{stroke-width:1.2}.point{fill:#111}.baton{stroke:#888;stroke-width:6}';
     s.insertBefore(st, s.firstChild); s.setAttribute('width', vb.width * k); s.setAttribute('height', vb.height * k); s.removeAttribute('style');
     const im = new Image();
     im.onload = () => { const cv = document.createElement('canvas'); cv.width = im.width; cv.height = im.height; const x = cv.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, cv.width, cv.height); x.drawImage(im, 0, 0); const a = document.createElement('a'); a.download = 'molecule-' + onglet + '.png'; a.href = cv.toDataURL('image/png'); a.click(); };
     im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(new XMLSerializer().serializeToString(s));
   });
+  // police des formules (mémorisée sur l'appareil)
+  const POLICES = { arial: 'Arial, Helvetica, sans-serif', century: "'Century Gothic', 'URW Gothic', Questrial, sans-serif", calibri: 'Calibri, Carlito, sans-serif', verdana: 'Verdana, Geneva, sans-serif', times: "'Times New Roman', Times, serif", cambria: 'Cambria, Caladea, Georgia, serif' };
+  function police(v) { if (!POLICES[v]) v = 'arial'; document.querySelector('.formules').style.setProperty('--fm-police', POLICES[v]); $('fm-police').value = v; try { localStorage.setItem('fm-police', v); } catch (e) {} }
+  $('fm-police').addEventListener('change', e => { police(e.target.value); ed.dessiner(); resultats(); });
+  try { police(localStorage.getItem('fm-police') || 'arial'); } catch (e) { police('arial'); }
   // molécule de départ (paramètre ?nom= possible)
   const p = new URLSearchParams(location.search).get('nom');
   $('fm-nom').value = p || 'acide 2-aminopropanoïque'; construire();

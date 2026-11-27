@@ -16,7 +16,8 @@
 .fm-groupe button.actif.el-o, .fm-groupe button.actif.el-n { color: #fff; }
 .fm-canevas { width: 100%; height: 340px; display: block; background: var(--fond); border: 1px solid var(--bord); border-radius: 10px; touch-action: none; cursor: crosshair; color: var(--texte);
   background-image: radial-gradient(circle, var(--bord) 1px, transparent 1px); background-size: 21px 21px; }
-.fm-canevas text, .fm-svg text { font: 16px Arial, Helvetica, sans-serif; fill: currentColor; }
+.formules { --fm-police: Arial, Helvetica, sans-serif; }
+.fm-canevas text, .fm-svg text { font-size: 16px; font-family: var(--fm-police); fill: currentColor; }
 .fm-canevas .ind, .fm-svg .ind { font-size: 11px; }
 .fm-canevas line { stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; }
 .fm-canevas line.sv { stroke: var(--accent); stroke-width: 3; }
@@ -73,10 +74,10 @@
 .fm-esp:hover { background: var(--accent-clair); }
 .fm-esp-f { display: flex; align-items: center; gap: 4px; }
 .fm-esp-f .fm-svg { width: auto; height: 96px; max-width: none !important; }
-.fm-bru { font: 30px Arial, sans-serif; }
+.fm-bru { font-size: 30px; font-family: var(--fm-police); }
 .fm-bru sub { font-size: .65em; }
 .fm-esp-f .fm-brute { width: 150px; }
-.fm-coef { font: 26px Arial, sans-serif; }
+.fm-coef { font-size: 26px; font-family: var(--fm-police); }
 .fm-esp-nom { font-size: .82rem; color: var(--doux); }
 .fm-op { font-size: 1.5rem; }
 .fm-fl { display: inline-flex; flex-direction: column; align-items: center; font-size: 1.9rem; line-height: 1; }
@@ -91,3 +92,5 @@
 .fm-especes > span { font-weight: 600; font-size: .9rem; }
 .fm-especes button { padding: 5px 9px; }
 .fm-especes input { flex: 1 1 160px; min-width: 0; padding: 6px 9px; border: 1px solid var(--bord); border-radius: 8px; background: var(--fond); color: var(--texte); font: inherit; }
+
+.fm-police select { padding: 5px 8px; border: 1px solid var(--bord); border-radius: 8px; background: var(--fond); color: var(--texte); font: inherit; }
