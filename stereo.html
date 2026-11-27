@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Représentations spatiales – Chimie de Synthèse</title>
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=20261125a">
+<link rel="stylesheet" href="outils/stereo/stereo.css?v=1">
+</head>
+<body>
+<header class="entete">
+  <div class="conteneur entete-inner">
+    <a class="marque" href="index.html">⚗️ Chimie de Synthèse</a>
+    <button class="burger" aria-label="Menu" onclick="document.body.classList.toggle('menu-ouvert')">☰</button>
+    <nav><ul class="menu">
+<li><a href="index.html">Accueil</a></li>
+<li><a href="matieres-premieres.html">Matières premières</a><ul class="sous-menu"><li><a href="fds.html">FDS</a></li><li><a href="fds-simplifiee.html">FDS simplifiée</a></li><li><a href="gestion-dechets.html">Gestion des déchets en salle de TP</a></li></ul></li>
+<li><a href="techniques.html">Techniques</a><ul class="sous-menu"><li><a href="verrerie-et-montages.html">Verrerie et montages</a></li><li><a href="techniques-experimentales.html">Techniques expérimentales</a></li></ul></li>
+<li><a href="ressources.html">Ressources</a><ul class="sous-menu"><li class="sm-titre">Synthèse</li><li><a href="cours.html">Cours</a></li><li><a href="tp.html">TP</a></li><li><a href="evaluations.html">Évaluations</a></li><li class="sm-titre">Formulation</li><li><a href="tp-formulation.html">TP</a></li><li><a href="fiches-methodes.html">Fiches méthodes</a></li></ul></li>
+<li><a href="entrainement.html" class="actif">S’entraîner</a></li>
+<li><a href="stage.html">Stage</a></li>
+<li><a href="annonces.html">Annonces</a></li>
+    </ul></nav>
+    <button type="button" class="theme-btn" id="theme-btn" aria-label="Changer de thème">🌙</button>
+  </div>
+</header>
+<div class="bandeau">
+  <div class="conteneur">
+    <p class="fil"><a href="index.html">Accueil</a> › <a href="entrainement.html">S’entraîner</a> › Représentations spatiales</p>
+    <p class="surtitre">BTS Métiers de la Chimie – Stéréochimie</p>
+    <h1>Représentations spatiales</h1>
+    
+  </div>
+</div>
+<main class="conteneur stereo">
+<p class="st-intro">Choisis une molécule (ou saisis son SMILES) : ses représentations de Cram, Newman, Fischer et Haworth sont toutes construites à partir de la même configuration. Clique sur un atome de carbone asymétrique (dans un dessin ou dans la liste) pour inverser sa configuration et observer l’effet sur chaque représentation.</p>
+<div class="st-grille">
+  <aside class="st-panneau">
+    <label class="st-lbl" for="mol">Molécule</label>
+    <select id="mol"><option value="">— molécule modifiée —</option></select>
+    <label class="st-lbl" for="smiles">ou SMILES</label>
+    <div class="st-ligne"><input id="smiles" type="text" spellcheck="false" autocomplete="off" placeholder="ex. C[C@H](O)C(=O)O"><button type="button" id="construire">OK</button></div>
+    <p class="st-err" id="err" hidden></p>
+    <p class="st-brute">Formule brute : <span id="brute"></span></p>
+    <p class="st-lbl">Atomes de carbone asymétriques</p>
+    <ul class="st-centres" id="centres"></ul>
+    <p class="st-nbc" id="nbc"></p>
+    <p class="st-lbl">Affichage</p>
+    <label class="st-case"><input type="checkbox" id="o-rs"> Descripteurs R / S</label>
+    <label class="st-case"><input type="checkbox" id="o-num"> Numéroter la chaîne</label>
+    <label class="st-case"><input type="checkbox" id="o-c" checked> Écrire les C (Cram)</label>
+    <label class="st-case"><input type="checkbox" id="o-serie" checked> Série D / L (Fischer)</label>
+  </aside>
+  <section class="st-scene">
+    <div class="st-onglets" role="tablist">
+      <button type="button" data-vue="cram">Cram</button><button type="button" data-vue="newman">Newman</button><button type="button" data-vue="fischer">Fischer</button><button type="button" data-vue="haworth">Haworth</button><button type="button" data-vue="cote">Côte à côte</button>
+    </div>
+    <div class="st-ligne st-choix" id="choix-cote" hidden>
+      <select id="v-gauche"><option value="cram">Cram</option><option value="newman">Newman</option><option value="fischer">Fischer</option><option value="haworth">Haworth</option></select>
+      <span>et</span>
+      <select id="v-droite"><option value="cram">Cram</option><option value="newman">Newman</option><option value="fischer" selected>Fischer</option><option value="haworth">Haworth</option></select>
+    </div>
+    <div class="st-dessins">
+      <div class="st-zone" id="zone-1"><p class="st-titre" id="titre-1"></p><div class="st-dessin" id="dessin-1"></div></div>
+      <div class="st-zone demi" id="zone-2" hidden><p class="st-titre" id="titre-2"></p><div class="st-dessin" id="dessin-2"></div></div>
+    </div>
+    <div class="st-cmd" id="cmd-newman" hidden>
+      <div class="st-ligne"><label for="liaison">Axe de visée</label><select id="liaison"></select>
+        <label for="phi">Rotation du carbone arrière</label><input type="range" id="phi" min="0" max="359" step="1" value="0"><span id="phi-val">0°</span></div>
+      <div class="st-ligne"><button type="button" data-phi="0">Décalée anti</button><button type="button" data-phi="120">Décalée gauche</button><button type="button" data-phi="60">Éclipsée</button><button type="button" data-phi="180">Éclipsée (groupes de référence)</button><button type="button" id="tourner">▶ Faire tourner</button></div>
+      <p class="st-conf" id="conf"></p>
+    </div>
+    <div class="st-cmd" id="cmd-haworth" hidden>
+      <div class="st-ligne"><label for="cycle">Cycle</label><select id="cycle"><option value="pyranose">pyranose (6 atomes)</option><option value="furanose">furanose (5 atomes)</option></select>
+        <label for="anomere">Anomère</label><select id="anomere"><option value="alpha">α</option><option value="beta">β</option></select></div>
+      <p class="st-conf" id="haw-info"></p>
+    </div>
+    <div class="st-ligne st-export"><button type="button" id="png">Enregistrer l’image (PNG)</button></div>
+  </section>
+</div>
+<details class="st-aide"><summary>Conventions utilisées</summary>
+<ul>
+<li><b>Cram</b> : la chaîne carbonée est dans le plan, en zigzag ; coin plein = liaison dirigée vers l’observateur, hachures = liaison dirigée vers l’arrière.</li>
+<li><b>Newman</b> : la molécule est regardée dans l’axe de la liaison choisie ; l’atome de devant est le point central, celui de derrière est masqué par le cercle. Par défaut, la suite de la chaîne est en position anti, comme dans le zigzag de Cram.</li>
+<li><b>Fischer</b> : la chaîne carbonée est verticale, l’atome de carbone le plus oxydé en haut ; les liaisons verticales sont dirigées vers l’arrière, les liaisons horizontales vers l’observateur. Série D : groupe OH (ou NH<sub>2</sub>) du dernier atome de carbone asymétrique à droite.</li>
+<li><b>Haworth</b> : cycle vu en perspective, atome d’oxygène en arrière à droite ; un groupe à droite en Fischer est dirigé vers le bas. Anomère α : groupe OH de l’atome de carbone anomère du côté opposé au groupe CH<sub>2</sub>OH de référence (série D : vers le bas).</li>
+</ul></details>
+</main>
+<footer class="pied"><div class="conteneur">BTS Métiers de la Chimie – Synthèse · <a href="mentions-legales.html">Mentions légales et confidentialité</a></div></footer>
+<script src="outils/stereo/moteur.js?v=1"></script>
+<script src="outils/stereo/vues.js?v=1"></script>
+<script src="outils/stereo/app.js?v=1"></script>
+<script src="theme.js?v=1"></script>
+<script data-goatcounter="https://chimie-winckler.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

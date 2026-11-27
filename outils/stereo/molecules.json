@@ -1,0 +1,18 @@
+[
+["Un atome de carbone asymétrique", [
+ ["Butan-2-ol","C[C@@H](O)CC"],["2-chlorobutane","C[C@H](Cl)CC"],["Acide lactique","C[C@H](O)C(=O)O"],
+ ["Glycéraldéhyde","O=C[C@H](O)CO"],["1-bromo-1-chloroéthane","C[C@H](Cl)Br"],["Bromochlorofluorométhane","F[C@H](Cl)Br"]]],
+["Acides α-aminés", [
+ ["Alanine","C[C@H](N)C(=O)O"],["Sérine","N[C@@H](CO)C(=O)O"],["Cystéine","N[C@@H](CS)C(=O)O"],
+ ["Valine","CC(C)[C@H](N)C(=O)O"],["Leucine","CC(C)C[C@H](N)C(=O)O"],["Thréonine","C[C@@H](O)[C@H](N)C(=O)O"]]],
+["Deux atomes de carbone asymétriques", [
+ ["Acide tartrique (2R,3R)","O=C(O)[C@H](O)[C@@H](O)C(=O)O"],["Acide tartrique méso","O=C(O)[C@@H](O)[C@@H](O)C(=O)O"],
+ ["2,3-dibromobutane (2R,3R)","C[C@@H](Br)[C@@H](C)Br"],["2,3-dibromobutane méso","C[C@@H](Br)[C@H](C)Br"],
+ ["3-chlorobutan-2-ol","C[C@@H](O)[C@H](C)Cl"],["Érythrose","O=C[C@H](O)[C@H](O)CO"],["Thréose","O=C[C@@H](O)[C@H](O)CO"]]],
+["Oses (Haworth)", [
+ ["Ribose","O=C[C@H](O)[C@H](O)[C@H](O)CO"],["Glucose","O=C[C@H](O)[C@@H](O)[C@H](O)[C@H](O)CO"],
+ ["Galactose","O=C[C@H](O)[C@@H](O)[C@@H](O)[C@H](O)CO"],["Mannose","O=C[C@@H](O)[C@@H](O)[C@H](O)[C@H](O)CO"],
+ ["Fructose","OCC(=O)[C@@H](O)[C@H](O)[C@H](O)CO"]]],
+["Conformations (Newman)", [
+ ["Éthane","CC"],["Propane","CCC"],["Butane","CCCC"],["1,2-dichloroéthane","ClCCCl"],["Éthane-1,2-diol","OCCO"]]]
+]

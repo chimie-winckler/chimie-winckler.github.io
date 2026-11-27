@@ -1,0 +1,56 @@
+/* Représentations spatiales */
+.st-intro { max-width: 80ch; color: var(--doux); }
+.st-grille { display: grid; grid-template-columns: minmax(0, 270px) minmax(0, 1fr); gap: 18px; align-items: start; margin-top: 14px; }
+.st-panneau, .st-scene { background: var(--carte); border: 1px solid var(--bord); border-radius: var(--rayon); padding: 16px; min-width: 0; }
+.st-lbl { display: block; margin: 12px 0 5px; font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--doux); }
+.st-lbl:first-child { margin-top: 0; }
+.st-panneau select, .st-panneau input[type=text] { width: 100%; padding: 8px 10px; border: 1px solid var(--bord); border-radius: 8px; background: var(--fond); color: var(--texte); font: inherit; min-width: 0; }
+.st-ligne { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.st-ligne input[type=text] { flex: 1; }
+.stereo button { padding: 7px 12px; border: 1px solid var(--accent); border-radius: 8px; background: var(--carte); color: var(--accent); font: inherit; font-weight: 600; cursor: pointer; }
+.stereo button:hover { background: var(--accent-clair); }
+.stereo button.actif { background: var(--accent); color: #fff; }
+.st-err { color: #b3261e; font-size: .9rem; margin: 6px 0 0; }
+.st-brute { margin: 12px 0 0; }
+.st-centres { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.st-centres li { display: flex; align-items: center; gap: 10px; }
+.st-centres li span { min-width: 2.2em; font-weight: 600; }
+.st-centres li b { color: #b3261e; min-width: 1em; }
+.st-centres .st-mini { padding: 3px 9px; font-size: .82rem; margin-left: auto; }
+.st-aucun { color: var(--doux); font-style: italic; }
+.st-nbc { font-size: .88rem; color: var(--doux); margin: 8px 0 0; }
+.st-case { display: flex; align-items: center; gap: 8px; margin: 5px 0; cursor: pointer; }
+.st-onglets { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.st-choix { margin-bottom: 10px; }
+.st-choix select, .st-cmd select { padding: 6px 8px; border: 1px solid var(--bord); border-radius: 8px; background: var(--fond); color: var(--texte); font: inherit; }
+.st-dessins { display: flex; flex-wrap: wrap; gap: 14px; }
+.st-zone { flex: 1 1 100%; min-width: 0; }
+.st-zone.demi { flex: 1 1 280px; }
+.st-titre { margin: 0 0 4px; font-weight: 700; color: var(--accent); text-align: center; }
+.st-titre:empty { display: none; }
+.st-dessin { background: var(--fond); border: 1px solid var(--bord); border-radius: 10px; min-height: 300px; display: flex; align-items: center; justify-content: center; padding: 10px; overflow-x: auto; }
+.st-msg { color: var(--doux); font-style: italic; max-width: 46ch; text-align: center; }
+.stereo-svg { width: 100%; max-width: 520px; max-height: 440px; height: auto; color: var(--texte); }
+.stereo-svg text { font: 16px Arial, Helvetica, sans-serif; fill: currentColor; }
+.stereo-svg .ind { font-size: 11px; }
+.stereo-svg .num { font-size: 11px; fill: var(--doux); }
+.stereo-svg .rs { font-size: 12px; font-weight: 700; fill: #c62828; }
+.stereo-svg .serie { font-size: 13px; fill: var(--doux); font-style: italic; }
+.stereo-svg line { stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; }
+.stereo-svg line.epais { stroke-width: 5; }
+.stereo-svg line.hach { stroke-width: 1.2; }
+.stereo-svg .coin, .stereo-svg .point { fill: currentColor; }
+.stereo-svg .arriere { fill: none; stroke: currentColor; stroke-width: 1.6; }
+.stereo-svg .cible { fill: transparent; }
+.stereo-svg .cible.asym { cursor: pointer; }
+.stereo-svg .cible.asym:hover { fill: rgba(26, 127, 132, .18); }
+.stereo-svg [data-c]:not([data-c=""]) { cursor: pointer; }
+.st-cmd { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--bord); display: grid; gap: 8px; }
+.st-cmd input[type=range] { flex: 1 1 160px; accent-color: var(--accent); }
+.st-cmd label { font-size: .9rem; color: var(--doux); }
+.st-conf { margin: 0; font-weight: 600; }
+.st-export { margin-top: 12px; justify-content: flex-end; }
+.st-aide { margin-top: 18px; background: var(--carte); border: 1px solid var(--bord); border-radius: var(--rayon); padding: 12px 16px; }
+.st-aide summary { cursor: pointer; font-weight: 600; color: var(--accent); }
+@media (max-width: 760px) { .st-grille { grid-template-columns: minmax(0, 1fr); } }
+.stereo [hidden] { display: none !important; }
