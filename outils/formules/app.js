@@ -3,13 +3,13 @@
   const $ = id => document.getElementById(id);
   const vue3d = { rx: -18, ry: 28, compact: false };
   let onglet = 'topo', G = { atomes: [], liaisons: [] };
-  const meca = { depart: null, choisie: null, ancres: [], etapes: null, cur: 0 };
+  const meca = { depart: null, choisie: null, ancres: [], etapes: null, cur: 0, cible: 'r' };
   const etapeCour = () => meca.etapes[meca.cur];
   const ed = Editeur.creer($('fm-canevas'), g => {
     G = g;
     // hors de l'onglet Mécanisme, un nouveau dessin repart d'un mécanisme vide ; dans l'onglet, il modifie l'étape en cours
     if (onglet !== 'meca') { meca.etapes = null; meca.cur = 0; meca.depart = null; meca.choisie = null; }
-    else if (meca.etapes) etapeCour().G = JSON.parse(JSON.stringify(g));
+    else if (meca.etapes) etapeCour()[meca.cible === 'p' ? 'P' : 'G'] = JSON.parse(JSON.stringify(g));
     resultats(); synchroNom();
   });
   // le champ du nom suit le dessin (nom IUPAC de la première molécule)
@@ -94,13 +94,20 @@
     });
     $('fm-infos').innerHTML = infos.join('');
     if (onglet === 'meca') {
-      if (!meca.etapes) meca.etapes = [{ G: JSON.parse(JSON.stringify(G)), fleches: [] }];
+      if (!meca.etapes) meca.etapes = [{ G: JSON.parse(JSON.stringify(G)), fleches: [], P: null }];
       const h = [];
       meca.etapes.forEach((e, i) => {
-        const cour = i === meca.cur, r = Rendu.mecanisme(e.G, e.fleches, cour ? meca : {});
-        if (cour) meca.ancres = r.ancres;
-        if (i) h.push('<div class="fm-reac">⟶</div>');
-        h.push(`<figure class="fm-fig fm-meca${cour ? (meca.depart ? ' choix-fin' : ' choix-debut') + ' courante' : ' autre'}" data-etape="${i}"><p class="fm-num-etape">Étape ${i + 1}</p>${r.svg}${cour ? `<figcaption>${meca.depart ? '② Clique maintenant sur l’atome ou la liaison où arrive le doublet (site pauvre en électrons).' : '① Clique sur un doublet non liant (trait près d’un atome) ou sur une liaison pour commencer une flèche courbe.'}</figcaption>` : '<figcaption>Clique pour modifier cette étape.</figcaption>'}</figure>`);
+        const cour = i === meca.cur, rr = Rendu.mecanisme(e.G, e.fleches, cour && meca.cible === 'r' ? meca : {});
+        if (cour && meca.cible === 'r') meca.ancres = rr.ancres;
+        const pv = e.P && e.P.atomes.length ? Rendu.mecanisme(e.P, [], {}).svg : '<p class="fm-vide-p">Produits à écrire :<br>clique sur « Produits » ci-dessous</p>';
+        const cr = cour && meca.cible === 'r', cp = cour && meca.cible === 'p';
+        const aide = cr ? (meca.depart ? '② Clique sur l’atome ou la liaison où arrive le doublet (site pauvre en électrons).' : '① Clique sur un doublet non liant (trait près d’un atome) ou sur une liaison pour commencer une flèche courbe.')
+          : cp ? 'Tu modifies les produits de cette étape avec la zone de dessin (ou « ＋ Ajouter » une espèce).' : 'Clique sur les réactifs ou sur les produits pour les modifier.';
+        h.push(`<div class="fm-etape${cour ? ' courante' : ''}"><p class="fm-num-etape">Étape ${i + 1}</p><div class="fm-eq-ligne">
+          <figure class="fm-fig fm-meca fm-cote${cr ? ' actif' + (meca.depart ? ' choix-fin' : ' choix-debut') : ''}" data-etape="${i}" data-cote="r"><span class="fm-etiq">Réactifs</span>${rr.svg}</figure>
+          <div class="fm-reac">⟶</div>
+          <figure class="fm-fig fm-produits fm-cote${cp ? ' actif' : ''}" data-etape="${i}" data-cote="p"><span class="fm-etiq">Produits</span>${pv}</figure>
+        </div>${cour ? `<p class="fm-aide-etape">${aide}</p>` : ''}</div>`);
       });
       zone.innerHTML = '<div class="fm-etapes">' + h.join('') + '</div>';
     } else if (onglet === 'equation') zone.innerHTML = equation(an);
@@ -115,7 +122,8 @@
     if (onglet === 'equation') { const c = e.target.closest('[data-cote]'); if (c) { cotes[c.dataset.cote] = cotes[c.dataset.cote] === 'p' ? 'r' : 'p'; resultats(); } return; }
     if (onglet !== 'meca') return;
     const fig = e.target.closest('[data-etape]');
-    if (fig && +fig.dataset.etape !== meca.cur) { choisirEtape(+fig.dataset.etape); return; }
+    if (fig && (+fig.dataset.etape !== meca.cur || fig.dataset.cote !== meca.cible)) { choisirEtape(+fig.dataset.etape, fig.dataset.cote); return; }
+    if (meca.cible !== 'r') return;
     const f = e.target.closest('[data-f]');
     if (f && !meca.depart) { meca.choisie = +f.dataset.f; msg(''); return resultats(); }
     const c = e.target.closest('[data-a]');
@@ -159,10 +167,19 @@
   $('fm-esp-ok').addEventListener('click', () => { ajouterEspece($('fm-esp').value); $('fm-esp').value = ''; });
   $('fm-esp').addEventListener('keydown', e => { if (e.key === 'Enter') { ajouterEspece($('fm-esp').value); $('fm-esp').value = ''; } });
 
-  function choisirEtape(i) { meca.cur = i; meca.depart = null; meca.choisie = null; msg(''); ed.charger(meca.etapes[i].G, true); }
+  function choisirEtape(i, cote = 'r') {
+    meca.cur = i; meca.cible = cote; meca.depart = null; meca.choisie = null; msg('');
+    const e = meca.etapes[i];
+    if (cote === 'p' && !e.P) e.P = JSON.parse(JSON.stringify(e.G));        // les produits partent d'une copie des réactifs
+    document.querySelectorAll('[data-cible]').forEach(b => b.classList.toggle('actif', b.dataset.cible === cote));
+    ed.charger(cote === 'p' ? e.P : e.G, true);
+    msg('');
+  }
+  document.querySelectorAll('[data-cible]').forEach(b => b.addEventListener('click', () => { if (meca.etapes) choisirEtape(meca.cur, b.dataset.cible); }));
   $('fm-et-plus').addEventListener('click', () => {
-    meca.etapes.splice(meca.cur + 1, 0, { G: JSON.parse(JSON.stringify(etapeCour().G)), fleches: [] });
-    choisirEtape(meca.cur + 1); msg('Nouvelle étape : modifie le dessin (intermédiaire ou produits) puis place les flèches courbes.');
+    const e = etapeCour(), src = e.P && e.P.atomes.length ? e.P : e.G;
+    meca.etapes.splice(meca.cur + 1, 0, { G: JSON.parse(JSON.stringify(src)), fleches: [], P: null });
+    choisirEtape(meca.cur + 1, 'r'); msg('Nouvelle étape : ses réactifs sont les produits de l’étape précédente. Place les flèches courbes, puis écris les produits.');
   });
   $('fm-et-moins').addEventListener('click', () => {
     if (meca.etapes.length < 2) { meca.etapes[0].fleches = []; return resultats(); }

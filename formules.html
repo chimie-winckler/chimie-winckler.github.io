@@ -6,7 +6,7 @@
 <title>Formules des molécules – Chimie de Synthèse</title>
 <script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <link rel="stylesheet" href="style.css?v=20261127a">
-<link rel="stylesheet" href="outils/formules/formules.css?v=4">
+<link rel="stylesheet" href="outils/formules/formules.css?v=5">
 </head>
 <body>
 <header class="entete">
@@ -56,7 +56,8 @@
   </div>
   <div class="fm-resultats" id="fm-resultats"></div>
   <div id="fm-cmdmeca" hidden>
-  <ol class="fm-guide"><li><b>Réactifs</b> : dessine-les ou construis-les par leur nom, puis ajoute les autres espèces ci-dessous (elles se placent à droite, sans effacer le reste).</li><li><b>Flèches courbes</b> : clique sur un doublet non liant ou une liaison, puis sur l’atome ou la liaison d’arrivée.</li><li><b>Étape suivante</b> : recopie le dessin ; modifie-le (intermédiaire, produits) puis place les nouvelles flèches.</li></ol>
+  <ol class="fm-guide"><li><b>Réactifs</b> : construis-les par leur nom ou dessine-les, puis ajoute les autres espèces avec les boutons ci-dessous (elles se placent à droite).</li><li><b>Flèches courbes</b> : clique sur un doublet non liant ou une liaison, puis sur l’atome ou la liaison d’arrivée.</li><li><b>Produits</b> : clique sur « Produits » ; la zone de dessin reprend une copie des réactifs, à modifier (ou à effacer pour construire les produits par leur nom). Ajoute chaque produit supplémentaire avec « ＋ Ajouter ».</li><li><b>Étape suivante</b> : ses réactifs sont les produits de l’étape précédente.</li></ol>
+  <div class="fm-ligne fm-cibles"><span>Je modifie :</span><button type="button" data-cible="r" class="actif">Réactifs</button><button type="button" data-cible="p">Produits</button></div>
   <div class="fm-ligne fm-especes"><span>Ajouter une espèce :</span><button type="button" data-espece="[OH-]">HO⁻</button><button type="button" data-espece="O">H₂O</button><button type="button" data-espece="[H+]">H⁺</button><button type="button" data-espece="[OH3+]">H₃O⁺</button><button type="button" data-espece="[Cl-]">Cl⁻</button><button type="button" data-espece="[Br-]">Br⁻</button><button type="button" data-espece="[I-]">I⁻</button><button type="button" data-espece="[C-]#N">CN⁻</button><button type="button" data-espece="C[O-]">CH₃O⁻</button><button type="button" data-espece="N">NH₃</button><button type="button" data-espece="Br">HBr</button><button type="button" data-espece="Cl">HCl</button><button type="button" data-espece="BrBr">Br₂</button>
     <input type="text" id="fm-esp" placeholder="autre : nom ou SMILES" spellcheck="false"><button type="button" id="fm-esp-ok">＋ Ajouter</button></div>
   <div class="fm-ligne"><button type="button" id="fm-et-plus">＋ Étape suivante</button><button type="button" id="fm-et-moins">Supprimer l’étape</button><button type="button" id="fm-fl-sens">Inverser la courbure</button><button type="button" id="fm-fl-suppr">Supprimer la flèche</button><button type="button" id="fm-fl-vider">Effacer les flèches</button><span class="fm-aide">Chaque flèche part exactement d’un doublet non liant ou d’une liaison et arrive exactement sur un atome ou une liaison.</span></div>
@@ -76,7 +77,7 @@
 <script src="outils/formules/lib/equation.js?v=1"></script>
 <script src="outils/formules/rendu.js?v=7"></script>
 <script src="outils/formules/editeur.js?v=7"></script>
-<script src="outils/formules/app.js?v=4"></script>
+<script src="outils/formules/app.js?v=6"></script>
 <script src="theme.js?v=1"></script>
 <script data-goatcounter="https://chimie-winckler.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>

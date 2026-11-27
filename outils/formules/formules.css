@@ -94,3 +94,16 @@
 .fm-especes input { flex: 1 1 160px; min-width: 0; padding: 6px 9px; border: 1px solid var(--bord); border-radius: 8px; background: var(--fond); color: var(--texte); font: inherit; }
 
 .fm-police select { padding: 5px 8px; border: 1px solid var(--bord); border-radius: 8px; background: var(--fond); color: var(--texte); font: inherit; }
+.fm-etape { width: 100%; border: 1px solid transparent; border-radius: 10px; padding: 6px 8px; }
+.fm-etape.courante { border-color: var(--accent-clair); background: var(--carte); }
+.fm-eq-ligne { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; }
+.fm-cote { position: relative; border: 1px dashed transparent; border-radius: 8px; padding: 14px 8px 6px; cursor: pointer; min-width: 120px; }
+.fm-cote:hover { border-color: var(--bord); }
+.fm-cote.actif { border: 2px solid var(--accent); cursor: default; }
+.fm-etiq { position: absolute; top: 2px; left: 8px; font-size: .72rem; font-weight: 700; color: var(--doux); text-transform: uppercase; letter-spacing: .05em; }
+.fm-produits .cible, .fm-cote:not(.actif) .cible { pointer-events: none; }
+.fm-vide-p { color: var(--doux); font-style: italic; font-size: .88rem; text-align: center; margin: 18px 6px; }
+.fm-aide-etape { margin: 4px 0 0; font-size: .88rem; color: var(--doux); text-align: center; }
+.fm-cibles { margin: 4px 0 8px; }
+.fm-cibles > span { font-weight: 600; font-size: .9rem; }
+.fm-meca .fm-svg { max-height: 300px; }
