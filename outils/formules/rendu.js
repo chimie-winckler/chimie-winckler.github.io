@@ -127,8 +127,18 @@ const Rendu = (() => {
   function croix(an, comp) {
     const lourds = comp.filter(k => an.atomes[k].el !== 'H' || !an.voisins[k].some(v => an.atomes[v.j].el !== 'H'));
     const nH = new Map(lourds.map(k => [k, an.H[k] + an.voisins[k].filter(v => an.atomes[v.j].el === 'H' && !lourds.includes(v.j)).length]));
-    const r = Disposition.croix(an, lourds, nH, { horizontal: true });
-    return r ? { r, lourds, nH } : null;
+    let r = Disposition.croix(an, lourds, nH, { horizontal: true });
+    if (!r) {                       // molécule cyclique : disposition en zigzag (hexagone de Kekulé), H vers l'extérieur
+      const pos = Disposition.zigzag(an, lourds, null);
+      if (!pos) return null;
+      const h = new Map();
+      lourds.forEach(k => {
+        const p = pos.get(k), occ = an.voisins[k].filter(v => lourds.includes(v.j)).map(v => { const q = pos.get(v.j); return Math.atan2(q[1] - p[1], q[0] - p[0]) / RAD; });
+        h.set(k, directionsDoublets(occ, nH.get(k)).map(a => [p[0] + Math.cos(a * RAD) * 0.85, p[1] + Math.sin(a * RAD) * 0.85]));
+      });
+      r = { pos, h };
+    }
+    return { r, lourds, nH };
   }
   function developpee(an, comp, opt = {}) {
     const c = croix(an, comp); if (!c) return null;

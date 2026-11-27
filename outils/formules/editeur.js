@@ -81,7 +81,11 @@ const Editeur = (() => {
         p = [p[0] + dx / nn * ra, p[1] + dy / nn * ra]; q = [q[0] - dx / nn * rb, q[1] - dy / nn * rb];
         const nx = -dy / nn, ny = dx / nn, cls = st.survol === l ? ' class="sv"' : '';
         const seg = (e) => `<line${cls} x1="${(p[0] + nx * e).toFixed(1)}" y1="${(p[1] + ny * e).toFixed(1)}" x2="${(q[0] + nx * e).toFixed(1)}" y2="${(q[1] + ny * e).toFixed(1)}"/>`;
-        if (l.ordre === 1) out.push(seg(0)); else if (l.ordre === 2) out.push(seg(3), seg(-3)); else out.push(seg(0), seg(4.5), seg(-4.5));
+        if (l.ordre === 2 && !ra && !rb) {         // double liaison entre deux C non écrits : second trait du côté des autres voisins (intérieur du cycle)
+          const autres = voisins(a).concat(voisins(b)).filter(c => c !== a && c !== b);
+          const sc = autres.reduce((t, c) => t + ((c.x * U - p[0]) * nx + (c.y * U - p[1]) * ny), 0), sg = sc >= 0 ? 1 : -1, r0 = 0.14;
+          out.push(seg(0), `<line${cls} x1="${(p[0] + dx * r0 + nx * 6 * sg).toFixed(1)}" y1="${(p[1] + dy * r0 + ny * 6 * sg).toFixed(1)}" x2="${(q[0] - dx * r0 + nx * 6 * sg).toFixed(1)}" y2="${(q[1] - dy * r0 + ny * 6 * sg).toFixed(1)}"/>`);
+        } else if (l.ordre === 1) out.push(seg(0)); else if (l.ordre === 2) out.push(seg(3), seg(-3)); else out.push(seg(0), seg(4.5), seg(-4.5));
       });
       G.atomes.forEach((a, i) => {
         const t = lab(a, an), sv = st.survol === a, err = an && an.erreur[i];
