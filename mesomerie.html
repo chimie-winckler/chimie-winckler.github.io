@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mésomérie – Chimie de Synthèse</title>
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=20261127b">
+<link rel="stylesheet" href="outils/mesomerie/mesomerie.css?v=1">
+</head>
+<body>
+<header class="entete">
+  <div class="conteneur entete-inner">
+    <a class="marque" href="index.html">⚗️ Chimie de Synthèse</a>
+    <button class="burger" aria-label="Menu" onclick="document.body.classList.toggle('menu-ouvert')">☰</button>
+    <nav><ul class="menu">
+<li><a href="index.html">Accueil</a></li>
+<li><a href="matieres-premieres.html">Matières premières</a><ul class="sous-menu"><li><a href="fds.html">FDS</a></li><li><a href="fds-simplifiee.html">FDS simplifiée</a></li><li><a href="gestion-dechets.html">Gestion des déchets en salle de TP</a></li></ul></li>
+<li><a href="techniques.html">Techniques</a><ul class="sous-menu"><li><a href="verrerie-et-montages.html">Verrerie et montages</a></li><li><a href="techniques-experimentales.html">Techniques expérimentales</a></li></ul></li>
+<li><a href="ressources.html">Ressources</a><ul class="sous-menu"><li class="sm-titre">Synthèse</li><li><a href="cours.html">Cours</a></li><li><a href="tp.html">TP</a></li><li><a href="evaluations.html">Évaluations</a></li><li class="sm-titre">Formulation</li><li><a href="tp-formulation.html">TP</a></li><li><a href="fiches-methodes.html">Fiches méthodes</a></li></ul></li>
+<li><a href="entrainement.html" class="actif">S’entraîner</a><ul class="sous-menu"><li><a href="entrainement.html">Exercices 🔒</a></li><li><a href="outils.html" class="actif">Outils interactifs</a></li></ul></li>
+<li><a href="stage.html">Stage</a></li>
+<li><a href="annonces.html">Annonces</a></li>
+    </ul></nav>
+    <button type="button" class="theme-btn" id="theme-btn" aria-label="Changer de thème">🌙</button>
+  </div>
+</header>
+<div class="bandeau">
+  <div class="conteneur">
+    <p class="fil"><a href="index.html">Accueil</a> › S’entraîner › <a href="outils.html">Outils interactifs</a> › Mésomérie</p>
+    <p class="surtitre">BTS Métiers de la Chimie – Exploiter les structures des espèces chimiques</p>
+    <h1>Mésomérie</h1>
+    
+  </div>
+</div>
+<main class="conteneur mesomerie">
+<p class="ms-intro">Lorsque plusieurs formules de Lewis correctes peuvent être écrites pour une même espèce, <b>le squelette restant intact</b> (noyaux et doublets liants σ fixes), ces formules sont appelées <b>formules mésomères</b> (ou formules de résonance). Aucune d’elles ne décrit seule la structure réelle : l’espèce réelle est un <b>hybride de résonance</b>.</p>
+
+<div class="ms-avert" role="note"><span class="ms-avert-ic">⚠</span><p><b>Ces flèches ne décrivent pas un mécanisme.</b> Elles montrent un déplacement <i>formel</i> (fictif) d’électrons qui permet de passer d’une formule mésomère à une autre : aucune réaction n’a lieu, aucun noyau ne bouge, aucune liaison σ n’est rompue. C’est pourquoi elles sont dessinées <span class="ms-bleu">en bleu</span>, et les formules sont reliées par la flèche de mésomérie <b>↔</b> (et non par une double flèche d’équilibre ⇄).</p></div>
+
+<section class="ms-carte">
+  <div class="ms-ligne ms-modes" role="tablist">
+    <button type="button" data-mode="voir" class="actif">👁 Observer</button>
+    <button type="button" data-mode="toi">✍ À toi</button>
+    <label class="ms-police">Police <select id="ms-police"><option value="arial">Arial</option><option value="century">Century Gothic</option><option value="calibri">Calibri</option><option value="verdana">Verdana</option><option value="times">Times New Roman</option><option value="cambria">Cambria</option></select></label>
+  </div>
+  <div class="ms-choix"><span>Exemples du cours</span><div class="ms-ligne" id="ms-cours"></div></div>
+  <div class="ms-choix"><span>Exercices (cours 4.2)</span><div class="ms-ligne" id="ms-exos"></div></div>
+</section>
+
+<section class="ms-carte">
+  <h2 class="ms-titre" id="ms-titre"></h2>
+  <p class="ms-consigne" id="ms-consigne"></p>
+  <div class="ms-scene" id="ms-scene"></div>
+  <p class="ms-legende" id="ms-legende"></p>
+  <div class="ms-ligne ms-cmd" id="ms-cmd-voir">
+    <button type="button" id="ms-prec" aria-label="Formule précédente">◀</button>
+    <button type="button" id="ms-jouer">▶ Animer</button>
+    <button type="button" id="ms-suiv" aria-label="Formule suivante">▶▶</button>
+    <button type="button" id="ms-tout">⟳ Tout enchaîner</button>
+    <label class="ms-vit">Vitesse <select id="ms-vitesse"><option value="0.6">lente</option><option value="1" selected>normale</option><option value="1.6">rapide</option></select></label>
+    <button type="button" id="ms-video">Enregistrer la vidéo</button>
+  </div>
+  <div id="ms-cmd-toi" hidden>
+    <div class="ms-ligne ms-cmd">
+      <span class="ms-lab">Flèche :</span>
+      <button type="button" data-demi="0" class="actif">↷ doublet (2 e⁻)</button>
+      <button type="button" data-demi="1">⇀ demi-flèche (1 e⁻)</button>
+      <button type="button" id="ms-inv">Inverser la courbure</button>
+      <button type="button" id="ms-suppr">Supprimer la flèche</button>
+      <button type="button" id="ms-vider">Effacer les flèches</button>
+    </div>
+    <div class="ms-ligne ms-cmd">
+      <button type="button" id="ms-ecrire" class="ms-prim">Écrire la formule obtenue ↔</button>
+      <button type="button" id="ms-recom">Recommencer</button>
+      <button type="button" id="ms-solution">Voir la solution</button>
+      <span class="ms-score" id="ms-score"></span>
+    </div>
+  </div>
+  <p class="ms-msg" id="ms-msg" hidden></p>
+</section>
+
+<section class="ms-carte">
+  <h2 class="ms-sous">Ensemble des formules mésomères</h2>
+  <div class="ms-ensemble-cadre"><div class="ms-ensemble" id="ms-ensemble"></div></div>
+  <div class="ms-annexes" id="ms-annexes"></div>
+  <p class="ms-note" id="ms-note"></p>
+</section>
+
+<section class="ms-carte ms-regles">
+  <h2 class="ms-sous">Représentativité d’une formule mésomère</h2>
+  <p>Le « poids statistique » (représentativité) d’une formule est d’autant plus grand que, <b>dans l’ordre</b> :</p>
+  <ol><li>la règle de l’octet est au maximum respectée (pas de défaut d’électrons) ;</li><li>la formule fait apparaître un minimum de charges formelles ;</li><li>les charges formelles sont en accord avec l’électronégativité des éléments qui les portent (négatives sur les éléments électronégatifs, positives sur les électropositifs).</li></ol>
+  <p class="ms-doux">Rappel : un élément de la 2ᵉ période (C, N, O) ne dépasse jamais l’octet ; les éléments de la 3ᵉ période (P, S) peuvent le dépasser. Un électron célibataire (radical) se déplace avec une demi-flèche.</p>
+</section>
+</main>
+<footer class="pied"><div class="conteneur">BTS Métiers de la Chimie – Synthèse · <a href="mentions-legales.html">Mentions légales et confidentialité</a></div></footer>
+<script src="outils/mesomerie/moteur.js?v=1"></script>
+<script src="outils/mesomerie/molecules.js?v=1"></script>
+<script src="outils/mesomerie/dessin.js?v=1"></script>
+<script src="outils/mesomerie/app.js?v=1"></script>
+<script src="theme.js?v=1"></script>
+<script data-goatcounter="https://chimie-winckler.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

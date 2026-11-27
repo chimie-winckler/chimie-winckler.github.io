@@ -581,3 +581,4 @@ main section, main article.partie { scroll-margin-top: 80px; }
 #synthese, #formulation { margin-bottom: 28px; }
 .intro-outils { color: var(--doux); max-width: 75ch; }
 .tuile-bientot { opacity: .7; }
+.doc-outil .doc-ico { background: #1565c0; }

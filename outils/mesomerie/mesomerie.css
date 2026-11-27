@@ -1,0 +1,74 @@
+/* Mésomérie */
+.mesomerie [hidden] { display: none !important; }
+.ms-intro { color: var(--doux); max-width: 85ch; }
+.ms-carte { background: var(--carte); border: 1px solid var(--bord); border-radius: var(--rayon); padding: 14px 16px; margin-top: 14px; min-width: 0; }
+.ms-ligne { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.mesomerie button { padding: 7px 12px; border: 1px solid var(--accent); border-radius: 8px; background: var(--carte); color: var(--accent); font: inherit; font-weight: 600; cursor: pointer; }
+.mesomerie button:hover:not(:disabled) { background: var(--accent-clair); }
+.mesomerie button.actif { background: var(--accent); color: #fff; }
+.mesomerie button:disabled { opacity: .45; cursor: default; }
+.mesomerie select { padding: 5px 8px; border: 1px solid var(--bord); border-radius: 8px; background: var(--fond); color: var(--texte); font: inherit; }
+.ms-modes { margin-bottom: 10px; }
+.ms-police { margin-left: auto; font-size: .9rem; }
+.ms-choix { margin-top: 8px; }
+.ms-choix > span { display: block; font-weight: 600; font-size: .85rem; color: var(--doux); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .04em; }
+.ms-choix button { padding: 5px 10px; font-weight: 600; }
+
+.ms-avert { display: flex; gap: 12px; align-items: flex-start; margin: 14px 0 0; padding: 12px 14px; border-radius: var(--rayon); border: 1px solid #90b4e6; background: rgba(21, 101, 192, .07); }
+.ms-avert p { margin: 0; max-width: 95ch; }
+.ms-avert-ic { font-size: 1.4rem; line-height: 1; color: #1565c0; }
+.ms-bleu { color: #1565c0; font-weight: 700; }
+:root[data-theme="dark"] .ms-bleu, :root[data-theme="dark"] .ms-avert-ic { color: #7fb0ff; }
+
+.ms-titre { margin: 0 0 4px; font-size: 1.25rem; }
+.ms-sous { margin: 0 0 10px; font-size: 1.1rem; }
+.ms-doux { color: var(--doux); font-weight: 400; }
+.ms-consigne { margin: 0 0 8px; color: var(--doux); font-size: .93rem; }
+.ms-scene { display: flex; justify-content: center; align-items: center; min-height: 230px; padding: 10px; background: var(--fond); border: 1px solid var(--bord); border-radius: 10px; overflow-x: auto; color: var(--texte); }
+.ms-scene svg { flex: 0 0 auto; }
+.ms-legende { text-align: center; color: var(--doux); font-size: .9rem; margin: 6px 0 10px; min-height: 1.2em; }
+.ms-cmd { margin-top: 6px; }
+.ms-lab { font-weight: 600; font-size: .9rem; }
+.ms-vit { font-size: .9rem; }
+.ms-prim { background: var(--accent) !important; color: #fff !important; }
+.ms-score { margin-left: auto; font-size: .95rem; }
+.ms-msg { margin: 10px 0 0; padding: 8px 12px; border-radius: 8px; background: rgba(198, 40, 40, .08); color: #b3261e; border: 1px solid rgba(198, 40, 40, .3); }
+.ms-msg.ok { background: rgba(46, 125, 50, .08); color: #2e7d32; border-color: rgba(46, 125, 50, .3); }
+:root[data-theme="dark"] .ms-msg { color: #ff8a80; } :root[data-theme="dark"] .ms-msg.ok { color: #81c784; }
+
+/* zones cliquables du mode « À toi » */
+.ms-actif .ms-c { cursor: pointer; }
+.ms-actif.choix-debut .c-p:hover, .ms-actif.choix-debut .c-l:hover { fill: rgba(46, 160, 67, .3); }
+.ms-actif.choix-fin .c-a:hover, .ms-actif.choix-fin .c-l:hover { fill: rgba(21, 101, 192, .22); }
+.ms-actif.choix-fin .c-p { pointer-events: none; }
+.ms-actif.choix-debut .c-a { cursor: not-allowed; }
+.ms-fl { cursor: pointer; }
+.ms-fl.sel path { stroke-width: 3; }
+
+/* ensemble entre crochets */
+.ms-ensemble-cadre { overflow-x: auto; padding-bottom: 6px; }
+.ms-ensemble { display: flex; align-items: stretch; gap: 4px; width: max-content; min-width: 100%; color: var(--texte); }
+.ms-crochet { width: 14px; flex: 0 0 14px; height: auto; align-self: stretch; color: var(--texte); }
+.ms-sep { display: flex; align-items: center; padding: 0 2px; margin-bottom: 52px; }
+.ms-fig { margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 4px; padding: 6px 6px 8px; border-radius: 10px; border: 2px solid transparent; }
+.ms-ensemble .ms-fig { cursor: pointer; }
+.ms-ensemble .ms-fig:hover { background: var(--accent-clair); }
+.ms-fig.actif { border-color: var(--accent); }
+.ms-fig svg { display: block; }
+.ms-verdict { margin: 2px 0 0; font-size: .82rem; text-align: center; font-weight: 700; max-width: 210px; line-height: 1.25; }
+.ms-verdict.max { color: #2e7d32; } .ms-verdict.moins { color: #b26a00; } .ms-verdict.int { color: #c62828; }
+:root[data-theme="dark"] .ms-verdict.max { color: #81c784; } :root[data-theme="dark"] .ms-verdict.moins { color: #ffb74d; }
+.ms-verdict .ms-doux { font-weight: 400; }
+.ms-badges { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; }
+.ms-b { font-size: .72rem; padding: 1px 6px; border-radius: 10px; border: 1px solid var(--bord); color: var(--doux); }
+.ms-b.oui { border-color: rgba(46, 125, 50, .5); color: #2e7d32; } .ms-b.non { border-color: rgba(198, 40, 40, .5); color: #c62828; }
+.ms-annexes { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 12px; }
+.ms-annexes:empty { display: none; }
+.ms-annexes figcaption { font-size: .85rem; color: var(--doux); text-align: center; max-width: 280px; }
+.ms-hyb, .ms-int { border: 1px dashed var(--bord); }
+.ms-note { color: var(--doux); font-size: .9rem; margin: 10px 0 0; }
+.ms-note:empty { display: none; }
+.ms-regles ol { margin: 6px 0; padding-left: 1.4em; }
+.ms-regles li { margin: 3px 0; }
+.ms-regles p { margin: 4px 0; }
+@media (max-width: 640px) { .ms-police, .ms-score { margin-left: 0; } .ms-scene { min-height: 180px; } }
