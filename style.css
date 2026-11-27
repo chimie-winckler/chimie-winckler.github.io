@@ -579,3 +579,5 @@ main section, main article.partie { scroll-margin-top: 80px; }
 .sous-menu .sm-titre { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--doux); padding: 8px 12px 2px; }
 .sous-menu .sm-titre:not(:first-child) { border-top: 1px solid var(--bord); margin-top: 4px; padding-top: 10px; }
 #synthese, #formulation { margin-bottom: 28px; }
+.intro-outils { color: var(--doux); max-width: 75ch; }
+.tuile-bientot { opacity: .7; }
