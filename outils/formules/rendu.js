@@ -159,6 +159,7 @@ const Rendu = (() => {
       const gauche = versDroite(an, k, P) && an.voisins[k].filter(v => lourds.includes(v.j)).length === 1;
       lab.set(k, (gauche ? hTexte(h) + a.el : a.el + hTexte(h)) + chargeTexte(a.charge));
     });
+    if (lourds.length === 1) { const f = Chimie.formuleBrute(an, comp); lab.set(lourds[0], f.texte.replace(/([+−])$/, m => '^' + m)); }
     const vu = new Set();
     lourds.forEach(k => an.voisins[k].forEach(v => {
       if (!lourds.includes(v.j)) return;
@@ -215,7 +216,14 @@ const Rendu = (() => {
       if (!r) return;
       const xs = lourds.map(k => r.pos.get(k)[0]), x0 = Math.min(...xs), x1 = Math.max(...xs);
       if (ci) { txt.push(tx(dx - U * 0.55, 0, '+', { cls: 'plus' })); }
-      const P = k => { const p = r.pos.get(k); return [(p[0] - x0) * U + dx, p[1] * U]; };
+      // espèce placée à gauche d'une autre : son atome réactif (chargé, ou portant le plus de doublets) tourné vers la droite
+      let miroir = false;
+      if (ci < comps.length - 1 && x1 > x0) {
+        const het = lourds.filter(k => an.atomes[k].el !== 'C' && an.atomes[k].el !== 'H');
+        const reac = het.find(k => an.atomes[k].charge) ?? het.sort((u, v) => an.doublets[v].paires - an.doublets[u].paires)[0];
+        if (reac !== undefined && r.pos.get(reac)[0] < (x0 + x1) / 2) miroir = true;
+      }
+      const P = k => { const p = r.pos.get(k); return [((miroir ? x0 + x1 - p[0] : p[0]) - x0) * U + dx, p[1] * U]; };
       const lab = new Map();
       lourds.forEach(k => { const a = an.atomes[k]; lab.set(k, a.el === 'C' ? 'C' + hTexte(an.H[k]) : a.el); });
       const vu = new Set();

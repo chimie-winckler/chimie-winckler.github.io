@@ -51,11 +51,12 @@
 <section class="fm-carte">
   <div id="fm-infos"></div>
   <div class="fm-onglets" role="tablist">
-    <button type="button" data-vue="brute">Brute</button><button type="button" data-vue="semi">Semi-développée</button><button type="button" data-vue="dev">Développée</button><button type="button" data-vue="lewis">Lewis</button><button type="button" data-vue="topo" class="actif">Topologique</button><button type="button" data-vue="3d">Modèle 3D</button><button type="button" data-vue="meca">↷ Mécanisme</button>
+    <button type="button" data-vue="brute">Brute</button><button type="button" data-vue="semi">Semi-développée</button><button type="button" data-vue="dev">Développée</button><button type="button" data-vue="lewis">Lewis</button><button type="button" data-vue="topo" class="actif">Topologique</button><button type="button" data-vue="3d">Modèle 3D</button><button type="button" data-vue="meca">↷ Mécanisme</button><button type="button" data-vue="equation">⇄ Équation</button>
   </div>
   <div class="fm-resultats" id="fm-resultats"></div>
-  <div class="fm-ligne" id="fm-cmdmeca" hidden><button type="button" id="fm-fl-sens">Inverser la courbure</button><button type="button" id="fm-fl-suppr">Supprimer la flèche</button><button type="button" id="fm-fl-vider">Effacer les flèches</button><span class="fm-aide">Chaque flèche part exactement d’un doublet non liant ou d’une liaison et arrive exactement sur un atome ou une liaison.</span></div>
+  <div class="fm-ligne" id="fm-cmdmeca" hidden><button type="button" id="fm-et-plus">＋ Étape suivante</button><button type="button" id="fm-et-moins">Supprimer l’étape</button><button type="button" id="fm-fl-sens">Inverser la courbure</button><button type="button" id="fm-fl-suppr">Supprimer la flèche</button><button type="button" id="fm-fl-vider">Effacer les flèches</button><span class="fm-aide">Chaque flèche part exactement d’un doublet non liant ou d’une liaison et arrive exactement sur un atome ou une liaison.</span></div>
   <p class="fm-err" id="fm-mmsg" hidden></p>
+  <div class="fm-ligne" id="fm-cmdeq" hidden><label class="fm-case">Formules <select id="fm-eqmode"><option value="brute">brutes</option><option value="semi">semi-développées</option><option value="topo">topologiques</option></select></label><label class="fm-case">Conditions au-dessus de la flèche <input type="text" id="fm-eqcond" placeholder="ex. H⁺, Δ" size="14"></label></div>
   <div class="fm-ligne" id="fm-cmd3d" hidden><label class="fm-case"><input type="checkbox" id="fm-compact"> Modèle compact</label><button type="button" id="fm-depart">Orientation de départ</button><span class="fm-aide">Fais tourner la molécule à la souris ou au doigt.</span></div>
   <div class="fm-ligne fm-bas"><label class="fm-case"><input type="checkbox" id="fm-simple"> Noms simplifiés (propanone, méthylpropane…)</label><button type="button" id="fm-png">Enregistrer l’image (PNG)</button></div>
 </section>

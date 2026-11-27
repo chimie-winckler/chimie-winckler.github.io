@@ -62,3 +62,23 @@
 .fm-meca.choix-fin .c-atome:hover, .fm-meca.choix-fin .c-liaison:hover { fill: rgba(198, 40, 40, .2); }
 .fm-meca.choix-debut .c-atome { cursor: not-allowed; }
 .fm-svg .depart { fill: rgba(46, 160, 67, .35); stroke: #2e7d32; }
+.fm-etapes { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 100%; }
+.fm-reac { font-size: 1.6rem; color: var(--doux); line-height: 1; }
+.fm-meca.autre { opacity: .55; cursor: pointer; }
+.fm-meca.autre .cible { pointer-events: none; }
+.fm-meca.courante { outline: 2px solid var(--accent-clair); border-radius: 10px; padding: 4px 10px; }
+.fm-num-etape { margin: 0; font-weight: 700; color: var(--accent); font-size: .9rem; align-self: flex-start; }
+.fm-equation { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; width: 100%; }
+.fm-esp { display: flex; flex-direction: column; align-items: center; cursor: pointer; border-radius: 8px; padding: 4px 6px; }
+.fm-esp:hover { background: var(--accent-clair); }
+.fm-esp-f { display: flex; align-items: center; gap: 4px; }
+.fm-esp-f .fm-svg { width: auto; height: 96px; max-width: none !important; }
+.fm-bru { font: 30px Arial, sans-serif; }
+.fm-bru sub { font-size: .65em; }
+.fm-esp-f .fm-brute { width: 150px; }
+.fm-coef { font: 26px Arial, sans-serif; }
+.fm-esp-nom { font-size: .82rem; color: var(--doux); }
+.fm-op { font-size: 1.5rem; }
+.fm-fl { display: inline-flex; flex-direction: column; align-items: center; font-size: 1.9rem; line-height: 1; }
+.fm-cond { font-size: .8rem; color: var(--texte); min-height: 1em; }
+#fm-cmdeq select, #fm-cmdeq input { padding: 5px 8px; border: 1px solid var(--bord); border-radius: 8px; background: var(--fond); color: var(--texte); font: inherit; }

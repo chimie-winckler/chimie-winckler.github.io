@@ -3,8 +3,9 @@
   const $ = id => document.getElementById(id);
   const vue3d = { rx: -18, ry: 28, compact: false };
   let onglet = 'topo', G = { atomes: [], liaisons: [] };
-  const meca = { fleches: [], depart: null, choisie: null, ancres: [] };
-  const ed = Editeur.creer($('fm-canevas'), g => { G = g; resultats(); });
+  const meca = { depart: null, choisie: null, ancres: [], etapes: null, cur: 0 };
+  const etapeCour = () => meca.etapes[meca.cur];
+  const ed = Editeur.creer($('fm-canevas'), g => { G = g; if (meca.etapes) etapeCour().G = JSON.parse(JSON.stringify(g)); resultats(); });
 
   // ── SMILES (sans stéréochimie) d'une composante, pour ouvrir l'outil Représentations spatiales ──
   function smiles(an, comp) {
@@ -54,7 +55,7 @@
     const zone = $('fm-resultats');
     if (!G.atomes.length) { zone.innerHTML = '<p class="fm-vide">Dessine une molécule ou saisis son nom pour voir ses formules.</p>'; $('fm-infos').innerHTML = ''; return; }
     const an = Chimie.analyser(G), simpl = $('fm-simple').checked;
-    $('fm-cmdmeca').hidden = onglet !== 'meca';
+    $('fm-cmdmeca').hidden = onglet !== 'meca'; $('fm-cmdeq').hidden = onglet !== 'equation';
     const infos = [], blocs = [];
     an.composantes.forEach(c => {
       if (c.every(k => an.atomes[k].el === 'H') && c.length === 1) return;
@@ -69,15 +70,23 @@
       else if (onglet === 'dev') s = Rendu.developpee(an, c);
       else if (onglet === 'lewis') s = Rendu.developpee(an, c, { lewis: true });
       else if (onglet === '3d') s = Rendu.modele3d(an, c, vue3d);
-      else if (onglet === 'meca') s = '';
+      else if (onglet === 'meca' || onglet === 'equation') s = '';
       const titres = { meca: 'Mécanisme', brute: 'Formule brute', topo: 'Représentation topologique', semi: 'Formule semi-développée', dev: 'Formule développée', lewis: 'Formule de Lewis', '3d': 'Modèle moléculaire' };
       blocs.push(`<figure class="fm-fig">${s || '<p class="fm-doux">Cette représentation n’est pas disponible pour cette molécule (cycles accolés…).</p>'}<figcaption>${titres[onglet]}${nom ? ' ' + escH(Nomenclature.avecDe ? Nomenclature.avecDe(nom) : 'de ' + nom) : ''}</figcaption></figure>`);
     });
     $('fm-infos').innerHTML = infos.join('');
     if (onglet === 'meca') {
-      const r = Rendu.mecanisme(G, meca.fleches, meca); meca.ancres = r.ancres;
-      zone.innerHTML = `<figure class="fm-fig fm-meca${meca.depart ? ' choix-fin' : ' choix-debut'}">${r.svg}<figcaption>${meca.depart ? 'Clique maintenant sur l’atome ou la liaison où arrive le doublet (site pauvre en électrons).' : 'Clique sur un doublet non liant ou sur une liaison pour commencer une flèche courbe.'}</figcaption></figure>`;
-    } else zone.innerHTML = blocs.join('');
+      if (!meca.etapes) meca.etapes = [{ G: JSON.parse(JSON.stringify(G)), fleches: [] }];
+      const h = [];
+      meca.etapes.forEach((e, i) => {
+        const cour = i === meca.cur, r = Rendu.mecanisme(e.G, e.fleches, cour ? meca : {});
+        if (cour) meca.ancres = r.ancres;
+        if (i) h.push('<div class="fm-reac">⟶</div>');
+        h.push(`<figure class="fm-fig fm-meca${cour ? (meca.depart ? ' choix-fin' : ' choix-debut') + ' courante' : ' autre'}" data-etape="${i}"><p class="fm-num-etape">Étape ${i + 1}</p>${r.svg}${cour ? `<figcaption>${meca.depart ? 'Clique maintenant sur l’atome ou la liaison où arrive le doublet (site pauvre en électrons).' : 'Clique sur un doublet non liant ou sur une liaison pour commencer une flèche courbe.'}</figcaption>` : '<figcaption>Clique pour modifier cette étape.</figcaption>'}</figure>`);
+      });
+      zone.innerHTML = '<div class="fm-etapes">' + h.join('') + '</div>';
+    } else if (onglet === 'equation') zone.innerHTML = equation(an);
+    else zone.innerHTML = blocs.join('');
     $('fm-cmd3d').hidden = onglet !== '3d';
   }
   const escH = t => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;');
@@ -85,7 +94,10 @@
   // ── mécanisme : flèches courbes (départ : doublet non liant ou liaison ; arrivée : atome ou liaison) ──
   function msg(t) { const m = $('fm-mmsg'); m.textContent = t || ''; m.hidden = !t; }
   $('fm-resultats').addEventListener('click', e => {
+    if (onglet === 'equation') { const c = e.target.closest('[data-cote]'); if (c) { cotes[c.dataset.cote] = cotes[c.dataset.cote] === 'p' ? 'r' : 'p'; resultats(); } return; }
     if (onglet !== 'meca') return;
+    const fig = e.target.closest('[data-etape]');
+    if (fig && +fig.dataset.etape !== meca.cur) { choisirEtape(+fig.dataset.etape); return; }
     const f = e.target.closest('[data-f]');
     if (f && !meca.depart) { meca.choisie = +f.dataset.f; msg(''); return resultats(); }
     const c = e.target.closest('[data-a]');
@@ -102,12 +114,47 @@
     let alerte = '';
     const at = a.type === 'atome' ? G.atomes.find(x => x.id === a.id) : null;
     if (at && at.charge < 0) alerte = 'Attention : cet atome porte une charge négative, ce n’est pas un site pauvre en électrons.';
-    meca.fleches.push({ de: d, vers: { type: a.type, id: a.id }, sens: 1 });
-    meca.depart = null; meca.choisie = meca.fleches.length - 1; msg(alerte); resultats();
+    etapeCour().fleches.push({ de: d, vers: { type: a.type, id: a.id }, sens: 1 });
+    meca.depart = null; meca.choisie = etapeCour().fleches.length - 1; msg(alerte); resultats();
   });
-  $('fm-fl-sens').addEventListener('click', () => { const f = meca.fleches[meca.choisie]; if (f) { f.sens = -(f.sens || 1); resultats(); } });
-  $('fm-fl-suppr').addEventListener('click', () => { if (meca.choisie !== null && meca.fleches[meca.choisie]) { meca.fleches.splice(meca.choisie, 1); meca.choisie = null; resultats(); } });
-  $('fm-fl-vider').addEventListener('click', () => { meca.fleches = []; meca.depart = null; meca.choisie = null; msg(''); resultats(); });
+  $('fm-fl-sens').addEventListener('click', () => { const f = etapeCour().fleches[meca.choisie]; if (f) { f.sens = -(f.sens || 1); resultats(); } });
+  $('fm-fl-suppr').addEventListener('click', () => { if (meca.choisie !== null && etapeCour().fleches[meca.choisie]) { etapeCour().fleches.splice(meca.choisie, 1); meca.choisie = null; resultats(); } });
+  $('fm-fl-vider').addEventListener('click', () => { etapeCour().fleches = []; meca.depart = null; meca.choisie = null; msg(''); resultats(); });
+
+  function choisirEtape(i) { meca.cur = i; meca.depart = null; meca.choisie = null; msg(''); ed.charger(meca.etapes[i].G, true); }
+  $('fm-et-plus').addEventListener('click', () => {
+    meca.etapes.splice(meca.cur + 1, 0, { G: JSON.parse(JSON.stringify(etapeCour().G)), fleches: [] });
+    choisirEtape(meca.cur + 1); msg('Nouvelle étape : modifie le dessin (intermédiaire ou produits) puis place les flèches courbes.');
+  });
+  $('fm-et-moins').addEventListener('click', () => {
+    if (meca.etapes.length < 2) { meca.etapes[0].fleches = []; return resultats(); }
+    meca.etapes.splice(meca.cur, 1); choisirEtape(Math.max(0, meca.cur - 1));
+  });
+
+  // ── équation de réaction ──
+  const cotes = {};
+  function equation(an) {
+    const comps = an.composantes.filter(c => !(c.length === 1 && an.atomes[c[0]].el === 'H' && !an.atomes[c[0]].charge))
+      .map(c => ({ c, x: Math.min(...c.map(k => an.atomes[k].x || 0)), cle: an.atomes[c[0]].id })).sort((a, b) => a.x - b.x);
+    if (comps.length < 2) return '<p class="fm-doux">Dessine (ou construis) au moins deux espèces : les réactifs à gauche, les produits à droite. Clique sur une espèce pour la passer de réactif à produit.</p>';
+    comps.forEach((o, i) => { if (!cotes[o.cle]) cotes[o.cle] = i < Math.ceil(comps.length / 2) ? 'r' : 'p'; });
+    const R = comps.filter(o => cotes[o.cle] === 'r'), Pd = comps.filter(o => cotes[o.cle] === 'p');
+    const res = Equation.ajuster(R.map(o => Chimie.compter(an, o.c)), Pd.map(o => Chimie.compter(an, o.c)));
+    const mode = $('fm-eqmode').value, conditions = $('fm-eqcond').value.trim();
+    const bloc = (o, coef) => {
+      const nm = Nomenclature.nommer(an, o.c), nom = nm && nm.nom ? nm.nom : '';
+      let f;
+      if (mode === 'semi') f = Rendu.semi(an, o.c);
+      else if (mode === 'topo') f = Rendu.topologique(an, o.c, nm && nm.chaine && nm.chaine.length ? nm.chaine : null);
+      else { const fb = Chimie.formuleBrute(an, o.c); f = `<span class="fm-bru">${escH(fb.texte).replace(/(\d+)/g, '<sub>$1</sub>').replace(/([+−])$/, '<sup>$1</sup>')}</span>`; }
+      return `<div class="fm-esp" data-cote="${o.cle}" title="Clique pour passer de réactif à produit"><div class="fm-esp-f">${coef > 1 ? `<span class="fm-coef">${coef}</span>` : ''}${f || ''}</div><div class="fm-esp-nom">${escH(nom)}</div></div>`;
+    };
+    const k = res.coefs || [];
+    const g = R.map((o, i) => bloc(o, k[i] || 1)).join('<span class="fm-op">+</span>');
+    const d = Pd.map((o, i) => bloc(o, k[R.length + i] || 1)).join('<span class="fm-op">+</span>');
+    return `<div class="fm-equation">${g}<span class="fm-fl"><span class="fm-cond">${escH(conditions)}</span>⟶</span>${d}</div>` +
+      (res.erreur ? `<p class="fm-alerte">${escH(res.erreur.charAt(0).toUpperCase() + res.erreur.slice(1))}.</p>` : '<p class="fm-doux">Équation ajustée (conservation des éléments et de la charge). Clique sur une espèce pour la passer de réactif à produit.</p>');
+  }
 
   // ── commandes ──
   document.querySelectorAll('[data-outil]').forEach(b => b.addEventListener('click', () => {
@@ -121,6 +168,8 @@
   $('fm-vider').addEventListener('click', () => ed.vider());
   $('fm-c').addEventListener('change', e => { ed.st.ecrireC = e.target.checked; ed.dessiner(); });
   $('fm-simple').addEventListener('change', resultats);
+  $('fm-eqmode').addEventListener('change', resultats);
+  $('fm-eqcond').addEventListener('input', resultats);
   document.querySelectorAll('.fm-onglets button').forEach(b => b.addEventListener('click', () => {
     onglet = b.dataset.vue; document.querySelectorAll('.fm-onglets button').forEach(x => x.classList.toggle('actif', x === b)); resultats();
   }));
