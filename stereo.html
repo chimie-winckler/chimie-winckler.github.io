@@ -61,6 +61,23 @@
       <span>et</span>
       <select id="v-droite"><option value="cram">Cram</option><option value="newman">Newman</option><option value="fischer" selected>Fischer</option><option value="haworth">Haworth</option></select>
     </div>
+    <div class="st-ligne st-anim-barre"><span>Animation :</span><select id="anim-type"><option value="cramFischer">Cram → Fischer</option><option value="cramNewman">Cram → Newman</option><option value="fischerHaworth">Fischer → Haworth</option></select><button type="button" id="anim-go">▶ Lancer l’animation</button></div>
+    <div class="st-anim" id="anim" hidden>
+      <div class="st-dessin st-anim-dessin" id="anim-dessin"></div>
+      <p class="st-anim-legende"><span id="anim-etape"></span> <span id="anim-legende"></span></p>
+      <div class="st-anim-prog"><div id="anim-prog"></div></div>
+      <div class="st-ligne">
+        <button type="button" id="anim-debut" title="Recommencer">⏮</button>
+        <button type="button" id="anim-prec" title="Étape précédente">◀</button>
+        <button type="button" id="anim-lecture">⏸ Pause</button>
+        <button type="button" id="anim-suiv" title="Étape suivante">▶</button>
+        <label class="st-case"><input type="checkbox" id="anim-pas"> S’arrêter à chaque étape</label>
+        <select id="anim-vitesse" aria-label="Vitesse"><option value="0.5">Lent</option><option value="1" selected>Normal</option><option value="1.6">Rapide</option></select>
+        <button type="button" id="anim-video">Enregistrer la vidéo</button>
+        <button type="button" id="anim-fermer">Fermer</button>
+      </div>
+      <p class="st-err" id="anim-msg" hidden></p>
+    </div>
     <div class="st-dessins">
       <div class="st-zone" id="zone-1"><p class="st-titre" id="titre-1"></p><div class="st-dessin" id="dessin-1"></div></div>
       <div class="st-zone demi" id="zone-2" hidden><p class="st-titre" id="titre-2"></p><div class="st-dessin" id="dessin-2"></div></div>
@@ -90,7 +107,9 @@
 <footer class="pied"><div class="conteneur">BTS Métiers de la Chimie – Synthèse · <a href="mentions-legales.html">Mentions légales et confidentialité</a></div></footer>
 <script src="outils/stereo/moteur.js?v=1"></script>
 <script src="outils/stereo/vues.js?v=1"></script>
+<script src="outils/stereo/anim.js?v=1"></script>
 <script src="outils/stereo/app.js?v=1"></script>
+<script src="outils/stereo/lecteur.js?v=1"></script>
 <script src="theme.js?v=1"></script>
 <script data-goatcounter="https://chimie-winckler.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>

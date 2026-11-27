@@ -54,3 +54,14 @@
 .st-aide summary { cursor: pointer; font-weight: 600; color: var(--accent); }
 @media (max-width: 760px) { .st-grille { grid-template-columns: minmax(0, 1fr); } }
 .stereo [hidden] { display: none !important; }
+.st-anim-barre { margin: -2px 0 12px; font-size: .92rem; color: var(--doux); }
+.st-anim-barre select { padding: 6px 8px; border: 1px solid var(--bord); border-radius: 8px; background: var(--fond); color: var(--texte); font: inherit; }
+.st-anim { margin-bottom: 14px; display: grid; gap: 10px; }
+.st-anim-dessin { min-height: 360px; }
+.st-anim-dessin .anim-svg { max-width: 640px; max-height: 420px; }
+.st-anim-legende { margin: 0; min-height: 3em; }
+.st-anim-legende #anim-etape { font-weight: 700; color: var(--accent); margin-right: 4px; }
+.st-anim-prog { height: 4px; background: var(--bord); border-radius: 4px; overflow: hidden; }
+.st-anim-prog div { height: 100%; width: 0; background: var(--accent); }
+.st-anim select { padding: 6px 8px; border: 1px solid var(--bord); border-radius: 8px; background: var(--fond); color: var(--texte); font: inherit; }
+.stereo .st-masque { display: none !important; }

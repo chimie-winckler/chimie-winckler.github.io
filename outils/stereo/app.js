@@ -125,6 +125,7 @@
     };
     img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(t);
   });
+  window.StereoApp = { etat, rendre };
   fetch('outils/stereo/molecules.json').then(r => r.json()).then(d => {
     LIB = d; remplirListe();
     const p = new URLSearchParams(location.search).get('smiles');
