@@ -78,21 +78,22 @@ const Verrerie = (() => {
       joints: { haut: [0, -30, -90], bas: [-25, 43, 150] } },
     dean_stark: { nom: 'Dean-Stark', cat: 'Réfrigérants et distillation',
       // tube collecteur gradué à gauche (réfrigérant au-dessus), bras de retour à droite (vers le ballon)
-      dessin: () => P('M-88,-300 L-88,-122 L-84,-112 L-84,-104 M-72,-300 L-72,-250 M-72,-234 L-72,-122 L-76,-112 L-76,-104', 'trait')
-        + P('M-72,-250 L6,-214 L6,0 M-72,-234 L-6,-203 L-6,0', 'trait')
-        + robinet(-80, -98) + P('M-82,-92 L-81,-78 L-79,-78 L-78,-92', 'trait')
-        + grads(-88, -205, -130, 10, 6)
-        + Ln(-89.5, -294, -89.5, -300, 'rodage') + Ln(-70.5, -294, -70.5, -300, 'rodage') + Ln(-7.5, -6, -7.5, 0, 'rodage') + Ln(7.5, -6, 7.5, 0, 'rodage'),
-      interieur: () => 'M-88,-236 L-88,-122 L-84,-112 L-76,-112 L-72,-122 L-72,-236 Z', haut: -236, bas: -112,
-      joints: { bas: [0, 0, 90], haut: [-80, -300, -90] } },
+      dessin: () => P('M-88,-210 L-88,-32 L-84,-22 L-84,-14 M-72,-210 L-72,-160 M-72,-144 L-72,-32 L-76,-22 L-76,-14', 'trait')
+        + P('M-72,-160 L6,-124 L6,0 M-72,-144 L-6,-113 L-6,0', 'trait')
+        + robinet(-80, -8) + P('M-82,-2 L-81,12 L-79,12 L-78,-2', 'trait')
+        + grads(-88, -115, -40, 10, 6)
+        + Ln(-89.5, -204, -89.5, -210, 'rodage') + Ln(-70.5, -204, -70.5, -210, 'rodage') + Ln(-7.5, -6, -7.5, 0, 'rodage') + Ln(7.5, -6, 7.5, 0, 'rodage'),
+      interieur: () => 'M-88,-146 L-88,-32 L-84,-22 L-76,-22 L-72,-32 L-72,-146 Z', haut: -146, bas: -22,
+      joints: { bas: [0, 0, 90], haut: [-80, -210, -90] } },
     soxhlet: { nom: 'Extracteur de Soxhlet', cat: 'Réfrigérants et distillation',
       // corps (cartouche), tube d'admission des vapeurs à droite, siphon à gauche
-      dessin: () => P('M-7,-215 L-7,-196 L-26,-180 L-26,-50 L-7,-34 L-7,0 M7,-215 L7,-196 L26,-180 L26,-50 L7,-34 L7,0', 'trait')
-        + P('M26,-170 L38,-170 L38,-24 L7,-18 M26,-158 L46,-158 L46,-14 L7,-8', 'trait')
-        + P('M-26,-58 L-40,-58 L-40,-128 A6,6 0 0 1 -52,-128 L-52,-26 L-7,-20 M-26,-66 L-34,-66 L-34,-128 A12,12 0 0 0 -58,-128 L-58,-20 L-7,-12', 'trait')
-        + R(-16, -160, 32, 96, 'cartouche', 3) + (() => { let g = ''; for (let y = -150; y < -70; y += 10) for (let x = -10; x <= 10; x += 10) g += C(x + (y % 20 ? 5 : 0), y, 2.2, 'grain'); return g; })()
+      dessin: () => P('M-7,-215 L-7,-200 L-26,-186 L-26,-74 M-26,-66 L-26,-60 L-7,-24 L-7,-22 M-7,-12 L-7,0', 'trait')
+        + P('M7,-215 L7,-200 L26,-186 L26,-180 M26,-168 L26,-60 L7,-24 L7,-22 M7,-10 L7,0', 'trait')
+        + P('M26,-180 L44,-180 L44,-30 L7,-10 M26,-168 L36,-168 L36,-36 L7,-22', 'trait')
+        + P('M-26,-74 L-30,-74 L-30,-130 A12,12 0 0 0 -54,-130 L-54,-34 L-7,-12 M-26,-66 L-36,-66 L-36,-130 A6,6 0 0 0 -48,-130 L-48,-38 L-7,-22', 'trait')
+        + R(-16, -170, 32, 92, 'cartouche', 3) + (() => { let g = ''; for (let y = -160; y < -84; y += 10) for (let x = -10; x <= 10; x += 10) g += C(x + (y % 20 ? 5 : 0), y, 2.2, 'grain'); return g; })()
         + Ln(-8.5, -209, -8.5, -215, 'rodage') + Ln(8.5, -209, 8.5, -215, 'rodage') + Ln(-8.5, -6, -8.5, 0, 'rodage') + Ln(8.5, -6, 8.5, 0, 'rodage'),
-      interieur: () => 'M-26,-180 L-26,-50 L-7,-34 L7,-34 L26,-50 L26,-180 Z', haut: -128, bas: -34,
+      interieur: () => 'M-26,-186 L-26,-60 L-7,-24 L7,-24 L26,-60 L26,-186 Z', haut: -186, bas: -24,
       joints: { bas: [0, 0, 90], haut: [0, -215, -90] } },
     // ───── ajout, séparation ─────
     ampoule_coulee: { nom: 'Ampoule de coulée isobare', cat: 'Ajout et séparation',
