@@ -61,6 +61,26 @@ const Rendu = (() => {
     }
     return best;
   }
+  // directions des doublets non liants, réparties symétriquement autour des liaisons
+  function directionsDoublets(occ, n) {
+    if (!n) return [];
+    const nm = a => ((a % 360) + 540) % 360 - 180;
+    if (!occ.length) return [0, 180, -90, 90].slice(0, n);
+    if (occ.length === 1) {
+      const b = occ[0];
+      if (n === 1) return [nm(b + 180)];
+      if (n === 2) return [nm(b + 90), nm(b - 90)];
+      return [nm(b + 180), nm(b + 90), nm(b - 90), nm(b)].slice(0, n);
+    }
+    if (occ.length === 2 && Math.abs(Math.abs(nm(occ[0] - occ[1])) - 180) < 10) {   // liaisons opposées
+      const b = occ[0]; return [nm(b + 90), nm(b - 90), nm(b + 45), nm(b - 135)].slice(0, n);
+    }
+    // plus grand secteur libre : directions centrées sur sa bissectrice
+    const t = occ.map(x => (x + 360) % 360).sort((x, y) => x - y);
+    let deb = 0, larg = -1; t.forEach((x, i) => { const y = i + 1 < t.length ? t[i + 1] : t[0] + 360; if (y - x > larg) { larg = y - x; deb = x; } });
+    const m = deb + larg / 2, pas = Math.min(90, larg / (n + 0.6));
+    return [...Array(n)].map((_, i) => nm(m + (i - (n - 1) / 2) * pas));
+  }
   // ───────── formule brute ─────────
   function brute(an, comp) {
     const f = Chimie.formuleBrute(an, comp);
@@ -132,7 +152,7 @@ const Rendu = (() => {
       out.push(tx(p[0], p[1], a.el, { k })); pts.push(p);
       if (lewis) {
         const d = an.doublets[k];
-        const angs = Disposition.anglesLibres(occ, d.paires + d.seul);
+        const angs = directionsDoublets(occ, d.paires + d.seul);
         angs.slice(0, d.paires).forEach(an0 => {
           const ux = Math.cos(an0 * RAD), uy = Math.sin(an0 * RAD), c0 = [p[0] + ux * 14, p[1] + uy * 14];
           out.push(L([c0[0] - uy * 6, c0[1] + ux * 6], [c0[0] + uy * 6, c0[1] - ux * 6], 'doublet'));
@@ -243,7 +263,7 @@ const Rendu = (() => {
           return;
         }
         const occ = an.voisins[k].filter(v => lourds.includes(v.j)).map(v => { const q = P(v.j); return Math.atan2(q[1] - p[1], q[0] - p[0]) / RAD; });
-        const d = an.doublets[k], angs = Disposition.anglesLibres(occ, d.paires);
+        const d = an.doublets[k], angs = directionsDoublets(occ, d.paires);
         const angCharge = a.charge ? angleCharge(occ.concat(angs)) : null;
         let n = 0;
         angs.forEach(an0 => {

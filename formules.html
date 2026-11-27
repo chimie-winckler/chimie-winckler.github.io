@@ -6,7 +6,7 @@
 <title>Formules des molécules – Chimie de Synthèse</title>
 <script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <link rel="stylesheet" href="style.css?v=20261127a">
-<link rel="stylesheet" href="outils/formules/formules.css?v=1">
+<link rel="stylesheet" href="outils/formules/formules.css?v=2">
 </head>
 <body>
 <header class="entete">
@@ -39,14 +39,15 @@
   <div class="fm-ligne fm-saisie"><input id="fm-nom" type="text" spellcheck="false" autocomplete="off" placeholder="Nom (butan-2-ol, acétone…) ou SMILES (CC(O)CC)" aria-label="Nom ou SMILES"><button type="button" id="fm-ok">Construire</button></div>
   <p class="fm-err" id="fm-err" hidden></p>
   <div class="fm-barre" role="toolbar" aria-label="Outils de dessin">
+    <div class="fm-groupe"><button type="button" data-outil="deplacer" title="Sélectionner et déplacer (glisser un atome, ou encadrer un groupe d’atomes)">↖ Déplacer</button></div>
     <div class="fm-groupe"><button type="button" data-outil="atome" data-val="C" class="actif">C</button><button type="button" data-outil="atome" data-val="H">H</button><button type="button" data-outil="atome" data-val="O" class="el-o">O</button><button type="button" data-outil="atome" data-val="N" class="el-n">N</button><button type="button" data-outil="atome" data-val="S">S</button><button type="button" data-outil="atome" data-val="Cl">Cl</button><button type="button" data-outil="atome" data-val="Br">Br</button><button type="button" data-outil="atome" data-val="I">I</button><button type="button" data-outil="atome" data-val="F">F</button><button type="button" data-outil="atome" data-val="P">P</button></div>
     <div class="fm-groupe"><button type="button" data-outil="liaison" data-val="1" title="Liaison simple">─</button><button type="button" data-outil="liaison" data-val="2" title="Liaison double">═</button><button type="button" data-outil="liaison" data-val="3" title="Liaison triple">≡</button></div>
     <div class="fm-groupe"><button type="button" data-outil="cycle" data-val="3" title="Cycle à 3">△</button><button type="button" data-outil="cycle" data-val="5" title="Cycle à 5">⬠</button><button type="button" data-outil="cycle" data-val="6" title="Cycle à 6">⬡</button><button type="button" data-outil="cycle" data-val="benzene" title="Benzène">⌬</button></div>
     <div class="fm-groupe"><button type="button" data-outil="plus" title="Charge +">⊕</button><button type="button" data-outil="moins" title="Charge −">⊖</button><button type="button" data-outil="gomme" title="Gomme">⌫</button></div>
-    <div class="fm-groupe"><button type="button" id="fm-annuler" title="Annuler">↶</button><button type="button" id="fm-retablir" title="Rétablir">↷</button><button type="button" id="fm-vider">Effacer</button></div>
+    <div class="fm-groupe"><button type="button" id="fm-annuler" title="Annuler">↶</button><button type="button" id="fm-retablir" title="Rétablir">↷</button><button type="button" id="fm-forme" title="Remettre la molécule en zigzag à 120°">Mettre en forme</button><button type="button" id="fm-vider">Effacer</button></div>
   </div>
   <svg id="fm-canevas" class="fm-canevas" xmlns="http://www.w3.org/2000/svg" viewBox="-300 -170 600 340" aria-label="Zone de dessin"></svg>
-  <div class="fm-ligne fm-options"><label class="fm-case"><input type="checkbox" id="fm-c"> Écrire les C</label><span class="fm-aide">Clic : poser ou prolonger · glisser depuis un atome : liaison · clic sur une liaison : changer son ordre</span></div>
+  <div class="fm-ligne fm-options"><label class="fm-case"><input type="checkbox" id="fm-c"> Écrire les C</label><span class="fm-aide">Clic : poser ou prolonger · glisser depuis un atome : liaison · clic sur une liaison : changer son ordre · ↖ Déplacer : glisser un atome (il tourne de 30° en 30° autour de son voisin) ou encadrer un groupe</span></div>
 </section>
 <section class="fm-carte">
   <div id="fm-infos"></div>
@@ -68,9 +69,9 @@
 <script src="outils/formules/lib/disposition.js?v=1"></script>
 <script src="outils/formules/lib/geometrie3d.js?v=1"></script>
 <script src="outils/formules/lib/equation.js?v=1"></script>
-<script src="outils/formules/rendu.js?v=1"></script>
-<script src="outils/formules/editeur.js?v=1"></script>
-<script src="outils/formules/app.js?v=1"></script>
+<script src="outils/formules/rendu.js?v=2"></script>
+<script src="outils/formules/editeur.js?v=2"></script>
+<script src="outils/formules/app.js?v=2"></script>
 <script src="theme.js?v=1"></script>
 <script data-goatcounter="https://chimie-winckler.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>

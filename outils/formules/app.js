@@ -5,7 +5,19 @@
   let onglet = 'topo', G = { atomes: [], liaisons: [] };
   const meca = { depart: null, choisie: null, ancres: [], etapes: null, cur: 0 };
   const etapeCour = () => meca.etapes[meca.cur];
-  const ed = Editeur.creer($('fm-canevas'), g => { G = g; if (meca.etapes) etapeCour().G = JSON.parse(JSON.stringify(g)); resultats(); });
+  const ed = Editeur.creer($('fm-canevas'), g => {
+    G = g;
+    // hors de l'onglet Mécanisme, un nouveau dessin repart d'un mécanisme vide ; dans l'onglet, il modifie l'étape en cours
+    if (onglet !== 'meca') { meca.etapes = null; meca.cur = 0; meca.depart = null; meca.choisie = null; }
+    else if (meca.etapes) etapeCour().G = JSON.parse(JSON.stringify(g));
+    resultats(); synchroNom();
+  });
+  // le champ du nom suit le dessin (nom IUPAC de la première molécule)
+  function synchroNom() {
+    if (document.activeElement === $('fm-nom') || !G.atomes.length) return;
+    const an = Chimie.analyser(G), noms = an.composantes.filter(c => c.some(k => an.atomes[k].el !== 'H')).map(c => { const r = Nomenclature.nommer(an, c); return r && r.nom; });
+    if (noms.length && noms.every(Boolean)) $('fm-nom').value = noms.join(' + ');
+  }
 
   // ── SMILES (sans stéréochimie) d'une composante, pour ouvrir l'outil Représentations spatiales ──
   function smiles(an, comp) {
@@ -27,7 +39,7 @@
     return ecrire(ordreVisite[0]);
   }
 
-  function disposer(g, chaine) {        // coordonnées d'un graphe sans dessin (nom ou SMILES)
+  function disposer(g, chaine, garderH) {        // coordonnées d'un graphe sans dessin (nom ou SMILES)
     const an = Chimie.analyser(g); let dx = 0;
     an.composantes.forEach(c => {
       const lourds = c.filter(k => an.atomes[k].el !== 'H' || an.voisins[k].length === 0);
@@ -35,8 +47,10 @@
       const pos = Disposition.zigzag(an, lourds, ch) || new Map(lourds.map((k, i) => [k, [i * 0.87, (i % 2) * 0.5]]));
       const xs = [...pos.values()].map(p => p[0]), x0 = Math.min(...xs);
       lourds.forEach(k => { const p = pos.get(k) || [0, 0]; g.atomes[k].x = p[0] - x0 + dx; g.atomes[k].y = p[1]; });
+      if (garderH) c.forEach(k => { if (!lourds.includes(k)) g.atomes[k].x = undefined; });
       dx += Math.max(...xs) - x0 + 2;
     });
+    if (garderH) { g.atomes.forEach(a => { if (a.x === undefined) a._h = true; }); return g; }
     g.atomes = g.atomes.filter((a, k) => a.x !== undefined);
     return g;
   }
@@ -46,6 +60,10 @@
     let g = null, chaine = null;
     const r = Nomenclature.lireNom(t);
     if (!r.erreur) g = r.graphe;
+    else if (t.includes(' + ')) {          // plusieurs espèces
+      const parts = t.split(' + ').map(x => { const q = Nomenclature.lireNom(x.trim()); if (!q.erreur) return q.graphe; try { return Chimie.lireSmiles(x.trim()); } catch (e) { return null; } });
+      if (parts.every(Boolean)) { g = { atomes: [], liaisons: [] }; parts.forEach((q, i) => { q.atomes.forEach(a => { a.id = 'm' + i + a.id; g.atomes.push(a); }); q.liaisons.forEach(l => { l.id = 'm' + i + l.id; l.a = 'm' + i + l.a; l.b = 'm' + i + l.b; g.liaisons.push(l); }); }); }
+    }
     else { try { g = Chimie.lireSmiles(t); } catch (e) { g = null; } }
     if (!g) { $('fm-err').textContent = 'Nom ou SMILES non reconnu' + (r.erreur ? ' : ' + r.erreur : '') + '.'; $('fm-err').hidden = false; return; }
     ed.charger(disposer(g, chaine));
@@ -164,6 +182,21 @@
   $('fm-ok').addEventListener('click', construire);
   $('fm-nom').addEventListener('keydown', e => { if (e.key === 'Enter') construire(); });
   $('fm-annuler').addEventListener('click', () => ed.annuler());
+  window.addEventListener('keydown', e => { if ((e.key === 'Delete' || e.key === 'Backspace') && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName) && ed.st.selection.size) { e.preventDefault(); ed.supprimerSelection(); } });
+  // mise en forme : zigzag à 120°, chaîne principale à l'horizontale
+  $('fm-forme').addEventListener('click', () => {
+    if (!G.atomes.length) return;
+    const g = JSON.parse(JSON.stringify(G)), an = Chimie.analyser(g);
+    disposer(g, null, true);
+    g.atomes.forEach((a, k) => {           // H dessinés : à côté de leur atome
+      if (a.x !== undefined && !a._h) return;
+      const v = an.voisins[k][0]; if (!v) { a.x = 0; a.y = 0; return; }
+      const p = g.atomes[v.j], occ = an.voisins[v.j].filter(x => x.j !== k && g.atomes[x.j].x !== undefined && !g.atomes[x.j]._h).map(x => Math.atan2(g.atomes[x.j].y - p.y, g.atomes[x.j].x - p.x));
+      let best = 0, sc = -1; for (let t = 0; t < 12; t++) { const an0 = t * Math.PI / 6, m = occ.length ? Math.min(...occ.map(o => Math.abs(Math.atan2(Math.sin(an0 - o), Math.cos(an0 - o))))) : 3; if (m > sc) { sc = m; best = an0; } }
+      a.x = p.x + Math.cos(best); a.y = p.y + Math.sin(best); delete a._h;
+    });
+    ed.charger(g);
+  });
   $('fm-retablir').addEventListener('click', () => ed.retablir());
   $('fm-vider').addEventListener('click', () => ed.vider());
   $('fm-c').addEventListener('change', e => { ed.st.ecrireC = e.target.checked; ed.dessiner(); });

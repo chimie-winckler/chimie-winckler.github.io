@@ -4,7 +4,7 @@ const Editeur = (() => {
   function creer(svgEl, surChange) {
     let G = { atomes: [], liaisons: [] }, n = 0;
     const histo = [], refaire = [];
-    const st = { outil: 'atome', el: 'C', ordre: 1, cycle: 6, ecrireC: false, survol: null, glisse: null };
+    const st = { outil: 'atome', el: 'C', ordre: 1, cycle: 6, ecrireC: false, survol: null, glisse: null, selection: new Set() };
     const id = p => p + (n++);
     const sauver = () => { histo.push(JSON.stringify(G)); if (histo.length > 100) histo.shift(); refaire.length = 0; };
     const A = i => G.atomes.find(a => a.id === i);
@@ -86,9 +86,11 @@ const Editeur = (() => {
       G.atomes.forEach((a, i) => {
         const t = lab(a, an), sv = st.survol === a, err = an && an.erreur[i];
         if (sv) out.push(`<circle class="sv-c" cx="${X(a.x)}" cy="${X(a.y)}" r="13"/>`);
+        if (st.selection.has(a.id)) out.push(`<circle class="sel-c" cx="${X(a.x)}" cy="${X(a.y)}" r="11"/>`);
         if (t) out.push(Rendu.tx(a.x * U, a.y * U, t, { cls: err ? 'err' : '' }));
         else if (!voisins(a).length) out.push(`<circle class="pt" cx="${X(a.x)}" cy="${X(a.y)}" r="3"/>`);
       });
+      if (st.glisse && st.glisse.rect) { const [q0, q1] = st.glisse.rect; out.push(`<rect class="cadre-sel" x="${X(Math.min(q0[0], q1[0]))}" y="${X(Math.min(q0[1], q1[1]))}" width="${X(Math.abs(q1[0] - q0[0]))}" height="${X(Math.abs(q1[1] - q0[1]))}"/>`); }
       if (st.glisse && st.glisse.fin) { const a = st.glisse.depart, f = st.glisse.fin; out.push(`<line class="fantome" x1="${X(a.x)}" y1="${X(a.y)}" x2="${X(f[0])}" y2="${X(f[1])}"/>`); }
       svgEl.innerHTML = out.join('') || `<text x="0" y="0" text-anchor="middle" class="vide">Clique pour poser un atome de carbone, glisse pour tracer une liaison.</text>`;
       if (!G.atomes.length || horsVue()) cadrer();
@@ -118,10 +120,30 @@ const Editeur = (() => {
     svgEl.addEventListener('pointerdown', e => {
       e.preventDefault(); svgEl.setPointerCapture(e.pointerId);
       const p = ecran(e), a = atomeSous(p), l = a ? null : liaisonSous(p);
+      if (st.outil === 'deplacer') {
+        if (a || l) {
+          const ids = a ? [a.id] : [l.a, l.b];
+          if (!ids.every(i => st.selection.has(i))) st.selection = new Set(ids);
+          sauver();
+          st.glisse = { mode: 'move', p0: p, orig: new Map([...st.selection].map(i => { const x = A(i); return [i, [x.x, x.y]]; })) };
+        } else st.glisse = { mode: 'rect', p0: p, rect: [p, p] };
+        return;
+      }
       st.glisse = { depart: a, liaison: l, p0: p, bouge: false };
     });
     svgEl.addEventListener('pointermove', e => {
       const p = ecran(e);
+      if (st.glisse && st.glisse.mode === 'move') {
+        const g = st.glisse, dx = p[0] - g.p0[0], dy = p[1] - g.p0[1];
+        g.orig.forEach((o, i) => { const x = A(i); if (x) { x.x = o[0] + dx; x.y = o[1] + dy; } });
+        // un seul atome lié à un seul voisin : il tourne autour de ce voisin (liaison de longueur fixe, angles multiples de 30°)
+        if (g.orig.size === 1) {
+          const x = A([...g.orig.keys()][0]), v = voisins(x);
+          if (v.length === 1) { const c = v[0]; let an = Math.atan2(x.y - c.y, x.x - c.x); an = Math.round(an / (Math.PI / 6)) * (Math.PI / 6); x.x = c.x + Math.cos(an); x.y = c.y + Math.sin(an); }
+        }
+        dessiner(); return;
+      }
+      if (st.glisse && st.glisse.mode === 'rect') { st.glisse.rect = [st.glisse.p0, p]; dessiner(); return; }
       if (st.glisse) {
         const g = st.glisse;
         if (g.depart && Math.hypot(p[0] - g.p0[0], p[1] - g.p0[1]) > 0.3 && ['atome', 'liaison'].includes(st.outil)) { g.bouge = true; g.fin = p; dessiner(); }
@@ -133,6 +155,12 @@ const Editeur = (() => {
     svgEl.addEventListener('pointerup', e => {
       const g = st.glisse; if (!g) return; st.glisse = null;
       const p = ecran(e);
+      if (g.mode === 'move') { if (Math.hypot(p[0] - g.p0[0], p[1] - g.p0[1]) < 0.05) histo.pop(); return change(); }
+      if (g.mode === 'rect') {
+        const [q0, q1] = g.rect, x0 = Math.min(q0[0], q1[0]), x1 = Math.max(q0[0], q1[0]), y0 = Math.min(q0[1], q1[1]), y1 = Math.max(q0[1], q1[1]);
+        st.selection = new Set(G.atomes.filter(a => a.x >= x0 && a.x <= x1 && a.y >= y0 && a.y <= y1).map(a => a.id));
+        return dessiner();
+      }
       sauver();
       if (g.bouge && g.depart) {                  // glisser : nouvelle liaison
         let cible = atomeSous(p, g.depart);
@@ -166,7 +194,8 @@ const Editeur = (() => {
     new ResizeObserver(() => { dessiner(); cadrer(); }).observe(svgEl);
     return {
       st,
-      outil(o, v) { st.outil = o; if (o === 'atome') st.el = v; if (o === 'liaison') st.ordre = v; if (o === 'cycle') st.cycle = v; },
+      supprimerSelection() { if (!st.selection.size) return; sauver(); st.selection.forEach(i => { const a = A(i); if (a) supprimerAtome(a); }); st.selection.clear(); change(); },
+      outil(o, v) { if (o !== 'deplacer') st.selection.clear(); st.outil = o; svgEl.dataset.outil = o; dessiner(); if (o === 'atome') st.el = v; if (o === 'liaison') st.ordre = v; if (o === 'cycle') st.cycle = v; },
       graphe: () => G,
       charger(g, sansHisto) { if (!sansHisto) sauver(); G = JSON.parse(JSON.stringify(g)); n = G.atomes.length + G.liaisons.length + 1000; dessiner(); cadrer(); surChange && surChange(G); },
       vider() { sauver(); G = { atomes: [], liaisons: [] }; change(); },
