@@ -1,0 +1,35 @@
+/* Schémas de montages — interface */
+.montages [hidden] { display: none !important; }
+.mt-intro { color: var(--doux); max-width: 80ch; }
+.mt-barre { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 12px 0; }
+.mt-barre select { padding: 7px 10px; border: 1px solid var(--bord); border-radius: 8px; background: var(--fond); color: var(--texte); font: inherit; max-width: 100%; }
+.montages button, .mt-fichier { padding: 7px 12px; border: 1px solid var(--accent); border-radius: 8px; background: var(--carte); color: var(--accent); font: inherit; font-weight: 600; cursor: pointer; }
+.montages button:hover, .mt-fichier:hover { background: var(--accent-clair); }
+.montages button.actif { background: var(--accent); color: #fff; }
+.mt-fichier input { display: none; }
+.mt-case { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+.mt-grille3 { display: grid; grid-template-columns: minmax(0, 230px) minmax(0, 1fr) minmax(0, 250px); gap: 12px; align-items: start; }
+.mt-carte { background: var(--carte); border: 1px solid var(--bord); border-radius: var(--rayon); padding: 10px; min-width: 0; }
+#mt-palette { max-height: 640px; overflow-y: auto; }
+#mt-palette details { margin-bottom: 6px; }
+#mt-palette summary { cursor: pointer; font-weight: 700; color: var(--accent); font-size: .9rem; padding: 4px 0; }
+.mt-grille { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+.montages .mt-piece { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 4px; border-color: var(--bord); color: var(--texte); font-weight: 400; font-size: .74rem; line-height: 1.15; }
+.mt-vign { width: 100%; height: 64px; }
+.mt-zone { background: #fff; border: 1px solid var(--bord); border-radius: 10px; overflow: hidden; }
+#mt-scene { width: 100%; height: 640px; display: block; touch-action: none; background: #fff; }
+#mt-scene[data-outil="legende"], #mt-scene[data-outil="texte"] { cursor: crosshair; }
+#mt-scene .obj { cursor: move; }
+#mt-scene .obj.sel { outline: none; filter: drop-shadow(0 0 3px rgba(26, 127, 132, .9)); }
+#mt-scene .obj.sel .poignee { fill: rgba(26, 127, 132, .25); stroke: #1a7f84; cursor: grab; }
+.mt-titre { font-weight: 700; margin: 0 0 8px; }
+.mt-l { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 6px 0; }
+.mt-l > span { min-width: 64px; font-size: .88rem; color: var(--doux); }
+.mt-l input[type=number] { width: 64px; }
+.mt-l input[type=text] { width: 100%; }
+.mt-l input[type=range] { flex: 1 1 90px; accent-color: var(--accent); }
+.mt-l input[type=number], .mt-l input[type=text] { padding: 5px 7px; border: 1px solid var(--bord); border-radius: 6px; background: var(--fond); color: var(--texte); font: inherit; }
+.montages button.mt-danger { border-color: #c62828; color: #c62828; }
+.mt-doux { color: var(--doux); font-size: .9rem; }
+.mt-credits { font-size: .85rem; color: var(--doux); margin-top: 14px; }
+@media (max-width: 1000px) { .mt-grille3 { grid-template-columns: minmax(0, 1fr); } #mt-palette { max-height: 260px; } #mt-scene { height: 460px; } .mt-grille { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); } }
