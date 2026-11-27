@@ -69,7 +69,7 @@ const Rendu = (() => {
     if (occ.length === 1) {
       const b = occ[0];
       if (n === 1) return [nm(b + 180)];
-      if (n === 2) return [nm(b + 90), nm(b - 90)];
+      if (n === 2) return [nm(b + 180 + 38), nm(b + 180 - 38)];   // « toit » au-dessus de l'atome
       return [nm(b + 180), nm(b + 90), nm(b - 90), nm(b)].slice(0, n);
     }
     if (occ.length === 2 && Math.abs(Math.abs(nm(occ[0] - occ[1])) - 180) < 10) {   // liaisons opposées
