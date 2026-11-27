@@ -6,7 +6,7 @@
 <title>Formules des molécules – Chimie de Synthèse</title>
 <script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <link rel="stylesheet" href="style.css?v=20261127a">
-<link rel="stylesheet" href="outils/formules/formules.css?v=2">
+<link rel="stylesheet" href="outils/formules/formules.css?v=3">
 </head>
 <body>
 <header class="entete">
@@ -55,7 +55,12 @@
     <button type="button" data-vue="brute">Brute</button><button type="button" data-vue="semi">Semi-développée</button><button type="button" data-vue="dev">Développée</button><button type="button" data-vue="lewis">Lewis</button><button type="button" data-vue="topo" class="actif">Topologique</button><button type="button" data-vue="3d">Modèle 3D</button><button type="button" data-vue="meca">↷ Mécanisme</button><button type="button" data-vue="equation">⇄ Équation</button>
   </div>
   <div class="fm-resultats" id="fm-resultats"></div>
-  <div class="fm-ligne" id="fm-cmdmeca" hidden><button type="button" id="fm-et-plus">＋ Étape suivante</button><button type="button" id="fm-et-moins">Supprimer l’étape</button><button type="button" id="fm-fl-sens">Inverser la courbure</button><button type="button" id="fm-fl-suppr">Supprimer la flèche</button><button type="button" id="fm-fl-vider">Effacer les flèches</button><span class="fm-aide">Chaque flèche part exactement d’un doublet non liant ou d’une liaison et arrive exactement sur un atome ou une liaison.</span></div>
+  <div id="fm-cmdmeca" hidden>
+  <ol class="fm-guide"><li><b>Réactifs</b> : dessine-les ou construis-les par leur nom, puis ajoute les autres espèces ci-dessous (elles se placent à droite, sans effacer le reste).</li><li><b>Flèches courbes</b> : clique sur un doublet non liant ou une liaison, puis sur l’atome ou la liaison d’arrivée.</li><li><b>Étape suivante</b> : recopie le dessin ; modifie-le (intermédiaire, produits) puis place les nouvelles flèches.</li></ol>
+  <div class="fm-ligne fm-especes"><span>Ajouter une espèce :</span><button type="button" data-espece="[OH-]">HO⁻</button><button type="button" data-espece="O">H₂O</button><button type="button" data-espece="[H+]">H⁺</button><button type="button" data-espece="[OH3+]">H₃O⁺</button><button type="button" data-espece="[Cl-]">Cl⁻</button><button type="button" data-espece="[Br-]">Br⁻</button><button type="button" data-espece="[I-]">I⁻</button><button type="button" data-espece="[C-]#N">CN⁻</button><button type="button" data-espece="C[O-]">CH₃O⁻</button><button type="button" data-espece="N">NH₃</button><button type="button" data-espece="Br">HBr</button><button type="button" data-espece="Cl">HCl</button><button type="button" data-espece="BrBr">Br₂</button>
+    <input type="text" id="fm-esp" placeholder="autre : nom ou SMILES" spellcheck="false"><button type="button" id="fm-esp-ok">＋ Ajouter</button></div>
+  <div class="fm-ligne"><button type="button" id="fm-et-plus">＋ Étape suivante</button><button type="button" id="fm-et-moins">Supprimer l’étape</button><button type="button" id="fm-fl-sens">Inverser la courbure</button><button type="button" id="fm-fl-suppr">Supprimer la flèche</button><button type="button" id="fm-fl-vider">Effacer les flèches</button><span class="fm-aide">Chaque flèche part exactement d’un doublet non liant ou d’une liaison et arrive exactement sur un atome ou une liaison.</span></div>
+  </div>
   <p class="fm-err" id="fm-mmsg" hidden></p>
   <div class="fm-ligne" id="fm-cmdeq" hidden><label class="fm-case">Formules <select id="fm-eqmode"><option value="brute">brutes</option><option value="semi">semi-développées</option><option value="topo">topologiques</option></select></label><label class="fm-case">Conditions au-dessus de la flèche <input type="text" id="fm-eqcond" placeholder="ex. H⁺, Δ" size="14"></label></div>
   <div class="fm-ligne" id="fm-cmd3d" hidden><label class="fm-case"><input type="checkbox" id="fm-compact"> Modèle compact</label><button type="button" id="fm-depart">Orientation de départ</button><span class="fm-aide">Fais tourner la molécule à la souris ou au doigt.</span></div>
@@ -69,9 +74,9 @@
 <script src="outils/formules/lib/disposition.js?v=1"></script>
 <script src="outils/formules/lib/geometrie3d.js?v=1"></script>
 <script src="outils/formules/lib/equation.js?v=1"></script>
-<script src="outils/formules/rendu.js?v=2"></script>
+<script src="outils/formules/rendu.js?v=3"></script>
 <script src="outils/formules/editeur.js?v=2"></script>
-<script src="outils/formules/app.js?v=2"></script>
+<script src="outils/formules/app.js?v=3"></script>
 <script src="theme.js?v=1"></script>
 <script data-goatcounter="https://chimie-winckler.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>

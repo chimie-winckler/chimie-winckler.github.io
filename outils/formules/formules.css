@@ -85,3 +85,9 @@
 .fm-canevas .sel-c { fill: rgba(26, 127, 132, .18); stroke: var(--accent); stroke-width: 1.5; }
 .fm-canevas .cadre-sel { fill: rgba(26, 127, 132, .08); stroke: var(--accent); stroke-dasharray: 4 3; }
 .fm-canevas[data-outil="deplacer"] { cursor: default; }
+.fm-guide { margin: 8px 0; padding-left: 1.3em; font-size: .9rem; color: var(--doux); }
+.fm-guide li { margin: 2px 0; }
+.fm-especes { margin: 6px 0 10px; }
+.fm-especes > span { font-weight: 600; font-size: .9rem; }
+.fm-especes button { padding: 5px 9px; }
+.fm-especes input { flex: 1 1 160px; min-width: 0; padding: 6px 9px; border: 1px solid var(--bord); border-radius: 8px; background: var(--fond); color: var(--texte); font: inherit; }

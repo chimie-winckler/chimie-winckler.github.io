@@ -77,11 +77,23 @@ const Verrerie = (() => {
       dessin: () => P('M-7,-30 L-7,2 L-32,40 M7,-30 L7,8 L-18,46 M5,-4 L20,-12', 'trait') + Ln(-8.5, -24, -8.5, -30, 'rodage') + Ln(8.5, -24, 8.5, -30, 'rodage'),
       joints: { haut: [0, -30, -90], bas: [-25, 43, 150] } },
     dean_stark: { nom: 'Dean-Stark', cat: 'Réfrigérants et distillation',
-      dessin: () => P('M-7,90 L-7,-70 M7,90 L7,-30 L28,-42 M7,-70 L7,-50 L32,-64 M24,-62 L24,40 L30,52 L36,40 L36,-66', 'trait') + robinet(30, 44) + grads(24, -30, 30, 6, 5) + col(0, -70, -80) + Ln(-8.5, 84, -8.5, 90, 'rodage') + Ln(8.5, 84, 8.5, 90, 'rodage'),
-      interieur: () => 'M24,-50 L24,40 L30,50 L36,40 L36,-50 Z', haut: -80, bas: 90, joints: { bas: [0, 90, 90], haut: [0, -80, -90] } },
+      // tube collecteur gradué à gauche (réfrigérant au-dessus), bras de retour à droite (vers le ballon)
+      dessin: () => P('M-88,-300 L-88,-122 L-84,-112 L-84,-104 M-72,-300 L-72,-250 M-72,-234 L-72,-122 L-76,-112 L-76,-104', 'trait')
+        + P('M-72,-250 L6,-214 L6,0 M-72,-234 L-6,-203 L-6,0', 'trait')
+        + robinet(-80, -98) + P('M-82,-92 L-81,-78 L-79,-78 L-78,-92', 'trait')
+        + grads(-88, -205, -130, 10, 6)
+        + Ln(-89.5, -294, -89.5, -300, 'rodage') + Ln(-70.5, -294, -70.5, -300, 'rodage') + Ln(-7.5, -6, -7.5, 0, 'rodage') + Ln(7.5, -6, 7.5, 0, 'rodage'),
+      interieur: () => 'M-88,-236 L-88,-122 L-84,-112 L-76,-112 L-72,-122 L-72,-236 Z', haut: -236, bas: -112,
+      joints: { bas: [0, 0, 90], haut: [-80, -300, -90] } },
     soxhlet: { nom: 'Extracteur de Soxhlet', cat: 'Réfrigérants et distillation',
-      dessin: () => P('M-7,120 L-7,90 L-26,70 L-26,-80 L-7,-96 L-7,-110 M7,120 L7,90 L26,70 L26,-80 L7,-96 L7,-110', 'trait') + P('M-26,60 L-40,60 L-40,-60 L-34,-66 L-34,40 L-26,40 M26,-60 L40,-50 L40,96 L7,100', 'trait') + R(-16, -50, 32, 100, 'cartouche', 3) + Ln(-8.5, -104, -8.5, -110, 'rodage') + Ln(8.5, -104, 8.5, -110, 'rodage'),
-      interieur: () => 'M-26,70 L-26,-80 L26,-80 L26,70 Z', haut: -110, bas: 120, joints: { bas: [0, 120, 90], haut: [0, -110, -90] } },
+      // corps (cartouche), tube d'admission des vapeurs à droite, siphon à gauche
+      dessin: () => P('M-7,-215 L-7,-196 L-26,-180 L-26,-50 L-7,-34 L-7,0 M7,-215 L7,-196 L26,-180 L26,-50 L7,-34 L7,0', 'trait')
+        + P('M26,-170 L38,-170 L38,-24 L7,-18 M26,-158 L46,-158 L46,-14 L7,-8', 'trait')
+        + P('M-26,-58 L-40,-58 L-40,-128 A6,6 0 0 1 -52,-128 L-52,-26 L-7,-20 M-26,-66 L-34,-66 L-34,-128 A12,12 0 0 0 -58,-128 L-58,-20 L-7,-12', 'trait')
+        + R(-16, -160, 32, 96, 'cartouche', 3) + (() => { let g = ''; for (let y = -150; y < -70; y += 10) for (let x = -10; x <= 10; x += 10) g += C(x + (y % 20 ? 5 : 0), y, 2.2, 'grain'); return g; })()
+        + Ln(-8.5, -209, -8.5, -215, 'rodage') + Ln(8.5, -209, 8.5, -215, 'rodage') + Ln(-8.5, -6, -8.5, 0, 'rodage') + Ln(8.5, -6, 8.5, 0, 'rodage'),
+      interieur: () => 'M-26,-180 L-26,-50 L-7,-34 L7,-34 L26,-50 L26,-180 Z', haut: -128, bas: -34,
+      joints: { bas: [0, 0, 90], haut: [0, -215, -90] } },
     // ───── ajout, séparation ─────
     ampoule_coulee: { nom: 'Ampoule de coulée isobare', cat: 'Ajout et séparation',
       dessin: () => P('M-7,-120 L-7,-104 L-24,-84 L-24,-10 L-5,12 L-5,40 M7,-120 L7,-104 L24,-84 L24,-10 L5,12 L5,40', 'trait') + P('M7,-108 L34,-108 L34,30 L5,34', 'trait') + robinet(0, 18) + P('M-11,-120 L11,-120 L9,-132 L-9,-132 Z', 'bouchon') + Ln(-6.5, 34, -6.5, 40, 'rodage') + Ln(6.5, 34, 6.5, 40, 'rodage'),
@@ -113,6 +125,9 @@ const Verrerie = (() => {
     chauffe_ballon: { nom: 'Chauffe-ballon', cat: 'Chauffage et support',
       dessin: () => P('M-58,-28 A58,58 0 0 0 58,-28 L58,30 L-58,30 Z', 'appareil') + P('M-46,-28 A46,46 0 0 0 46,-28', 'trait') + C(-30, 16, 5, 'bouton') + C(30, 16, 5, 'bouton'),
       joints: { nid: [0, 6, -90], bas: [0, 30, 90] } },
+    chauffe_ballon_agit: { nom: 'Chauffe-ballon agitateur', cat: 'Chauffage et support',
+      dessin: () => P('M-58,-30 A58,58 0 0 0 58,-30 L58,0 L-58,0 Z', 'appareil') + P('M-46,-30 A46,46 0 0 0 46,-30', 'trait') + R(-66, 0, 132, 42, 'appareil', 5) + R(-56, 8, 22, 7, 'bouton', 2) + C(-32, 28, 7, 'bouton') + C(32, 28, 7, 'bouton') + T(-32, 16, '≈', 'petit') + T(32, 16, '°C', 'petit'),
+      joints: { nid: [0, 4, -90], bas: [0, 42, 90] } },
     agitateur_chauffant: { nom: 'Agitateur magnétique chauffant', cat: 'Chauffage et support',
       dessin: () => R(-70, -10, 140, 10, 'plaque') + R(-62, 0, 124, 34, 'appareil', 4) + C(-38, 17, 7, 'bouton') + C(38, 17, 7, 'bouton') + T(0, 22, '≈ ⊕', 'petit'),
       joints: { dessus: [0, -10, -90], bas: [0, 34, 90] } },

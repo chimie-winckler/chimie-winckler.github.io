@@ -38,8 +38,8 @@ const Modeles = (() => {
       items.push(b, at(pc('olive'), 'bas', b, 'bas', 0, -5));
       return { b, bain, ag, elev };
     }
-    const cb = at(pc('chauffe_ballon'), 'bas', elev, 'dessus'); items.push(cb);
-    b = at(pc(ballonType, 0, 0, { liq }), 'bas', cb, 'nid', 0, 0); items.push(b);
+    const cb = at(pc('chauffe_ballon_agit'), 'bas', elev, 'dessus'); items.push(cb);
+    b = at(pc(ballonType, 0, 0, { liq }), 'bas', cb, 'nid', 0, 0); items.push(b, at(pc('olive'), 'bas', b, 'bas', 0, -5));
     return { b, cb, elev };
   }
 
@@ -57,7 +57,7 @@ const Modeles = (() => {
       const tq = M.monde(b, Verrerie.pieces.tricol.joints.droite), dir = [Math.cos(-53 * Math.PI / 180), Math.sin(-53 * Math.PI / 180)];
       const t = pc('thermometre', tq[0] - dir[0] * 50, tq[1] - dir[1] * 50, { rot: 37, sc: 0.8 }); it.push(t);
       support(it, b.x - 120, [[b.x - 10, J(b, 'haut')[1] + 14], [r.x - 16, r.y + 20]]);
-      return legendes(it, [[J(r, 'haut', 0, 50), 'réfrigérant droit'], [[a.x - 10, a.y], 'ampoule de coulée isobare', 'gauche'], [[t.x + 70, t.y - 100], 'thermomètre'], [[b.x + 25, b.y + 15], 'ballon tricol'], [[cb.x + 50, cb.y], 'chauffe-ballon'], [[elev.x + 50, elev.y + 30], 'support élévateur']]);
+      return legendes(it, [[J(r, 'haut', 0, 50), 'réfrigérant droit'], [[a.x - 10, a.y], 'ampoule de coulée isobare', 'gauche'], [[t.x + 70, t.y - 100], 'thermomètre'], [[b.x + 25, b.y + 15], 'ballon tricol'], [[cb.x + 55, cb.y + 20], 'chauffe-ballon agitateur'], [[elev.x + 50, elev.y + 30], 'support élévateur']]);
     } },
     distillation: { nom: 'Distillation simple', f() { return distillation(false); } },
     distillation_fractionnee: { nom: 'Distillation fractionnée', f() { return distillation(true); } },
@@ -76,17 +76,17 @@ const Modeles = (() => {
     } },
     dean_stark: { nom: 'Montage de Dean-Stark', f() {
       const it = [], { b, bain, ag, elev } = chauffage(it, 'bain');
-      const d = at(pc('dean_stark', 0, 0, { liq: { niv: 0.35, coul: EAU } }), 'bas', b, 'haut'); it.push(d);
+      const d = at(pc('dean_stark', 0, 0, { liq: { niv: 0.45, coul: EAU } }), 'bas', b, 'haut'); it.push(d);
       const r = at(pc('refrigerant_boules', 0, 0, { eau: true }), 'bas', d, 'haut'); it.push(r);
-      support(it, b.x - 80, [[b.x - 10, J(b, 'haut')[1] + 14], [r.x - 20, r.y + 10]]);
-      return legendes(it, [[J(r, 'haut', 0, 60), 'réfrigérant à eau'], [[d.x + 36, d.y], 'appareil de Dean-Stark'], [[b.x + 18, b.y + 25], 'milieu réactionnel'], [[bain.x + 60, bain.y - 10], 'bain d’huile'], [[ag.x + 50, ag.y + 15], 'agitateur magnétique chauffant']]);
+      support(it, r.x - 90, [[r.x - 14, r.y + 10], [d.x - 92, J(d, 'haut')[1] + 70], [b.x - 10, J(b, 'haut')[1] + 14]]);
+      return legendes(it, [[J(r, 'haut', 18, 60), 'réfrigérant à eau'], [[J(d, 'haut')[0] - 8, J(d, 'haut')[1] + 110], 'appareil de Dean-Stark (eau recueillie)', 'gauche'], [[b.x + 18, b.y + 25], 'milieu réactionnel'], [[bain.x + 60, bain.y - 10], 'bain d’huile'], [[ag.x + 50, ag.y + 15], 'agitateur magnétique chauffant'], [[elev.x + 50, elev.y + 30], 'support élévateur']]);
     } },
     soxhlet: { nom: 'Extraction au Soxhlet', f() {
       const it = [], { b, cb, elev } = chauffage(it, 'chauffe', 'ballon', { niv: 0.5, coul: ORGA });
-      const s = at(pc('soxhlet', 0, 0, { liq: { niv: 0.4, coul: ORGA } }), 'bas', b, 'haut'); it.push(s);
+      const s = at(pc('soxhlet', 0, 0, { liq: { niv: 0.35, coul: ORGA } }), 'bas', b, 'haut'); it.push(s);
       const r = at(pc('refrigerant_boules', 0, 0, { eau: true }), 'bas', s, 'haut'); it.push(r);
       support(it, b.x - 90, [[b.x - 10, J(b, 'haut')[1] + 14], [r.x - 20, r.y + 10]]);
-      return legendes(it, [[J(r, 'haut', 0, 60), 'réfrigérant à eau'], [[s.x + 16, s.y - 20], 'cartouche poreuse (solide)'], [[s.x - 40, s.y + 20], 'siphon', 'gauche'], [[b.x + 18, b.y + 20], 'solvant'], [[cb.x + 50, cb.y], 'chauffe-ballon']]);
+      return legendes(it, [[J(r, 'haut', 0, 60), 'réfrigérant à eau'], [[s.x + 16, s.y - 110], 'cartouche poreuse (solide)'], [[s.x + 46, s.y - 60], 'tube d’admission des vapeurs'], [[s.x - 58, s.y - 90], 'siphon', 'gauche'], [[b.x + 18, b.y + 20], 'solvant'], [[cb.x + 55, cb.y + 20], 'chauffe-ballon agitateur']]);
     } },
     filtration: { nom: 'Filtration par gravité', f() {
       const it = [];
@@ -127,7 +127,7 @@ const Modeles = (() => {
     const elev2 = at(pc('elevateur'), 'dessus', er, 'bas'); it.push(elev2);
     support(it, b.x - 80, [[b.x - 10, J(b, 'haut')[1] + 14]]);
     const L = [[[th.x + 4, th.y - 150], 'thermomètre'], [J(tete, 'haut', 7, 30), 'tête de distillation'], [J(r, 'haut', 60, 40), 'réfrigérant droit'], [J(al, 'haut', 10, 20), 'allonge'], [J(er, 'haut', 10, 70), hydro ? 'distillat (hydrolat + huile essentielle)' : 'distillat'],
-      [[b.x - 20, b.y + 10], hydro ? 'eau + matière végétale' : 'mélange à distiller', 'gauche'], [[cb.x - 50, cb.y + 10], 'chauffe-ballon', 'gauche'], [[elev.x - 50, elev.y + 30], 'support élévateur', 'gauche']];
+      [[b.x - 20, b.y + 10], hydro ? 'eau + matière végétale' : 'mélange à distiller', 'gauche'], [[cb.x - 55, cb.y + 20], 'chauffe-ballon agitateur', 'gauche'], [[elev.x - 50, elev.y + 30], 'support élévateur', 'gauche']];
     if (vg) L.push([[vg.x - 9, vg.y], 'colonne de Vigreux', 'gauche']);
     return legendes(it, L);
   }

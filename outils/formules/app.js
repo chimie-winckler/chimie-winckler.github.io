@@ -100,7 +100,7 @@
         const cour = i === meca.cur, r = Rendu.mecanisme(e.G, e.fleches, cour ? meca : {});
         if (cour) meca.ancres = r.ancres;
         if (i) h.push('<div class="fm-reac">⟶</div>');
-        h.push(`<figure class="fm-fig fm-meca${cour ? (meca.depart ? ' choix-fin' : ' choix-debut') + ' courante' : ' autre'}" data-etape="${i}"><p class="fm-num-etape">Étape ${i + 1}</p>${r.svg}${cour ? `<figcaption>${meca.depart ? 'Clique maintenant sur l’atome ou la liaison où arrive le doublet (site pauvre en électrons).' : 'Clique sur un doublet non liant ou sur une liaison pour commencer une flèche courbe.'}</figcaption>` : '<figcaption>Clique pour modifier cette étape.</figcaption>'}</figure>`);
+        h.push(`<figure class="fm-fig fm-meca${cour ? (meca.depart ? ' choix-fin' : ' choix-debut') + ' courante' : ' autre'}" data-etape="${i}"><p class="fm-num-etape">Étape ${i + 1}</p>${r.svg}${cour ? `<figcaption>${meca.depart ? '② Clique maintenant sur l’atome ou la liaison où arrive le doublet (site pauvre en électrons).' : '① Clique sur un doublet non liant (trait près d’un atome) ou sur une liaison pour commencer une flèche courbe.'}</figcaption>` : '<figcaption>Clique pour modifier cette étape.</figcaption>'}</figure>`);
       });
       zone.innerHTML = '<div class="fm-etapes">' + h.join('') + '</div>';
     } else if (onglet === 'equation') zone.innerHTML = equation(an);
@@ -138,6 +138,26 @@
   $('fm-fl-sens').addEventListener('click', () => { const f = etapeCour().fleches[meca.choisie]; if (f) { f.sens = -(f.sens || 1); resultats(); } });
   $('fm-fl-suppr').addEventListener('click', () => { if (meca.choisie !== null && etapeCour().fleches[meca.choisie]) { etapeCour().fleches.splice(meca.choisie, 1); meca.choisie = null; resultats(); } });
   $('fm-fl-vider').addEventListener('click', () => { etapeCour().fleches = []; meca.depart = null; meca.choisie = null; msg(''); resultats(); });
+
+  // ── ajouter une espèce (réactif, ion…) à l'étape en cours, sans effacer le reste ──
+  function lireEspece(t) {
+    t = t.trim(); if (!t) return null;
+    const r = Nomenclature.lireNom(t); if (!r.erreur) return r.graphe;
+    try { return Chimie.lireSmiles(t); } catch (e) { return null; }
+  }
+  function ajouterEspece(t) {
+    const g0 = lireEspece(t);
+    if (!g0) { msg('Espèce non reconnue : écris son nom (ion hydroxyde, eau, bromométhane…) ou son SMILES.'); return; }
+    const g = disposer(g0), base = JSON.parse(JSON.stringify(G));
+    const xMax = base.atomes.length ? Math.max(...base.atomes.map(a => a.x)) : -2, yMoy = base.atomes.length ? base.atomes.reduce((t, a) => t + a.y, 0) / base.atomes.length : 0;
+    const gy = g.atomes.reduce((t, a) => t + a.y, 0) / g.atomes.length, pre = 'e' + Date.now().toString(36) + '_';
+    g.atomes.forEach(a => { a.id = pre + a.id; a.x += xMax + 1.8; a.y += yMoy - gy; base.atomes.push(a); });
+    g.liaisons.forEach(l => { l.id = pre + l.id; l.a = pre + l.a; l.b = pre + l.b; base.liaisons.push(l); });
+    msg(''); ed.charger(base);
+  }
+  document.querySelectorAll('[data-espece]').forEach(b => b.addEventListener('click', () => ajouterEspece(b.dataset.espece)));
+  $('fm-esp-ok').addEventListener('click', () => { ajouterEspece($('fm-esp').value); $('fm-esp').value = ''; });
+  $('fm-esp').addEventListener('keydown', e => { if (e.key === 'Enter') { ajouterEspece($('fm-esp').value); $('fm-esp').value = ''; } });
 
   function choisirEtape(i) { meca.cur = i; meca.depart = null; meca.choisie = null; msg(''); ed.charger(meca.etapes[i].G, true); }
   $('fm-et-plus').addEventListener('click', () => {

@@ -237,11 +237,11 @@ const Rendu = (() => {
       const xs = lourds.map(k => r.pos.get(k)[0]), x0 = Math.min(...xs), x1 = Math.max(...xs);
       if (ci) { txt.push(tx(dx - U * 0.55, 0, '+', { cls: 'plus' })); }
       // espèce placée à gauche d'une autre : son atome réactif (chargé, ou portant le plus de doublets) tourné vers la droite
+      // ion (atome chargé) : on le tourne vers l'espèce voisine (à droite s'il est avant, à gauche s'il est après)
       let miroir = false;
-      if (ci < comps.length - 1 && x1 > x0) {
-        const het = lourds.filter(k => an.atomes[k].el !== 'C' && an.atomes[k].el !== 'H');
-        const reac = het.find(k => an.atomes[k].charge) ?? het.sort((u, v) => an.doublets[v].paires - an.doublets[u].paires)[0];
-        if (reac !== undefined && r.pos.get(reac)[0] < (x0 + x1) / 2) miroir = true;
+      if (x1 > x0 && comps.length > 1) {
+        const reac = lourds.find(k => an.atomes[k].charge && an.atomes[k].el !== 'C');
+        if (reac !== undefined) { const gauche = r.pos.get(reac)[0] < (x0 + x1) / 2; miroir = ci < comps.length - 1 ? gauche : !gauche; }
       }
       const P = k => { const p = r.pos.get(k); return [((miroir ? x0 + x1 - p[0] : p[0]) - x0) * U + dx, p[1] * U]; };
       const lab = new Map();
