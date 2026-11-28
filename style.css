@@ -582,3 +582,8 @@ main section, main article.partie { scroll-margin-top: 80px; }
 .intro-outils { color: var(--doux); max-width: 75ch; }
 .tuile-bientot { opacity: .7; }
 .doc-outil .doc-ico { background: #1565c0; }
+/* mot de passe intégré à une vignette (page S’entraîner) */
+.tuile-coffre { cursor: default; }
+.coffre-form-tuile { max-width: none; margin: 12px 0 0; padding: 0; border: 0; background: none; }
+.coffre-form-tuile .coffre-ligne { margin: 8px 0 8px; }
+.tuile-coffre:hover { transform: none; box-shadow: none; border-color: var(--bord); }
