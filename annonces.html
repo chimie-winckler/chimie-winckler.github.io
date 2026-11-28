@@ -50,7 +50,7 @@
     <a class="doc doc-lien" href="attestation-stage.html"><span class="doc-ico">PAGE</span>Attestation de stage à remplir</a>
   </div>
 </section>
-<section class="annonce annonce-urgent">
+<section class="annonce annonce-urgent" data-fin="2026-12-01">
   <div class="annonce-tete"><span class="annonce-cat">Obligatoire</span><span class="annonce-date">⏰ Avant le 1er décembre 2026</span></div>
   <h2>Campagne de rentrée PIX</h2>
   <p>PIX est le service qui valide les compétences numériques. La campagne de rentrée est <strong>obligatoire pour tous les élèves du lycée</strong>, quel que soit le niveau.</p>
@@ -77,6 +77,11 @@
 </div>
 
 </main>
+<script>
+/* une annonce portant data-fin="AAAA-MM-JJ" disparaît automatiquement le lendemain de cette date */
+(function(){var d=new Date(),j=d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);
+document.querySelectorAll('.annonce[data-fin]').forEach(function(e){if(j>e.getAttribute('data-fin'))e.remove();});})();
+</script>
 <footer class="pied"><div class="conteneur">BTS Métiers de la Chimie – Synthèse · <a href="mentions-legales.html">Mentions légales et confidentialité</a></div></footer>
 <script src="theme.js?v=1"></script>
 <script data-goatcounter="https://chimie-winckler.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
