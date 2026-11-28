@@ -40,8 +40,14 @@ const Verrerie = (() => {
     cristallisoir: { nom: 'Cristallisoir', cat: 'Récipients',
       dessin: () => P('M-75,-42 L-75,0 L75,0 L75,-42'), interieur: () => 'M-75,-42 L-75,0 L75,0 L75,-42 Z', haut: -42, bas: 0, joints: { bas: [0, 0, 90], haut: [0, -42, -90] } },
     fiole_vide: { nom: 'Fiole à vide + Büchner', cat: 'Filtration',
-      dessin: () => P('M-9,-112 L-9,-70 L-44,0 L44,0 L9,-70 L9,-112') + P('M9,-100 L32,-100 M9,-93 L32,-93', 'trait') + P('M-13,-112 L13,-112 L10,-124 L-10,-124 Z', 'bouchon') + P('M-40,-200 L40,-200 L40,-150 L6,-140 L6,-112 M-40,-200 L-40,-150 L-6,-140 L-6,-112') + Ln(-38, -160, 38, -160, 'fritte') + T(48, -94, '→ trompe', 'petit g'),
-      interieur: () => 'M-9,-112 L-9,-70 L-44,0 L44,0 L9,-70 L9,-112 Z', interieur2: () => 'M-40,-200 L40,-200 L40,-160 L-40,-160 Z', haut: -112, bas: 0, joints: { bas: [0, 0, 90], haut: [0, -200, -90] } },
+      // fiole à vide à col et olive latérale, cône en caoutchouc dans le col, Büchner dont la tige descend sous l'olive
+      dessin: () => P('M-13,-117 L-13,-80 L-46,-4 Q-47,0 -42,0 L42,0 Q47,0 46,-4 L13,-80 L13,-117 M-13,-117 L-16,-120 M13,-117 L16,-120', 'trait')
+        + P('M13,-108 L30,-108 L33,-110 L33,-108 L37,-110 L37,-108 L41,-110 L41,-98 L37,-100 L37,-98 L33,-100 L33,-98 L30,-100 L13,-100', 'trait')
+        + `<g class="vide"><path d="M47,-104 L76,-104 M70,-109 L76,-104 L70,-99"/><text x="62" y="-112" class="petit" text-anchor="middle">vide</text></g>`
+        + P('M-4,-150 L-4,-92 L4,-88 L4,-150', 'trait')
+        + P('M-17,-131 L17,-131 L11.5,-109 L-11.5,-109 Z', 'caoutchouc')
+        + P('M-4,-131 L-4,-150 L-38,-166 L-38,-208 M4,-131 L4,-150 L38,-166 L38,-208', 'trait') + Ln(-37, -170, 37, -170, 'fritte'),
+      interieur: () => 'M-13,-117 L-13,-80 L-46,-4 Q-47,0 -42,0 L42,0 Q47,0 46,-4 L13,-80 L13,-117 Z', interieur2: () => 'M-38,-208 L38,-208 L38,-170 L-38,-170 Z', haut: -117, bas: 0, joints: { bas: [0, 0, 90], haut: [0, -208, -90] } },
     // ───── mesure ─────
     eprouvette: { nom: 'Éprouvette graduée', cat: 'Mesure',
       dessin: () => P('M-14,-200 L-12,-196 L-12,0 L12,0 L12,-200') + P('M-26,0 L26,0 L22,8 L-22,8 Z', 'verre') + grads(-12, -180, -20, 16, 7),

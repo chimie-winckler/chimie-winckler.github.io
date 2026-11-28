@@ -99,8 +99,8 @@ const Modeles = (() => {
     } },
     filtration_vide: { nom: 'Filtration sous vide (Büchner)', f() {
       const it = [], f = pc('fiole_vide', 0, 0, { liq: { niv: 0.15, coul: EAU, solide: false } }); it.push(f);
-      support(it, -120, [[0, -95]]);
-      return legendes(it, [[[30, -185], 'entonnoir Büchner'], [[0, -160], 'papier filtre'], [[0, -132], 'cône en caoutchouc'], [[30, -40], 'fiole à vide']]);
+      support(it, -140, [[0, -88, 14]]);
+      return legendes(it, [[[30, -192], 'entonnoir Büchner'], [[0, -172], 'papier filtre'], [[13, -121], 'cône en caoutchouc'], [[30, -40], 'fiole à vide']]);
     } },
     recristallisation: { nom: 'Recristallisation (dissolution à chaud)', f() {
       const it = [], { b, bain, ag } = chauffage(it, 'bain', 'ballon', { niv: 0.35, coul: '#e9f3fb', solide: true });

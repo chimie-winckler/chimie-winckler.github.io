@@ -30,6 +30,9 @@ window.MONTAGE_STYLE = function (nb) {
   .solide circle{fill:#fff;stroke:${K};stroke-width:.7}
   .plaque-ccm{fill:#fff;stroke:${K};stroke-width:1}
   .tache{fill:${nb ? K : '#6b5bd6'}}
+  .caoutchouc{fill:${nb ? '#bdbdbd' : '#5f6368'};stroke:${K};stroke-width:1.2}
+  .vide path{fill:none;stroke:${K};stroke-width:1.6}
+  .vide text{fill:${K}}
   .eau path{fill:none;stroke:${c.eau};stroke-width:1.6}
   .eau text{fill:${c.eau}}
   .petit{font:11px Arial,sans-serif;fill:${K}}
