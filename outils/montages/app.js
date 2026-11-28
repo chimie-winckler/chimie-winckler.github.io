@@ -107,6 +107,7 @@
       if (d.eau) h += `<label class="mt-case"><input type="checkbox" id="mt-p-eau"${it.eau ? ' checked' : ''}> Entrée et sortie d’eau</label>`;
       if (it.p === 'pince' || it.p === 'support_ampoule') h += `<div class="mt-l"><span>Bras</span><input type="range" id="mt-p-bras" min="10" max="200" value="${it.bras || (it.p === 'pince' ? 44 : 60)}"></div>`;
       if (it.p === 'support_ampoule') h += `<div class="mt-l"><span>Ouverture</span><input type="range" id="mt-p-ouv" min="15" max="70" value="${it.ouv || 26}"></div>`;
+      if (d.affiche) h += `<div class="mt-l"><span>Écran</span><input type="text" id="mt-p-aff" maxlength="9" value="${String(it.affiche ?? d.affiche).replace(/"/g, '&quot;')}"></div>`;
       if (d.cable) h += `<div class="mt-l"><span>${it.p === 'burette_auto' || it.p === 'titrateur' ? 'Tube' : 'Câble'}</span><input type="range" id="mt-p-cx" min="-400" max="400" value="${it.cx ?? (it.p === 'titrateur' ? 150 : it.p === 'burette_auto' ? 110 : 70)}"><input type="range" id="mt-p-cy" min="-450" max="100" value="${it.cy ?? (it.p === 'titrateur' || it.p === 'burette_auto' ? -150 : -250)}"></div>`;
       if (it.p === 'potence') h += `<div class="mt-l"><span>Hauteur</span><input type="range" id="mt-p-h" min="150" max="800" value="${it.h || 420}"></div>`;
     } else {
@@ -129,6 +130,7 @@
     lier('mt-p-ouv', x => { it.ouv = +x.value; });
     lier('mt-p-h', x => { it.h = +x.value; });
     lier('mt-p-cx', x => { it.cx = +x.value; });
+    lier('mt-p-aff', x => { it.affiche = x.value; });
     lier('mt-p-cy', x => { it.cy = +x.value; });
     lier('mt-p-tt', x => { it.taille = +x.value; });
     ['mt-p-rot', 'mt-p-sc', 'mt-p-niv', 'mt-p-niv2', 'mt-p-texte'].forEach(id => { const x = $(id); if (x) x.addEventListener('focus', sauver, { once: true }); });

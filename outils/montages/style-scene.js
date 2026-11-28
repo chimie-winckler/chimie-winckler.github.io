@@ -52,6 +52,7 @@ window.MONTAGE_STYLE = function (mode) {
   .flacon-brun{fill:${nb ? '#fff' : '#9a6b3f'};stroke:${K};stroke-width:1.2} .bouchon-bleu{fill:${nb ? '#fff' : '#3d6fd6'};stroke:${K};stroke-width:1} .bouchon-gris{fill:${nb ? '#fff' : '#c9ced6'};stroke:${K};stroke-width:1}
   .cable{fill:none;stroke:${K};stroke-width:2;stroke-linecap:round} .tube-fin{fill:none;stroke:${nb ? K : '#8fbfd6'};stroke-width:${nb ? 1.4 : 3};stroke-linecap:round}
   .sonde-verre{fill:${nb ? '#fff' : '#eef6fb'};stroke:${K};stroke-width:1.2} .sonde-tete{fill:${nb ? '#fff' : '#5a6068'};stroke:${K};stroke-width:1.2} .sonde-bague{fill:${nb ? '#fff' : '#9aa0a8'};stroke:${K};stroke-width:1}
+  .sonde-noire{fill:${nb ? '#fff' : '#3c4046'};stroke:${K};stroke-width:1.2} .sonde-kcl{fill:${nb ? '#fff' : '#f4f1e4'};stroke:${K};stroke-width:.6}
   .plaque-pt{fill:${nb ? '#fff' : '#9e9e9e'};stroke:${K};stroke-width:.8} .pointe{fill:${nb ? '#fff' : '#eef6fb'};stroke:${K};stroke-width:1} .led{fill:${nb ? '#fff' : '#7cd67c'};stroke:${K};stroke-width:.6}
   .leg-trait{stroke:${K};stroke-width:.9}
   .leg-pt{fill:${K}}
@@ -125,6 +126,7 @@ window.MONTAGE_STYLE_ILLU = (() => {
   .flacon-brun{fill:#5e331a;fill-opacity:.92;stroke:#2e1a0e;stroke-width:1} .bouchon-bleu{fill:#2f6ad8;stroke:#1d3f86;stroke-width:1} .bouchon-gris{fill:#d6d3cc;stroke:#8a8579;stroke-width:1}
   .cable{fill:none;stroke:#3a3346;stroke-width:2.2;stroke-linecap:round} .tube-fin{fill:none;stroke:#9fd8cf;stroke-opacity:.95;stroke-width:3.2;stroke-linecap:round}
   .sonde-verre{fill:rgba(215,232,243,.75);stroke:${K};stroke-width:1} .sonde-tete{fill:url(#ill-sarcelle);stroke:#1b5f58;stroke-width:1} .sonde-bague{fill:#2f2b3a;stroke:#1f1c28;stroke-width:.8}
+  .sonde-noire{fill:#2f2b3a;stroke:#1f1c28;stroke-width:1} .sonde-kcl{fill:#f1ecd8;fill-opacity:.85;stroke:none}
   .plaque-pt{fill:#b0b0b0;stroke:${K};stroke-width:.6} .pointe{fill:rgba(215,232,243,.85);stroke:${K};stroke-width:.8} .led{fill:#c8f07a;stroke:#5b7a2a;stroke-width:.6}
   .leg-trait{stroke:${T};stroke-width:.8}
   .leg-pt{fill:${T}}

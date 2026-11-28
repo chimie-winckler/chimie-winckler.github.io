@@ -139,6 +139,16 @@ const Modeles = (() => {
       it.push(pot, ag, be, ol, p2, el, p1, bu, co);
       return legendes(it, [[[bu.x - 6, bu.y - 250], 'burette'], [[bu.x - 3, bu.y - 110], 'solution titrante'], [[be.x - 34, be.y - 85], 'bécher'], [[be.x - 20, be.y - 25], 'solution titrée + eau distillée'], [[ol.x - 6, ol.y - 1], 'barreau aimanté'], [[ag.x - 50, ag.y + 24], 'agitateur magnétique'], [[el.x + 5, el.y - 80], 'cellule conductimétrique', 'droite'], [[co.x + 30, co.y - 30], 'conductimètre', 'droite']], 'gauche');
     } },
+    titrage_potentio: { nom: 'Titrage potentiométrique', f() {
+      const it = [], ag = pc('agitateur', 0, -34), be = at(pc('becher', 0, 0, { liq: { niv: 0.5, coul: '#f3e6b0' } }), 'bas', ag, 'dessus'), ol = at(pc('olive'), 'bas', be, 'bas', 0, -3);
+      const ep = pc('electrode_pt', 8, be.y - 16), er = pc('electrode_ref', 22, be.y - 12);
+      const bu = at(pc('burette', 0, 0, { liq: { niv: 0.8, coul: '#efc8e6' } }), 'bas', be, 'haut', -14, 12);
+      const xT = 150, p1 = pc('pince', xT, bu.y - 175, { flip: true, bras: xT + 14, ouv: 7 }), p2 = pc('pince', xT, ep.y - 120, { flip: true, bras: xT - 15, ouv: 12 });
+      const pot = pc('potence', xT - 33, 0, { flip: true, h: -p1.y + 90 }), mv = pc('millivoltmetre', 300, 0);
+      relier(ep, J(mv, 'prise')); relier(er, J(mv, 'prise2'));
+      it.push(pot, ag, be, ol, p2, ep, er, p1, bu, mv);
+      return legendes(it, [[[bu.x - 6, bu.y - 250], 'burette'], [[bu.x - 3, bu.y - 110], 'solution titrante'], [[be.x - 34, be.y - 85], 'bécher'], [[be.x - 20, be.y - 25], 'solution titrée'], [[ol.x - 6, ol.y - 1], 'barreau aimanté'], [[ag.x - 50, ag.y + 24], 'agitateur magnétique'], [[ep.x, ep.y - 6], 'électrode de platine', 'droite'], [[er.x + 4, er.y - 70], 'électrode de référence', 'droite'], [[mv.x + 30, mv.y - 30], 'millivoltmètre', 'droite']], 'gauche');
+    } },
     titrage_burette_auto: { nom: 'Titrage à la burette automatique', f() {
       const it = [], { ag, be, ol, el } = poste(it, 'sonde_ph', { niv: 0.45, coul: '#d9eef9' });
       const ba = pc('burette_auto', -150, 0), fl = pc('flacon_reactif', -225, 0, { liq: { niv: 0.6, coul: '#f6d2df' } });

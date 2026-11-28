@@ -33,6 +33,7 @@ const Verrerie = (() => {
   // câble / tube souple : du point (sx, sy) au point (ex, ey), en arc vers le haut
   const souple = (sx, sy, ex, ey, cls, h = 90) => P(`M${sx},${sy} C${sx},${sy - h} ${ex},${Math.min(ey, sy) - h} ${ex},${ey}`, cls);
   const bout = (it, dx, dy) => [(it && it.cx !== undefined) ? it.cx : dx, (it && it.cy !== undefined) ? it.cy : dy];
+  const aff = (it, def) => String((it && it.affiche !== undefined) ? it.affiche : def).replace(/&/g, '&amp;').replace(/</g, '&lt;');
   function boitier(sombre, ecran, nbBoutons) {
     const c = sombre ? 'app-noir' : 'app-blanc';
     return P('M-56,-62 L-49,-69 L49,-69 L56,-62 Z', c + '-dessus') + R(-56, -62, 112, 62, c, 4) + R(-42, -54, 70, 20, 'ecran', 2) + `<text class="ecran-txt" x="-7" y="-39" text-anchor="middle">${ecran}</text>`
@@ -185,13 +186,20 @@ const Verrerie = (() => {
     support_ampoule: { nom: 'Anneau (support d’ampoule)', cat: 'Chauffage et support', dessin: it => { const o = (it && it.ouv) || 26, br = Math.max(o + 4, (it && it.bras) || 60);
       return P(`M${-o},0 A${o},8 0 1 0 ${o},0 A${o},8 0 1 0 ${-o},0 M${-o + 4.5},0 A${o - 4.5},5.5 0 1 0 ${o - 4.5},0 A${o - 4.5},5.5 0 1 0 ${-o + 4.5},0 M${-o},0 L${-br},0`, 'pince'); }, joints: { centre: [0, 0, -90] } },
     // ───── dosages ─────
-    phmetre: { nom: 'pH-mètre', cat: 'Dosages', dessin: () => boitier(true, '7,00', 3), joints: { bas: [0, 0, 90], prise: [-44, -66, -90] } },
-    conductimetre: { nom: 'Conductimètre', cat: 'Dosages', dessin: () => boitier(true, 'mS/cm', 2), joints: { bas: [0, 0, 90], prise: [-44, -66, -90] } },
+    phmetre: { nom: 'pH-mètre', cat: 'Dosages', affiche: '7,00', dessin: it => boitier(true, aff(it, '7,00'), 3), joints: { bas: [0, 0, 90], prise: [-44, -66, -90] } },
+    conductimetre: { nom: 'Conductimètre', cat: 'Dosages', affiche: '1,25 mS', dessin: it => boitier(true, aff(it, '1,25 mS'), 2), joints: { bas: [0, 0, 90], prise: [-44, -66, -90] } },
+    millivoltmetre: { nom: 'Millivoltmètre (potentiomètre)', cat: 'Dosages', affiche: '412 mV', dessin: it => boitier(true, aff(it, '412 mV'), 2), joints: { bas: [0, 0, 90], prise: [-44, -66, -90], prise2: [-30, -67, -90] } },
     sonde_ph: { nom: 'Électrode de pH combinée', cat: 'Dosages', cable: true,
       dessin: it => { const [ex, ey] = bout(it, 70, -250); return souple(0, -186, ex, ey, 'cable') + R(-4.5, -152, 9, 140, 'sonde-verre', 3) + C(0, -7, 6.5, 'sonde-verre') + Ln(0, -145, 0, -12, 'grad') + R(-6.5, -188, 13, 38, 'sonde-tete', 3) + R(-7.5, -160, 15, 6, 'sonde-bague', 1.5); },
       joints: { bas: [0, 0, 90], haut: [0, -188, -90] } },
     cellule_cond: { nom: 'Cellule conductimétrique', cat: 'Dosages', cable: true,
       dessin: it => { const [ex, ey] = bout(it, 70, -250); return souple(0, -186, ex, ey, 'cable') + R(-5.5, -152, 11, 118, 'sonde-tete', 3) + P('M-5.5,-36 L-10,-26 L-10,0 L10,0 L10,-26 L5.5,-36 Z', 'sonde-verre') + R(-8, -22, 2.5, 18, 'plaque-pt') + R(5.5, -22, 2.5, 18, 'plaque-pt') + R(-6.5, -188, 13, 38, 'sonde-tete', 3); },
+      joints: { bas: [0, 0, 90], haut: [0, -188, -90] } },
+    electrode_pt: { nom: 'Électrode de platine', cat: 'Dosages', cable: true,
+      dessin: it => { const [ex, ey] = bout(it, 70, -250); return souple(0, -186, ex, ey, 'cable') + R(-3.5, -152, 7, 140, 'sonde-verre', 2.5) + Ln(0, -145, 0, -12, 'grad') + R(-3, -13, 6, 13, 'plaque-pt', 1) + R(-6.5, -188, 13, 38, 'sonde-noire', 3); },
+      joints: { bas: [0, 0, 90], haut: [0, -188, -90] } },
+    electrode_ref: { nom: 'Électrode de référence', cat: 'Dosages', cable: true,
+      dessin: it => { const [ex, ey] = bout(it, 70, -250); return souple(0, -186, ex, ey, 'cable') + R(-4.5, -152, 9, 146, 'sonde-verre', 3) + R(-3, -118, 6, 108, 'sonde-kcl', 2) + Ln(0, -145, 0, -40, 'trait') + R(-2, -8, 4, 4, 'plaque-pt', 1) + R(4.5, -140, 4, 6, 'sonde-bague', 1) + R(-6.5, -188, 13, 38, 'sonde-noire', 3); },
       joints: { bas: [0, 0, 90], haut: [0, -188, -90] } },
     burette_auto: { nom: 'Burette automatique', cat: 'Dosages', cable: true,
       dessin: it => { const [ex, ey] = bout(it, 110, -150);
