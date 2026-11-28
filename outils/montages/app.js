@@ -20,8 +20,9 @@
   // ── rendu ──
   function vue() {
     svg.innerHTML = `<g id="mt-contenu">${M.rendre(scene, sel)}</g>`;
-    document.body.classList.toggle('mt-nb', !!scene.nb);
-    $('mt-nb').checked = !!scene.nb;
+    const mode = M.modeDe(scene);
+    document.body.classList.toggle('mt-nb', mode === 'nb'); document.body.classList.toggle('mt-illu', mode === 'illu');
+    $('mt-style').value = mode;
     proprietes(); garder();
   }
   function cadrer() {
@@ -150,15 +151,15 @@
   $('mt-annuler').addEventListener('click', annuler); $('mt-retablir').addEventListener('click', retablir);
   $('mt-vider').addEventListener('click', () => { sauver(); scene.items = []; sel = null; vue(); cadrer(); });
   $('mt-cadrer').addEventListener('click', cadrer);
-  $('mt-nb').addEventListener('change', e => { scene.nb = e.target.checked; vue(); });
+  $('mt-style').addEventListener('change', e => { scene.style = e.target.value; scene.nb = scene.style === 'nb'; vue(); });
   $('mt-modele').addEventListener('change', e => {
     const m = Modeles.liste[e.target.value]; if (!m) return;
-    sauver(); scene.items = m.f(); sel = null; vue(); cadrer(); e.target.value = '';
+    sauver(); scene.items = m.f(); if (m.style && !scene.style) scene.style = m.style; sel = null; vue(); cadrer(); e.target.value = '';
   });
   // ── export ──
   function svgExport() {
     const c = svg.cloneNode(true); c.querySelectorAll('.poignee').forEach(x => x.remove()); c.querySelectorAll('.sel').forEach(x => x.classList.remove('sel'));
-    const st = document.createElementNS('http://www.w3.org/2000/svg', 'style'); st.textContent = window.MONTAGE_STYLE(scene.nb); c.insertBefore(st, c.firstChild);
+    const st = document.createElementNS('http://www.w3.org/2000/svg', 'style'); st.textContent = window.MONTAGE_STYLE(M.modeDe(scene)); c.insertBefore(st, c.firstChild);
     const bs = scene.items.map(M.boite), x0 = Math.min(...bs.map(b => b[0])) - 30, y0 = Math.min(...bs.map(b => b[1])) - 30, x1 = Math.max(...bs.map(b => b[2])) + 30, y1 = Math.max(...bs.map(b => b[3])) + 30;
     c.setAttribute('viewBox', `${x0} ${y0} ${x1 - x0} ${y1 - y0}`); c.setAttribute('width', (x1 - x0) * 2); c.setAttribute('height', (y1 - y0) * 2);
     return new XMLSerializer().serializeToString(c);

@@ -102,6 +102,17 @@ const Modeles = (() => {
       support(it, -140, [[0, -88, 14]]);
       return legendes(it, [[[30, -192], 'entonnoir Büchner'], [[0, -172], 'papier filtre'], [[13, -121], 'cône en caoutchouc'], [[30, -40], 'fiole à vide']]);
     } },
+    titrage_colorimetrique: { nom: 'Titrage colorimétrique (burette)', f() {
+      const it = [], ag = pc('agitateur', 0, -34);
+      const er = at(pc('erlen', 0, 0, { liq: { niv: 0.42, coul: '#f2d84b' } }), 'bas', ag, 'dessus');
+      const ol = at(pc('olive'), 'bas', er, 'bas', 0, -3);
+      const bu = at(pc('burette', 0, 0, { liq: { niv: 0.8, coul: '#cfe8f6' } }), 'bas', er, 'haut', 0, 12);
+      // potence derrière, à droite, comme sur les schémas de titrage usuels
+      const xT = 150, p1 = pc('pince', xT, bu.y - 175, { flip: true, bras: xT, ouv: 7 }), p2 = pc('pince', xT, er.y - 92, { flip: true, bras: xT, ouv: 10 });
+      const pot = pc('potence', xT - 33, 0, { flip: true, h: -p1.y + 90 });
+      it.push(pot, ag, p2, er, ol, p1, bu);
+      return legendes(it, [[[bu.x - 6, bu.y - 255], 'burette'], [[bu.x - 3, bu.y - 120], 'solution titrante'], [[er.x - 9, er.y - 100], 'erlenmeyer'], [[er.x - 18, er.y - 22], 'solution titrée'], [[ol.x - 5, ol.y - 1], 'barreau aimanté'], [[ag.x - 50, ag.y + 24], 'agitateur magnétique']], 'gauche');
+    } },
     recristallisation: { nom: 'Recristallisation (dissolution à chaud)', f() {
       const it = [], { b, bain, ag } = chauffage(it, 'bain', 'ballon', { niv: 0.35, coul: '#e9f3fb', solide: true });
       const r = at(pc('refrigerant_droit', 0, 0, { eau: true }), 'bas', b, 'haut'); it.push(r);

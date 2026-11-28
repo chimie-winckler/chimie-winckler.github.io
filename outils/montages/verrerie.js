@@ -11,6 +11,25 @@ const Verrerie = (() => {
   // col rodé (de y0 à y1, centré en x)
   const col = (x, y0, y1, w = J) => P(`M${x - w},${y0} L${x - w},${y1} M${x + w},${y0} L${x + w},${y1}`, 'trait') + Ln(x - w - 1.5, y1 + 6, x - w - 1.5, y1, 'rodage') + Ln(x + w + 1.5, y1 + 6, x + w + 1.5, y1, 'rodage');
   // robinet (vu de face)
+  // ── style illustré : appareils en relief ──
+  const E = (cx, cy, rx, ry, cls) => `<ellipse class="${cls}" cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}"/>`;
+  function boutonGradue(x, y, r) {
+    let t = ''; for (let k = 0; k <= 8; k++) { const a = (135 + k * 33.75) * Math.PI / 180; t += Ln((x + Math.cos(a) * (r + 2)).toFixed(1), (y + Math.sin(a) * (r + 2)).toFixed(1), (x + Math.cos(a) * (r + 4.5)).toFixed(1), (y + Math.sin(a) * (r + 4.5)).toFixed(1), 'graduation'); }
+    return t + C(x, y, r, 'bouton-c') + Ln(x, y, x + r * 0.55, y - r * 0.55, 'trait');
+  }
+  function agitIllu(chauffant) {
+    return P('M-64,4 L-55,-5 L55,-5 L64,4 Z', 'app-dessus') + R(-64, 4, 128, 30, 'appareil', 2)
+      + E(0, -4, 54, 6.5, 'app-sombre') + P('M-47,-10 L-47,-6 A47,5.5 0 0 0 47,-6 L47,-10 Z', 'appareil') + E(0, -10, 47, 5.5, 'app-dessus')
+      + boutonGradue(chauffant ? -40 : 40, 19, 7) + (chauffant ? boutonGradue(40, 19, 7) : '')
+      + R(chauffant ? -14 : -40, 12, 9, 14, 'app-sombre', 1.5) + R(chauffant ? 5 : -24, 12, 9, 14, 'app-sombre', 1.5);
+  }
+  function pinceIllu(it) {
+    const L = (it && it.bras) || 62, o = (it && it.ouv) || 9, xm = L - o;
+    return R(Math.min(8, xm - 14), -2.5, Math.max(2, xm - 22), 5, 'tige-h')
+      + R(-10, -11, 20, 22, 'noix', 3) + C(0, 0, 4.5, 'bouton-c') + R(-17, -3.5, 7, 7, 'noix', 1.5) + R(-21, -6, 4, 12, 'noix', 1)
+      + R(xm - 16, -4.5, 13, 9, 'mors', 2.5) + R(xm - 13, -14, 6, 9, 'mors', 1.5) + P(`M${xm - 15},-14 L${xm - 5},-14`, 'mors-l')
+      + P(`M${xm - 1},-8 Q${xm - 7},0 ${xm - 1},8`, 'mors-l') + P(`M${L + o + 1},-8 Q${L + o + 7},0 ${L + o + 1},8`, 'mors-l') + P(`M${xm - 2},-7 L${L + o + 2},-7`, 'mors-l');
+  }
   const robinet = (x, y) => R(x - 9, y - 4, 18, 8, 'robinet', 2) + Ln(x + 9, y, x + 17, y, 'trait');
   const grads = (x, y0, y1, n, w = 6) => { let s = ''; for (let k = 0; k <= n; k++) { const y = y0 + (y1 - y0) * k / n; s += Ln(x, y, x + (k % 5 ? w * 0.6 : w), y, 'grad'); } return s; };
 
@@ -33,6 +52,7 @@ const Verrerie = (() => {
       interieur: () => 'M-34,-98 L-34,0 L34,0 L34,-98 Z', haut: -98, bas: 0, joints: { bas: [0, 0, 90], haut: [0, -100, -90] } },
     erlen: { nom: 'Erlenmeyer', cat: 'Récipients',
       dessin: () => P('M-9,-110 L-9,-70 L-42,0 L42,0 L9,-70 L9,-110'),
+      illu: () => P('M-9,-108 L-9,-70 L-42,-3 Q-43,0 -39,0 L39,0 Q43,0 42,-3 L9,-70 L9,-108') + R(-11.5, -113, 23, 5, 'trait', 2.5) + E(0, -1, 36, 2.5, 'trait'),
       interieur: () => 'M-9,-110 L-9,-70 L-42,0 L42,0 L9,-70 L9,-110 Z', haut: -110, bas: 0, joints: { haut: [0, -110, -90], bas: [0, 0, 90] } },
     tube: { nom: 'Tube à essais', cat: 'Récipients',
       dessin: () => P('M-10,-120 L-10,-10 A10,10 0 0 0 10,-10 L10,-120'),
@@ -57,6 +77,7 @@ const Verrerie = (() => {
       interieur: () => 'M-7,-150 L-7,-62 A34,34 0 1 0 7,-62 L7,-150 Z', haut: -150, bas: 0, joints: { haut: [0, -150, -90], bas: [0, 0, 90] } },
     burette: { nom: 'Burette graduée', cat: 'Mesure',
       dessin: () => P('M-6,-300 L-6,-30 L-3,-22 L-3,-8 L-1,0 L1,0 L3,-8 L3,-22 L6,-30 L6,-300') + robinet(0, -24) + grads(-6, -280, -50, 23, 6),
+      illu: () => P('M-6,-300 L-6,-30 L-3,-22 L-3,-8 L-1,0 L1,0 L3,-8 L3,-22 L6,-30 L6,-300 M-6,-300 L-11,-311 M6,-300 L11,-311', 'verre') + E(0, -311, 11, 2.2, 'trait') + grads(-6, -280, -50, 23, 6) + R(-10, -28, 20, 8, 'robinet', 2) + R(-16, -26.5, 8, 5, 'noix', 1.5) + C(12, -24, 3, 'bouton-c'),
       interieur: () => 'M-6,-298 L-6,-30 L-3,-22 L-3,-8 L3,-8 L3,-22 L6,-30 L6,-298 Z', haut: -298, bas: 0, joints: { bas: [0, 0, 90] } },
     pipette: { nom: 'Pipette jaugée', cat: 'Mesure',
       dessin: () => P('M-3,-240 L-3,-160 L-9,-145 L-9,-95 L-3,-80 L-3,-6 L-1,0 L1,0 L3,-6 L3,-80 L9,-95 L9,-145 L3,-160 L3,-240') + Ln(-5, -200, 5, -200, 'grad'),
@@ -138,17 +159,21 @@ const Verrerie = (() => {
       joints: { nid: [0, 4, -90], bas: [0, 42, 90] } },
     agitateur_chauffant: { nom: 'Agitateur magnétique chauffant', cat: 'Chauffage et support',
       dessin: () => R(-70, -10, 140, 10, 'plaque') + R(-62, 0, 124, 34, 'appareil', 4) + C(-38, 17, 7, 'bouton') + C(38, 17, 7, 'bouton') + T(0, 22, '≈ ⊕', 'petit'),
-      joints: { dessus: [0, -10, -90], bas: [0, 34, 90] } },
+      illu: () => agitIllu(true), joints: { dessus: [0, -10, -90], bas: [0, 34, 90] } },
     elevateur: { nom: 'Support élévateur', cat: 'Chauffage et support',
       dessin: () => R(-55, -6, 110, 6, 'appareil') + R(-55, 54, 110, 6, 'appareil') + P('M-45,0 L45,54 M-45,54 L45,0 M-20,15 L20,15 M-20,39 L20,39', 'trait') + C(0, 27, 4, 'bouton'),
       joints: { dessus: [0, -6, -90], bas: [0, 60, 90] } },
     potence: { nom: 'Potence', cat: 'Chauffage et support',
-      dessin: it => R(-60, -8, 120, 8, 'appareil', 2) + R(-36, -((it && it.h) || 420), 6, ((it && it.h) || 420) - 8, 'tige'), haut: -420, joints: { bas: [0, 0, 90] } },
+      dessin: it => R(-60, -8, 120, 8, 'appareil', 2) + R(-36, -((it && it.h) || 420), 6, ((it && it.h) || 420) - 8, 'tige'), haut: -420,
+      illu: it => { const h = (it && it.h) || 420; return P('M-62,-8 L-54,-15 L56,-15 L62,-8 Z', 'app-dessus') + R(-62, -8, 124, 8, 'appareil', 1.5) + E(-33, -14, 7, 2.5, 'noix') + R(-36.5, -h, 7, h - 13, 'tige') + E(-33, -h, 3.5, 1.3, 'noix'); }, joints: { bas: [0, 0, 90] } },
     pince: { nom: 'Pince et noix', cat: 'Chauffage et support',
       // bras = distance de la noix à l'axe du tube serré ; ouv = demi-largeur du tube serré (les deux mors l'enserrent)
       dessin: it => { const L = (it && it.bras) || 62, o = (it && it.ouv) || 9; return R(-8, -8, 16, 16, 'noix', 2) + R(8, -3, Math.max(2, L - o - 13), 6, 'tige') + R(L - o - 6, -10, 5, 20, 'noix', 1.5) + R(L + o + 1, -10, 5, 20, 'noix', 1.5) + Ln(L - o - 4, -10, L + o + 4, -10, 'trait'); },
-      joints: { tige: [0, 0, 180] } },
-    olive: { nom: 'Olive aimantée', cat: 'Chauffage et support', dessin: () => R(-9, -4, 18, 8, 'olive', 4), joints: { bas: [0, 4, 90] } },
+      illu: pinceIllu, joints: { tige: [0, 0, 180] } },
+    agitateur: { nom: 'Agitateur magnétique', cat: 'Chauffage et support',
+      dessin: () => R(-70, -10, 140, 10, 'plaque') + R(-62, 0, 124, 34, 'appareil', 4) + C(38, 17, 7, 'bouton') + T(-30, 22, '≈', 'petit'),
+      illu: () => agitIllu(false), joints: { dessus: [0, -10, -90], bas: [0, 34, 90] } },
+    olive: { nom: 'Olive aimantée', cat: 'Chauffage et support', dessin: () => R(-9, -4, 18, 8, 'olive', 4), illu: () => R(-11, -4.5, 22, 7, 'olive', 3.5) + Ln(-7, -3, 7, -3, 'graduation'), joints: { bas: [0, 4, 90] } },
     support_ampoule: { nom: 'Anneau (support d’ampoule)', cat: 'Chauffage et support', dessin: it => { const o = (it && it.ouv) || 26, br = Math.max(o + 4, (it && it.bras) || 60);
       return P(`M${-o},0 A${o},8 0 1 0 ${o},0 A${o},8 0 1 0 ${-o},0 M${-o + 4.5},0 A${o - 4.5},5.5 0 1 0 ${o - 4.5},0 A${o - 4.5},5.5 0 1 0 ${-o + 4.5},0 M${-o},0 L${-br},0`, 'pince'); }, joints: { centre: [0, 0, -90] } },
     // ───── chromatographie ─────
