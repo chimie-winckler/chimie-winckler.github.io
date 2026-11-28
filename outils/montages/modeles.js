@@ -16,6 +16,14 @@ const Modeles = (() => {
     return items;
   }
   const J = (it, k, dx = 0, dy = 0) => { const p = M.monde(it, Verrerie.pieces[it.p].joints[k]); return [p[0] + dx, p[1] + dy]; };
+  // relie le câble (ou le tube) d'une pièce à un point de la scène
+  const relier = (it, q) => { const l = M.local(it, q); it.cx = Math.round(l[0]); it.cy = Math.round(l[1]); return it; };
+  // poste de titrage commun : agitateur, bécher, barreau, électrode tenue par une pince sur une potence à droite
+  function poste(it, sonde, liq) {
+    const ag = pc('agitateur', 0, -34), be = at(pc('becher', 0, 0, { liq }), 'bas', ag, 'dessus'), ol = at(pc('olive'), 'bas', be, 'bas', 0, -3);
+    const el = pc(sonde, 15, be.y - 16);
+    return { ag, be, ol, el };
+  }
   // potence + pinces (pinces serrées sur les points donnés)
   function support(items, xTige, serrages) {
     const pot = pc('potence', xTige + 33, 0); items.unshift(pot);
@@ -112,6 +120,42 @@ const Modeles = (() => {
       const pot = pc('potence', xT - 33, 0, { flip: true, h: -p1.y + 90 });
       it.push(pot, ag, p2, er, ol, p1, bu);
       return legendes(it, [[[bu.x - 6, bu.y - 255], 'burette'], [[bu.x - 3, bu.y - 120], 'solution titrante'], [[er.x - 9, er.y - 100], 'erlenmeyer'], [[er.x - 18, er.y - 22], 'solution titrée'], [[ol.x - 5, ol.y - 1], 'barreau aimanté'], [[ag.x - 50, ag.y + 24], 'agitateur magnétique']], 'gauche');
+    } },
+    titrage_ph: { nom: 'Titrage pH-métrique', f() {
+      const it = [], { ag, be, ol, el } = poste(it, 'sonde_ph', { niv: 0.45, coul: '#d9eef9' });
+      const bu = at(pc('burette', 0, 0, { liq: { niv: 0.8, coul: '#f6d2df' } }), 'bas', be, 'haut', -12, 12);
+      const xT = 150, p1 = pc('pince', xT, bu.y - 175, { flip: true, bras: xT + 12, ouv: 7 }), p2 = pc('pince', xT, el.y - 120, { flip: true, bras: xT - 15, ouv: 7 });
+      const pot = pc('potence', xT - 33, 0, { flip: true, h: -p1.y + 90 }), ph = pc('phmetre', 300, 0);
+      relier(el, J(ph, 'prise'));
+      it.push(pot, ag, be, ol, p2, el, p1, bu, ph);
+      return legendes(it, [[[bu.x - 6, bu.y - 250], 'burette'], [[bu.x - 3, bu.y - 110], 'solution titrante'], [[be.x - 34, be.y - 85], 'bécher'], [[be.x - 20, be.y - 25], 'solution titrée'], [[ol.x - 6, ol.y - 1], 'barreau aimanté'], [[ag.x - 50, ag.y + 24], 'agitateur magnétique'], [[el.x + 4, el.y - 80], 'électrode de pH combinée', 'droite'], [[ph.x + 30, ph.y - 30], 'pH-mètre', 'droite']], 'gauche');
+    } },
+    titrage_conducto: { nom: 'Titrage conductimétrique', f() {
+      const it = [], { ag, be, ol, el } = poste(it, 'cellule_cond', { niv: 0.62, coul: '#d9eef9' });
+      const bu = at(pc('burette', 0, 0, { liq: { niv: 0.8, coul: '#e8e8e8' } }), 'bas', be, 'haut', -12, 12);
+      const xT = 150, p1 = pc('pince', xT, bu.y - 175, { flip: true, bras: xT + 12, ouv: 7 }), p2 = pc('pince', xT, el.y - 120, { flip: true, bras: xT - 15, ouv: 7 });
+      const pot = pc('potence', xT - 33, 0, { flip: true, h: -p1.y + 90 }), co = pc('conductimetre', 300, 0);
+      relier(el, J(co, 'prise'));
+      it.push(pot, ag, be, ol, p2, el, p1, bu, co);
+      return legendes(it, [[[bu.x - 6, bu.y - 250], 'burette'], [[bu.x - 3, bu.y - 110], 'solution titrante'], [[be.x - 34, be.y - 85], 'bécher'], [[be.x - 20, be.y - 25], 'solution titrée + eau distillée'], [[ol.x - 6, ol.y - 1], 'barreau aimanté'], [[ag.x - 50, ag.y + 24], 'agitateur magnétique'], [[el.x + 5, el.y - 80], 'cellule conductimétrique', 'droite'], [[co.x + 30, co.y - 30], 'conductimètre', 'droite']], 'gauche');
+    } },
+    titrage_burette_auto: { nom: 'Titrage à la burette automatique', f() {
+      const it = [], { ag, be, ol, el } = poste(it, 'sonde_ph', { niv: 0.45, coul: '#d9eef9' });
+      const ba = pc('burette_auto', -150, 0), fl = pc('flacon_reactif', -225, 0, { liq: { niv: 0.6, coul: '#f6d2df' } });
+      relier(ba, [-14, be.y - 70]);
+      const xT = 150, p2 = pc('pince', xT, el.y - 120, { flip: true, bras: xT - 15, ouv: 7 });
+      const pot = pc('potence', xT - 33, 0, { flip: true, h: -p2.y + 80 }), ph = pc('phmetre', 300, 0);
+      relier(el, J(ph, 'prise'));
+      it.push(pot, ag, be, ol, p2, el, ba, fl, ph);
+      return legendes(it, [[[ba.x - 20, ba.y - 120], 'burette automatique'], [[ba.x - 10, ba.y - 190], 'réserve de solution titrante'], [[fl.x - 12, fl.y - 30], 'flacon de solution titrante'], [[be.x + 20, be.y - 25], 'solution titrée', 'droite'], [[el.x + 4, el.y - 80], 'électrode de pH combinée', 'droite'], [[ph.x + 30, ph.y - 30], 'pH-mètre', 'droite']], 'gauche');
+    } },
+    titrage_titrateur: { nom: 'Titrage au titrateur automatique', f() {
+      const it = [], ti = pc('titrateur', -150, 0), po = pc('poste_titrage', 0, 0);
+      const be = at(pc('becher', 0, 0, { sc: 0.72, liq: { niv: 0.5, coul: '#bfe6f2' } }), 'bas', po, 'dessus');
+      const el = pc('sonde_ph', 9, be.y - 10);
+      relier(ti, [-10, be.y - 45]); relier(el, J(ti, 'prise'));
+      it.push(ti, po, be, el);
+      return legendes(it, [[[ti.x - 30, ti.y - 60], 'titrateur automatique'], [[ti.x - 15, ti.y - 230], 'flacon de solution titrante'], [[ti.x + 49, ti.y - 280], 'garde (dessiccant)'], [[ti.x, ti.y - 150], 'unité de dosage (piston)'], [[po.x + 29, po.y - 206], 'support d’électrodes', 'droite'], [[el.x + 3, el.y - 150], 'électrode de pH combinée', 'droite'], [[be.x + 18, be.y - 20], 'solution titrée', 'droite'], [[po.x + 25, po.y - 30], 'agitateur', 'droite']], 'gauche');
     } },
     recristallisation: { nom: 'Recristallisation (dissolution à chaud)', f() {
       const it = [], { b, bain, ag } = chauffage(it, 'bain', 'ballon', { niv: 0.35, coul: '#e9f3fb', solide: true });

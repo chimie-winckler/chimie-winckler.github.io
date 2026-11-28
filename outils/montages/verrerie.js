@@ -30,6 +30,14 @@ const Verrerie = (() => {
       + R(xm - 16, -4.5, 13, 9, 'mors', 2.5) + R(xm - 13, -14, 6, 9, 'mors', 1.5) + P(`M${xm - 15},-14 L${xm - 5},-14`, 'mors-l')
       + P(`M${xm - 1},-8 Q${xm - 7},0 ${xm - 1},8`, 'mors-l') + P(`M${L + o + 1},-8 Q${L + o + 7},0 ${L + o + 1},8`, 'mors-l') + P(`M${xm - 2},-7 L${L + o + 2},-7`, 'mors-l');
   }
+  // câble / tube souple : du point (sx, sy) au point (ex, ey), en arc vers le haut
+  const souple = (sx, sy, ex, ey, cls, h = 90) => P(`M${sx},${sy} C${sx},${sy - h} ${ex},${Math.min(ey, sy) - h} ${ex},${ey}`, cls);
+  const bout = (it, dx, dy) => [(it && it.cx !== undefined) ? it.cx : dx, (it && it.cy !== undefined) ? it.cy : dy];
+  function boitier(sombre, ecran, nbBoutons) {
+    const c = sombre ? 'app-noir' : 'app-blanc';
+    return P('M-56,-62 L-49,-69 L49,-69 L56,-62 Z', c + '-dessus') + R(-56, -62, 112, 62, c, 4) + R(-42, -54, 70, 20, 'ecran', 2) + `<text class="ecran-txt" x="-7" y="-39" text-anchor="middle">${ecran}</text>`
+      + R(-46, -28, 92, 22, 'app-creme', 2) + [...Array(nbBoutons)].map((_, k) => C(-26 + k * (52 / Math.max(1, nbBoutons - 1)), -19, 5.5, 'bouton-c')).join('') + C(-8, -10.5, 2, 'app-noir') + C(8, -10.5, 2, 'app-noir') + C(40, -44, 4, 'bouton-c');
+  }
   const robinet = (x, y) => R(x - 9, y - 4, 18, 8, 'robinet', 2) + Ln(x + 9, y, x + 17, y, 'trait');
   const grads = (x, y0, y1, n, w = 6) => { let s = ''; for (let k = 0; k <= n; k++) { const y = y0 + (y1 - y0) * k / n; s += Ln(x, y, x + (k % 5 ? w * 0.6 : w), y, 'grad'); } return s; };
 
@@ -176,6 +184,35 @@ const Verrerie = (() => {
     olive: { nom: 'Olive aimantée', cat: 'Chauffage et support', dessin: () => R(-9, -4, 18, 8, 'olive', 4), illu: () => R(-11, -4.5, 22, 7, 'olive', 3.5) + Ln(-7, -3, 7, -3, 'graduation'), joints: { bas: [0, 4, 90] } },
     support_ampoule: { nom: 'Anneau (support d’ampoule)', cat: 'Chauffage et support', dessin: it => { const o = (it && it.ouv) || 26, br = Math.max(o + 4, (it && it.bras) || 60);
       return P(`M${-o},0 A${o},8 0 1 0 ${o},0 A${o},8 0 1 0 ${-o},0 M${-o + 4.5},0 A${o - 4.5},5.5 0 1 0 ${o - 4.5},0 A${o - 4.5},5.5 0 1 0 ${-o + 4.5},0 M${-o},0 L${-br},0`, 'pince'); }, joints: { centre: [0, 0, -90] } },
+    // ───── dosages ─────
+    phmetre: { nom: 'pH-mètre', cat: 'Dosages', dessin: () => boitier(true, '7,00', 3), joints: { bas: [0, 0, 90], prise: [-44, -66, -90] } },
+    conductimetre: { nom: 'Conductimètre', cat: 'Dosages', dessin: () => boitier(true, 'mS/cm', 2), joints: { bas: [0, 0, 90], prise: [-44, -66, -90] } },
+    sonde_ph: { nom: 'Électrode de pH combinée', cat: 'Dosages', cable: true,
+      dessin: it => { const [ex, ey] = bout(it, 70, -250); return souple(0, -186, ex, ey, 'cable') + R(-4.5, -152, 9, 140, 'sonde-verre', 3) + C(0, -7, 6.5, 'sonde-verre') + Ln(0, -145, 0, -12, 'grad') + R(-6.5, -188, 13, 38, 'sonde-tete', 3) + R(-7.5, -160, 15, 6, 'sonde-bague', 1.5); },
+      joints: { bas: [0, 0, 90], haut: [0, -188, -90] } },
+    cellule_cond: { nom: 'Cellule conductimétrique', cat: 'Dosages', cable: true,
+      dessin: it => { const [ex, ey] = bout(it, 70, -250); return souple(0, -186, ex, ey, 'cable') + R(-5.5, -152, 11, 118, 'sonde-tete', 3) + P('M-5.5,-36 L-10,-26 L-10,0 L10,0 L10,-26 L5.5,-36 Z', 'sonde-verre') + R(-8, -22, 2.5, 18, 'plaque-pt') + R(5.5, -22, 2.5, 18, 'plaque-pt') + R(-6.5, -188, 13, 38, 'sonde-tete', 3); },
+      joints: { bas: [0, 0, 90], haut: [0, -188, -90] } },
+    burette_auto: { nom: 'Burette automatique', cat: 'Dosages', cable: true,
+      dessin: it => { const [ex, ey] = bout(it, 110, -150);
+        return souple(7, -229, ex, ey - 34, 'tube-fin', 70) + R(ex - 2, ey - 36, 4, 36, 'pointe', 1.5) + R(ex - 5, ey - 44, 10, 10, 'app-creme', 2)
+          + R(-28, -162, 56, 162, 'app-creme', 5) + P('M-28,-84 L28,-62 L28,-6 Q28,0 22,0 L-22,0 Q-28,0 -28,-6 Z', 'app-creme-ombre') + R(-21, -136, 42, 30, 'ecran-cadre', 3) + R(-16, -131, 32, 20, 'ecran', 1.5)
+          + R(-19, -217, 38, 56, 'flacon-brun', 4) + R(-13, -230, 11, 14, 'bouchon-gris', 2) + R(2, -230, 11, 14, 'bouchon-gris', 2) + R(28, -150, 20, 12, 'app-creme', 2); },
+      joints: { bas: [0, 0, 90] } },
+    flacon_reactif: { nom: 'Flacon de réactif', cat: 'Dosages',
+      dessin: () => P('M-20,-60 L-20,-4 Q-20,0 -16,0 L16,0 Q20,0 20,-4 L20,-60 Q20,-69 10,-72 L10,-80 L-10,-80 L-10,-72 Q-20,-69 -20,-60 Z') + R(-12, -93, 24, 14, 'bouchon-bleu', 2) + Ln(4, -92, 4, -6, 'trait'),
+      interieur: () => 'M-20,-60 L-20,-4 Q-20,0 -16,0 L16,0 Q20,0 20,-4 L20,-60 Q20,-69 10,-72 L10,-80 L-10,-80 L-10,-72 Q-20,-69 -20,-60 Z', haut: -80, bas: 0, joints: { bas: [0, 0, 90] } },
+    titrateur: { nom: 'Titrateur automatique', cat: 'Dosages', cable: true,
+      dessin: it => { const [ex, ey] = bout(it, 150, -150);
+        return souple(-5, -303, ex, ey - 34, 'tube-fin', 60) + R(ex - 2, ey - 36, 4, 36, 'pointe', 1.5)
+          + R(-56, -112, 112, 112, 'app-blanc', 5) + Ln(-56, -84, 56, -84, 'grad') + Ln(-56, -56, 56, -56, 'grad') + Ln(-56, -28, 56, -28, 'grad') + R(-24, -104, 48, 98, 'app-sarcelle', 3) + C(15, -74, 2.2, 'led') + C(15, -62, 2.2, 'led')
+          + P('M-44,-112 L-44,-178 Q-44,-192 -30,-192 L30,-192 Q44,-192 44,-178 L44,-112 Z', 'app-blanc') + P('M-11,-112 L-11,-146 Q0,-162 11,-146 L11,-112 Z', 'app-sarcelle')
+          + P('M-26,-192 L-26,-262 Q-26,-274 -12,-277 L-12,-290 L12,-290 L12,-277 Q26,-274 26,-262 L26,-192 Z', 'flacon-brun') + R(-16, -304, 32, 15, 'app-sarcelle', 3)
+          + souple(8, -304, 48, -292, 'tube-fin', 26) + R(42, -296, 15, 44, 'app-blanc', 7); },
+      joints: { bas: [0, 0, 90], prise: [56, -90, 0] } },
+    poste_titrage: { nom: 'Agitateur du titrateur (avec support d’électrodes)', cat: 'Dosages',
+      dessin: () => R(26, -250, 6, 190, 'tige') + R(-30, -214, 62, 15, 'app-blanc', 3) + R(-32, -64, 64, 64, 'app-blanc', 5) + E(0, -64, 32, 4.5, 'app-sarcelle') + R(-22, -44, 44, 34, 'app-sarcelle', 3) + C(0, -20, 2.2, 'led'),
+      joints: { dessus: [0, -64, -90], bas: [0, 0, 90], support: [0, -206, 0] } },
     // ───── chromatographie ─────
     cuve_ccm: { nom: 'Cuve et plaque de CCM', cat: 'Chromatographie',
       dessin: () => P('M-50,-120 L-50,0 L50,0 L50,-120') + R(-56, -128, 112, 8, 'bouchon', 2) + P('M-26,-112 L-6,-112 L26,-8 L6,-8 Z', 'plaque-ccm') + Ln(-14, -30, 24, -30, 'grad') + C(4, -44, 3, 'tache') + C(-6, -70, 3, 'tache'),
